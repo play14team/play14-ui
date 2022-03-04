@@ -20,8 +20,9 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-      - name: Env
-        run: echo "Building with backend $NEXT_PUBLIC_STRAPI_API_URL"
+      - name: Environment
+        #run: echo "Building with backend $NEXT_PUBLIC_STRAPI_API_URL"
+        run: echo env
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
