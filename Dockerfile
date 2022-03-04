@@ -24,7 +24,7 @@ FROM node:16-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ENV NEXT_PUBLIC_STRAPI_API_URL https://play14-api.azurewebsites.net
+ENV NEXT_PUBLIC_STRAPI_API_URL https://api.play14.org
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
