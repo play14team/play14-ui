@@ -18,6 +18,8 @@ jobs:
     runs-on: ubuntu-latest
     name: Build and Deploy Job
     steps:
+      - name: env
+        run: env
       - uses: actions/checkout@v2
         with:
           submodules: true
