@@ -1,5 +1,8 @@
 name: Azure Static Web Apps CI/CD
 
+env:
+  NEXT_PUBLIC_STRAPI_API_URL: ${{ secrets.NEXT_PUBLIC_STRAPI_API_URL }}
+
 on:
   push:
     branches:
