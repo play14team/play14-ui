@@ -38,6 +38,7 @@ const Home: NextPage<Props> = ({ events }) => {
                   End:{" "}
                   <Moment format="DD MMM YYYY">{event.attributes.end}</Moment>
                 </p>
+                <h3>{event.attributes.status}</h3>
               </a>
             );
           })}
