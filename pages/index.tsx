@@ -1,11 +1,11 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
-import Moment from 'react-moment';
-import 'moment-timezone';
+import Moment from "react-moment";
+import "moment-timezone";
 
 const Home: NextPage<Props> = ({ events }) => {
   return (
@@ -17,26 +17,30 @@ const Home: NextPage<Props> = ({ events }) => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to #play14
-        </h1>
+        <h1 className={styles.title}>Welcome to #play14</h1>
 
-        <p className={styles.description}>
-          We believe in playfulness
-        </p>
+        <p className={styles.description}>We believe in playfulness</p>
 
         <div className={styles.grid}>
-          {
-            events.map((event : Entity<Event> ) => {
-              return (
-                <a href="/event/{event.attributes.slug}" key={event.id} className={styles.card}>
-                  <h2>{event.attributes.name}</h2>
-                  <p>Start : <Moment format="DD MMM YYYY">{event.attributes.start}</Moment></p>
-                  <p>End: <Moment format="DD MMM YYYY">{event.attributes.end}</Moment></p>
-                </a>
-              )
-            })
-          }
+          {events.map((event: Entity<Event>) => {
+            return (
+              <a
+                href="/event/{event.attributes.slug}"
+                key={event.id}
+                className={styles.card}
+              >
+                <h2>{event.attributes.name}</h2>
+                <p>
+                  Start :{" "}
+                  <Moment format="DD MMM YYYY">{event.attributes.start}</Moment>
+                </p>
+                <p>
+                  End:{" "}
+                  <Moment format="DD MMM YYYY">{event.attributes.end}</Moment>
+                </p>
+              </a>
+            );
+          })}
         </div>
       </main>
 
@@ -46,33 +50,33 @@ const Home: NextPage<Props> = ({ events }) => {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
 
 interface Entity<T> {
-  id : number
-  attributes : T
+  id: number;
+  attributes: T;
 }
 
 interface Event {
-  slug : string
-  name : string
-  start : Date
-  end : Date
-  status : string
+  slug: string;
+  name: string;
+  start: Date;
+  end: Date;
+  status: string;
 }
 
 interface Props {
-  events: Entity<Event>[]
+  events: Entity<Event>[];
 }
 
 export async function getStaticProps() {
@@ -92,12 +96,12 @@ export async function getStaticProps() {
           }
         }
       }
-    `
+    `,
   });
 
   return {
     props: {
-      events: data.events.data
-    }
-  }
+      events: data.events.data,
+    },
+  };
 }

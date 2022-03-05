@@ -40,4 +40,3 @@ Check out [Next.js deployment documentation](https://nextjs.org/docs/deployment#
 ```
 docker run -p 3000:3000 -it --env-file=./.env.local --name play14-ui play14-ui
 ```
-
