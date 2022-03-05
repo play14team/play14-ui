@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
+import Layout from "../components/layout";
 import Head from "next/head";
-import Image from "next/image";
+import Container from "../components/container";
+
 import styles from "../styles/Home.module.css";
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
@@ -9,55 +11,47 @@ import "moment-timezone";
 
 const Home: NextPage<Props> = ({ events }) => {
   return (
-    <div className={styles.container}>
+    <Layout>
       <Head>
         <title>#play14</title>
-        <meta name="description" content="#play14 community web site" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Container>
+        <div className={styles.container}>
+          <main className={styles.main}>
+            <h1 className={styles.title}>Welcome to #play14</h1>
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>Welcome to #play14</h1>
+            <p className={styles.description}>We believe in playfulness</p>
 
-        <p className={styles.description}>We believe in playfulness</p>
-
-        <div className={styles.grid}>
-          {events.map((event: Entity<Event>) => {
-            return (
-              <a
-                href="/event/{event.attributes.slug}"
-                key={event.id}
-                className={styles.card}
-              >
-                <h2>{event.attributes.name}</h2>
-                <p>
-                  Start :{" "}
-                  <Moment format="DD MMM YYYY">{event.attributes.start}</Moment>
-                </p>
-                <p>
-                  End:{" "}
-                  <Moment format="DD MMM YYYY">{event.attributes.end}</Moment>
-                </p>
-                <h3>{event.attributes.status}</h3>
-              </a>
-            );
-          })}
+            <div className={styles.grid}>
+              {events.map((event: Entity<Event>) => {
+                return (
+                  <a
+                    href="/event/{event.attributes.slug}"
+                    key={event.id}
+                    className={styles.card}
+                  >
+                    <h2>{event.attributes.name}</h2>
+                    <p>
+                      Start :{" "}
+                      <Moment format="DD MMM YYYY">
+                        {event.attributes.start}
+                      </Moment>
+                    </p>
+                    <p>
+                      End:{" "}
+                      <Moment format="DD MMM YYYY">
+                        {event.attributes.end}
+                      </Moment>
+                    </p>
+                    <h3>{event.attributes.status}</h3>
+                  </a>
+                );
+              })}
+            </div>
+          </main>
         </div>
-      </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{" "}
-          <span className={styles.logo}>
-            <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
-          </span>
-        </a>
-      </footer>
-    </div>
+      </Container>
+    </Layout>
   );
 };
 
