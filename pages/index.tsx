@@ -1,13 +1,31 @@
 import type { NextPage } from "next";
 import Layout from "../components/layout";
 import Head from "next/head";
-import Container from "../components/container";
-
 import styles from "../styles/Home.module.css";
+
+import Container from "../components/container";
+import DateFormatter from "../components/date-formatter";
 import { gql } from "@apollo/client";
 import client from "../apollo-client";
-import Moment from "react-moment";
-import "moment-timezone";
+
+import Link from "next/link";
+
+type Entity<T> = {
+  id: number;
+  attributes: T;
+};
+
+type Event = {
+  slug: string;
+  name: string;
+  start: Date;
+  end: Date;
+  status: string;
+};
+
+type Props = {
+  events: Entity<Event>[];
+};
 
 const Home: NextPage<Props> = ({ events }) => {
   return (
@@ -25,26 +43,31 @@ const Home: NextPage<Props> = ({ events }) => {
             <div className={styles.grid}>
               {events.map((event: Entity<Event>) => {
                 return (
-                  <a
-                    href="/event/{event.attributes.slug}"
+                  <Link
                     key={event.id}
-                    className={styles.card}
+                    href={`/events/${encodeURIComponent(
+                      event.attributes.slug
+                    )}`}
                   >
-                    <h2>{event.attributes.name}</h2>
-                    <p>
-                      Start :{" "}
-                      <Moment format="DD MMM YYYY">
-                        {event.attributes.start}
-                      </Moment>
-                    </p>
-                    <p>
-                      End:{" "}
-                      <Moment format="DD MMM YYYY">
-                        {event.attributes.end}
-                      </Moment>
-                    </p>
-                    <h3>{event.attributes.status}</h3>
-                  </a>
+                    <a className={styles.card}>
+                      <h2>{event.attributes.name}</h2>
+                      <p>
+                        Start :{" "}
+                        <DateFormatter
+                          date={event.attributes.start}
+                          formatString="dd MMM yyyy"
+                        />
+                      </p>
+                      <p>
+                        End:{" "}
+                        <DateFormatter
+                          date={event.attributes.end}
+                          formatString="dd MMM yyyy"
+                        />
+                      </p>
+                      <h3>{event.attributes.status}</h3>
+                    </a>
+                  </Link>
                 );
               })}
             </div>
@@ -56,23 +79,6 @@ const Home: NextPage<Props> = ({ events }) => {
 };
 
 export default Home;
-
-interface Entity<T> {
-  id: number;
-  attributes: T;
-}
-
-interface Event {
-  slug: string;
-  name: string;
-  start: Date;
-  end: Date;
-  status: string;
-}
-
-interface Props {
-  events: Entity<Event>[];
-}
 
 export async function getStaticProps() {
   const { data } = await client.query({
