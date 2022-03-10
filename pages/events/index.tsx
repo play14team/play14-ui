@@ -1,19 +1,47 @@
 import type { NextPage } from "next";
-import Layout from "../../components/layout";
 import Head from "next/head";
-import Container from "../../components/container";
+import { gql } from "@apollo/client";
+import client from "../../apollo-client";
+import EventList from "../../components/events/eventslist";
+import { EventProps } from "../../components/events/eventtypes";
 
-const Events: NextPage = () => {
+const Events: NextPage<EventProps> = ({ events }) => {
   return (
-    <Layout>
+    <>
       <Head>
         <title>#play14 - Events</title>
       </Head>
-      <Container>
-        <h1>Events coming soon</h1>
-      </Container>
-    </Layout>
+      <EventList events={events} />
+    </>
   );
 };
 
 export default Events;
+
+export async function getStaticProps() {
+  const { data } = await client.query({
+    query: gql`
+      query getEvents {
+        events {
+          data {
+            id
+            attributes {
+              slug
+              name
+              start
+              end
+              status
+            }
+          }
+        }
+      }
+    `,
+  });
+
+  return {
+    props: {
+      events: data.events.data,
+    },
+    revalidate: 10,
+  };
+}
