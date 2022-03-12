@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import EventGrid from "../components/events/grid";
 import { EventSummary } from "../components/events/types";
-import { DataProps } from "../types/common";
+import { DataProps } from "../libs/common";
 import qs from "qs";
 
 const Home: NextPage<DataProps<EventSummary[]>> = ({ data, meta }) => {

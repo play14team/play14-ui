@@ -2,7 +2,6 @@ import { RecoilRoot } from "recoil";
 import Footer from "./footer";
 import Meta from "./meta";
 import Nav from "./nav";
-import styles from "../../styles/Home.module.css";
 
 type Props = {
   preview?: boolean;
@@ -14,7 +13,7 @@ const Layout = ({ preview, children }: Props) => {
     <RecoilRoot>
       <Meta />
       <Nav />
-      <main className={styles.main}>{children}</main>
+      <main>{children}</main>
       <Footer />
     </RecoilRoot>
   );

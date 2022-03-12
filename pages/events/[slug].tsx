@@ -4,7 +4,7 @@ import { GetStaticPaths, GetStaticProps } from "next";
 import Container from "../../components/layout/container";
 import EventDetails from "../../components/events/details";
 import { Event } from "../../components/events/types";
-import { DataProps, Slug } from "../../types/common";
+import { DataProps, Slug } from "../../libs/common";
 
 const EventDetailsPage: NextPage<DataProps<Event>> = ({ data }) => {
   return (

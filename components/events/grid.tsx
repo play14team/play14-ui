@@ -1,5 +1,5 @@
 import styles from "../../styles/Home.module.css";
-import { DataProps } from "../../types/common";
+import { DataProps } from "../../libs/common";
 
 import EventCard from "./card";
 import { EventSummary } from "./types";
