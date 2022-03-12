@@ -1,10 +1,10 @@
 import styles from "../../styles/Home.module.css";
 
 import Container from "../container";
-import EventItem from "./eventitem";
-import { Event, Entity, EventProps } from "./eventtypes";
+import EventCard from "./eventcard";
+import { Event, Entity, EventsProps } from "./eventtypes";
 
-const Events = ({ events }: EventProps) => {
+const EventsGrid = ({ events }: EventsProps) => {
   return (
     <Container>
       <div className={styles.container}>
@@ -16,13 +16,14 @@ const Events = ({ events }: EventProps) => {
           <div className={styles.grid}>
             {events.map((event: Entity<Event>) => {
               return (
-                <EventItem
+                <EventCard
                   key={event.id}
                   slug={event.attributes.slug}
                   name={event.attributes.name}
                   start={event.attributes.start}
                   end={event.attributes.end}
                   status={event.attributes.status}
+                  description={event.attributes.description}
                 />
               );
             })}
@@ -33,4 +34,4 @@ const Events = ({ events }: EventProps) => {
   );
 };
 
-export default Events;
+export default EventsGrid;

@@ -9,6 +9,8 @@ type Props = {
 };
 
 const DateFormatter = ({ date, formatString }: Props) => {
+  if (date == null) return null;
+
   const dateToFormat = typeof date === "string" ? parseISO(date) : date;
   return (
     <time dateTime={dateToFormat.toString()}>

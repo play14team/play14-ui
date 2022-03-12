@@ -1,17 +1,17 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { gql } from "@apollo/client";
-import client from "../apollo-client";
-import EventList from "../components/events/eventslist";
-import { EventProps } from "../components/events/eventtypes";
+import client from "../libs/apollo-client";
+import EventGrid from "../components/events/eventsgrid";
+import { EventsProps } from "../components/events/eventtypes";
 
-const Home: NextPage<EventProps> = ({ events }) => {
+const Home: NextPage<EventsProps> = ({ events }) => {
   return (
     <>
       <Head>
         <title>#play14</title>
       </Head>
-      <EventList events={events} />
+      <EventGrid events={events} />
     </>
   );
 };

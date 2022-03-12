@@ -4,7 +4,7 @@ import DateFormatter from "../date-formatter";
 import Link from "next/link";
 import { Event } from "./eventtypes";
 
-const EventItem = (event: Event) => {
+const EventCard = (event: Event) => {
   return (
     <Link href={`/events/${encodeURIComponent(event.slug)}`}>
       <a className={styles.card}>
@@ -22,4 +22,4 @@ const EventItem = (event: Event) => {
   );
 };
 
-export default EventItem;
+export default EventCard;
