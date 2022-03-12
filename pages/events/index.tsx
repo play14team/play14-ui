@@ -1,17 +1,21 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { gql } from "@apollo/client";
-import client from "../../libs/apollo-client";
 import EventGrid from "../../components/events/eventsgrid";
-import { EventsProps } from "../../components/events/eventtypes";
+import { EventSummary } from "../../components/events/eventtypes";
+import { DataProps } from "../../types/common";
+import qs from "qs";
 
-const Events: NextPage<EventsProps> = ({ events }) => {
+const Events: NextPage<DataProps<EventSummary[]>> = ({ data, meta }) => {
   return (
     <>
       <Head>
         <title>#play14 - Events</title>
+        <meta
+          name="description"
+          content="All #play14 events thoughout the globe"
+        />
       </Head>
-      <EventGrid events={events} />
+      <EventGrid data={data} meta={meta} />
     </>
   );
 };
@@ -19,29 +23,28 @@ const Events: NextPage<EventsProps> = ({ events }) => {
 export default Events;
 
 export async function getStaticProps() {
-  const { data } = await client.query({
-    query: gql`
-      query getEvents {
-        events {
-          data {
-            id
-            attributes {
-              slug
-              name
-              start
-              end
-              status
-            }
-          }
-        }
-      }
-    `,
-  });
+  const query = qs.stringify(
+    {
+      sort: ["start:asc"],
+      fields: ["slug", "name", "start", "end", "status"],
+      // pagination: {
+      //   pageSize: 10,
+      //   page: 1,
+      // },
+      // publicationState: 'live',
+      // locale: ['en'],
+    },
+    {
+      encodeValuesOnly: true,
+    }
+  );
+
+  const url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/events?${query}`;
+  const response = await fetch(url);
+  const result: DataProps<Event> = await response.json();
 
   return {
-    props: {
-      events: data.events.data,
-    },
+    props: result,
     revalidate: 10,
   };
 }

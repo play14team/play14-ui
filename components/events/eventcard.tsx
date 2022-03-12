@@ -2,9 +2,9 @@ import styles from "../../styles/Home.module.css";
 
 import DateFormatter from "../date-formatter";
 import Link from "next/link";
-import { Event } from "./eventtypes";
+import { EventSummary } from "./eventtypes";
 
-const EventCard = (event: Event) => {
+const EventCard = (event: EventSummary) => {
   return (
     <Link href={`/events/${encodeURIComponent(event.slug)}`}>
       <a className={styles.card}>

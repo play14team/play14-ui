@@ -6,14 +6,12 @@ import { Event } from "./eventtypes";
 const EventDetails = (event: Event) => {
   return (
     <>
-      <h2>{event.name}</h2>
-      <p>
-        Start : <DateFormatter date={event.start} formatString="dd MMM yyyy" />
+      <h1 className={styles.title}>{event.name}</h1>
+      <h3 className={styles.description}>{event.status}</h3>
+      <p className={styles.description}>
+        Start : <DateFormatter date={event.start} formatString="dd MMM yyyy" />{" "}
+        - End: <DateFormatter date={event.end} formatString="dd MMM yyyy" />
       </p>
-      <p>
-        End: <DateFormatter date={event.end} formatString="dd MMM yyyy" />
-      </p>
-      <h3>{event.status}</h3>
     </>
   );
 };

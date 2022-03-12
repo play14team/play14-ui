@@ -1,6 +1,7 @@
 import Footer from "./footer";
 import Meta from "./meta";
 import Nav from "./nav";
+import styles from "../styles/Home.module.css";
 
 type Props = {
   preview?: boolean;
@@ -12,8 +13,8 @@ const Layout = ({ preview, children }: Props) => {
     <>
       <Meta />
       <Nav />
-      <div className="min-h-screen">
-        <main>{children}</main>
+      <div className={styles.container}>
+        <main className={styles.main}>{children}</main>
       </div>
       <Footer />
     </>

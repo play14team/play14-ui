@@ -1,36 +1,31 @@
 import styles from "../../styles/Home.module.css";
+import { DataProps } from "../../types/common";
 
-import Container from "../container";
 import EventCard from "./eventcard";
-import { Event, Entity, EventsProps } from "./eventtypes";
+import { EventSummary } from "./eventtypes";
 
-const EventsGrid = ({ events }: EventsProps) => {
+const EventsGrid = ({ data }: DataProps<EventSummary[]>) => {
   return (
-    <Container>
-      <div className={styles.container}>
-        <main className={styles.main}>
-          <h1 className={styles.title}>Welcome to #play14</h1>
+    <>
+      <h1 className={styles.title}>Welcome to #play14</h1>
 
-          <p className={styles.description}>We believe in playfulness</p>
+      <p className={styles.description}>We believe in playfulness</p>
 
-          <div className={styles.grid}>
-            {events.map((event: Entity<Event>) => {
-              return (
-                <EventCard
-                  key={event.id}
-                  slug={event.attributes.slug}
-                  name={event.attributes.name}
-                  start={event.attributes.start}
-                  end={event.attributes.end}
-                  status={event.attributes.status}
-                  description={event.attributes.description}
-                />
-              );
-            })}
-          </div>
-        </main>
+      <div className={styles.grid}>
+        {data.map((event: EventSummary) => {
+          return (
+            <EventCard
+              key={event.slug}
+              slug={event.slug}
+              name={event.name}
+              start={event.start}
+              end={event.end}
+              status={event.status}
+            />
+          );
+        })}
       </div>
-    </Container>
+    </>
   );
 };
 
