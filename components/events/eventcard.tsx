@@ -1,6 +1,6 @@
 import styles from "../../styles/Home.module.css";
 
-import DateFormatter from "../date-formatter";
+import DateFormatter from "../layout/date-formatter";
 import Link from "next/link";
 import { EventSummary } from "./eventtypes";
 

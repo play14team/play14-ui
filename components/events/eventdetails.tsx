@@ -1,6 +1,6 @@
 import styles from "../../styles/Home.module.css";
 
-import DateFormatter from "../date-formatter";
+import DateFormatter from "../layout/date-formatter";
 import { Event } from "./eventtypes";
 
 const EventDetails = (event: Event) => {

@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
-import Container from "../../components/container";
+import Container from "../../components/layout/container";
 import EventDetails from "../../components/events/eventdetails";
 import { Event } from "../../components/events/eventtypes";
 import { DataProps, Slug } from "../../types/common";
