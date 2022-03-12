@@ -2,7 +2,7 @@ import styles from "../../styles/Home.module.css";
 
 import DateFormatter from "../layout/date-formatter";
 import Link from "next/link";
-import { EventSummary } from "./eventtypes";
+import { EventSummary } from "./types";
 
 const EventCard = (event: EventSummary) => {
   return (

@@ -2,8 +2,8 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { GetStaticPaths, GetStaticProps } from "next";
 import Container from "../../components/layout/container";
-import EventDetails from "../../components/events/eventdetails";
-import { Event } from "../../components/events/eventtypes";
+import EventDetails from "../../components/events/details";
+import { Event } from "../../components/events/types";
 import { DataProps, Slug } from "../../types/common";
 
 const EventDetailsPage: NextPage<DataProps<Event>> = ({ data }) => {

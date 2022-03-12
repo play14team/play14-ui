@@ -1,7 +1,7 @@
 import styles from "../../styles/Home.module.css";
 
 import DateFormatter from "../layout/date-formatter";
-import { Event } from "./eventtypes";
+import { Event } from "./types";
 
 const EventDetails = (event: Event) => {
   return (

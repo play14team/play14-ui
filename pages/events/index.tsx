@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import EventGrid from "../../components/events/eventsgrid";
-import { EventSummary } from "../../components/events/eventtypes";
+import EventGrid from "../../components/events/grid";
+import { EventSummary } from "../../components/events/types";
 import { DataProps } from "../../types/common";
 import qs from "qs";
 

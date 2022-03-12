@@ -1,8 +1,8 @@
 import styles from "../../styles/Home.module.css";
 import { DataProps } from "../../types/common";
 
-import EventCard from "./eventcard";
-import { EventSummary } from "./eventtypes";
+import EventCard from "./card";
+import { EventSummary } from "./types";
 
 const EventsGrid = ({ data }: DataProps<EventSummary[]>) => {
   return (
