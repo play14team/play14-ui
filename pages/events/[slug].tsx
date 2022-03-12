@@ -14,14 +14,7 @@ const EventDetailsPage: NextPage<DataProps<Event>> = ({ data }) => {
         <meta name="description" content={data.description} />
       </Head>
       <Container>
-        <EventDetails
-          slug={data.slug}
-          name={data.name}
-          start={data.start}
-          end={data.end}
-          status={data.status}
-          description={data.description}
-        />
+        <EventDetails {...data} />
       </Container>
     </>
   );

@@ -13,16 +13,7 @@ const EventsGrid = ({ data }: DataProps<EventSummary[]>) => {
 
       <div className={styles.grid}>
         {data.map((event: EventSummary) => {
-          return (
-            <EventCard
-              key={event.slug}
-              slug={event.slug}
-              name={event.name}
-              start={event.start}
-              end={event.end}
-              status={event.status}
-            />
-          );
+          return <EventCard key={event.slug} {...event} />;
         })}
       </div>
     </>
