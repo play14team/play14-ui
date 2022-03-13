@@ -1,5 +1,4 @@
-import "../styles/styles.scss";
-import "bootstrap/dist/css/bootstrap.css";
+import "../styles/sass/main.scss";
 import type { AppProps } from "next/app";
 import Layout from "../components/layout";
 
