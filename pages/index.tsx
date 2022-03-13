@@ -35,8 +35,6 @@ export async function getStaticProps() {
     }
   );
 
-  console.log(query);
-
   const url = `${process.env.NEXT_PUBLIC_STRAPI_API_URL}/api/events?${query}`;
   const response = await fetch(url);
   const result: DataProps<Event> = await response.json();
