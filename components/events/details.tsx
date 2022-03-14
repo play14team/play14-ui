@@ -72,7 +72,7 @@ const EventDetails = (event: Event) => {
           </div>
 
           <div className="col-lg-4 col-md-12">
-            <EventSidebar />
+            <EventSidebar status={event.status} />
           </div>
         </div>
       </div>

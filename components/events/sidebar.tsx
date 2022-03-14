@@ -4,8 +4,12 @@ import payment1 from "../../styles/images/payment/payment1.png";
 import payment2 from "../../styles/images/payment/payment2.png";
 import payment3 from "../../styles/images/payment/payment3.png";
 
-const EventSidebar = () => {
-  return (
+interface EventSidebarProps {
+  status: string;
+}
+
+const EventSidebar = ({ status }: EventSidebarProps) => {
+  return status == "Open" ? (
     <div className="events-details-info">
       <ul className="info">
         <li className="price">
@@ -89,6 +93,8 @@ const EventSidebar = () => {
         </div>
       </div>
     </div>
+  ) : (
+    <h3>This event is {status}</h3>
   );
 };
 
