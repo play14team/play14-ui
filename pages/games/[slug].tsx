@@ -1,17 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Container from "../../components/layout/container";
 
 const GameDetail: NextPage = () => {
   return (
-    <>
+    <article>
       <Head>
         <title>#play14 - GameDetail</title>
       </Head>
-      <Container>
-        <h1>GameDetail coming soon</h1>
-      </Container>
-    </>
+      <h1>GameDetail coming soon</h1>
+    </article>
   );
 };
 

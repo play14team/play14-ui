@@ -1,17 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Container from "../../components/layout/container";
 
 const Players: NextPage = () => {
   return (
-    <>
+    <section id="players">
       <Head>
         <title>#play14 - Players</title>
       </Head>
-      <Container>
-        <h1>Players coming soon</h1>
-      </Container>
-    </>
+      <h1>Players coming soon</h1>
+    </section>
   );
 };
 

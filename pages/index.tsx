@@ -4,6 +4,7 @@ import EventGrid from "../components/events/grid";
 import { EventSummary } from "../components/events/types";
 import { DataProps } from "../libs/common";
 import qs from "qs";
+import Title from "../components/layout/title";
 
 const Home: NextPage<DataProps<EventSummary[]>> = ({ data, meta }) => {
   return (
@@ -11,6 +12,7 @@ const Home: NextPage<DataProps<EventSummary[]>> = ({ data, meta }) => {
       <Head>
         <title>#play14</title>
       </Head>
+      <Title />
       <EventGrid data={data} meta={meta} />
     </>
   );

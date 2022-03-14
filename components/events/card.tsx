@@ -1,24 +1,40 @@
-import styles from "../../styles/Home.module.css";
-
-import DateFormatter from "../layout/date-formatter";
 import Link from "next/link";
 import { EventSummary } from "./types";
+import Image from "next/image";
+import event1 from "../../styles/images/events/event1.jpg";
+import EventDate from "./date";
 
 const EventCard = (event: EventSummary) => {
+  const url = `/events/${encodeURIComponent(event.slug)}`;
+
   return (
-    <Link href={`/events/${encodeURIComponent(event.slug)}`}>
-      <a className={styles.card}>
-        <h2>{event.name}</h2>
-        <p>
-          Start :{" "}
-          <DateFormatter date={event.start} formatString="dd MMM yyyy" />
-        </p>
-        <p>
-          End: <DateFormatter date={event.end} formatString="dd MMM yyyy" />
-        </p>
-        <h3>{event.status}</h3>
-      </a>
-    </Link>
+    <article className="col-lg-4 col-sm-6 col-md-6">
+      <div className="single-events-box">
+        <div className="image">
+          <Link href={url}>
+            <a className="d-block">
+              <Image src={event1} alt="event" />
+            </a>
+          </Link>
+          <span className="date">
+            <EventDate
+              start={event.start}
+              end={event.end}
+              className="published"
+            />
+          </span>
+        </div>
+
+        <div className="content">
+          <h3>
+            <Link href={url}>{event.name}</Link>
+          </h3>
+          <span className="location">
+            <i className="bx bx-map"></i> Vancover, Canada
+          </span>
+        </div>
+      </div>
+    </article>
   );
 };
 

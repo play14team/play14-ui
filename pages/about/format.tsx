@@ -1,17 +1,14 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import Container from "../../components/layout/container";
 
 const Format: NextPage = () => {
   return (
-    <>
+    <section id="format">
       <Head>
         <title>#play14 - Format</title>
       </Head>
-      <Container>
-        <h1>Format coming soon</h1>
-      </Container>
-    </>
+      <h1>Format coming soon</h1>
+    </section>
   );
 };
 

@@ -7,7 +7,7 @@ import qs from "qs";
 
 const Events: NextPage<DataProps<EventSummary[]>> = ({ data, meta }) => {
   return (
-    <>
+    <section id="events">
       <Head>
         <title>#play14 - Events</title>
         <meta
@@ -15,8 +15,9 @@ const Events: NextPage<DataProps<EventSummary[]>> = ({ data, meta }) => {
           content="All #play14 events thoughout the globe"
         />
       </Head>
+      <h1>Events</h1>
       <EventGrid data={data} meta={meta} />
-    </>
+    </section>
   );
 };
 

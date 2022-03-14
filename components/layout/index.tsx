@@ -1,20 +1,24 @@
 import Footer from "./footer";
+import Header from "./header";
 import Meta from "./meta";
-import Nav from "./nav";
 
-type Props = {
+type LayoutProps = {
   preview?: boolean;
   children: React.ReactNode;
 };
 
-const Layout = ({ preview, children }: Props) => {
+const Layout = ({ preview, children }: LayoutProps) => {
   return (
-    <>
+    <div style={{ outline: "none" }} tabIndex={-1} id="next-focus-wrapper">
       <Meta />
-      <Nav />
-      <main>{children}</main>
+      <Header />
+      <main>
+        <div className="container">
+          <div className="pt-100 pb-70">{children}</div>
+        </div>
+      </main>
       <Footer />
-    </>
+    </div>
   );
 };
 
