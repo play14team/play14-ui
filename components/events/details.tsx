@@ -29,6 +29,10 @@ const EventDetails = (event: Event) => {
                 <li>
                   <i className="bx bx-time"></i>12.00PM
                 </li>
+                <li>
+                  <i className="bx bx-right-arrow"></i>
+                  {event.status}
+                </li>
               </ul>
             </div>
 

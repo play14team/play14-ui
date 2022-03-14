@@ -29,6 +29,7 @@ const EventCard = (event: EventSummary) => {
           <h3>
             <Link href={url}>{event.name}</Link>
           </h3>
+          <h6>{event.status}</h6>
           <span className="location">
             <i className="bx bx-map"></i> Vancover, Canada
           </span>
