@@ -31,7 +31,15 @@ const Footer = () => {
           <div className="col-lg-4 col-sm-6">
             <div className="single-footer-widget">
               <Link href="/" className="logo">
-                <Image src={logo} alt="logo" height={600} />
+                <Image
+                  src={logo}
+                  alt="logo"
+                  height={600}
+                  style={{
+                    maxWidth: "100%",
+                    height: "auto",
+                  }}
+                />
               </Link>
               <p>We believe in playfulness</p>
 
@@ -148,7 +156,14 @@ const Footer = () => {
       </div>
 
       <div className="footer-map">
-        <Image src={footerMap} alt="footer-logo" />
+        <Image
+          src={footerMap}
+          alt="footer-logo"
+          style={{
+            maxWidth: "100%",
+            height: "auto",
+          }}
+        />
       </div>
     </footer>
   );

@@ -9,7 +9,14 @@ const EventDetails = (event: Event) => {
   return (
     <section className="events-details-area pb-100">
       <div className="events-details-image">
-        <Image src={details} alt="details" />
+        <Image
+          src={details}
+          alt="details"
+          style={{
+            maxWidth: "100%",
+            height: "auto",
+          }}
+        />
 
         <UpcomingEventTimer date={event.start} />
       </div>

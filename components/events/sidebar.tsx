@@ -34,9 +34,33 @@ const EventSidebar = ({ status }: EventSidebarProps) => {
           <div className="d-flex justify-content-between align-items-center">
             <span>Pay With</span>
             <div className="payment-method">
-              <Image src={payment1} className="shadow" alt="payment-card" />
-              <Image src={payment2} className="shadow" alt="payment-card" />
-              <Image src={payment3} className="shadow" alt="payment-card" />
+              <Image
+                src={payment1}
+                className="shadow"
+                alt="payment-card"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
+              />
+              <Image
+                src={payment2}
+                className="shadow"
+                alt="payment-card"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
+              />
+              <Image
+                src={payment3}
+                className="shadow"
+                alt="payment-card"
+                style={{
+                  maxWidth: "100%",
+                  height: "auto",
+                }}
+              />
             </div>
           </div>
         </li>
