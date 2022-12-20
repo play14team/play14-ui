@@ -8,10 +8,8 @@ const NavBar = () => {
       <div className="tarn-nav">
         <div className="container-fluid">
           <nav className="navbar navbar-expand-lg navbar-light">
-            <Link href="/">
-              <a className="navbar-brand">
-                <Image src={logo} alt="logo" height={250} />
-              </a>
+            <Link href="/" className="navbar-brand">
+              <Image src={logo} alt="logo" height={250} />
             </Link>
             <button
               className="navbar-toggler navbar-toggler-right collapsed"
@@ -32,56 +30,53 @@ const NavBar = () => {
             >
               <ul className="navbar-nav">
                 <li className="nav-item">
-                  <Link href="/">
-                    <a className="nav-link">Home</a>
+                  <Link href="/" className="nav-link">
+                    Home
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/events">
-                    <a className="nav-link">Events</a>
+                  <Link href="/events" className="nav-link">
+                    Events
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/players">
-                    <a className="nav-link">Players</a>
+                  <Link href="/players" className="nav-link">
+                    Players
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/games">
-                    <a className="nav-link">Games</a>
+                  <Link href="/games" className="nav-link">
+                    Games
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/articles">
-                    <a className="nav-link">Articles</a>
+                  <Link href="/articles" className="nav-link">
+                    Articles
                   </Link>
                 </li>
                 <li className="nav-item">
-                  <Link href="/about">
-                    <a className="nav-link">
-                      About
-                      <i className="bx bx-chevron-down"></i>
-                    </a>
+                  <Link href="/about" className="nav-link">
+                    About<i className="bx bx-chevron-down"></i>
                   </Link>
                   <ul className="dropdown-menu">
                     <li className="nav-item">
-                      <Link href="/about">
-                        <a className="nav-link">About</a>
+                      <Link href="/about" className="nav-link">
+                        About
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link href="/about/story">
-                        <a className="nav-link">Our story</a>
+                      <Link href="/about/story" className="nav-link">
+                        Our story
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link href="/about/values">
-                        <a className="nav-link">Our values</a>
+                      <Link href="/about/values" className="nav-link">
+                        Our values
                       </Link>
                     </li>
                     <li className="nav-item">
-                      <Link href="/about/format">
-                        <a className="nav-link">Our format</a>
+                      <Link href="/about/format" className="nav-link">
+                        Our format
                       </Link>
                     </li>
                   </ul>

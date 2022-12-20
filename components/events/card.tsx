@@ -11,10 +11,8 @@ const EventCard = (event: EventSummary) => {
     <article className="col-lg-4 col-sm-6 col-md-6">
       <div className="single-events-box">
         <div className="image">
-          <Link href={url}>
-            <a className="d-block">
-              <Image src={event1} alt="event" />
-            </a>
+          <Link href={url} className="d-block">
+            <Image src={event1} alt="event" />
           </Link>
           <span className="date">
             <EventDate
@@ -27,7 +25,9 @@ const EventCard = (event: EventSummary) => {
 
         <div className="content">
           <h3>
-            <Link href={url}>{event.name}</Link>
+            <Link href={url} legacyBehavior>
+              {event.name}
+            </Link>
           </h3>
           <h6>{event.status}</h6>
           <span className="location">

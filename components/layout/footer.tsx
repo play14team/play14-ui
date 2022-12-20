@@ -30,10 +30,8 @@ const Footer = () => {
         <div className="row">
           <div className="col-lg-4 col-sm-6">
             <div className="single-footer-widget">
-              <Link href="/">
-                <a className="logo">
-                  <Image src={logo} alt="logo" height={600} />
-                </a>
+              <Link href="/" className="logo">
+                <Image src={logo} alt="logo" height={600} />
               </Link>
               <p>We believe in playfulness</p>
 
@@ -41,10 +39,13 @@ const Footer = () => {
                 {socialLinks.map((action, index) => {
                   return (
                     <li key={index}>
-                      <Link href={action.url}>
-                        <a className="d-block" target="_blank" rel="noreferrer">
-                          <i className={`bx bxl-${action.icon}`} />
-                        </a>
+                      <Link
+                        href={action.url}
+                        className="d-block"
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <i className={`bx bxl-${action.icon}`} />
                       </Link>
                     </li>
                   );
@@ -122,10 +123,12 @@ const Footer = () => {
               <p>
                 &copy; 2014 - {currentYear} <strong>#play14</strong> developed
                 by{" "}
-                <Link href="https://www.linkedin.com/in/c%C3%A9dric-pontet/">
-                  <a target="_blank" rel="noreferrer">
-                    Cédric Pontet
-                  </a>
+                <Link
+                  href="https://www.linkedin.com/in/c%C3%A9dric-pontet/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Cédric Pontet
                 </Link>
               </p>
             </div>
