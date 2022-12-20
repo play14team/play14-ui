@@ -15,7 +15,7 @@ const UpcomingEventTimer = ({ date }: TimerProps) => {
       commingSoonTime();
     }, 1000);
     return () => clearInterval(interval);
-  }, []);
+  });
 
   const commingSoonTime = () => {
     let endTimeParse = Date.parse(date.toString()) / 1000;
