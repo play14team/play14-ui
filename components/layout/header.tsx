@@ -7,10 +7,18 @@ const NavBar = () => {
     <div id="navbar" className="navbar-area">
       <div className="tarn-nav">
         <div className="container-fluid">
+          <Link href="/" className="navbar-brand">
+            <Image
+              src={logo}
+              alt="logo"
+              // height={250}
+              style={{
+                // maxWidth: "100%",
+                height: "100px",
+              }}
+            />
+          </Link>
           <nav className="navbar navbar-expand-lg navbar-light">
-            <Link href="/" className="navbar-brand">
-              <Image src={logo} alt="logo" height={250} />
-            </Link>
             <button
               className="navbar-toggler navbar-toggler-right collapsed"
               type="button"

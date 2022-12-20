@@ -12,7 +12,14 @@ const EventCard = (event: EventSummary) => {
       <div className="single-events-box">
         <div className="image">
           <Link href={url} className="d-block">
-            <Image src={event1} alt="event" />
+            <Image
+              src={event1}
+              alt="event"
+              style={{
+                maxWidth: "100%",
+                height: "auto",
+              }}
+            />
           </Link>
           <span className="date">
             <EventDate
