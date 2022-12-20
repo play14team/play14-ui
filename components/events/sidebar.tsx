@@ -43,11 +43,8 @@ const EventSidebar = ({ status }: EventSidebarProps) => {
       </ul>
 
       <div className="btn-box">
-        <Link href="#">
-          <a className="default-btn">
-            <i className="flaticon-user"></i>
-            Book Now<span></span>
-          </a>
+        <Link href="#" className="default-btn">
+          <i className="flaticon-user"></i>Book Now<span></span>
         </Link>
         <p>
           You must <Link href="/login">login</Link> before register event.
@@ -62,31 +59,23 @@ const EventSidebar = ({ status }: EventSidebarProps) => {
 
           <ul className="social-link">
             <li>
-              <Link href="#">
-                <a className="d-block">
-                  <i className="bx bxl-facebook"></i>
-                </a>
+              <Link href="#" className="d-block">
+                <i className="bx bxl-facebook"></i>
               </Link>
             </li>
             <li>
-              <Link href="#">
-                <a className="d-block">
-                  <i className="bx bxl-twitter"></i>
-                </a>
+              <Link href="#" className="d-block">
+                <i className="bx bxl-twitter"></i>
               </Link>
             </li>
             <li>
-              <Link href="#">
-                <a className="d-block">
-                  <i className="bx bxl-instagram"></i>
-                </a>
+              <Link href="#" className="d-block">
+                <i className="bx bxl-instagram"></i>
               </Link>
             </li>
             <li>
-              <Link href="#">
-                <a className="d-block">
-                  <i className="bx bxl-linkedin"></i>
-                </a>
+              <Link href="#" className="d-block">
+                <i className="bx bxl-linkedin"></i>
               </Link>
             </li>
           </ul>
