@@ -24,7 +24,8 @@
     "react-image-lightbox": "^5.1.4",
     "react-modal-video": "^1.2.10",
     "react-moment": "^1.1.2",
-    "sass": "^1.57.1"
+    "sass": "^1.57.1",
+    "sharp": "^0.31.2"
   },
   "devDependencies": {
     "@types/node": "^18.11.17",
