@@ -10,7 +10,7 @@
     "prepare": "husky install",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook",
-    "codegen": "openapi-generator-cli generate -i ./api/play14-api.json -o ./types -g typescript-fetch --additional-properties=supportsES6=true,npmVersion=6.9.0,typescriptThreePlus=true --skip-validate-spec"
+    "generate": "strapi-generate-types generate"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
@@ -32,7 +32,6 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
-    "@openapitools/openapi-generator-cli": "^2.5.2",
     "@storybook/addon-actions": "^6.5.15",
     "@storybook/addon-essentials": "^6.5.15",
     "@storybook/addon-interactions": "^6.5.15",
@@ -54,6 +53,7 @@
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
+    "strapi-generate-types": "^1.0.0",
     "typescript": "^4.9.4"
   },
   "lint-staged": {
