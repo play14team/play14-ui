@@ -1775,7 +1775,9 @@ export type EventItemFragment = {
   } | null;
 } & { " $fragmentName"?: "EventItemFragment" };
 
-export type EventsQueryVariables = Exact<{ [key: string]: never }>;
+export type EventsQueryVariables = Exact<{
+  first: Scalars["Int"];
+}>;
 
 export type EventsQuery = {
   __typename?: "Query";
@@ -1893,6 +1895,19 @@ export const EventsDocument = {
       kind: "OperationDefinition",
       operation: "query",
       name: { kind: "Name", value: "Events" },
+      variableDefinitions: [
+        {
+          kind: "VariableDefinition",
+          variable: {
+            kind: "Variable",
+            name: { kind: "Name", value: "first" },
+          },
+          type: {
+            kind: "NonNullType",
+            type: { kind: "NamedType", name: { kind: "Name", value: "Int" } },
+          },
+        },
+      ],
       selectionSet: {
         kind: "SelectionSet",
         selections: [
@@ -1918,7 +1933,10 @@ export const EventsDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "9" },
+                      value: {
+                        kind: "Variable",
+                        name: { kind: "Name", value: "first" },
+                      },
                     },
                   ],
                 },

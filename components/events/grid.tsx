@@ -3,8 +3,8 @@ import { useQuery } from "@apollo/client";
 import { graphql } from "../../models";
 
 const allEventsQueryDocument = graphql(`
-  query Events {
-    events(sort: "start:desc", pagination: { limit: 9 }) {
+  query Events($first: Int!) {
+    events(sort: "start:desc", pagination: { limit: $first }) {
       data {
         id
         attributes {
@@ -15,9 +15,9 @@ const allEventsQueryDocument = graphql(`
   }
 `);
 
-const EventsGrid = () => {
+const EventsGrid = (props: { first: number }) => {
   const { data, loading, error } = useQuery(allEventsQueryDocument, {
-    variables: {},
+    variables: { first: props.first },
   });
 
   if (loading) return <>Loading...</>;
@@ -32,7 +32,7 @@ const EventsGrid = () => {
         <div className="row">
           {data &&
             data.events &&
-            data.events.data.map((event, index) => {
+            data.events.data.map((event) => {
               return <EventCard key={event.id} evt={event.attributes} />;
             })}
         </div>
