@@ -1,16 +1,40 @@
-import { DataProps } from "../../libs/common";
-
 import EventCard from "./card";
-import { EventSummary } from "./types";
+import { useQuery } from "@apollo/client";
+import { graphql } from "../../models";
 
-const EventsGrid = ({ data }: DataProps<EventSummary[]>) => {
+const allEventsQueryDocument = graphql(`
+  query Events {
+    events(sort: "start:desc", pagination: { limit: 9 }) {
+      data {
+        id
+        attributes {
+          ...EventItem
+        }
+      }
+    }
+  }
+`);
+
+const EventsGrid = () => {
+  const { data, loading, error } = useQuery(allEventsQueryDocument, {
+    variables: {},
+  });
+
+  if (loading) return <>Loading...</>;
+  if (error) {
+    console.log(error);
+    return <>{error.message}</>;
+  }
+
   return (
     <div className="events-area pt-100 pb-70">
       <div className="container">
         <div className="row">
-          {data.map((event: EventSummary, index) => {
-            return <EventCard key={index} {...event} />;
-          })}
+          {data &&
+            data.events &&
+            data.events.data.map((event, index) => {
+              return <EventCard key={event.id} evt={event.attributes} />;
+            })}
         </div>
       </div>
     </div>
