@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from "@graphql-typed-document-node/
 const documents = {
   "\n  fragment EventItem on Event {\n    slug\n    name\n    start\n    end\n    status\n    images {\n      data {\n        attributes {\n          name\n          url\n        }\n      }\n    }\n    location {\n      data {\n        attributes {\n          name\n          country\n        }\n      }\n    }\n  }\n":
     types.EventItemFragmentDoc,
-  '\n  query Events {\n    events (sort: "start:desc", pagination: { limit: 9 }) {\n      data {\n        id\n        attributes {\n          ...EventItem\n        }\n      }\n    }\n  }\n':
+  '\n  query Events($first: Int!) {\n    events(sort: "start:desc", pagination: { limit: $first }) {\n      data {\n        id\n        attributes {\n          ...EventItem\n        }\n      }\n    }\n  }\n':
     types.EventsDocument,
 };
 
@@ -43,8 +43,8 @@ export function graphql(
  * The graphql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function graphql(
-  source: '\n  query Events {\n    events (sort: "start:desc", pagination: { limit: 9 }) {\n      data {\n        id\n        attributes {\n          ...EventItem\n        }\n      }\n    }\n  }\n'
-): typeof documents['\n  query Events {\n    events (sort: "start:desc", pagination: { limit: 9 }) {\n      data {\n        id\n        attributes {\n          ...EventItem\n        }\n      }\n    }\n  }\n'];
+  source: '\n  query Events($first: Int!) {\n    events(sort: "start:desc", pagination: { limit: $first }) {\n      data {\n        id\n        attributes {\n          ...EventItem\n        }\n      }\n    }\n  }\n'
+): typeof documents['\n  query Events($first: Int!) {\n    events(sort: "start:desc", pagination: { limit: $first }) {\n      data {\n        id\n        attributes {\n          ...EventItem\n        }\n      }\n    }\n  }\n'];
 
 export function graphql(source: string) {
   return (documents as any)[source] ?? {};
