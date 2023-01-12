@@ -5,7 +5,9 @@
   "scripts": {
     "develop": "concurrently --kill-others-on-fail \"yarn gen-watch\" \"yarn dev\"",
     "dev": "next dev",
-    "build": "yarn gen-types && next build",
+    "predev": "yarn gen-types",
+    "build": "next build",
+    "prebuild": "yarn gen-types",
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky install",
