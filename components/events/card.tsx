@@ -32,8 +32,8 @@ export const EventFragment = graphql(`
   }
 `);
 
-const EventCard = (props: { evt: FragmentType<typeof EventFragment> }) => {
-  const event = useFragment(EventFragment, props.evt);
+const EventCard = (props: { event: FragmentType<typeof EventFragment> }) => {
+  const event = useFragment(EventFragment, props.event);
   const url = `/events/${encodeURIComponent(event.slug)}`;
 
   return (
