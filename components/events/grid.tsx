@@ -31,12 +31,12 @@ const EventsGrid = (props: { first: number }) => {
       <div className="container">
         <div className="row">
           {data &&
-            data.events &&
-            data.events.data.map((event) => {
-              return (
-                event && <EventCard key={event.id} evt={event.attributes} />
-              );
-            })}
+            data.events?.data.map(
+              (event) =>
+                event.attributes && (
+                  <EventCard key={event.id} event={event.attributes} />
+                )
+            )}
         </div>
       </div>
     </div>
