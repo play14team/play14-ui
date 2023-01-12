@@ -33,7 +33,9 @@ const EventsGrid = (props: { first: number }) => {
           {data &&
             data.events &&
             data.events.data.map((event) => {
-              return <EventCard key={event.id} evt={event.attributes} />;
+              return (
+                event && <EventCard key={event.id} evt={event.attributes} />
+              );
             })}
         </div>
       </div>
