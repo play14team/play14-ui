@@ -13,7 +13,7 @@ export const EventFragment = graphql(`
     start
     end
     status
-    images {
+    defaultImage {
       data {
         attributes {
           name
@@ -42,14 +42,15 @@ const EventCard = (props: { evt: FragmentType<typeof EventFragment> }) => {
         <div className="image">
           <Link href={url} className="d-block">
             <Image
-              src={event1}
-              alt={event.images?.data[0].attributes?.name}
-              // width={100}
-              // height={100}
-              // style={{
-              //   maxWidth: "100%",
-              //   height: "auto",
-              // }}
+              src={event.defaultImage.data?.attributes?.url || event1}
+              alt={event.defaultImage.data?.attributes?.name || "image"}
+              // fill={true}
+              width={400}
+              height={400}
+              style={{
+                maxWidth: "100%",
+                objectFit: "cover",
+              }}
             />
           </Link>
           <span className="date">

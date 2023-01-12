@@ -7,7 +7,7 @@ const nextConfig = {
         protocol: "https",
         hostname: "play14-cdn.azureedge.net",
         port: "",
-        pathname: "strapi-uploads/assets/**",
+        pathname: "/strapi-uploads/assets/**",
       },
     ],
   },
