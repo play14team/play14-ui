@@ -6,7 +6,7 @@ import EventDate from "./date";
 import { FragmentType, useFragment } from "../../models/fragment-masking";
 import { graphql } from "../../models";
 
-export const EventFragment = graphql(`
+export const EventItemFragment = graphql(`
   fragment EventItem on Event {
     slug
     name
@@ -32,8 +32,10 @@ export const EventFragment = graphql(`
   }
 `);
 
-const EventCard = (props: { event: FragmentType<typeof EventFragment> }) => {
-  const event = useFragment(EventFragment, props.event);
+const EventCard = (props: {
+  event: FragmentType<typeof EventItemFragment>;
+}) => {
+  const event = useFragment(EventItemFragment, props.event);
   const url = `/events/${encodeURIComponent(event.slug)}`;
 
   return (

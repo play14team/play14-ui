@@ -6,7 +6,7 @@ const STRAPI_SERVER =
 const config: CodegenConfig = {
   overwrite: true,
   schema: STRAPI_SERVER + "/graphql",
-  documents: ["pages/**/*.tsx", "components/**/*.tsx"],
+  documents: ["pages/**/*.tsx", "components/**/*.tsx", "graphql/**/*.graphql"],
   ignoreNoDocuments: true, // for better experience with the watcher
   generates: {
     "./models/": {
@@ -14,11 +14,9 @@ const config: CodegenConfig = {
       plugins: [
         {
           add: {
-            content: "/* eslint-disable */",
+            content: "/* tslint:disable */",
           },
         },
-        "typescript",
-        // "typescript-resolvers"
       ],
     },
   },
