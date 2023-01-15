@@ -28,6 +28,16 @@ const EventDetailsFragment = graphql(`
         }
       }
     }
+    images {
+      data {
+        attributes {
+          name
+          url
+          width
+          height
+        }
+      }
+    }
     location {
       data {
         attributes {
@@ -154,7 +164,7 @@ const EventDetails = (props: {
                   </div>
 
                   <div id="tab4" className="tab-pane tabs_item">
-                    <Gallery />
+                    {event.images && <Gallery images={event.images} />}
                   </div>
                 </div>
               </div>

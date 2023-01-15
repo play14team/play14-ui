@@ -1,31 +1,32 @@
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+
 import { useState } from "react";
 
 import PhotoAlbum from "react-photo-album";
-
 import Lightbox from "yet-another-react-lightbox";
-import "yet-another-react-lightbox/styles.css";
-
-// import optional lightbox plugins
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import "yet-another-react-lightbox/plugins/thumbnails.css";
+import { UploadFileRelationResponseCollection } from "../../models/graphql";
 
-import photos from "./photos";
-const slides = photos.map(({ src, width, height, images }) => ({
-  src,
-  width,
-  height,
-  srcSet: images.map((image) => ({
-    src: image.src,
-    width: image.width,
-    height: image.height,
-  })),
-}));
-
-const Gallery = () => {
+const Gallery = (props: { images: UploadFileRelationResponseCollection }) => {
   const [index, setIndex] = useState(-1);
+  const { images } = props;
+
+  if (!images) {
+    return <>No image found!</>;
+  }
+
+  const photos = images.data?.map((img) => {
+    return {
+      src: img.attributes?.url || "",
+      width: img.attributes?.width || 500,
+      height: img.attributes?.height || 500,
+    };
+  });
+
   return (
     <>
       <PhotoAlbum
@@ -36,7 +37,7 @@ const Gallery = () => {
       />
 
       <Lightbox
-        slides={slides}
+        slides={photos}
         open={index >= 0}
         index={index}
         close={() => setIndex(-1)}
