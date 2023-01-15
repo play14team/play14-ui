@@ -1,15 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
+import { EventDetailsFragment } from "../../models/graphql";
 import payment1 from "../../styles/images/payment/payment1.png";
 import payment2 from "../../styles/images/payment/payment2.png";
 import payment3 from "../../styles/images/payment/payment3.png";
 
-interface EventSidebarProps {
-  status: string;
-}
+const EventSidebar = (props: { event: EventDetailsFragment }) => {
+  const { event } = props;
 
-const EventSidebar = ({ status }: EventSidebarProps) => {
-  return status == "Open" ? (
+  return event.status === "Open" ? (
     <div className="events-details-info">
       <ul className="info">
         <li className="price">
@@ -107,7 +106,7 @@ const EventSidebar = ({ status }: EventSidebarProps) => {
       </div>
     </div>
   ) : (
-    <h3>This event is {status}</h3>
+    <h3>This event is {event.status}</h3>
   );
 };
 
