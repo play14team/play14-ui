@@ -35,6 +35,10 @@ const EventDetailsFragment = graphql(`
           url
           width
           height
+          hash
+          mime
+          provider
+          size
         }
       }
     }
