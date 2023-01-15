@@ -9,7 +9,7 @@ import { Enum_Event_Status } from "../../models/graphql";
 import openTabSection from "../../libs/tabs";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
-import EventMedia from "./media";
+import Gallery from "./gallery";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -154,7 +154,7 @@ const EventDetails = (props: {
                   </div>
 
                   <div id="tab4" className="tab-pane tabs_item">
-                    <EventMedia />
+                    <Gallery />
                   </div>
                 </div>
               </div>

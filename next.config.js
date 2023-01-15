@@ -9,6 +9,12 @@ const nextConfig = {
         port: "",
         pathname: "/strapi-uploads/assets/**",
       },
+      {
+        protocol: "https",
+        hostname: "source.unsplash.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };
