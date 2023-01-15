@@ -15,7 +15,7 @@ const EventsQuery = graphql(`
   }
 `);
 
-const EventsGrid = (props: { first: number }) => {
+const EventGrid = (props: { first: number }) => {
   const { data, loading, error } = useQuery(EventsQuery, {
     variables: { first: props.first },
   });
@@ -43,4 +43,4 @@ const EventsGrid = (props: { first: number }) => {
   );
 };
 
-export default EventsGrid;
+export default EventGrid;

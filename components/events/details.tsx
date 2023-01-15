@@ -2,11 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import EventSidebar from "./sidebar";
 import UpcomingEventTimer from "./timer";
-import EventDate from "./date";
 import { FragmentType, graphql, useFragment } from "../../models";
 import ReactHtmlParser from "react-html-parser";
 import EventTime from "./time";
 import { Enum_Event_Status } from "../../models/graphql";
+import openTabSection from "../../libs/tabs";
+import EventSchedule from "./schedule";
+import PlayerGrid from "../players/grid";
+import EventMedia from "./media";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -110,16 +113,50 @@ const EventDetails = (props: {
                 </ul>
               </div>
 
-              <div className="events-details-location">
-                {event.venue?.data?.attributes?.embeddedMapUrl && (
-                  <iframe
-                    src={event.venue?.data?.attributes?.embeddedMapUrl}
-                  ></iframe>
-                )}
-              </div>
+              <div className="courses-details-desc">
+                <ul className="nav nav-tabs" id="myTab" role="tablist">
+                  <li
+                    className="current"
+                    onClick={(e) => openTabSection(e, "tab1")}
+                  >
+                    Overview
+                  </li>
+                  <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
+                  <li onClick={(e) => openTabSection(e, "tab3")}>
+                    Team & Players
+                  </li>
+                  <li onClick={(e) => openTabSection(e, "tab4")}>
+                    Photos & media
+                  </li>
+                </ul>
 
-              <div className="events-details-desc">
-                {event.description && ReactHtmlParser(event.description)}
+                <div className="tab-content">
+                  <div id="tab1" className="tab-pane tabs_item">
+                    <div className="events-details-location">
+                      {event.venue?.data?.attributes?.embeddedMapUrl && (
+                        <iframe
+                          src={event.venue?.data?.attributes?.embeddedMapUrl}
+                        ></iframe>
+                      )}
+                    </div>
+
+                    <div className="events-details-desc">
+                      {event.description && ReactHtmlParser(event.description)}
+                    </div>
+                  </div>
+
+                  <div id="tab2" className="tab-pane tabs_item">
+                    <EventSchedule />
+                  </div>
+
+                  <div id="tab3" className="tab-pane tabs_item">
+                    <PlayerGrid />
+                  </div>
+
+                  <div id="tab4" className="tab-pane tabs_item">
+                    <EventMedia />
+                  </div>
+                </div>
               </div>
             </div>
 
