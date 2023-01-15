@@ -7,7 +7,7 @@ const NavBar = () => {
     <div id="navbar" className="navbar-area">
       <div className="tarn-nav">
         <div className="container-fluid">
-          <Link href="/" className="navbar-brand">
+          {/* <Link href="/" className="navbar-brand">
             <Image
               src={logo}
               alt="logo"
@@ -17,7 +17,7 @@ const NavBar = () => {
                 height: "100px",
               }}
             />
-          </Link>
+          </Link> */}
           <nav className="navbar navbar-expand-lg navbar-light">
             <button
               className="navbar-toggler navbar-toggler-right collapsed"

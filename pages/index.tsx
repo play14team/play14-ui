@@ -7,10 +7,10 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>#play14</title>
+        <title>#play14 - we believe in playfulness</title>
       </Head>
       <Title />
-      <EventGrid first={3} />
+      <EventGrid first={6} />
     </>
   );
 };
