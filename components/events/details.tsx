@@ -5,6 +5,8 @@ import UpcomingEventTimer from "./timer";
 import EventDate from "./date";
 import { FragmentType, graphql, useFragment } from "../../models";
 import ReactHtmlParser from "react-html-parser";
+import EventTime from "./time";
+import { Enum_Event_Status } from "../../models/graphql";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -77,7 +79,10 @@ const EventDetails = (props: {
               />
             )}
           </div>
-          <UpcomingEventTimer date={event.start} />
+          {event.status === Enum_Event_Status.Announced ||
+            (event.status === Enum_Event_Status.Open && (
+              <UpcomingEventTimer date={event.start} />
+            ))}
         </div>
 
         <div className="container">
@@ -87,16 +92,16 @@ const EventDetails = (props: {
                 <ul>
                   <li>
                     <i className="bx bx-calendar"></i>
-                    <EventDate start={event.start} end={event.end} />
+                    <EventTime time={event.start} />
+                  </li>
+                  <li>
+                    <i className="bx bx-time"></i>
+                    <EventTime time={event.end} />
                   </li>
                   <li>
                     <i className="bx bx-map"></i>
                     {event.location?.data?.attributes?.name},{" "}
                     {event.location?.data?.attributes?.country}
-                  </li>
-                  <li>
-                    <i className="bx bx-time"></i>
-                    {event.start}
                   </li>
                   <li>
                     <i className="bx bx-right-arrow"></i>
