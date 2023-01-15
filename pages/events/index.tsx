@@ -13,7 +13,7 @@ const Events: NextPage = () => {
         />
       </Head>
       <h1>Events</h1>
-      <EventGrid first={1000} />
+      <EventGrid first={18} />
     </section>
   );
 };
