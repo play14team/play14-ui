@@ -3,10 +3,8 @@ import Image from "next/image";
 import EventSidebar from "./sidebar";
 import UpcomingEventTimer from "./timer";
 import EventDate from "./date";
-import details from "../../styles/images/events/events-details.jpg";
 import { FragmentType, graphql, useFragment } from "../../models";
 import ReactHtmlParser from "react-html-parser";
-import { relative } from "path";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -64,26 +62,21 @@ const EventDetails = (props: {
         <meta name="description" content={description} />
       </Head>
       <section className="events-details-area pb-100">
+        <h1>{event.name}</h1>
         <div className="events-details-image">
-          <div style={{ position: "relative" }}>
+          <div style={{ position: "relative", width: "100%", height: "300px" }}>
             {event.defaultImage.data?.attributes && (
               <Image
                 src={event.defaultImage.data?.attributes?.url}
                 alt={event.defaultImage.data?.attributes?.name}
-                width={200}
-                height={200}
-                // fill={true}
-                // style={{
-                //   maxWidth: "100%",
-                //   height: "auto",
-                // }}
-                // sizes="(max-width: 768px) 100vw,
-                //         (max-width: 1200px) 50vw,
-                //         33vw"
+                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                }}
               />
             )}
           </div>
-
           <UpcomingEventTimer date={event.start} />
         </div>
 
