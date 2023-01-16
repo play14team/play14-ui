@@ -64,6 +64,27 @@ const EventDetailsFragment = graphql(`
         }
       }
     }
+    hosts {
+      data {
+        attributes {
+          ...PlayerItem
+        }
+      }
+    }
+    mentors {
+      data {
+        attributes {
+          ...PlayerItem
+        }
+      }
+    }
+    players {
+      data {
+        attributes {
+          ...PlayerItem
+        }
+      }
+    }
   }
 `);
 
@@ -136,12 +157,9 @@ const EventDetails = (props: {
                     Overview
                   </li>
                   <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
-                  <li onClick={(e) => openTabSection(e, "tab3")}>
-                    Team & Players
-                  </li>
-                  <li onClick={(e) => openTabSection(e, "tab4")}>
-                    Photos & media
-                  </li>
+                  <li onClick={(e) => openTabSection(e, "tab3")}>Team </li>
+                  <li onClick={(e) => openTabSection(e, "tab4")}>Players </li>
+                  <li onClick={(e) => openTabSection(e, "tab5")}>Photos </li>
                 </ul>
 
                 <div className="tab-content">
@@ -164,10 +182,21 @@ const EventDetails = (props: {
                   </div>
 
                   <div id="tab3" className="tab-pane tabs_item">
-                    <PlayerGrid />
+                    {event.hosts && (
+                      <PlayerGrid title="Hosts" players={event.hosts} />
+                    )}
+                    {event.mentors && (
+                      <PlayerGrid title="Mentors" players={event.mentors} />
+                    )}
                   </div>
 
                   <div id="tab4" className="tab-pane tabs_item">
+                    {event.players && (
+                      <PlayerGrid title="Players" players={event.players} />
+                    )}
+                  </div>
+
+                  <div id="tab5" className="tab-pane tabs_item">
                     {event.images && <Gallery images={event.images} />}
                   </div>
                 </div>
