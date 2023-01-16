@@ -29,6 +29,12 @@ const PlayerCard = (props: {
 }) => {
   const player = useFragment(PlayerItemFragment, props.player);
 
+  function mapIcon(type: string) {
+    if (type === "Email") return "bx bx-envelope";
+
+    return `bx bxl-${type.toLowerCase()}`;
+  }
+
   return (
     <div className="col-lg-4 col-sm-6 col-md-6">
       <div className="single-scientist-item-box">
@@ -51,9 +57,7 @@ const PlayerCard = (props: {
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <i
-                      className={`bx bxl-${socialNetwork?.type?.toLowerCase()}`}
-                    ></i>
+                    <i className={mapIcon(socialNetwork?.type as string)}></i>
                   </Link>
                 </li>
               );
