@@ -5,11 +5,12 @@ import UpcomingEventTimer from "./timer";
 import { FragmentType, graphql, useFragment } from "../../models";
 import ReactHtmlParser from "react-html-parser";
 import EventTime from "./time";
-import { Enum_Event_Status } from "../../models/graphql";
+import { Enum_Event_Status, Venue } from "../../models/graphql";
 import openTabSection from "../../libs/tabs";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
 import Gallery from "./gallery";
+import EventVenue from "./venue";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -55,12 +56,9 @@ const EventDetailsFragment = graphql(`
         attributes {
           name
           embeddedMapUrl
-          address {
-            street
-            area
-            postalCode
-            city
-          }
+          area
+          address
+          website
         }
       }
     }
@@ -157,20 +155,24 @@ const EventDetails = (props: {
                     Overview
                   </li>
                   <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
-                  <li onClick={(e) => openTabSection(e, "tab3")}>Team </li>
-                  <li onClick={(e) => openTabSection(e, "tab4")}>Players </li>
-                  <li onClick={(e) => openTabSection(e, "tab5")}>Photos </li>
+                  <li onClick={(e) => openTabSection(e, "tab3")}>Players</li>
+                  <li onClick={(e) => openTabSection(e, "tab4")}>Photos</li>
                 </ul>
 
                 <div className="tab-content">
                   <div id="tab1" className="tab-pane tabs_item">
-                    <div className="events-details-location">
-                      {event.venue?.data?.attributes?.embeddedMapUrl && (
-                        <iframe
-                          src={event.venue?.data?.attributes?.embeddedMapUrl}
-                        ></iframe>
-                      )}
-                    </div>
+                    {event.venue?.data && (
+                      <EventVenue
+                        venue={event.venue?.data?.attributes as Venue}
+                      />
+                    )}
+
+                    {event.hosts && (
+                      <PlayerGrid title="Team" players={event.hosts} />
+                    )}
+                    {event.mentors && (
+                      <PlayerGrid title="Mentors" players={event.mentors} />
+                    )}
 
                     <div className="events-details-desc">
                       {event.description && ReactHtmlParser(event.description)}
@@ -182,21 +184,12 @@ const EventDetails = (props: {
                   </div>
 
                   <div id="tab3" className="tab-pane tabs_item">
-                    {event.hosts && (
-                      <PlayerGrid title="Hosts" players={event.hosts} />
-                    )}
-                    {event.mentors && (
-                      <PlayerGrid title="Mentors" players={event.mentors} />
-                    )}
-                  </div>
-
-                  <div id="tab4" className="tab-pane tabs_item">
                     {event.players && (
                       <PlayerGrid title="Players" players={event.players} />
                     )}
                   </div>
 
-                  <div id="tab5" className="tab-pane tabs_item">
+                  <div id="tab4" className="tab-pane tabs_item">
                     {event.images && <Gallery images={event.images} />}
                   </div>
                 </div>
