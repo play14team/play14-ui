@@ -46,9 +46,9 @@ const EventCard = (props: {
             <Image
               src={event.defaultImage.data?.attributes?.url || event1}
               alt={event.defaultImage.data?.attributes?.name || "image"}
-              // fill={true}
               width={400}
               height={400}
+              priority
               style={{
                 maxWidth: "100%",
                 objectFit: "cover",

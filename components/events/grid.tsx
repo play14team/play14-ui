@@ -1,6 +1,8 @@
 import EventCard from "./card";
 import { useQuery } from "@apollo/client";
 import { graphql } from "../../models";
+import Loader from "../layout/loader";
+import Error from "../layout/error";
 
 const EventsQuery = graphql(`
   query Events($first: Int!) {
@@ -20,11 +22,8 @@ const EventGrid = (props: { first: number }) => {
     variables: { first: props.first },
   });
 
-  if (loading) return <>Loading...</>;
-  if (error) {
-    console.log(error);
-    return <>{error.message}</>;
-  }
+  if (loading) return <Loader />;
+  if (error) return <Error message={error.message} />;
 
   return (
     <div className="events-area pt-100 pb-70">

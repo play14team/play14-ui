@@ -3,6 +3,7 @@ import EventDetails from "../../components/events/details";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { graphql } from "../../models";
+import Loader from "../../components/layout/loader";
 
 const EventQuery = graphql(`
   query EventQuery($slug: String!) {
@@ -23,7 +24,7 @@ const EventDetailsPage: NextPage = () => {
     variables: { slug: slug },
   });
 
-  if (loading) return <>Loading...</>;
+  if (loading) return <Loader />;
   if (error) {
     console.log(error);
     return <>{error.message}</>;

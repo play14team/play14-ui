@@ -68,7 +68,7 @@ const Navbar = () => {
 
                   <li className="nav-item">
                     <Link href="/about" className="nav-link">
-                      About us <i className="bx bx-chevron-down"></i>
+                      About <i className="bx bx-chevron-down"></i>
                     </Link>
 
                     <ul className="dropdown-menu">
