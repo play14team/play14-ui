@@ -1,5 +1,5 @@
 import Image from "next/image";
-import logo from "../../public/logo/play14_white_bg_transparent.svg";
+import logo from "../../public/logo/play14_1500x500_transparent.png";
 import Link from "next/link";
 import footerMap from "../../styles/images/footer-map.png";
 
@@ -34,7 +34,6 @@ const Footer = () => {
                 <Image
                   src={logo}
                   alt="logo"
-                  height={600}
                   style={{
                     maxWidth: "100%",
                     height: "auto",

@@ -1,6 +1,6 @@
 import Footer from "./footer";
-import Header from "./header";
 import Meta from "./meta";
+import Navbar from "./navbar";
 
 type LayoutProps = {
   preview?: boolean;
@@ -11,7 +11,7 @@ const Layout = ({ preview, children }: LayoutProps) => {
   return (
     <div style={{ outline: "none" }} tabIndex={-1} id="next-focus-wrapper">
       <Meta />
-      <Header />
+      <Navbar />
       <main>
         <div className="container">
           <div className="pt-100 pb-70">{children}</div>
