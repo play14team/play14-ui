@@ -32,6 +32,13 @@ export const EventItemFragment = graphql(`
   }
 `);
 
+const icons = {
+  Announced: "calendar-plus",
+  Cancelled: "calendar-x",
+  Open: "calendar-edit",
+  Over: "calendar-check",
+};
+
 const EventCard = (props: {
   event: FragmentType<typeof EventItemFragment>;
 }) => {
@@ -66,17 +73,24 @@ const EventCard = (props: {
 
         <div className="content">
           <h3>
-            <Link href={url} legacyBehavior>
-              {event.name}
-            </Link>
+            <Link href={url}>{event.name}</Link>
           </h3>
-          <h6>{event.status}</h6>
-          <span className="location">
-            <i className="bx bx-map"></i>{" "}
-            {event.location?.data?.attributes?.name}
-            {event.location?.data?.attributes?.country && ", "}
-            {event.location?.data?.attributes?.country}
-          </span>
+          <ul className="d-flex list-unstyled justify-content-between">
+            <li>
+              <span className="location">
+                <i className="bx bx-map"></i>{" "}
+                {event.location?.data?.attributes?.name}
+                {event.location?.data?.attributes?.country && ", "}
+                {event.location?.data?.attributes?.country}
+              </span>
+            </li>
+            <li>
+              <span className="location">
+                <i className={`bx bx-${icons[event.status]}`}></i>{" "}
+                {event.status}
+              </span>
+            </li>
+          </ul>
         </div>
       </div>
     </article>
