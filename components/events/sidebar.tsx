@@ -29,7 +29,7 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
             350
           </div>
         </li>
-        <li>
+        {/* <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Pay With</span>
             <div className="payment-method">
@@ -62,7 +62,7 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
               />
             </div>
           </div>
-        </li>
+        </li> */}
       </ul>
 
       <div className="btn-box">
@@ -70,14 +70,14 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
           <i className="flaticon-user"></i>Book Now<span></span>
         </Link>
         <p>
-          You must <Link href="/login">login</Link> before register event.
+          You must <Link href="/login">login</Link> before registering an event.
         </p>
       </div>
 
       <div className="events-share">
         <div className="share-info">
           <span>
-            Share This Course <i className="flaticon-share"></i>
+            Share this event <i className="flaticon-share"></i>
           </span>
 
           <ul className="social-link">
@@ -106,7 +106,7 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
       </div>
     </div>
   ) : (
-    <h3>This event is {event.status}</h3>
+    <h4>This event is {event.status}</h4>
   );
 };
 
