@@ -10,7 +10,7 @@ const Home: NextPage = () => {
         <title>#play14 - we believe in playfulness</title>
       </Head>
       <Title />
-      <EventGrid first={6} />
+      <EventGrid pageSize={6} paging={false} />
     </>
   );
 };

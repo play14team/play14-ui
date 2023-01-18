@@ -13,7 +13,7 @@ const Events: NextPage = () => {
         />
       </Head>
       <h1>Events</h1>
-      <EventGrid first={100} />
+      <EventGrid pageSize={18} paging />
     </section>
   );
 };

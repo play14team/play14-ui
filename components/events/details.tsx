@@ -148,7 +148,7 @@ const EventDetails = (props: {
       <section className="events-details-area pb-100">
         <h1>{event.name}</h1>
         <div className="events-details-image">
-          <div style={{ position: "relative", width: "100%", height: "300px" }}>
+          <div style={{ position: "relative", width: "100%", height: "250px" }}>
             {defaultImage && (
               <Image
                 src={defaultImage.url}
@@ -166,7 +166,11 @@ const EventDetails = (props: {
 
         <div className="container">
           <div className="row">
-            <div className="col-lg-8 col-md-12">
+            <div
+              className={
+                isOpen() ? "col-lg-8 col-md-12" : "col-lg-12 col-md-12"
+              }
+            >
               <div className="events-details-header">
                 <ul>
                   <li>
