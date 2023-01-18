@@ -8,28 +8,29 @@ import payment3 from "../../styles/images/payment/payment3.png";
 const EventSidebar = (props: { event: EventDetailsFragment }) => {
   const { event } = props;
 
-  return event.status === "Open" ? (
-    <div className="events-details-info">
-      <ul className="info">
-        <li className="price">
-          <div className="d-flex justify-content-between align-items-center">
-            <span>Cost</span>
-            $149
-          </div>
-        </li>
-        <li>
-          <div className="d-flex justify-content-between align-items-center">
-            <span>Total Slot</span>
-            1500
-          </div>
-        </li>
-        <li>
-          <div className="d-flex justify-content-between align-items-center">
-            <span>Booked Slot</span>
-            350
-          </div>
-        </li>
-        {/* <li>
+  return (
+    <div className="col-lg-4 col-md-12">
+      <div className="events-details-info">
+        <ul className="info">
+          <li className="price">
+            <div className="d-flex justify-content-between align-items-center">
+              <span>Cost</span>
+              $149
+            </div>
+          </li>
+          <li>
+            <div className="d-flex justify-content-between align-items-center">
+              <span>Total Slot</span>
+              1500
+            </div>
+          </li>
+          <li>
+            <div className="d-flex justify-content-between align-items-center">
+              <span>Booked Slot</span>
+              350
+            </div>
+          </li>
+          {/* <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Pay With</span>
             <div className="payment-method">
@@ -63,50 +64,50 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
             </div>
           </div>
         </li> */}
-      </ul>
+        </ul>
 
-      <div className="btn-box">
-        <Link href="#" className="default-btn">
-          <i className="flaticon-user"></i>Book Now<span></span>
-        </Link>
-        <p>
-          You must <Link href="/login">login</Link> before registering an event.
-        </p>
-      </div>
+        <div className="btn-box">
+          <Link href="#" className="default-btn">
+            <i className="flaticon-user"></i>Book Now<span></span>
+          </Link>
+          <p>
+            You must <Link href="/login">login</Link> before registering an
+            event.
+          </p>
+        </div>
 
-      <div className="events-share">
-        <div className="share-info">
-          <span>
-            Share this event <i className="flaticon-share"></i>
-          </span>
+        <div className="events-share">
+          <div className="share-info">
+            <span>
+              Share this event <i className="flaticon-share"></i>
+            </span>
 
-          <ul className="social-link">
-            <li>
-              <Link href="#" className="d-block">
-                <i className="bx bxl-facebook"></i>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="d-block">
-                <i className="bx bxl-twitter"></i>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="d-block">
-                <i className="bx bxl-instagram"></i>
-              </Link>
-            </li>
-            <li>
-              <Link href="#" className="d-block">
-                <i className="bx bxl-linkedin"></i>
-              </Link>
-            </li>
-          </ul>
+            <ul className="social-link">
+              <li>
+                <Link href="#" className="d-block">
+                  <i className="bx bxl-facebook"></i>
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="d-block">
+                  <i className="bx bxl-twitter"></i>
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="d-block">
+                  <i className="bx bxl-instagram"></i>
+                </Link>
+              </li>
+              <li>
+                <Link href="#" className="d-block">
+                  <i className="bx bxl-linkedin"></i>
+                </Link>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
-  ) : (
-    <h4>This event is {event.status}</h4>
   );
 };
 

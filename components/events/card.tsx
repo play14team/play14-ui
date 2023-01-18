@@ -5,6 +5,7 @@ import EventDate from "./date";
 
 import { FragmentType, useFragment } from "../../models/fragment-masking";
 import { graphql } from "../../models";
+import EventStatus from "./status";
 
 export const EventItemFragment = graphql(`
   fragment EventItem on Event {
@@ -31,13 +32,6 @@ export const EventItemFragment = graphql(`
     }
   }
 `);
-
-const icons = {
-  Announced: "calendar-plus",
-  Cancelled: "calendar-x",
-  Open: "calendar-edit",
-  Over: "calendar-check",
-};
 
 const EventCard = (props: {
   event: FragmentType<typeof EventItemFragment>;
@@ -86,8 +80,7 @@ const EventCard = (props: {
             </li>
             <li>
               <span className="location">
-                <i className={`bx bx-${icons[event.status]}`}></i>{" "}
-                {event.status}
+                <EventStatus status={event.status} />
               </span>
             </li>
           </ul>

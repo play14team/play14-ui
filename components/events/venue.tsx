@@ -5,7 +5,9 @@ const EventVenue = (props: { venue: Venue }) => {
   const { venue } = props;
   return (
     <div className="events-details-location">
-      <h4>{venue.name}</h4>
+      <Link href={venue.website as string} target="_blank">
+        <h4>{venue.name}</h4>
+      </Link>
       <p>
         {venue.area && (
           <>
@@ -15,14 +17,8 @@ const EventVenue = (props: { venue: Venue }) => {
         )}
         {venue.address && (
           <>
-            <i className="bx bx-map"></i> {venue.address}
+            <i className="bx bx-building"></i> {venue.address}
             <br />
-          </>
-        )}
-        {venue.website && (
-          <>
-            <i className="bx bx-globe"></i>{" "}
-            <Link href={venue.website}>{venue.website}</Link>
           </>
         )}
       </p>

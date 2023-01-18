@@ -3,14 +3,22 @@ import Image from "next/image";
 import EventSidebar from "./sidebar";
 import UpcomingEventTimer from "./timer";
 import { FragmentType, graphql, useFragment } from "../../models";
-import ReactHtmlParser from "react-html-parser";
 import EventTime from "./time";
-import { Enum_Event_Status, Venue } from "../../models/graphql";
+import {
+  ComponentEventsTimetable,
+  Enum_Event_Status,
+  EventLocation,
+  Maybe,
+  UploadFile,
+  Venue,
+} from "../../models/graphql";
 import openTabSection from "../../libs/tabs";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
 import Gallery from "./gallery";
 import EventVenue from "./venue";
+import EventStatus from "./status";
+import EventDescription from "./description";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -62,6 +70,14 @@ const EventDetailsFragment = graphql(`
         }
       }
     }
+    timetable {
+      day
+      description
+      timeslots {
+        time
+        description
+      }
+    }
     hosts {
       data {
         attributes {
@@ -93,6 +109,11 @@ const EventDetails = (props: {
 
   const description = `${event.name} @ ${event.venue?.data?.attributes?.name} on ${event.start}`;
 
+  const defaultImage = event.defaultImage.data?.attributes as UploadFile;
+  const eventLocation = event.location?.data?.attributes as EventLocation;
+  const venue = event.venue?.data?.attributes as Venue;
+  const timetable = event.timetable as Array<Maybe<ComponentEventsTimetable>>;
+
   return (
     <article>
       <Head>
@@ -103,10 +124,10 @@ const EventDetails = (props: {
         <h1>{event.name}</h1>
         <div className="events-details-image">
           <div style={{ position: "relative", width: "100%", height: "300px" }}>
-            {event.defaultImage.data?.attributes && (
+            {defaultImage && (
               <Image
-                src={event.defaultImage.data?.attributes?.url}
-                alt={event.defaultImage.data?.attributes?.name}
+                src={defaultImage.url}
+                alt={defaultImage.name}
                 fill
                 sizes="100vw"
                 style={{
@@ -115,10 +136,7 @@ const EventDetails = (props: {
               />
             )}
           </div>
-          {event.status === Enum_Event_Status.Announced ||
-            (event.status === Enum_Event_Status.Open && (
-              <UpcomingEventTimer date={event.start} />
-            ))}
+          {isAnnouncedOrOpen() && <UpcomingEventTimer date={event.start} />}
         </div>
 
         <div className="container">
@@ -136,12 +154,11 @@ const EventDetails = (props: {
                   </li>
                   <li>
                     <i className="bx bx-map"></i>
-                    {event.location?.data?.attributes?.name},{" "}
-                    {event.location?.data?.attributes?.country}
+                    {eventLocation && eventLocation.name},{" "}
+                    {eventLocation && eventLocation.country}
                   </li>
                   <li>
-                    <i className="bx bx-right-arrow"></i>
-                    {event.status}
+                    <EventStatus status={event.status} />
                   </li>
                 </ul>
               </div>
@@ -161,26 +178,20 @@ const EventDetails = (props: {
 
                 <div className="tab-content">
                   <div id="tab1" className="tab-pane tabs_item">
-                    {event.venue?.data && (
-                      <EventVenue
-                        venue={event.venue?.data?.attributes as Venue}
-                      />
-                    )}
-
+                    {venue && <EventVenue venue={venue} />}
                     {event.hosts && (
                       <PlayerGrid title="Team" players={event.hosts} />
                     )}
                     {event.mentors && (
                       <PlayerGrid title="Mentors" players={event.mentors} />
                     )}
-
-                    <div className="events-details-desc">
-                      {event.description && ReactHtmlParser(event.description)}
-                    </div>
+                    {event.description && (
+                      <EventDescription description={event.description} />
+                    )}
                   </div>
 
                   <div id="tab2" className="tab-pane tabs_item">
-                    <EventSchedule />
+                    {timetable && <EventSchedule timetable={timetable} />}
                   </div>
 
                   <div id="tab3" className="tab-pane tabs_item">
@@ -196,14 +207,24 @@ const EventDetails = (props: {
               </div>
             </div>
 
-            <div className="col-lg-4 col-md-12">
-              <EventSidebar event={event} />
-            </div>
+            {isOpen() && <EventSidebar event={event} />}
           </div>
         </div>
       </section>
     </article>
   );
+
+  function isAnnouncedOrOpen() {
+    return isAnnounced() || isOpen();
+  }
+
+  function isAnnounced() {
+    return event.status === Enum_Event_Status.Announced;
+  }
+
+  function isOpen() {
+    return event.status === Enum_Event_Status.Open;
+  }
 };
 
 export default EventDetails;
