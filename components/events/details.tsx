@@ -145,11 +145,11 @@ const EventDetails = (props: {
               <div className="events-details-header">
                 <ul>
                   <li>
-                    <i className="bx bx-calendar"></i>
+                    <i className="bx bx-time"></i>
                     <EventTime time={event.start} />
                   </li>
                   <li>
-                    <i className="bx bx-time"></i>
+                    <i className="bx bx-flag"></i>
                     <EventTime time={event.end} />
                   </li>
                   <li>
