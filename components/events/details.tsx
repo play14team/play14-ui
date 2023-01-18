@@ -5,6 +5,7 @@ import UpcomingEventTimer from "./timer";
 import { FragmentType, graphql, useFragment } from "../../models";
 import EventTime from "./time";
 import {
+  ComponentEventsSponsorship,
   ComponentEventsTimetable,
   Enum_Event_Status,
   EventLocation,
@@ -19,6 +20,7 @@ import Gallery from "./gallery";
 import EventVenue from "./venue";
 import EventStatus from "./status";
 import EventDescription from "./description";
+import EventSponsorships from "./sponsorships";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -76,6 +78,29 @@ const EventDetailsFragment = graphql(`
       timeslots {
         time
         description
+      }
+    }
+    sponsorships {
+      category
+      sponsors {
+        data {
+          attributes {
+            name
+            url
+            logo {
+              data {
+                attributes {
+                  name
+                  url
+                }
+              }
+            }
+            socialNetworks {
+              type
+              url
+            }
+          }
+        }
       }
     }
     hosts {
@@ -158,6 +183,10 @@ const EventDetails = (props: {
                     {eventLocation && eventLocation.country}
                   </li>
                   <li>
+                    <i className="bx bx-map"></i>
+                    {venue.name}
+                  </li>
+                  <li>
                     <EventStatus status={event.status} />
                   </li>
                 </ul>
@@ -184,6 +213,13 @@ const EventDetails = (props: {
                     )}
                     {event.mentors && (
                       <PlayerGrid title="Mentors" players={event.mentors} />
+                    )}
+                    {event.sponsorships && (
+                      <EventSponsorships
+                        sponsorships={
+                          event.sponsorships as Array<ComponentEventsSponsorship>
+                        }
+                      />
                     )}
                     {event.description && (
                       <EventDescription description={event.description} />

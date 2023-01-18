@@ -67,6 +67,52 @@ const Navbar = () => {
                   </li>
 
                   <li className="nav-item">
+                    <Link href="/events" className="nav-link">
+                      Events <i className="bx bx-chevron-down"></i>
+                    </Link>
+
+                    <ul className="dropdown-menu">
+                      <li className="nav-item">
+                        <Link
+                          href="/events"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
+                          Events
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link
+                          href="/events/organizing"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
+                          Organizing an event
+                        </Link>
+                      </li>
+                    </ul>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link href="/players" className="nav-link">
+                      Players
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link href="/games" className="nav-link">
+                      Games
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
+                    <Link href="/articles" className="nav-link">
+                      Articles
+                    </Link>
+                  </li>
+
+                  <li className="nav-item">
                     <Link href="/about" className="nav-link">
                       About <i className="bx bx-chevron-down"></i>
                     </Link>
@@ -112,52 +158,6 @@ const Navbar = () => {
                         </Link>
                       </li>
                     </ul>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link href="/events" className="nav-link">
-                      Events <i className="bx bx-chevron-down"></i>
-                    </Link>
-
-                    <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <Link
-                          href="/events"
-                          onClick={() => setCollapsed(true)}
-                          className="nav-link"
-                        >
-                          Events
-                        </Link>
-                      </li>
-
-                      <li className="nav-item">
-                        <Link
-                          href="/events/organizing"
-                          onClick={() => setCollapsed(true)}
-                          className="nav-link"
-                        >
-                          Organizing an event
-                        </Link>
-                      </li>
-                    </ul>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link href="/players" className="nav-link">
-                      Players
-                    </Link>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link href="/games" className="nav-link">
-                      Games
-                    </Link>
-                  </li>
-
-                  <li className="nav-item">
-                    <Link href="/articles" className="nav-link">
-                      Articles
-                    </Link>
                   </li>
 
                   <li className="nav-item">

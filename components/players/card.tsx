@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { FragmentType, graphql, useFragment } from "../../models";
 import { Player } from "../../models/graphql";
+import SocialNetworks from "../events/socialnetworks";
 
 export const PlayerItemFragment = graphql(`
   fragment PlayerItem on Player {
@@ -47,22 +48,9 @@ const PlayerCard = (props: {
               height={500}
             />
           )}
-          <ul className="social">
-            {player.socialNetworks?.map((socialNetwork) => {
-              return (
-                <li key={socialNetwork?.id}>
-                  <Link
-                    href={socialNetwork?.url || "#"}
-                    className="d-block"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <i className={mapIcon(socialNetwork?.type as string)}></i>
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
+          {player.socialNetworks && (
+            <SocialNetworks socialNetworks={player.socialNetworks} />
+          )}
         </div>
         <div className="content">
           <h3>{player.name}</h3>
