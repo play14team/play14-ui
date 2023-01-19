@@ -5,6 +5,7 @@ import Loader from "../layout/loader";
 import Error from "../layout/error";
 import { useState } from "react";
 import Paging from "../layout/paging";
+import { Pagination } from "../../models/graphql";
 
 const EventsQuery = graphql(`
   query Events($page: Int!, $pageSize: Int!) {
@@ -41,7 +42,7 @@ const EventGrid = (props: { pageSize: number; paging: boolean }) => {
   if (loading) return <Loader />;
   if (error) return <Error message={error.message} />;
 
-  const pagination = data?.events?.meta.pagination;
+  const pagination = data?.events?.meta.pagination as Pagination;
 
   return (
     <>

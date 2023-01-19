@@ -1,6 +1,6 @@
 import PlayerCard from "./card";
 
-const PlayerGrid = (props: { title: string; players: any }) => {
+const PlayerGrid = (props: { title?: string; players: any }) => {
   const { title, players } = props;
 
   if (!players || players.data.length === 0) {
@@ -10,9 +10,11 @@ const PlayerGrid = (props: { title: string; players: any }) => {
   return (
     <section className="scientist-area pb-70">
       <div className="container">
-        <div className="section-title">
-          <span className="sub-title">{title}</span>
-        </div>
+        {title && (
+          <div className="section-title">
+            <span className="sub-title">{title}</span>
+          </div>
+        )}
         <div className="row">
           {players &&
             players.data.map(

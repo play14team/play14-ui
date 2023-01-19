@@ -1,7 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
 import { FragmentType, graphql, useFragment } from "../../models";
-import { Player } from "../../models/graphql";
 import SocialNetworks from "../events/socialnetworks";
 
 export const PlayerItemFragment = graphql(`
@@ -37,7 +35,7 @@ const PlayerCard = (props: {
   }
 
   return (
-    <div className="col-lg-4 col-sm-6 col-md-6">
+    <div className="col-lg-3 col-sm-6 col-md-6">
       <div className="single-scientist-item-box">
         <div className="image">
           {player.avatar?.data?.attributes && (
