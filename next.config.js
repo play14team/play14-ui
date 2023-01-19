@@ -1,4 +1,7 @@
 /** @type {import('next').NextConfig} */
+
+const path = require("path");
+
 const nextConfig = {
   reactStrictMode: true,
   images: {
@@ -10,6 +13,9 @@ const nextConfig = {
         pathname: "/strapi-uploads/assets/**",
       },
     ],
+  },
+  sassOptions: {
+    includePaths: [path.join(__dirname, "styles")],
   },
 };
 

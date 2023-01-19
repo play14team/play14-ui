@@ -1,0 +1,25 @@
+$theme-colors: (
+  "primary": #ff5200,
+  "secondary": #0098dd,
+  "success": #92c900,
+  "info": #ff5200,
+  "warning": #ffc900,
+  "danger": #d80000,
+  "light": #c0ccda,
+  "dark": #393939,
+);
+
+// node modules
+@import "/node_modules/bootstrap/scss/bootstrap.scss";
+@import "/node_modules/react-modal-video/css/modal-video.min.css";
+@import "/node_modules/react-accessible-accordion/dist/fancy-example.css";
+@import "/node_modules/react-image-lightbox/style.css";
+
+// scss
+@import "/styles/scss/style.scss";
+@import "/styles/scss/responsive.scss";
+
+// css
+@import "/styles/css/animate.min.css";
+@import "/styles/css/boxicons.min.css";
+@import "/styles/css/flaticon.css";
