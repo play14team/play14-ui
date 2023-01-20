@@ -28,14 +28,8 @@ const PlayerCard = (props: {
 }) => {
   const player = useFragment(PlayerItemFragment, props.player);
 
-  function mapIcon(type: string) {
-    if (type === "Email") return "bx bx-envelope";
-
-    return `bx bxl-${type.toLowerCase()}`;
-  }
-
   return (
-    <div className="col-lg-3 col-sm-6 col-md-6">
+    <div className="col-lg-2 col-sm-4 col-md-3">
       <div className="single-scientist-item-box">
         <div className="image">
           {player.avatar?.data?.attributes && (
