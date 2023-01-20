@@ -6,14 +6,26 @@ const Paging = (props: {
   onNextPage: (nextPage: number) => void;
 }) => {
   const { pagination, onNextPage } = props;
+  const color = "#ff5200";
 
   const items = [];
 
   for (let index = 1; index < pagination.pageCount + 1; index++) {
     items.push(
-      <li className={`page-item ${pagination.page == index ? "active" : ""}`}>
+      <li
+        className={`page-item ${
+          isCurrentPage(pagination, index) ? "active" : ""
+        }`}
+        style={{ backgroundColor: color, borderColor: "ff5200" }}
+      >
         <Link className="page-link" onClick={(e) => onNextPage(index)} href="#">
-          {index}
+          <span
+            style={{
+              color: isCurrentPage(pagination, index) ? "#ffffff" : color,
+            }}
+          >
+            {index}
+          </span>
         </Link>
       </li>
     );
@@ -26,7 +38,7 @@ const Paging = (props: {
       : pagination.page * pagination.pageSize;
 
   return (
-    <nav aria-label="pagination">
+    <nav aria-label="pagination" style={{ paddingTop: "20px" }}>
       <div className="container">
         <div className="row">
           <div className="col-lg-6 col-sm-6 col-md-6">
@@ -43,6 +55,7 @@ const Paging = (props: {
                   onClick={(e) => {
                     onNextPage(pagination.page - 1);
                   }}
+                  style={{ color: color }}
                 >
                   <span aria-hidden="true">&laquo;</span>
                 </Link>
@@ -62,6 +75,7 @@ const Paging = (props: {
                   onClick={(e) => {
                     onNextPage(pagination.page + 1);
                   }}
+                  style={{ color: color }}
                 >
                   <span aria-hidden="true">&raquo;</span>
                 </Link>
@@ -70,7 +84,7 @@ const Paging = (props: {
           </div>
           <div className="col-lg-6 col-sm-6 col-md-6 float-end">
             <span className="float-end">
-              Events {itemMin} to {itemMax} on {pagination.total}
+              {itemMin} {"->"} {itemMax} / {pagination.total}
             </span>
           </div>
         </div>
@@ -80,3 +94,6 @@ const Paging = (props: {
 };
 
 export default Paging;
+function isCurrentPage(pagination: Pagination, index: number) {
+  return pagination.page == index;
+}

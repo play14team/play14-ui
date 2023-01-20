@@ -50,11 +50,18 @@ const Players: NextPage = () => {
       <Head>
         <title>#play14 - Players</title>
       </Head>
+      <h1>Players</h1>
       <Paging
         pagination={pagination}
         onNextPage={(nextPage) => setPage(nextPage)}
       />
-      <PlayerGrid players={data?.players} />
+      <div className="pt-70">
+        <PlayerGrid players={data?.players} />
+      </div>
+      <Paging
+        pagination={pagination}
+        onNextPage={(nextPage) => setPage(nextPage)}
+      />
     </section>
   );
 };

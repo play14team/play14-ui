@@ -46,14 +46,12 @@ const EventGrid = (props: { pageSize: number; paging: boolean }) => {
 
   return (
     <>
-      <div style={{ paddingTop: "20px" }}>
-        {props.paging && pagination && (
-          <Paging
-            pagination={pagination}
-            onNextPage={(nextPage) => setPage(nextPage)}
-          />
-        )}
-      </div>
+      {props.paging && pagination && (
+        <Paging
+          pagination={pagination}
+          onNextPage={(nextPage) => setPage(nextPage)}
+        />
+      )}
       <div className="events-area pt-70 pb-70">
         <div className="container">
           <div className="row">
@@ -67,6 +65,12 @@ const EventGrid = (props: { pageSize: number; paging: boolean }) => {
           </div>
         </div>
       </div>
+      {props.paging && pagination && (
+        <Paging
+          pagination={pagination}
+          onNextPage={(nextPage) => setPage(nextPage)}
+        />
+      )}
     </>
   );
 };
