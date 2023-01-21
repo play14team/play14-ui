@@ -10,20 +10,20 @@ const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {
 
   return (
     <div className="col-lg-3 col-sm-6 col-md-6">
-      <div className="single-scientist-item-box">
-        <div className="image">
-          {logo && (
+      <div className="single-scientist-box">
+        {logo && (
+          <Link href={url}>
             <Image src={logo.url} alt={logo.name} width={500} height={500} />
-          )}
-          {sponsor.socialNetworks && (
-            <SocialNetworks socialNetworks={sponsor.socialNetworks} />
-          )}
-        </div>
+          </Link>
+        )}
         <div className="content">
           <Link href={url}>
             <h3>{sponsor.name}</h3>
           </Link>
           <span>{category}</span>
+          {sponsor.socialNetworks && (
+            <SocialNetworks socialNetworks={sponsor.socialNetworks} />
+          )}
         </div>
       </div>
     </div>

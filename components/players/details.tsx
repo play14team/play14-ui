@@ -47,6 +47,7 @@ const PlayerDetails = (props: {
         <meta name="description" content={description} />
       </Head>
       <section className="case-studies-details-area ptb-100">
+        <h1>{player.name}</h1>
         <div className="container">
           <div className="row">
             <div className="col-lg-4 col-md-12">

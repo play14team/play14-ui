@@ -34,25 +34,25 @@ const PlayerCard = (props: {
 
   return (
     <div className="col-lg-3 col-sm-6 col-md-6">
-      <div className="single-scientist-item-box">
-        <div className="image">
-          {avatar && (
+      <div className="single-scientist-box">
+        {avatar && (
+          <Link href={url}>
             <Image
               src={avatar.url}
               alt={avatar.name}
               width={500}
               height={500}
             />
-          )}
-          {player.socialNetworks && (
-            <SocialNetworks socialNetworks={player.socialNetworks} />
-          )}
-        </div>
+          </Link>
+        )}
         <div className="content">
           <Link href={url}>
             <h3>{player.name}</h3>
           </Link>
           <span>{player.position}</span>
+          {player.socialNetworks && (
+            <SocialNetworks socialNetworks={player.socialNetworks} />
+          )}
         </div>
       </div>
     </div>
