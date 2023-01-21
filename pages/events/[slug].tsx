@@ -19,7 +19,7 @@ const EventQuery = graphql(`
 
 const EventDetailsPage: NextPage = () => {
   const router = useRouter();
-  const slug: string = router.query.slug as string;
+  const slug = router.query.slug as string;
   const { data, loading, error } = useQuery(EventQuery, {
     variables: { slug: slug },
   });

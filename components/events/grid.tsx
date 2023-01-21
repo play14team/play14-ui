@@ -31,7 +31,10 @@ const EventsQuery = graphql(`
   }
 `);
 
-const EventGrid = (props: { pageSize: number; paging: boolean }) => {
+const EventGrid = (props: {
+  pageSize: number;
+  paging?: boolean | undefined;
+}) => {
   const [pageSize] = useState(props.pageSize);
   const [page, setPage] = useState(1);
 
