@@ -266,8 +266,16 @@ const EventDetails = (props: {
                 Overview
               </li>
               <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
-              <li onClick={(e) => openTabSection(e, "tab3")}>Players</li>
-              <li onClick={(e) => openTabSection(e, "tab4")}>Photos</li>
+              <li onClick={(e) => openTabSection(e, "tab3")}>
+                Players{" "}
+                {players && players.length > 0 ? `(${players.length})` : ""}
+              </li>
+              <li onClick={(e) => openTabSection(e, "tab4")}>
+                Photos{" "}
+                {event.images && event.images.data.length > 0
+                  ? `(${event.images.data.length})`
+                  : ""}
+              </li>
             </ul>
 
             <div className="tab-content">
