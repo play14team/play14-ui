@@ -9,7 +9,7 @@ const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {
   const logo = sponsor.logo?.data?.attributes as UploadFile;
 
   return (
-    <div className="col-lg-4 col-sm-6 col-md-6">
+    <div className="col-lg-3 col-sm-6 col-md-6">
       <div className="single-scientist-box">
         {logo && (
           <Link href={url}>

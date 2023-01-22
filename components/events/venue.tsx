@@ -5,6 +5,7 @@ const EventVenue = (props: { venue: Venue }) => {
   const { venue } = props;
   return (
     <div className="events-details-location">
+      {venue.embeddedMapUrl && <iframe src={venue.embeddedMapUrl}></iframe>}
       <Link href={venue.website as string} target="_blank">
         <h4>{venue.name}</h4>
       </Link>
@@ -22,7 +23,6 @@ const EventVenue = (props: { venue: Venue }) => {
           </>
         )}
       </p>
-      {venue.embeddedMapUrl && <iframe src={venue.embeddedMapUrl}></iframe>}
     </div>
   );
 };

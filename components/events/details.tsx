@@ -22,6 +22,9 @@ import EventVenue from "./venue";
 import EventStatus from "./status";
 import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
+import { Button } from "../../stories/Button";
+import Link from "next/link";
+import EventDate from "./date";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -80,6 +83,10 @@ const EventDetailsFragment = graphql(`
         time
         description
       }
+    }
+    registration {
+      link
+      widgetCode
     }
     sponsorships {
       category
@@ -147,8 +154,18 @@ const EventDetails = (props: {
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
       </Head>
-      <section className="events-details-area pb-100">
-        <h1>{event.name}</h1>
+      <section className="events-details-area pt-70 pb-100">
+        <ul className="d-flex list-unstyled justify-content-between">
+          <li>
+            <h1>{event.name}</h1>
+          </li>
+          <li>
+            <h2>
+              <EventDate start={event.start} end={event.end} />
+            </h2>
+          </li>
+        </ul>
+
         <div className="events-details-image">
           <div style={{ position: "relative", width: "100%", height: "250px" }}>
             {defaultImage && (
@@ -166,94 +183,121 @@ const EventDetails = (props: {
           {isAnnouncedOrOpen() && <UpcomingEventTimer date={event.start} />}
         </div>
 
-        <div className="container">
-          <div className="row">
-            <div
-              className={
-                isOpen() ? "col-lg-8 col-md-12" : "col-lg-12 col-md-12"
-              }
-            >
-              <div className="events-details-header">
-                <ul>
-                  <li>
-                    <i className="bx bx-time"></i>
-                    <EventTime time={event.start} />
-                  </li>
-                  <li>
-                    <i className="bx bx-flag"></i>
-                    <EventTime time={event.end} />
-                  </li>
-                  <li>
-                    <i className="bx bx-map"></i>
-                    <Location
-                      city={eventLocation.name}
-                      country={eventLocation.country}
-                    />
-                  </li>
-                  <li>
-                    <i className="bx bx-map"></i>
-                    {venue.name}
-                  </li>
-                  <li>
-                    <EventStatus status={event.status} />
-                  </li>
-                </ul>
+        <div className="events-details-header">
+          <div className="d-flex">
+            <div className="flex-grow-1">
+              <ul>
+                <li>
+                  <i className="bx bx-time"></i>
+                  <EventTime time={event.start} />
+                </li>
+                <li>
+                  <i className="bx bx-flag"></i>
+                  <EventTime time={event.end} />
+                </li>
+                <li>
+                  <i className="bx bx-map"></i>
+                  <Location
+                    city={eventLocation.name}
+                    country={eventLocation.country}
+                  />
+                </li>
+                <li>
+                  <i className="bx bx-map"></i>
+                  {venue.name}
+                </li>
+                <li>
+                  <EventStatus status={event.status} />
+                </li>
+              </ul>
+            </div>
+            {event.contactEmail && (
+              <ul className="d-flex">
+                <li>
+                  <Link href={`mailto:${event.contactEmail}`}>
+                    <i
+                      className="bx bx-envelope"
+                      style={{ fontSize: "25px" }}
+                    ></i>
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+        </div>
+
+        <div className="row">
+          {isOpen() && (
+            <>
+              <div className="col-lg-8 col-md-12">
+                {venue && <EventVenue venue={venue} />}
+              </div>
+              <div className="col-lg-4 col-md-12">
+                <EventSidebar event={event} />
+              </div>
+            </>
+          )}
+          {!isOpen() && (
+            <div className="col-lg-12 col-md-12">
+              {venue && <EventVenue venue={venue} />}
+            </div>
+          )}
+        </div>
+
+        {/* tabs */}
+        <div className="row">
+          <div className="courses-details-desc">
+            <ul className="nav nav-tabs" id="myTab" role="tablist">
+              <li
+                className="current"
+                onClick={(e) => openTabSection(e, "tab1")}
+              >
+                Overview
+              </li>
+              <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
+              <li onClick={(e) => openTabSection(e, "tab3")}>Players</li>
+              <li onClick={(e) => openTabSection(e, "tab4")}>Photos</li>
+            </ul>
+
+            <div className="tab-content">
+              {/* tab1 */}
+              <div id="tab1" className="tab-pane tabs_item">
+                {event.hosts && (
+                  <PlayerGrid title="Team" players={event.hosts} />
+                )}
+                {event.mentors && (
+                  <PlayerGrid title="Mentors" players={event.mentors} />
+                )}
+                {event.sponsorships && (
+                  <EventSponsorships
+                    sponsorships={
+                      event.sponsorships as Array<ComponentEventsSponsorship>
+                    }
+                  />
+                )}
+                {event.description && (
+                  <EventDescription description={event.description} />
+                )}
               </div>
 
-              <div className="courses-details-desc">
-                <ul className="nav nav-tabs" id="myTab" role="tablist">
-                  <li
-                    className="current"
-                    onClick={(e) => openTabSection(e, "tab1")}
-                  >
-                    Overview
-                  </li>
-                  <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
-                  <li onClick={(e) => openTabSection(e, "tab3")}>Players</li>
-                  <li onClick={(e) => openTabSection(e, "tab4")}>Photos</li>
-                </ul>
+              {/* tab2 */}
+              <div id="tab2" className="tab-pane tabs_item">
+                {timetable && <EventSchedule timetable={timetable} />}
+              </div>
 
-                <div className="tab-content">
-                  <div id="tab1" className="tab-pane tabs_item">
-                    {venue && <EventVenue venue={venue} />}
-                    {event.hosts && (
-                      <PlayerGrid title="Team" players={event.hosts} />
-                    )}
-                    {event.mentors && (
-                      <PlayerGrid title="Mentors" players={event.mentors} />
-                    )}
-                    {event.sponsorships && (
-                      <EventSponsorships
-                        sponsorships={
-                          event.sponsorships as Array<ComponentEventsSponsorship>
-                        }
-                      />
-                    )}
-                    {event.description && (
-                      <EventDescription description={event.description} />
-                    )}
-                  </div>
+              {/* tab3 */}
+              <div id="tab3" className="tab-pane tabs_item">
+                {event.players && (
+                  <PlayerGrid title="Players" players={event.players} />
+                )}
+              </div>
 
-                  <div id="tab2" className="tab-pane tabs_item">
-                    {timetable && <EventSchedule timetable={timetable} />}
-                  </div>
-
-                  <div id="tab3" className="tab-pane tabs_item">
-                    {event.players && (
-                      <PlayerGrid title="Players" players={event.players} />
-                    )}
-                  </div>
-
-                  <div id="tab4" className="tab-pane tabs_item">
-                    {event.images && <Gallery images={event.images} />}
-                  </div>
-                </div>
+              {/* tab4 */}
+              <div id="tab4" className="tab-pane tabs_item">
+                {event.images && <Gallery images={event.images} />}
               </div>
             </div>
-
-            {isOpen() && <EventSidebar event={event} />}
           </div>
-          <div className="row"></div>
         </div>
       </section>
     </article>
