@@ -19,6 +19,7 @@ export const EventItemFragment = graphql(`
         attributes {
           name
           url
+          blurhash
         }
       }
     }
@@ -38,6 +39,7 @@ const EventCard = (props: {
 }) => {
   const event = useFragment(EventItemFragment, props.event);
   const url = `/events/${encodeURIComponent(event.slug)}`;
+  const image = event.defaultImage.data?.attributes;
 
   return (
     <article className="col-lg-4 col-sm-6 col-md-6">
@@ -45,11 +47,13 @@ const EventCard = (props: {
         <div className="image">
           <Link href={url} className="d-block">
             <Image
-              src={event.defaultImage.data?.attributes?.url || event1}
-              alt={event.defaultImage.data?.attributes?.name || "image"}
+              src={(image && image.url) || event1}
+              alt={(image && image.name) || "image"}
               width={400}
               height={400}
               priority
+              placeholder="blur"
+              blurDataURL={(image && image.blurhash) || undefined}
               style={{
                 maxWidth: "100%",
                 objectFit: "cover",

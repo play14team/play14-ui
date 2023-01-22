@@ -14,6 +14,7 @@ export const PlayerItemFragment = graphql(`
         attributes {
           url
           name
+          blurhash
         }
       }
     }
@@ -42,6 +43,8 @@ const PlayerCard = (props: {
               alt={avatar.name}
               width={500}
               height={500}
+              placeholder="blur"
+              blurDataURL={(avatar && avatar.blurhash) || undefined}
             />
           </Link>
         )}

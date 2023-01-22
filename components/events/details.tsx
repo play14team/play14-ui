@@ -13,6 +13,7 @@ import {
   UploadFile,
   Venue,
 } from "../../models/graphql";
+import Location from "../layout/location";
 import openTabSection from "../../libs/tabs";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
@@ -92,6 +93,7 @@ const EventDetailsFragment = graphql(`
                 attributes {
                   name
                   url
+                  blurhash
                 }
               }
             }
@@ -183,8 +185,10 @@ const EventDetails = (props: {
                   </li>
                   <li>
                     <i className="bx bx-map"></i>
-                    {eventLocation && eventLocation.name},{" "}
-                    {eventLocation && eventLocation.country}
+                    <Location
+                      city={eventLocation.name}
+                      country={eventLocation.country}
+                    />
                   </li>
                   <li>
                     <i className="bx bx-map"></i>
@@ -249,6 +253,7 @@ const EventDetails = (props: {
 
             {isOpen() && <EventSidebar event={event} />}
           </div>
+          <div className="row"></div>
         </div>
       </section>
     </article>

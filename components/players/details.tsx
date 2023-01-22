@@ -81,7 +81,7 @@ const PlayerDetails = (props: {
           </div>
           <div className="row">
             <div className="case-studies-details-desc">
-              <h3>{player.tagline}</h3>
+              <h5>{player.tagline}</h5>
               {player.bio && <span className="sub-title">Biography</span>}
               <br />
               <p>{player.bio}</p>
