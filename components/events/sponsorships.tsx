@@ -21,7 +21,6 @@ const EventSponsorships = (props: {
               <>
                 {sponsors?.map((item) => {
                   const sponsor = item.attributes;
-                  console.log("IDDDDDDDDDDDDDD : " + item.id);
                   return (
                     sponsor && (
                       <EventSponsor

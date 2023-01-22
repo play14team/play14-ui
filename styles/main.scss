@@ -1,16 +1,6 @@
-$theme-colors: (
-  "primary": #ff5200,
-  "secondary": #0098dd,
-  "success": #92c900,
-  "info": #ff5200,
-  "warning": #ffc900,
-  "danger": #d80000,
-  "light": #c0ccda,
-  "dark": #393939,
-);
-
 @import "scss/style.scss";
 @import "scss/responsive.scss";
+@import "scss/play14.scss";
 
 @import "css/bootstrap.min.css";
 @import "css/animate.min.css";
