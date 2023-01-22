@@ -11,7 +11,7 @@ const EventSchedule = (props: {
       {timetable.map((item) => {
         return (
           item && (
-            <div className="container">
+            <div key={item.id} className="container">
               <h3>{item.day}</h3>
               {item.description}
               <ul>
@@ -19,7 +19,7 @@ const EventSchedule = (props: {
                   item.timeslots.map((slot) => {
                     return (
                       slot && (
-                        <li>
+                        <li key={slot.id}>
                           <Link
                             href="#"
                             className="d-flex justify-content-between align-items-center"

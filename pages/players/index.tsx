@@ -3,11 +3,11 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import { useState } from "react";
 import Loader from "../../components/layout/loader";
-import Error from "../../components/layout/error";
+import ErrorMessage from "../../components/layout/error";
 import PlayerGrid from "../../components/players/grid";
 import { graphql } from "../../models";
 import Paging from "../../components/layout/paging";
-import { Pagination } from "../../models/graphql";
+import { Pagination, PlayerEntity } from "../../models/graphql";
 
 const PlayersQuery = graphql(`
   query Players($page: Int!, $pageSize: Int!) {
@@ -16,6 +16,7 @@ const PlayersQuery = graphql(`
       pagination: { page: $page, pageSize: $pageSize }
     ) {
       data {
+        id
         attributes {
           ...PlayerItem
         }
@@ -41,8 +42,9 @@ const Players: NextPage = () => {
   });
 
   if (loading) return <Loader />;
-  if (error) return <Error message={error.message} />;
+  if (error) return <ErrorMessage message={error.message} />;
 
+  const players = data?.players?.data as PlayerEntity[];
   const pagination = data?.players?.meta.pagination as Pagination;
 
   return (
@@ -56,7 +58,7 @@ const Players: NextPage = () => {
         onNextPage={(nextPage) => setPage(nextPage)}
       />
       <div className="pt-70">
-        <PlayerGrid players={data?.players} />
+        <PlayerGrid players={players} />
       </div>
       <Paging
         pagination={pagination}

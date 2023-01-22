@@ -1,4 +1,4 @@
-import ReactHtmlParser from "react-html-parser";
+import Html from "../layout/html";
 
 const EventDescription = (props: { description: string }) => {
   const { description } = props;
@@ -7,7 +7,9 @@ const EventDescription = (props: { description: string }) => {
       <div className="section-title">
         <span className="sub-title">Details</span>
       </div>
-      <div className="events-details-desc">{ReactHtmlParser(description)}</div>
+      <div className="events-details-desc">
+        <Html>{description}</Html>
+      </div>
     </>
   );
 };

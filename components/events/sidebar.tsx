@@ -1,10 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import { EventDetailsFragment } from "../../models/graphql";
-import ReactHtmlParser from "react-html-parser";
 import payment1 from "../../styles/images/payment/payment1.png";
 import payment2 from "../../styles/images/payment/payment2.png";
 import payment3 from "../../styles/images/payment/payment3.png";
+import Html from "../layout/html";
 
 const EventSidebar = (props: { event: EventDetailsFragment }) => {
   const { event } = props;
@@ -66,7 +66,9 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
         </li> */}
 
         {event.registration && event.registration.widgetCode && (
-          <li>{ReactHtmlParser(event.registration.widgetCode)}</li>
+          <li>
+            <Html>{event.registration.widgetCode}</Html>
+          </li>
         )}
       </ul>
 

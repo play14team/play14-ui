@@ -1,20 +1,21 @@
 import Head from "next/head";
 import Image from "next/image";
-import EventSidebar from "./sidebar";
-import UpcomingEventTimer from "./timer";
+import Link from "next/link";
 import { FragmentType, graphql, useFragment } from "../../models";
-import EventTime from "./time";
 import {
   ComponentEventsSponsorship,
   ComponentEventsTimetable,
   Enum_Event_Status,
   EventLocation,
   Maybe,
+  PlayerEntity,
   UploadFile,
   Venue,
 } from "../../models/graphql";
+import EventSidebar from "./sidebar";
+import UpcomingEventTimer from "./timer";
+import EventTime from "./time";
 import Location from "../layout/location";
-import openTabSection from "../../libs/tabs";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
 import Gallery from "./gallery";
@@ -22,9 +23,8 @@ import EventVenue from "./venue";
 import EventStatus from "./status";
 import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
-import { Button } from "../../stories/Button";
-import Link from "next/link";
 import EventDate from "./date";
+import openTabSection from "../../libs/tabs";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -77,9 +77,11 @@ const EventDetailsFragment = graphql(`
       }
     }
     timetable {
+      id
       day
       description
       timeslots {
+        id
         time
         description
       }
@@ -89,9 +91,11 @@ const EventDetailsFragment = graphql(`
       widgetCode
     }
     sponsorships {
+      id
       category
       sponsors {
         data {
+          id
           attributes {
             name
             url
@@ -105,6 +109,7 @@ const EventDetailsFragment = graphql(`
               }
             }
             socialNetworks {
+              id
               type
               url
             }
@@ -114,6 +119,7 @@ const EventDetailsFragment = graphql(`
     }
     hosts {
       data {
+        id
         attributes {
           ...PlayerItem
         }
@@ -121,6 +127,7 @@ const EventDetailsFragment = graphql(`
     }
     mentors {
       data {
+        id
         attributes {
           ...PlayerItem
         }
@@ -128,6 +135,7 @@ const EventDetailsFragment = graphql(`
     }
     players {
       data {
+        id
         attributes {
           ...PlayerItem
         }
@@ -147,6 +155,9 @@ const EventDetails = (props: {
   const eventLocation = event.location?.data?.attributes as EventLocation;
   const venue = event.venue?.data?.attributes as Venue;
   const timetable = event.timetable as Array<Maybe<ComponentEventsTimetable>>;
+  const players = event.players?.data as PlayerEntity[];
+  const hosts = event.hosts?.data as PlayerEntity[];
+  const mentors = event.mentors?.data as PlayerEntity[];
 
   return (
     <article>
@@ -262,12 +273,8 @@ const EventDetails = (props: {
             <div className="tab-content">
               {/* tab1 */}
               <div id="tab1" className="tab-pane tabs_item">
-                {event.hosts && (
-                  <PlayerGrid title="Team" players={event.hosts} />
-                )}
-                {event.mentors && (
-                  <PlayerGrid title="Mentors" players={event.mentors} />
-                )}
+                {hosts && <PlayerGrid title="Team" players={hosts} />}
+                {mentors && <PlayerGrid title="Mentors" players={mentors} />}
                 {event.sponsorships && (
                   <EventSponsorships
                     sponsorships={
@@ -287,9 +294,7 @@ const EventDetails = (props: {
 
               {/* tab3 */}
               <div id="tab3" className="tab-pane tabs_item">
-                {event.players && (
-                  <PlayerGrid title="Players" players={event.players} />
-                )}
+                {players && <PlayerGrid title="Players" players={players} />}
               </div>
 
               {/* tab4 */}

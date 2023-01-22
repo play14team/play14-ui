@@ -13,22 +13,23 @@ const SocialNetworks = (props: {
   const { socialNetworks } = props;
   return (
     <ul className="social">
-      {socialNetworks.map((socialNetwork) => {
-        return (
-          <li key={socialNetwork?.id}>
-            {socialNetwork?.url && (
-              <Link
-                href={socialNetwork?.url}
-                className="d-block"
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i className={mapIcon(socialNetwork?.type as string)}></i>
-              </Link>
-            )}
-          </li>
-        );
-      })}
+      {socialNetworks.map(
+        (socialNetwork) =>
+          socialNetwork && (
+            <li key={socialNetwork.id}>
+              {socialNetwork?.url && (
+                <Link
+                  href={socialNetwork.url}
+                  className="d-block"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i className={mapIcon(socialNetwork.type as string)}></i>
+                </Link>
+              )}
+            </li>
+          )
+      )}
     </ul>
   );
 };
