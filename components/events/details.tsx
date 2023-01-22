@@ -117,7 +117,7 @@ const EventDetailsFragment = graphql(`
         }
       }
     }
-    hosts {
+    hosts(sort: "name") {
       data {
         id
         attributes {
@@ -125,7 +125,7 @@ const EventDetailsFragment = graphql(`
         }
       }
     }
-    mentors {
+    mentors(sort: "name") {
       data {
         id
         attributes {
@@ -133,7 +133,7 @@ const EventDetailsFragment = graphql(`
         }
       }
     }
-    players {
+    players(sort: "name") {
       data {
         id
         attributes {

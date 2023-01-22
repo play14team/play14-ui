@@ -34,7 +34,7 @@ const PlayerDetailsFragment = graphql(`
       url
       type
     }
-    attended {
+    attended(sort: "start:desc") {
       data {
         id
         attributes {
@@ -42,7 +42,7 @@ const PlayerDetailsFragment = graphql(`
         }
       }
     }
-    hosted {
+    hosted(sort: "start:desc") {
       data {
         id
         attributes {
@@ -50,7 +50,7 @@ const PlayerDetailsFragment = graphql(`
         }
       }
     }
-    mentored {
+    mentored(sort: "start:desc") {
       data {
         id
         attributes {
@@ -126,9 +126,22 @@ const PlayerDetails = (props: {
                   >
                     Biography
                   </li>
-                  <li onClick={(e) => openTabSection(e, "tab2")}>Attended</li>
-                  <li onClick={(e) => openTabSection(e, "tab3")}>Hosted</li>
-                  <li onClick={(e) => openTabSection(e, "tab4")}>Mentored</li>
+                  <li onClick={(e) => openTabSection(e, "tab2")}>
+                    Attended{" "}
+                    {attended && attended.length > 0
+                      ? `(${attended.length})`
+                      : ""}
+                  </li>
+                  <li onClick={(e) => openTabSection(e, "tab3")}>
+                    Hosted{" "}
+                    {hosted && hosted.length > 0 ? `(${hosted.length})` : ""}
+                  </li>
+                  <li onClick={(e) => openTabSection(e, "tab4")}>
+                    Mentored{" "}
+                    {mentored && mentored.length > 0
+                      ? `(${mentored.length})`
+                      : ""}
+                  </li>
                 </ul>
 
                 <div className="tab-content">
