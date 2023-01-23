@@ -5,6 +5,7 @@ import payment1 from "../../styles/images/payment/payment1.png";
 import payment2 from "../../styles/images/payment/payment2.png";
 import payment3 from "../../styles/images/payment/payment3.png";
 import Html from "../layout/html";
+import EventTime from "./time";
 
 const EventSidebar = (props: { event: EventDetailsFragment }) => {
   const { event } = props;
@@ -16,24 +17,24 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
   return (
     <div className="events-details-info">
       <ul className="info">
-        {/*   <li className="price">
-            <div className="d-flex justify-content-between align-items-center">
-              <span>Cost</span>
-              $149
-            </div>
-          </li>
-          <li>
-            <div className="d-flex justify-content-between align-items-center">
-              <span>Total Slot</span>
-              1500
-            </div>
-          </li>
-          <li>
-            <div className="d-flex justify-content-between align-items-center">
-              <span>Booked Slot</span>
-              350
-            </div>
-          </li> */}
+        <li>
+          <div className="d-flex justify-content-between align-items-center">
+            <span>Start</span>
+            <EventTime time={event.start} />
+          </div>
+        </li>
+        <li>
+          <div className="d-flex justify-content-between align-items-center">
+            <span>End</span>
+            <EventTime time={event.end} />
+          </div>
+        </li>
+        <li>
+          <div className="d-flex justify-content-between align-items-center">
+            <span>Attendees</span>
+            {event.players?.data.length}
+          </div>
+        </li>
         {/* <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Pay With</span>
