@@ -9,9 +9,9 @@ import Html from "../layout/html";
 const EventSidebar = (props: { event: EventDetailsFragment }) => {
   const { event } = props;
 
-  const text =
-    "Take%20a%20look%20at%20this%20%23play14%20event%20" +
-    encodeURI(window.location.href);
+  const url = encodeURI(window.location.href);
+  const eventName = encodeURI(event.name);
+  const text = encodeURI("Take a look at #play14 ") + eventName;
 
   return (
     <div className="events-details-info">
@@ -100,26 +100,42 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
 
           <ul className="social-link">
             <li>
-              <Link href="#" className="d-block">
+              <Link
+                href={`http://www.facebook.com/sharer.php?u=${url}&p[title]=${text}`}
+                target="_blank"
+                rel="noopener"
+                className="d-block"
+              >
                 <i className="bx bxl-facebook"></i>
               </Link>
             </li>
             <li>
               <Link
-                href={"https://twitter.com/intent/tweet?text=" + text}
+                href={`http://twitter.com/share?url=${url}&text=${text}`}
                 target="_blank"
+                rel="noopener"
                 className="d-block"
               >
                 <i className="bx bxl-twitter"></i>
               </Link>
             </li>
             <li>
-              <Link href="#" className="d-block">
-                <i className="bx bxl-instagram"></i>
+              <Link
+                href={`http://pinterest.com/pin/create/button/?url=${url}&description=${text}`}
+                target="_blank"
+                rel="noopener"
+                className="d-block"
+              >
+                <i className="bx bxl-pinterest"></i>
               </Link>
             </li>
             <li>
-              <Link href="#" className="d-block">
+              <Link
+                href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${text}`}
+                target="_blank"
+                rel="noopener"
+                className="d-block"
+              >
                 <i className="bx bxl-linkedin"></i>
               </Link>
             </li>
