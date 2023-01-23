@@ -25,6 +25,7 @@ import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
 import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
+import EventNavigator from "./nav";
 
 const EventDetailsFragment = graphql(`
   fragment EventDetails on Event {
@@ -165,6 +166,7 @@ const EventDetails = (props: {
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
       </Head>
+      <EventNavigator current={event.slug} />
       <section className="events-details-area pt-70 pb-100">
         <ul className="d-flex list-unstyled justify-content-between">
           <li>
@@ -176,7 +178,6 @@ const EventDetails = (props: {
             </h2>
           </li>
         </ul>
-
         <div className="events-details-image">
           <div style={{ position: "relative", width: "100%", height: "250px" }}>
             {defaultImage && (
@@ -188,6 +189,7 @@ const EventDetails = (props: {
                 style={{
                   objectFit: "cover",
                 }}
+                priority
               />
             )}
           </div>
