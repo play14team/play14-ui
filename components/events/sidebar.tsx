@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import Image from "next/image";
 import { EventDetailsFragment } from "../../models/graphql";
 import payment1 from "../../styles/images/payment/payment1.png";
 import payment2 from "../../styles/images/payment/payment2.png";
@@ -8,6 +8,10 @@ import Html from "../layout/html";
 
 const EventSidebar = (props: { event: EventDetailsFragment }) => {
   const { event } = props;
+
+  const text =
+    "Take%20a%20look%20at%20this%20%23play14%20event%20" +
+    encodeURI(window.location.href);
 
   return (
     <div className="events-details-info">
@@ -101,7 +105,11 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
               </Link>
             </li>
             <li>
-              <Link href="#" className="d-block">
+              <Link
+                href={"https://twitter.com/intent/tweet?text=" + text}
+                target="_blank"
+                className="d-block"
+              >
                 <i className="bx bxl-twitter"></i>
               </Link>
             </li>
