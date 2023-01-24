@@ -1,0 +1,54 @@
+query Events($page: Int!, $pageSize: Int!) {
+  events(sort: "start:desc", pagination: { page: $page, pageSize: $pageSize }) {
+    data {
+      id
+      attributes {
+        ...EventItem
+      }
+    }
+    meta {
+      pagination {
+        page
+        pageSize
+        total
+        pageCount
+      }
+    }
+  }
+}
+
+query UpcomingEvents($today: DateTime!) {
+  events(sort: "start:desc", filters: { end: { gte: $today } }) {
+    data {
+      id
+      attributes {
+        ...EventItem
+      }
+    }
+  }
+}
+
+fragment EventItem on Event {
+  slug
+  name
+  start
+  end
+  status
+  defaultImage {
+    data {
+      attributes {
+        name
+        url
+        blurhash
+      }
+    }
+  }
+  location {
+    data {
+      attributes {
+        name
+        country
+      }
+    }
+  }
+}

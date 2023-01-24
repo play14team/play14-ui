@@ -1,21 +1,9 @@
 import Link from "next/link";
 import { useQuery } from "@apollo/client";
-import { graphql } from "../../models";
-
-const EventNavigatorQuery = graphql(`
-  query EventNavigator {
-    events(sort: "start:desc", pagination: { limit: 10000 }) {
-      data {
-        attributes {
-          slug
-        }
-      }
-    }
-  }
-`);
+import { EventSlugsDocument } from "../../models/graphql";
 
 const EventNavigator = (props: { current: string }) => {
-  const { data } = useQuery(EventNavigatorQuery);
+  const { data } = useQuery(EventSlugsDocument);
   const slugs = data?.events?.data.map((i) => i.attributes?.slug as string);
   if (!slugs) return <></>;
 

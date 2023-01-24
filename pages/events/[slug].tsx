@@ -2,25 +2,13 @@ import type { NextPage } from "next";
 import EventDetails from "../../components/events/details";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
-import { graphql } from "../../models";
 import Loader from "../../components/layout/loader";
-
-const EventQuery = graphql(`
-  query EventQuery($slug: String!) {
-    events(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          ...EventDetails
-        }
-      }
-    }
-  }
-`);
+import { EventDocument } from "../../models/graphql";
 
 const EventDetailsPage: NextPage = () => {
   const router = useRouter();
   const slug = router.query.slug as string;
-  const { data, loading, error } = useQuery(EventQuery, {
+  const { data, loading, error } = useQuery(EventDocument, {
     variables: { slug: slug },
   });
 

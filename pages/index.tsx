@@ -6,25 +6,11 @@ import EventGrid from "../components/events/grid";
 import ErrorMessage from "../components/layout/error";
 import Loader from "../components/layout/loader";
 import Title from "../components/layout/title";
-import { graphql } from "../models";
-import { EventEntity } from "../models/graphql";
-
-const HomeQuery = graphql(`
-  query UpcomingEvents($today: DateTime!) {
-    events(sort: "start:desc", filters: { end: { gte: $today } }) {
-      data {
-        id
-        attributes {
-          ...EventItem
-        }
-      }
-    }
-  }
-`);
+import { EventEntity, UpcomingEventsDocument } from "../models/graphql";
 
 const Home: NextPage = () => {
   const today = moment().format();
-  const { data, loading, error } = useQuery(HomeQuery, {
+  const { data, loading, error } = useQuery(UpcomingEventsDocument, {
     variables: { today: today },
   });
 

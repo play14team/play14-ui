@@ -1,0 +1,59 @@
+query Player($slug: String!) {
+  players(filters: { slug: { eq: $slug } }) {
+    data {
+      attributes {
+        ...PlayerDetails
+      }
+    }
+  }
+}
+
+fragment PlayerDetails on Player {
+  slug
+  name
+  position
+  company
+  tagline
+  bio
+  city
+  country
+  website
+  embeddedMapUrl
+  avatar {
+    data {
+      attributes {
+        name
+        url
+      }
+    }
+  }
+  socialNetworks {
+    id
+    url
+    type
+  }
+  attended(sort: "start:desc") {
+    data {
+      id
+      attributes {
+        ...EventItem
+      }
+    }
+  }
+  hosted(sort: "start:desc") {
+    data {
+      id
+      attributes {
+        ...EventItem
+      }
+    }
+  }
+  mentored(sort: "start:desc") {
+    data {
+      id
+      attributes {
+        ...EventItem
+      }
+    }
+  }
+}

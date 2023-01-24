@@ -5,39 +5,18 @@ import { useState } from "react";
 import Loader from "../../components/layout/loader";
 import ErrorMessage from "../../components/layout/error";
 import PlayerGrid from "../../components/players/grid";
-import { graphql } from "../../models";
 import Paging from "../../components/layout/paging";
-import { Pagination, PlayerEntity } from "../../models/graphql";
-
-const PlayersQuery = graphql(`
-  query Players($page: Int!, $pageSize: Int!) {
-    players(
-      sort: "name:asc"
-      pagination: { page: $page, pageSize: $pageSize }
-    ) {
-      data {
-        id
-        attributes {
-          ...PlayerItem
-        }
-      }
-      meta {
-        pagination {
-          page
-          pageSize
-          total
-          pageCount
-        }
-      }
-    }
-  }
-`);
+import {
+  Pagination,
+  PlayerEntity,
+  PlayersDocument,
+} from "../../models/graphql";
 
 const Players: NextPage = () => {
   const [pageSize] = useState(60);
   const [page, setPage] = useState(1);
 
-  const { data, loading, error } = useQuery(PlayersQuery, {
+  const { data, loading, error } = useQuery(PlayersDocument, {
     variables: { page: page, pageSize: pageSize },
   });
 

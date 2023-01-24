@@ -1,0 +1,9 @@
+query EventSlugs {
+  events(sort: "start:desc", pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}

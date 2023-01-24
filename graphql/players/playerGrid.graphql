@@ -1,0 +1,38 @@
+query Players($page: Int!, $pageSize: Int!) {
+  players(sort: "name:asc", pagination: { page: $page, pageSize: $pageSize }) {
+    data {
+      id
+      attributes {
+        ...PlayerItem
+      }
+    }
+    meta {
+      pagination {
+        page
+        pageSize
+        total
+        pageCount
+      }
+    }
+  }
+}
+
+fragment PlayerItem on Player {
+  slug
+  name
+  position
+  avatar {
+    data {
+      attributes {
+        url
+        name
+        blurhash
+      }
+    }
+  }
+  socialNetworks {
+    id
+    url
+    type
+  }
+}

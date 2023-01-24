@@ -4,40 +4,13 @@ import event1 from "../../styles/images/events/event1.jpg";
 import EventDate from "./date";
 
 import { FragmentType, useFragment } from "../../models/fragment-masking";
-import { graphql } from "../../models";
 import EventStatus from "./status";
-
-export const EventItemFragment = graphql(`
-  fragment EventItem on Event {
-    slug
-    name
-    start
-    end
-    status
-    defaultImage {
-      data {
-        attributes {
-          name
-          url
-          blurhash
-        }
-      }
-    }
-    location {
-      data {
-        attributes {
-          name
-          country
-        }
-      }
-    }
-  }
-`);
+import { EventItemFragmentDoc } from "../../models/graphql";
 
 const EventCard = (props: {
-  event: FragmentType<typeof EventItemFragment>;
+  event: FragmentType<typeof EventItemFragmentDoc>;
 }) => {
-  const event = useFragment(EventItemFragment, props.event);
+  const event = useFragment(EventItemFragmentDoc, props.event);
   const url = `/events/${encodeURIComponent(event.slug)}`;
   const image = event.defaultImage.data?.attributes;
 

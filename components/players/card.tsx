@@ -1,35 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { FragmentType, graphql, useFragment } from "../../models";
-import { UploadFile } from "../../models/graphql";
+import { PlayerItemFragmentDoc, UploadFile } from "../../models/graphql";
 import SocialNetworks from "../layout/socialnetworks";
 
-export const PlayerItemFragment = graphql(`
-  fragment PlayerItem on Player {
-    slug
-    name
-    position
-    avatar {
-      data {
-        attributes {
-          url
-          name
-          blurhash
-        }
-      }
-    }
-    socialNetworks {
-      id
-      url
-      type
-    }
-  }
-`);
-
 const PlayerCard = (props: {
-  player: FragmentType<typeof PlayerItemFragment>;
+  player: FragmentType<typeof PlayerItemFragmentDoc>;
 }) => {
-  const player = useFragment(PlayerItemFragment, props.player);
+  const player = useFragment(PlayerItemFragmentDoc, props.player);
   const url = player.slug ? `/players/${player.slug}` : "#";
   const avatar = player.avatar?.data?.attributes as UploadFile;
 

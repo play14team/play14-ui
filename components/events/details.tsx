@@ -6,6 +6,7 @@ import {
   ComponentEventsSponsorship,
   ComponentEventsTimetable,
   Enum_Event_Status,
+  EventDetailsFragmentDoc,
   EventLocation,
   Maybe,
   PlayerEntity,
@@ -27,128 +28,10 @@ import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
 import EventNavigator from "./nav";
 
-const EventDetailsFragment = graphql(`
-  fragment EventDetails on Event {
-    slug
-    name
-    start
-    end
-    status
-    description
-    contactEmail
-    defaultImage {
-      data {
-        attributes {
-          name
-          url
-        }
-      }
-    }
-    images {
-      data {
-        attributes {
-          name
-          url
-          width
-          height
-          hash
-          mime
-          provider
-          size
-        }
-      }
-    }
-    location {
-      data {
-        attributes {
-          name
-          country
-        }
-      }
-    }
-    venue {
-      data {
-        attributes {
-          name
-          embeddedMapUrl
-          area
-          address
-          website
-        }
-      }
-    }
-    timetable {
-      id
-      day
-      description
-      timeslots {
-        id
-        time
-        description
-      }
-    }
-    registration {
-      link
-      widgetCode
-    }
-    sponsorships {
-      id
-      category
-      sponsors {
-        data {
-          id
-          attributes {
-            name
-            url
-            logo {
-              data {
-                attributes {
-                  name
-                  url
-                  blurhash
-                }
-              }
-            }
-            socialNetworks {
-              id
-              type
-              url
-            }
-          }
-        }
-      }
-    }
-    hosts(sort: "name") {
-      data {
-        id
-        attributes {
-          ...PlayerItem
-        }
-      }
-    }
-    mentors(sort: "name") {
-      data {
-        id
-        attributes {
-          ...PlayerItem
-        }
-      }
-    }
-    players(sort: "name") {
-      data {
-        id
-        attributes {
-          ...PlayerItem
-        }
-      }
-    }
-  }
-`);
-
 const EventDetails = (props: {
-  event: FragmentType<typeof EventDetailsFragment>;
+  event: FragmentType<typeof EventDetailsFragmentDoc>;
 }) => {
-  const event = useFragment(EventDetailsFragment, props.event);
+  const event = useFragment(EventDetailsFragmentDoc, props.event);
 
   const description = `${event.name} @ ${event.venue?.data?.attributes?.name} on ${event.start}`;
 

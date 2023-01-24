@@ -4,24 +4,12 @@ import Head from "next/head";
 import { useRouter } from "next/router";
 import Loader from "../../components/layout/loader";
 import PlayerDetails from "../../components/players/details";
-import { graphql } from "../../models";
-
-const PlayerQuery = graphql(`
-  query PlayerQuery($slug: String!) {
-    players(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          ...PlayerDetails
-        }
-      }
-    }
-  }
-`);
+import { PlayerDocument } from "../../models/graphql";
 
 const PlayerDetailsPage: NextPage = () => {
   const router = useRouter();
   const slug = router.query.slug as string;
-  const { data, loading, error } = useQuery(PlayerQuery, {
+  const { data, loading, error } = useQuery(PlayerDocument, {
     variables: { slug: slug },
   });
 

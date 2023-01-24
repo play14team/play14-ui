@@ -1,70 +1,21 @@
 import Head from "next/head";
 import Image from "next/image";
 import { FragmentType, graphql, useFragment } from "../../models";
-import { Player, UploadFile } from "../../models/graphql";
+import {
+  Player,
+  PlayerDetailsFragmentDoc,
+  UploadFile,
+} from "../../models/graphql";
 import SocialNetworks from "../layout/socialnetworks";
 import PlayerSidebar from "./sidebar";
 import openTabSection from "../../libs/tabs";
 import Html from "../layout/html";
-import { platform } from "os";
 import EventGrid from "../events/grid";
 
-const PlayerDetailsFragment = graphql(`
-  fragment PlayerDetails on Player {
-    slug
-    name
-    position
-    company
-    tagline
-    bio
-    city
-    country
-    website
-    embeddedMapUrl
-    avatar {
-      data {
-        attributes {
-          name
-          url
-        }
-      }
-    }
-    socialNetworks {
-      id
-      url
-      type
-    }
-    attended(sort: "start:desc") {
-      data {
-        id
-        attributes {
-          ...EventItem
-        }
-      }
-    }
-    hosted(sort: "start:desc") {
-      data {
-        id
-        attributes {
-          ...EventItem
-        }
-      }
-    }
-    mentored(sort: "start:desc") {
-      data {
-        id
-        attributes {
-          ...EventItem
-        }
-      }
-    }
-  }
-`);
-
 const PlayerDetails = (props: {
-  player: FragmentType<typeof PlayerDetailsFragment>;
+  player: FragmentType<typeof PlayerDetailsFragmentDoc>;
 }) => {
-  const player = useFragment(PlayerDetailsFragment, props.player) as Player;
+  const player = useFragment(PlayerDetailsFragmentDoc, props.player) as Player;
 
   const description = `${player.name} (${player.position})`;
   const avatar = player.avatar?.data?.attributes as UploadFile;
