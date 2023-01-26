@@ -1,0 +1,20 @@
+query Search($input: String!) {
+  search(query: $input) {
+    events {
+      data {
+        id
+        attributes {
+          ...EventItem
+        }
+      }
+    }
+    players {
+      data {
+        id
+        attributes {
+          ...PlayerItem
+        }
+      }
+    }
+  }
+}

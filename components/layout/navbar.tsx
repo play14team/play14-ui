@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
 import logo from "../../public/logo/play14_white_bg_transparent.svg";
+import SearchBox from "./searchbox";
 
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(true);
@@ -167,20 +168,7 @@ const Navbar = () => {
                   </li>
                 </ul>
 
-                <div className="others-option d-flex align-items-center">
-                  <div className="option-item">
-                    <form className="search-box">
-                      <input
-                        type="text"
-                        className="input-search"
-                        placeholder="Search for anything"
-                      />
-                      <button type="submit">
-                        <i className="flaticon-loupe"></i>
-                      </button>
-                    </form>
-                  </div>
-                </div>
+                <SearchBox />
               </div>
             </nav>
           </div>
