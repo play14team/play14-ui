@@ -1,15 +1,12 @@
-import { Maybe, Scalars } from "../../models/graphql";
+import { EventLocation, Maybe, Scalars } from "../../models/graphql";
 
-const Location = (props: {
-  city?: Maybe<Scalars["String"]>;
-  country?: Maybe<Scalars["String"]>;
-}) => {
-  const { city, country } = props;
+const Location = (props: { location: EventLocation }) => {
+  const { location } = props;
   return (
     <>
-      {city}
-      {city || country ? ", " : ""}
-      {country}
+      {location.name}
+      {location.name && location.country ? ", " : ""}
+      {location.country}
     </>
   );
 };

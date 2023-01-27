@@ -83,27 +83,31 @@ const EventDetails = (props: {
           <div className="d-flex">
             <div className="flex-grow-1">
               <ul>
+                {venue.name && (
+                  <li>
+                    <h5>
+                      <Link href={venue.website as string} target="_blank">
+                        <i className="bx bx-home"></i>
+                        {venue.name}
+                      </Link>
+                    </h5>
+                  </li>
+                )}
+                {venue.area && (
+                  <li>
+                    <i className="bx bx-map-alt"></i>
+                    {venue.area}
+                  </li>
+                )}
+                {venue.address && (
+                  <li>
+                    <i className="bx bx-map"></i>
+                    {venue.address}
+                  </li>
+                )}
                 <li>
-                  <i className="bx bx-time"></i>
-                  <EventTime time={event.start} />
-                </li>
-                <li>
-                  <i className="bx bx-flag"></i>
-                  <EventTime time={event.end} />
-                </li>
-                <li>
-                  <i className="bx bx-map"></i>
-                  <Location
-                    city={eventLocation.name}
-                    country={eventLocation.country}
-                  />
-                </li>
-                <li>
-                  <i className="bx bx-map"></i>
-                  {venue.name}
-                </li>
-                <li>
-                  <EventStatus status={event.status} />
+                  <i className="bx bx-buildings"></i>
+                  <Location location={eventLocation} />
                 </li>
               </ul>
             </div>
@@ -123,21 +127,12 @@ const EventDetails = (props: {
         </div>
 
         <div className="row">
-          {isOpen() && (
-            <>
-              <div className="col-lg-8 col-md-12">
-                {venue && <EventVenue venue={venue} />}
-              </div>
-              <div className="col-lg-4 col-md-12">
-                <EventSidebar event={event} />
-              </div>
-            </>
-          )}
-          {!isOpen() && (
-            <div className="col-lg-12 col-md-12">
-              {venue && <EventVenue venue={venue} />}
-            </div>
-          )}
+          <div className="col-lg-8 col-md-12">
+            {venue && <EventVenue venue={venue} />}
+          </div>
+          <div className="col-lg-4 col-md-12">
+            <EventSidebar event={event} />
+          </div>
         </div>
 
         {/* tabs */}

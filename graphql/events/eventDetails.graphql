@@ -122,4 +122,9 @@ fragment EventDetails on Event {
       }
     }
   }
+  media {
+    id
+    url
+    type
+  }
 }
