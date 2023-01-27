@@ -107,7 +107,10 @@ const EventDetails = (props: {
                 )}
                 <li>
                   <i className="bx bx-buildings"></i>
-                  <Location location={eventLocation} />
+                  <Location
+                    city={eventLocation.name}
+                    country={eventLocation.country}
+                  />
                 </li>
               </ul>
             </div>
