@@ -40,7 +40,7 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
           </li>
           <li>
             <div className="d-flex justify-content-between align-items-center">
-              <span>Attendees</span>
+              <span>Registered</span>
               {event.players?.data.length}
             </div>
           </li>
@@ -56,13 +56,13 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
                         {medium.type ==
                           Enum_Componenteventsmedia_Type.Photos && (
                           <>
-                            <i className="bx bx-photo-album"></i> album
+                            <i className="bx bx-photo-album"></i> go to album
                           </>
                         )}
                         {medium.type ==
                           Enum_Componenteventsmedia_Type.Videos && (
                           <>
-                            <i className="bx bx-video"></i> library
+                            <i className="bx bx-video"></i> go to library
                           </>
                         )}
                       </Link>
