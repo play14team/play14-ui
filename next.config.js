@@ -12,6 +12,12 @@ const nextConfig = {
         port: "",
         pathname: "/strapi-uploads/assets/**",
       },
+      {
+        protocol: "http",
+        hostname: "localhost",
+        port: "1337",
+        pathname: "/uploads/**",
+      },
     ],
   },
   sassOptions: {
