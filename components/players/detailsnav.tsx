@@ -6,7 +6,13 @@ const PlayersNavigator = (props: { current: string }) => {
   const { data } = useQuery(PlayerSlugsDocument);
   const slugs = data?.players?.data.map((i) => i.attributes?.slug as string);
 
-  return <DetailsNavigator current={props.current} slugs={slugs} />;
+  return (
+    <DetailsNavigator
+      current={props.current}
+      slugs={slugs}
+      listUrl="/players"
+    />
+  );
 };
 
 export default PlayersNavigator;

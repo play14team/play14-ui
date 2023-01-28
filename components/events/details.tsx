@@ -15,13 +15,11 @@ import {
 } from "../../models/graphql";
 import EventSidebar from "./sidebar";
 import UpcomingEventTimer from "./timer";
-import EventTime from "./time";
 import Location from "../layout/location";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
-import Gallery from "./gallery";
+import Gallery from "../layout/gallery";
 import EventVenue from "./venue";
-import EventStatus from "./status";
 import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
 import EventDate from "./date";

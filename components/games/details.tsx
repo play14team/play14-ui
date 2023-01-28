@@ -5,6 +5,7 @@ import { Game, GameDetailsFragmentDoc, UploadFile } from "../../models/graphql";
 import GameSidebar from "./sidebar";
 import Html from "../layout/html";
 import GamesNavigator from "./detailsnav";
+import Gallery from "../layout/gallery";
 
 const GameDetails = (props: {
   game: FragmentType<typeof GameDetailsFragmentDoc>;
@@ -20,7 +21,8 @@ const GameDetails = (props: {
       </Head>
       <GamesNavigator current={game.slug} />
       <section className="services-details-area ptb-100">
-        <div className="container">
+        <h1>{game.name}</h1>
+        <div className="container pt-5">
           <div className="row">
             <div className="col-lg-8 col-md-12">
               <div className="services-details-desc">
@@ -107,6 +109,13 @@ const GameDetails = (props: {
                 <div className="row">
                   <Html>{game.description}</Html>
                 </div>
+
+                {game.images && game.images.data.length > 1 && (
+                  <div className="row pt-70">
+                    <h2>Images</h2>
+                    <Gallery images={game.images} />
+                  </div>
+                )}
               </div>
             </div>
 

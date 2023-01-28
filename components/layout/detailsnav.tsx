@@ -3,8 +3,9 @@ import Link from "next/link";
 const DetailsNavigator = (props: {
   current: string;
   slugs: string[] | undefined;
+  listUrl: string;
 }) => {
-  const { current, slugs } = props;
+  const { current, slugs, listUrl } = props;
   if (!slugs) return <></>;
 
   const index = slugs.indexOf(current) || 0;
@@ -27,10 +28,10 @@ const DetailsNavigator = (props: {
                 </Link>
               </li>
 
-              <li className={`page-item ${previous == "#" ? "disabled" : ""}`}>
+              <li className="page-item">
                 <Link
                   className="page-link orange"
-                  href="/events"
+                  href={listUrl}
                   aria-label="Grid"
                 >
                   <i
