@@ -8,7 +8,7 @@ const GameSidebar = (props: { game: Game }) => {
 
   return (
     <div className="services-details-info">
-      <div className="single-industries-serve-box">{game.category}</div>
+      <div className="single-industries-serve-box orange">{game.category}</div>
 
       <div className="services-contact-info">
         <h3>Details</h3>
