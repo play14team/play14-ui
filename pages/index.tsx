@@ -22,7 +22,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Head>
-        <title>#play14 - we believe in playfulness</title>
+        <title>#play14 - play is the way</title>
       </Head>
       <div className="d-flex justify-content-center pt-70">
         <Title />

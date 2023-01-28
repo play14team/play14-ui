@@ -1,8 +1,8 @@
 const Title = () => {
   return (
     <h1>
-      <span className="red">We</span> <span className="yellow">believe</span>{" "}
-      <span className="blue">in</span> <span className="green">playfuless</span>
+      <span className="red">Play</span> <span className="yellow">is</span>{" "}
+      <span className="blue">the</span> <span className="green">way</span>
     </h1>
   );
 };

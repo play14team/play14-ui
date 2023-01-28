@@ -40,7 +40,7 @@ const Footer = () => {
                   }}
                 />
               </Link>
-              <p>We believe in playfulness</p>
+              <p>play is the way</p>
 
               <ul className="social-link">
                 {socialLinks.map((action, index) => {
