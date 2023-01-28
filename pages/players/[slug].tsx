@@ -23,12 +23,6 @@ const PlayerDetailsPage: NextPage = () => {
   }
 
   return <PlayerDetails player={playerDetails} />;
-
-  return (
-    <article>
-      <h1>PlayerDetail coming soon</h1>
-    </article>
-  );
 };
 
 export default PlayerDetailsPage;

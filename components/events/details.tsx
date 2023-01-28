@@ -26,7 +26,7 @@ import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
 import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
-import EventNavigator from "./nav";
+import EventsNavigator from "./detailsnav";
 
 const EventDetails = (props: {
   event: FragmentType<typeof EventDetailsFragmentDoc>;
@@ -49,7 +49,7 @@ const EventDetails = (props: {
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
       </Head>
-      <EventNavigator current={event.slug} />
+      <EventsNavigator current={event.slug} />
       <section className="events-details-area pt-70 pb-100">
         <ul className="d-flex list-unstyled justify-content-between">
           <li>

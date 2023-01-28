@@ -11,6 +11,7 @@ import PlayerSidebar from "./sidebar";
 import openTabSection from "../../libs/tabs";
 import Html from "../layout/html";
 import EventGrid from "../events/grid";
+import PlayersNavigator from "./detailsnav";
 
 const PlayerDetails = (props: {
   player: FragmentType<typeof PlayerDetailsFragmentDoc>;
@@ -29,6 +30,7 @@ const PlayerDetails = (props: {
         <title>#play14 - {player && player.name}</title>
         <meta name="description" content={description} />
       </Head>
+      <PlayersNavigator current={player.slug} />
       <section className="case-studies-details-area pt-70 pb-100">
         <div className="container">
           <h1>{player.name}</h1>

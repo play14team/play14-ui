@@ -4,6 +4,7 @@ import { FragmentType, graphql, useFragment } from "../../models";
 import { Game, GameDetailsFragmentDoc, UploadFile } from "../../models/graphql";
 import GameSidebar from "./sidebar";
 import Html from "../layout/html";
+import GamesNavigator from "./detailsnav";
 
 const GameDetails = (props: {
   game: FragmentType<typeof GameDetailsFragmentDoc>;
@@ -17,6 +18,7 @@ const GameDetails = (props: {
         <title>#play14 - {game && game.name}</title>
         <meta name="description" content={game.summary?.substring(0, 200)} />
       </Head>
+      <GamesNavigator current={game.slug} />
       <section className="services-details-area ptb-100">
         <div className="container">
           <div className="row">

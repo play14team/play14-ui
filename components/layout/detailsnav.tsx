@@ -1,13 +1,13 @@
 import Link from "next/link";
-import { useQuery } from "@apollo/client";
-import { EventSlugsDocument } from "../../models/graphql";
 
-const EventNavigator = (props: { current: string }) => {
-  const { data } = useQuery(EventSlugsDocument);
-  const slugs = data?.events?.data.map((i) => i.attributes?.slug as string);
+const DetailsNavigator = (props: {
+  current: string;
+  slugs: string[] | undefined;
+}) => {
+  const { current, slugs } = props;
   if (!slugs) return <></>;
 
-  const index = slugs.indexOf(props.current) || 0;
+  const index = slugs.indexOf(current) || 0;
   const previous = index > 0 ? slugs[index - 1] : "#";
   const next = index < slugs.length - 1 ? slugs[index + 1] : "#";
 
@@ -54,31 +54,7 @@ const EventNavigator = (props: { current: string }) => {
         </div>
       </div>
     </nav>
-
-    // <div className="d-flex list-unstyled justify-content-start">
-    //   <li>
-    //     <Link href={previous} className={previous == "#" ? "isDisabled" : ""}>
-    //       <i
-    //         className="bx bx-chevron-left-circle"
-    //         style={{ fontSize: "25px" }}
-    //       ></i>
-    //     </Link>
-    //   </li>
-    //   <li>
-    //     <Link href={"/events"}>
-    //       <i className="bx bx-grid" style={{ fontSize: "25px" }}></i>
-    //     </Link>
-    //   </li>
-    //   <li>
-    //     <Link href={next} className={next == "#" ? "isDisabled" : ""}>
-    //       <i
-    //         className="bx bx-chevron-right-circle"
-    //         style={{ fontSize: "25px" }}
-    //       ></i>
-    //     </Link>
-    //   </li>
-    // </div>
   );
 };
 
-export default EventNavigator;
+export default DetailsNavigator;
