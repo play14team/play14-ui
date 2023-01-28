@@ -8,9 +8,10 @@ const GameSidebar = (props: { game: Game }) => {
 
   return (
     <div className="services-details-info">
+      <div className="single-industries-serve-box">{game.category}</div>
+
       <div className="services-contact-info">
         <h3>Details</h3>
-
         <ul>
           <li>
             <div className="icon">
@@ -52,19 +53,15 @@ const GameSidebar = (props: { game: Game }) => {
                 const url = `/players/${player?.slug}`;
                 const avatar = player?.avatar?.data?.attributes;
                 return (
-                  <Link key={p.id} href={url}>
+                  <Link key={p.id} href={url} className="centered pt-3">
                     <Image
                       src={avatar?.url || "#"}
                       alt={avatar?.name || "avatar"}
-                      width={400}
-                      height={400}
+                      width={200}
+                      height={200}
                       priority
                       placeholder="blur"
                       blurDataURL={(avatar && avatar.blurhash) || undefined}
-                      style={{
-                        maxWidth: "100%",
-                        objectFit: "cover",
-                      }}
                     />
                     <h5 className="centered pt-2">{player?.name}</h5>
                   </Link>
@@ -83,19 +80,15 @@ const GameSidebar = (props: { game: Game }) => {
                 const url = `/players/${player?.slug}`;
                 const avatar = player?.avatar?.data?.attributes;
                 return (
-                  <Link key={p.id} href={url}>
+                  <Link key={p.id} href={url} className="centered pt-3">
                     <Image
                       src={avatar?.url || "#"}
                       alt={avatar?.name || "avatar"}
-                      width={400}
-                      height={400}
+                      width={200}
+                      height={200}
                       priority
                       placeholder="blur"
                       blurDataURL={(avatar && avatar.blurhash) || undefined}
-                      style={{
-                        maxWidth: "100%",
-                        objectFit: "cover",
-                      }}
                     />
                     <h5 className="centered pt-2">{player?.name}</h5>
                   </Link>

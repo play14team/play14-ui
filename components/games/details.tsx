@@ -2,11 +2,8 @@ import Head from "next/head";
 import Image from "next/image";
 import { FragmentType, graphql, useFragment } from "../../models";
 import { Game, GameDetailsFragmentDoc, UploadFile } from "../../models/graphql";
-import SocialNetworks from "../layout/socialnetworks";
 import GameSidebar from "./sidebar";
-import openTabSection from "../../libs/tabs";
 import Html from "../layout/html";
-import EventGrid from "../events/grid";
 
 const GameDetails = (props: {
   game: FragmentType<typeof GameDetailsFragmentDoc>;
@@ -18,26 +15,13 @@ const GameDetails = (props: {
     <article>
       <Head>
         <title>#play14 - {game && game.name}</title>
-        <meta name="description" content={game.summary?.substring(0, 100)} />
+        <meta name="description" content={game.summary?.substring(0, 200)} />
       </Head>
       <section className="services-details-area ptb-100">
         <div className="container">
           <div className="row">
             <div className="col-lg-8 col-md-12">
               <div className="services-details-desc">
-                <div className="row">
-                  <div className="col-lg-4 col-sm-6 col-md-6">
-                    <div className="single-industries-serve-box">
-                      {game.category}
-                    </div>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <h3>Summary</h3>
-                  <p>{game.summary}</p>
-                </div>
-
                 <div className="row align-items-center">
                   <div className="col-lg-6 col-md-6">
                     <div className="image">
@@ -68,6 +52,11 @@ const GameDetails = (props: {
                       </ul>
                     </div>
                   </div>
+                </div>
+
+                <div className="row">
+                  <h3>Summary</h3>
+                  <p>{game.summary}</p>
                 </div>
 
                 {game.materials.length > 0 && (
