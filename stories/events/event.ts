@@ -11,7 +11,7 @@ const open: EventDetailsFragment = {
   defaultImage: {
     data: {
       attributes: {
-        url: "../../styles/images/events/event1.jpg",
+        url: "/styles/images/events/event1.jpg",
         name: "event1",
       },
     },
