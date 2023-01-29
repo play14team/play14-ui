@@ -47,9 +47,14 @@ fragment GameDetails on Game {
   images {
     data {
       attributes {
-        url
         name
-        blurhash
+        url
+        width
+        height
+        hash
+        mime
+        provider
+        size
       }
     }
   }

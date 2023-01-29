@@ -42,7 +42,7 @@ const EventDetails = (props: {
   const mentors = event.mentors?.data as PlayerEntity[];
 
   return (
-    <article>
+    <details>
       <Head>
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
@@ -188,13 +188,13 @@ const EventDetails = (props: {
 
               {/* tab4 */}
               <div id="tab4" className="tab-pane tabs_item">
-                {event.images && <Gallery images={event.images} />}
+                {event.images && <Gallery images={event.images.data} />}
               </div>
             </div>
           </div>
         </div>
       </section>
-    </article>
+    </details>
   );
 
   function isAnnouncedOrOpen() {

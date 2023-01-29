@@ -11,6 +11,7 @@ import {
   PlayerEntity,
   PlayersDocument,
 } from "../../models/graphql";
+import Page from "../../components/layout/page";
 
 const Players: NextPage = () => {
   const [pageSize] = useState(60);
@@ -20,30 +21,27 @@ const Players: NextPage = () => {
     variables: { page: page, pageSize: pageSize },
   });
 
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage message={error.message} />;
-
   const players = data?.players?.data as PlayerEntity[];
   const pagination = data?.players?.meta.pagination as Pagination;
 
   return (
-    <section id="players">
-      <Head>
-        <title>#play14 - Players</title>
-      </Head>
-      <h1>Players</h1>
-      <Paging
-        pagination={pagination}
-        onNextPage={(nextPage) => setPage(nextPage)}
-      />
-      <div className="pt-70">
-        <PlayerGrid players={players} />
-      </div>
-      <Paging
-        pagination={pagination}
-        onNextPage={(nextPage) => setPage(nextPage)}
-      />
-    </section>
+    <Page pageName="Players" loading={loading} error={error}>
+      {data && (
+        <div>
+          <Paging
+            pagination={pagination}
+            onNextPage={(nextPage) => setPage(nextPage)}
+          />
+          <div className="pt-70">
+            <PlayerGrid players={players} />
+          </div>
+          <Paging
+            pagination={pagination}
+            onNextPage={(nextPage) => setPage(nextPage)}
+          />
+        </div>
+      )}
+    </Page>
   );
 };
 

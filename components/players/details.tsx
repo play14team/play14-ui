@@ -25,7 +25,7 @@ const PlayerDetails = (props: {
   const mentored = player.mentored?.data;
 
   return (
-    <article>
+    <details>
       <Head>
         <title>#play14 - {player && player.name}</title>
         <meta name="description" content={description} />
@@ -131,7 +131,7 @@ const PlayerDetails = (props: {
           </div>
         </div>
       </section>
-    </article>
+    </details>
   );
 };
 

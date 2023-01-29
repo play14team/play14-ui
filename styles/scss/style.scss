@@ -71,6 +71,7 @@ Default CSS
 
 $font-family: "Nunito", sans-serif;
 $main-color: #ff5200;
+$blue-color: #0098dd;
 $white-color: #ffffff;
 $black-color: #393939;
 $optional-color: #6b6b84;
@@ -137,12 +138,12 @@ p {
   }
 }
 a {
-  color: $black-color;
+  color: $main-color;
   text-decoration: none;
   transition: $transition;
 
   &:hover {
-    color: $main-color;
+    color: $blue-color;
     text-decoration: none;
   }
 }

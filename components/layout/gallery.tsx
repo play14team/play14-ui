@@ -9,9 +9,9 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen";
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow";
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
-import { UploadFileRelationResponseCollection } from "../../models/graphql";
+import { UploadFileEntity } from "../../models/graphql";
 
-const Gallery = (props: { images: UploadFileRelationResponseCollection }) => {
+const Gallery = (props: { images: UploadFileEntity[] }) => {
   const [index, setIndex] = useState(-1);
   const { images } = props;
 
@@ -19,7 +19,7 @@ const Gallery = (props: { images: UploadFileRelationResponseCollection }) => {
     return <>No image found!</>;
   }
 
-  const photos = images.data?.map((img) => {
+  const photos = images.map((img) => {
     return {
       src: img.attributes?.url || "",
       width: img.attributes?.width || 500,

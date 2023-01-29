@@ -7,7 +7,7 @@ const GameSidebar = (props: { game: Game }) => {
   const { game } = props;
 
   return (
-    <div className="services-details-info">
+    <aside className="services-details-info">
       <div className="single-industries-serve-box orange">{game.category}</div>
 
       <div className="services-contact-info">
@@ -125,7 +125,7 @@ const GameSidebar = (props: { game: Game }) => {
           </ul>
         </div>
       )}
-    </div>
+    </aside>
   );
 };
 

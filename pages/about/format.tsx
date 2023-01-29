@@ -1,15 +1,9 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Page from "../../components/layout/page";
 
 const Format: NextPage = () => {
-  return (
-    <section id="format">
-      <Head>
-        <title>#play14 - Format</title>
-      </Head>
-      <h1>Format coming soon</h1>
-    </section>
-  );
+  return <Page pageName="Our format"></Page>;
 };
 
 export default Format;
