@@ -80,7 +80,10 @@ const GameCard = (props: {
               <i className="bx bx-time"></i> {game.timebox}
             </li>
             <li>
-              <i className="flaticon-team"></i> {game.scale}
+              <i className="flaticon-team"></i>{" "}
+              {game.scale && game.scale?.length > 20
+                ? game.scale?.substring(0, 17).concat("...")
+                : game.scale}
             </li>
           </ul>
         </div>
