@@ -69,94 +69,94 @@ const Home: NextPage = () => {
           <p>
             If you want to join and wonder what is going to happen, here are
             some examples of activites we engage in:
-            <ul>
-              <li>
-                A{" "}
-                <Link href="/games/ball-pointLinkgame" target="_blank">
-                  serious game
-                </Link>{" "}
-                that you use as a metaphor in order to understand a new concept
-              </li>
-              <li>
-                An{" "}
-                <Link href="/games/eggolution" target="_blank">
-                  ice breaker
-                </Link>{" "}
-                game where people learn more about one another
-              </li>
-              <li>
-                A{" "}
-                <Link href="/games/brain-shock" target="_blank">
-                  warm up
-                </Link>{" "}
-                or an{" "}
-                <Link href="/games/happy-salmon" target="_blank">
-                  energizer
-                </Link>{" "}
-                that you can use to raise the level of awareness and energy
-              </li>
-              <li>
-                A facilitation technique that you can use in your daily work
-              </li>
-              <li>
-                A{" "}
-                <Link href="/games/cupcake-design-factory" target="_blank">
-                  team building
-                </Link>{" "}
-                exercise that fosters collaboration and self organization
-              </li>
-              <li>
-                A{" "}
-                <Link href="/games/ball-runner" target="_blank">
-                  game design
-                </Link>{" "}
-                session where you invent a new game to teach something new
-              </li>
-              <li>
-                A soul searching, deep-dive introspection session where you
-                learn about yourself
-              </li>
-              <li>
-                A one-on-one coaching session where you will find some answers
-                with the help of a friend
-              </li>
-              <li>
-                A brainstorming session on a question or problem that wakes you
-                up at night
-              </li>
-              <li>
-                A{" "}
-                <Link href="/games/doodling-together" target="_blank">
-                  creative session
-                </Link>{" "}
-                where you sketch, doodle, or build something together
-              </li>
-              <li>
-                A fun and energetic time with{" "}
-                <Link href="https://youtu.be/N2quY1ZPF50" target="_blank">
-                  dancing
-                </Link>
-                ,{" "}
-                <Link href="https://youtu.be/jpLCTQgHhqs" target="_blank">
-                  singing
-                </Link>{" "}
-                or being silly together
-              </li>
-              <li>
-                An{" "}
-                <Link href="https://youtu.be/T7HPg2-xowc" target="_blank">
-                  improv theater
-                </Link>{" "}
-                session where you can work on your confidence and ability to
-                speak publicly
-              </li>
-              <li>
-                A more esoteric session on a practice/hobby you want to share
-                like yoga, laughter yoga, Tai Chi, Qigong, meditation,
-                mindfulness, aikido, ...
-              </li>
-            </ul>
           </p>
+          <ul>
+            <li>
+              A{" "}
+              <Link href="/games/ball-pointLinkgame" target="_blank">
+                serious game
+              </Link>{" "}
+              that you use as a metaphor in order to understand a new concept
+            </li>
+            <li>
+              An{" "}
+              <Link href="/games/eggolution" target="_blank">
+                ice breaker
+              </Link>{" "}
+              game where people learn more about one another
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/brain-shock" target="_blank">
+                warm up
+              </Link>{" "}
+              or an{" "}
+              <Link href="/games/happy-salmon" target="_blank">
+                energizer
+              </Link>{" "}
+              that you can use to raise the level of awareness and energy
+            </li>
+            <li>
+              A facilitation technique that you can use in your daily work
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/cupcake-design-factory" target="_blank">
+                team building
+              </Link>{" "}
+              exercise that fosters collaboration and self organization
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/ball-runner" target="_blank">
+                game design
+              </Link>{" "}
+              session where you invent a new game to teach something new
+            </li>
+            <li>
+              A soul searching, deep-dive introspection session where you learn
+              about yourself
+            </li>
+            <li>
+              A one-on-one coaching session where you will find some answers
+              with the help of a friend
+            </li>
+            <li>
+              A brainstorming session on a question or problem that wakes you up
+              at night
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/doodling-together" target="_blank">
+                creative session
+              </Link>{" "}
+              where you sketch, doodle, or build something together
+            </li>
+            <li>
+              A fun and energetic time with{" "}
+              <Link href="https://youtu.be/N2quY1ZPF50" target="_blank">
+                dancing
+              </Link>
+              ,{" "}
+              <Link href="https://youtu.be/jpLCTQgHhqs" target="_blank">
+                singing
+              </Link>{" "}
+              or being silly together
+            </li>
+            <li>
+              An{" "}
+              <Link href="https://youtu.be/T7HPg2-xowc" target="_blank">
+                improv theater
+              </Link>{" "}
+              session where you can work on your confidence and ability to speak
+              publicly
+            </li>
+            <li>
+              A more esoteric session on a practice/hobby you want to share like
+              yoga, laughter yoga, Tai Chi, Qigong, meditation, mindfulness,
+              aikido, ...
+            </li>
+          </ul>
         </div>
       </section>
 

@@ -138,12 +138,12 @@ p {
   }
 }
 a {
-  color: $main-color;
+  color: $black-color;
   text-decoration: none;
   transition: $transition;
 
   &:hover {
-    color: $blue-color;
+    color: $main-color;
     text-decoration: none;
   }
 }
