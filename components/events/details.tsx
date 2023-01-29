@@ -25,13 +25,18 @@ import EventSponsorships from "./sponsorships";
 import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
 import EventsNavigator from "./detailsnav";
+import moment from "moment";
 
 const EventDetails = (props: {
   event: FragmentType<typeof EventDetailsFragmentDoc>;
 }) => {
   const event = useFragment(EventDetailsFragmentDoc, props.event);
 
-  const description = `${event.name} @ ${event.venue?.data?.attributes?.name} on ${event.start}`;
+  const description = `${event.name} @ ${
+    event.venue?.data?.attributes?.name
+  } from ${moment(event.start).format("MMMM Do")} to ${moment(event.end).format(
+    "MMMM Do YYYY"
+  )}`;
 
   const defaultImage = event.defaultImage.data?.attributes as UploadFile;
   const eventLocation = event.location?.data?.attributes as EventLocation;
@@ -42,7 +47,7 @@ const EventDetails = (props: {
   const mentors = event.mentors?.data as PlayerEntity[];
 
   return (
-    <details>
+    <>
       <Head>
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
@@ -194,7 +199,7 @@ const EventDetails = (props: {
           </div>
         </div>
       </section>
-    </details>
+    </>
   );
 
   function isAnnouncedOrOpen() {

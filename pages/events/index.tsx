@@ -22,13 +22,13 @@ const Events: NextPage = () => {
 
   return (
     <Page
-      pageName="Events"
+      name="Events"
       description="All #play14 events thoughout the globe"
       loading={loading}
       error={error}
     >
       {data && (
-        <div>
+        <>
           <Paging
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
@@ -38,7 +38,7 @@ const Events: NextPage = () => {
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
           />
-        </div>
+        </>
       )}
     </Page>
   );

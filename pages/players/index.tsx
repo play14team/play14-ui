@@ -25,9 +25,9 @@ const Players: NextPage = () => {
   const pagination = data?.players?.meta.pagination as Pagination;
 
   return (
-    <Page pageName="Players" loading={loading} error={error}>
+    <Page name="Players" loading={loading} error={error}>
       {data && (
-        <div>
+        <>
           <Paging
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
@@ -39,7 +39,7 @@ const Players: NextPage = () => {
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
           />
-        </div>
+        </>
       )}
     </Page>
   );

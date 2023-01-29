@@ -14,13 +14,13 @@ const GameDetails = (props: {
   const image = game.defaultImage?.data?.attributes as UploadFile;
 
   return (
-    <details>
+    <>
       <Head>
         <title>#play14 - {game && game.name}</title>
         <meta name="description" content={game.summary?.substring(0, 200)} />
       </Head>
       <GamesNavigator current={game.slug} />
-      <section className="services-details-area ptb-100">
+      <section className="services-details-area pt-70 pb-100">
         <h1>{game.name}</h1>
         <div className="container pt-5">
           <div className="row">
@@ -145,7 +145,7 @@ const GameDetails = (props: {
           </div>
         </div>
       </section>
-    </details>
+    </>
   );
 };
 

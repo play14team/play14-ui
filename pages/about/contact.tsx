@@ -3,7 +3,11 @@ import Head from "next/head";
 import Page from "../../components/layout/page";
 
 const Contact: NextPage = () => {
-  return <Page pageName="Contact"></Page>;
+  return (
+    <Page name="Contact">
+      <></>
+    </Page>
+  );
 };
 
 export default Contact;

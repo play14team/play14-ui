@@ -3,7 +3,11 @@ import Head from "next/head";
 import Page from "../../components/layout/page";
 
 const Values: NextPage = () => {
-  return <Page pageName="Our values"></Page>;
+  return (
+    <Page name="Our values">
+      <></>
+    </Page>
+  );
 };
 
 export default Values;

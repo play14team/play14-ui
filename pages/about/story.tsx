@@ -3,7 +3,11 @@ import Head from "next/head";
 import Page from "../../components/layout/page";
 
 const Story: NextPage = () => {
-  return <Page pageName="Our story"></Page>;
+  return (
+    <Page name="Our story">
+      <></>
+    </Page>
+  );
 };
 
 export default Story;

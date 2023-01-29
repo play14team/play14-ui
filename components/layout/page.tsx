@@ -3,8 +3,8 @@ import Head from "next/head";
 import ErrorMessage from "./error";
 import Loader from "./loader";
 
-type PageProps = {
-  pageName: string;
+export type PageProps = {
+  name: string;
   description?: string | undefined;
   loading?: boolean | undefined;
   error?: ApolloError | undefined;
@@ -12,14 +12,15 @@ type PageProps = {
 };
 
 const Page = (props: PageProps) => {
-  const { pageName, description, loading, error, children } = props;
+  const { name, description, loading, error, children } = props;
+
   return (
-    <section id={pageName}>
+    <section id={name}>
       <Head>
-        <title>#play14 - {pageName}</title>
+        <title>#play14 - {name}</title>
         {description && <meta name="description" content={description} />}
       </Head>
-      <h1 className="pt-5">{pageName}</h1>
+      <h1 className="pt-5">{name}</h1>
       {loading && <Loader />}
       {error && <ErrorMessage message={error.message} />}
       {children && children}
