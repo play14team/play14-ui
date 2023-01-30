@@ -111,4 +111,9 @@ fragment GameDetails on Game {
       }
     }
   }
+  ratings {
+    energy
+    connection
+    silliness
+  }
 }

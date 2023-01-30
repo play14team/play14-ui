@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import { FragmentType, graphql, useFragment } from "../../models";
+import { FragmentType, useFragment } from "../../models";
 import { Game, GameDetailsFragmentDoc, UploadFile } from "../../models/graphql";
 import GameSidebar from "./sidebar";
 import Html from "../layout/html";
@@ -26,7 +26,7 @@ const GameDetails = (props: {
           <div className="row">
             <div className="col-lg-8 col-md-12">
               <div className="services-details-desc">
-                <div className="row align-items-center">
+                <div className="row align-items-center align-items-stretch">
                   <div className="col-lg-6 col-md-6">
                     <div className="image">
                       <Image

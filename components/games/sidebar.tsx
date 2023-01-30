@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Game } from "../../models/graphql";
 import Moment from "react-moment";
+import Ratings from "../layout/ratings";
 
 const GameSidebar = (props: { game: Game }) => {
   const { game } = props;
@@ -11,7 +12,6 @@ const GameSidebar = (props: { game: Game }) => {
       <div className="single-industries-serve-box orange">{game.category}</div>
 
       <div className="services-contact-info">
-        <h3>Details</h3>
         <ul>
           <li>
             <div className="icon">
@@ -28,6 +28,24 @@ const GameSidebar = (props: { game: Game }) => {
             {game.scale}
           </li>
 
+          {game.ratings && game.ratings.energy && (
+            <li>
+              <div className="icon">
+                <i className="bx bx-star"></i>
+              </div>
+              <span>Ratings</span>
+              {game.ratings.energy != undefined && (
+                <Ratings name="Energy" value={game.ratings.energy} />
+              )}
+              {game.ratings.connection != undefined && (
+                <Ratings name="Connection" value={game.ratings.connection} />
+              )}
+              {game.ratings.silliness != undefined && (
+                <Ratings name="Silliness" value={game.ratings.silliness} />
+              )}
+            </li>
+          )}
+
           {game.firstPlayedAt && (
             <li>
               <div className="icon">
@@ -39,6 +57,16 @@ const GameSidebar = (props: { game: Game }) => {
               >
                 {game.firstPlayedAt.data?.attributes?.name}
               </Link>
+            </li>
+          )}
+
+          {game.credits && (
+            <li>
+              <div className="icon">
+                <i className="bx bx-award"></i>
+              </div>
+              <span>Credits</span>
+              {game.credits}
             </li>
           )}
 
