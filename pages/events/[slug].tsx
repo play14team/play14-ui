@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import Loader from "../../components/layout/loader";
 import { EventDocument } from "../../models/graphql";
+import ErrorMessage from "../../components/layout/error";
 
 const EventDetailsPage: NextPage = () => {
   const router = useRouter();
@@ -11,19 +12,15 @@ const EventDetailsPage: NextPage = () => {
   const { data, loading, error } = useQuery(EventDocument, {
     variables: { slug: slug },
   });
-
-  if (loading) return <Loader />;
-  if (error) {
-    console.log(error);
-    return <>{error.message}</>;
-  }
-
   const eventDetails = data?.events?.data[0].attributes;
-  if (!eventDetails) {
-    return <>Event {slug} not found!</>;
-  }
 
-  return <EventDetails event={eventDetails} />;
+  return (
+    <>
+      {loading && <Loader />}
+      {error && <ErrorMessage message={error.message} />}
+      {eventDetails && <EventDetails event={eventDetails} />}
+    </>
+  );
 };
 
 export default EventDetailsPage;

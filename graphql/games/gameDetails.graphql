@@ -1,0 +1,119 @@
+query Game($slug: String!) {
+  games(filters: { slug: { eq: $slug } }) {
+    data {
+      attributes {
+        ...GameDetails
+      }
+    }
+  }
+}
+
+fragment GameDetails on Game {
+  slug
+  name
+  category
+  scale
+  timebox
+  summary
+  credits
+  description
+  publishedAt
+  tags {
+    id
+    value
+  }
+  materials {
+    id
+    value
+  }
+  preparationSteps {
+    id
+    value
+  }
+  safety {
+    id
+    key
+    value
+  }
+  defaultImage {
+    data {
+      attributes {
+        url
+        name
+        blurhash
+      }
+    }
+  }
+  images {
+    data {
+      attributes {
+        name
+        url
+        width
+        height
+        hash
+        mime
+        provider
+        size
+      }
+    }
+  }
+  resources {
+    data {
+      id
+      attributes {
+        name
+        url
+      }
+    }
+  }
+  firstPlayedAt {
+    data {
+      attributes {
+        name
+        slug
+      }
+    }
+  }
+  documentedBy {
+    data {
+      id
+      attributes {
+        name
+        slug
+        avatar {
+          data {
+            attributes {
+              name
+              url
+              blurhash
+            }
+          }
+        }
+      }
+    }
+  }
+  proposedBy {
+    data {
+      id
+      attributes {
+        name
+        slug
+        avatar {
+          data {
+            attributes {
+              name
+              url
+              blurhash
+            }
+          }
+        }
+      }
+    }
+  }
+  ratings {
+    energy
+    connection
+    silliness
+  }
+}

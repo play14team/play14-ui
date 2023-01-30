@@ -84,7 +84,7 @@ const Paging = (props: {
           </div>
           <div className="col-lg-6 col-sm-6 col-md-6 float-end">
             <span className="float-end">
-              {itemMin} {"->"} {itemMax} / {pagination.total}
+              {itemMin} to {itemMax} of {pagination.total}
             </span>
           </div>
         </div>

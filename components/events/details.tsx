@@ -15,25 +15,28 @@ import {
 } from "../../models/graphql";
 import EventSidebar from "./sidebar";
 import UpcomingEventTimer from "./timer";
-import EventTime from "./time";
 import Location from "../layout/location";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
-import Gallery from "./gallery";
+import Gallery from "../layout/gallery";
 import EventVenue from "./venue";
-import EventStatus from "./status";
 import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
 import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
-import EventNavigator from "./nav";
+import EventsNavigator from "./detailsnav";
+import moment from "moment";
 
 const EventDetails = (props: {
   event: FragmentType<typeof EventDetailsFragmentDoc>;
 }) => {
   const event = useFragment(EventDetailsFragmentDoc, props.event);
 
-  const description = `${event.name} @ ${event.venue?.data?.attributes?.name} on ${event.start}`;
+  const description = `${event.name} @ ${
+    event.venue?.data?.attributes?.name
+  } from ${moment(event.start).format("MMMM Do")} to ${moment(event.end).format(
+    "MMMM Do YYYY"
+  )}`;
 
   const defaultImage = event.defaultImage.data?.attributes as UploadFile;
   const eventLocation = event.location?.data?.attributes as EventLocation;
@@ -44,12 +47,12 @@ const EventDetails = (props: {
   const mentors = event.mentors?.data as PlayerEntity[];
 
   return (
-    <article>
+    <>
       <Head>
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
       </Head>
-      <EventNavigator current={event.slug} />
+      <EventsNavigator current={event.slug} />
       <section className="events-details-area pt-70 pb-100">
         <ul className="d-flex list-unstyled justify-content-between">
           <li>
@@ -190,13 +193,13 @@ const EventDetails = (props: {
 
               {/* tab4 */}
               <div id="tab4" className="tab-pane tabs_item">
-                {event.images && <Gallery images={event.images} />}
+                {event.images && <Gallery images={event.images.data} />}
               </div>
             </div>
           </div>
         </div>
       </section>
-    </article>
+    </>
   );
 
   function isAnnouncedOrOpen() {

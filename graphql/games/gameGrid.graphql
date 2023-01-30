@@ -1,0 +1,54 @@
+query Games($page: Int!, $pageSize: Int!) {
+  games(sort: "name:asc", pagination: { page: $page, pageSize: $pageSize }) {
+    data {
+      id
+      attributes {
+        ...GameItem
+      }
+    }
+    meta {
+      pagination {
+        page
+        pageSize
+        total
+        pageCount
+      }
+    }
+  }
+}
+
+fragment GameItem on Game {
+  slug
+  name
+  summary
+  timebox
+  scale
+  category
+  proposedBy {
+    data {
+      id
+      attributes {
+        name
+        slug
+        avatar {
+          data {
+            attributes {
+              name
+              url
+              blurhash
+            }
+          }
+        }
+      }
+    }
+  }
+  defaultImage {
+    data {
+      attributes {
+        url
+        name
+        blurhash
+      }
+    }
+  }
+}

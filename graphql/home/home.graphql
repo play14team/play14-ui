@@ -1,0 +1,22 @@
+query Home {
+  home {
+    data {
+      attributes {
+        images {
+          data {
+            attributes {
+              name
+              url
+              width
+              height
+              hash
+              mime
+              provider
+              size
+            }
+          }
+        }
+      }
+    }
+  }
+}

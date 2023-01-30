@@ -31,7 +31,7 @@ const Meta = () => {
       <meta name="msapplication-config" content="/favicon/browserconfig.xml" />
       <meta name="theme-color" content="#000" />
       <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
-      <meta name="description" content={`#play14 - We belive in playfulness`} />
+      <meta name="description" content={`#play14 - play is the way`} />
       <meta
         property="og:image"
         content="/public/play14_black_bg_transparent.svg"

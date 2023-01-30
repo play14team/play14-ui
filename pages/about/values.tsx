@@ -1,14 +1,12 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import Page from "../../components/layout/page";
 
 const Values: NextPage = () => {
   return (
-    <section id="values">
-      <Head>
-        <title>#play14 - Values</title>
-      </Head>
-      <h1>Values coming soon</h1>
-    </section>
+    <Page name="Our values">
+      <></>
+    </Page>
   );
 };
 

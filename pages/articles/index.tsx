@@ -1,14 +1,11 @@
 import type { NextPage } from "next";
-import Head from "next/head";
+import Page from "../../components/layout/page";
 
 const Articles: NextPage = () => {
   return (
-    <section id="articles">
-      <Head>
-        <title>#play14 - Articles</title>
-      </Head>
-      <h1>Articles coming soon</h1>
-    </section>
+    <Page name="Articles">
+      <></>
+    </Page>
   );
 };
 

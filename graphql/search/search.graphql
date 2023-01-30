@@ -16,5 +16,12 @@ query Search($input: String!) {
         }
       }
     }
+    games {
+      data {
+        attributes {
+          ...GameItem
+        }
+      }
+    }
   }
 }

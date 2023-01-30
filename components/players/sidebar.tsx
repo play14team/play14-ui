@@ -5,7 +5,7 @@ import Location from "../layout/location";
 const PlayerSidebar = (props: { player: Player }) => {
   const { player } = props;
   return (
-    <div className="case-studies-sidebar-sticky">
+    <aside className="case-studies-sidebar-sticky">
       <div className="case-studies-details-info">
         <ul>
           <li>
@@ -52,7 +52,7 @@ const PlayerSidebar = (props: { player: Player }) => {
           )}
         </ul>
       </div>
-    </div>
+    </aside>
   );
 };
 

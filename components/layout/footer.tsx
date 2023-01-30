@@ -40,7 +40,7 @@ const Footer = () => {
                   }}
                 />
               </Link>
-              <p>We believe in playfulness</p>
+              <p>play is the way</p>
 
               <ul className="social-link">
                 {socialLinks.map((action, index) => {
@@ -106,7 +106,7 @@ const Footer = () => {
 
               <ul className="footer-contact-info">
                 <li>
-                  <i className="bx bx-map"></i>
+                  <i className="bx bx-building"></i>
                   #play14 a.s.b.l.
                   <br />
                   46 boulevard Jules Salentiny

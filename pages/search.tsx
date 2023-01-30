@@ -2,10 +2,16 @@ import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
 import EventGrid from "../components/events/grid";
+import GameGrid from "../components/games/grid";
 import ErrorMessage from "../components/layout/error";
 import Loader from "../components/layout/loader";
 import PlayerGrid from "../components/players/grid";
-import { EventEntity, PlayerEntity, SearchDocument } from "../models/graphql";
+import {
+  EventEntity,
+  GameEntity,
+  PlayerEntity,
+  SearchDocument,
+} from "../models/graphql";
 
 const SearchPage = () => {
   const router = useRouter();
@@ -19,6 +25,7 @@ const SearchPage = () => {
 
   const events = data?.search?.events?.data as EventEntity[];
   const players = data?.search?.players?.data as PlayerEntity[];
+  const games = data?.search?.games?.data as GameEntity[];
 
   return (
     <>
@@ -26,18 +33,36 @@ const SearchPage = () => {
         <title>#play14 - Search</title>
       </Head>
       <div className="pt-70">
-        <h3>Events</h3>
-        {events && events.length > 0 && <EventGrid events={events} />}
-        {!events ||
-          (events.length == 0 && (
-            <p className="pb-70">No corresponding event found</p>
-          ))}
-      </div>
-      <div>
-        <h3>Players</h3>
-        {players && players.length > 0 && <PlayerGrid players={players} />}
-        {!events ||
-          (players.length == 0 && <p>No corresponding player found</p>)}
+        {events && events.length > 0 && (
+          <div>
+            <div className="d-flex justify-content-between">
+              <h3>Events</h3>
+              <p>{events.length} found</p>
+            </div>
+            <EventGrid events={events} />
+          </div>
+        )}
+        {players && players.length > 0 && (
+          <div>
+            <div className="d-flex justify-content-between pb-70">
+              <h3>Players</h3>
+              <p>{players.length} found</p>
+            </div>
+            <PlayerGrid players={players} />
+          </div>
+        )}
+        {games && games.length > 0 && (
+          <div>
+            <div className="d-flex justify-content-between">
+              <h3>Games</h3>
+              <p>{games.length} found</p>
+            </div>
+            <GameGrid games={games} />
+          </div>
+        )}
+        {events.length == 0 && players.length == 0 && games.length == 0 && (
+          <h5 className="pb-70">No search result found</h5>
+        )}
       </div>
     </>
   );
