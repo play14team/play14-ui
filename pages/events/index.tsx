@@ -1,10 +1,7 @@
 import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useState } from "react";
 import EventGrid from "../../components/events/grid";
-import Loader from "../../components/layout/loader";
-import ErrorMessage from "../../components/layout/error";
 import { EventEntity, EventsDocument, Pagination } from "../../models/graphql";
 import Paging from "../../components/layout/paging";
 import Page from "../../components/layout/page";
