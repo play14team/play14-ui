@@ -33,7 +33,7 @@ const CodeOfConduct = () => {
           and should try not be shy about that
         </li>
       </ul>
-      <p>To summarize : "You shall not be an a**hole".</p>
+      <p>To summarize : &ldquo;You shall not be an a**hole&rdquo;.</p>
     </div>
   );
 };
