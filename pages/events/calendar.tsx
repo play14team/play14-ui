@@ -22,7 +22,7 @@ const EventCalendarPage: NextPage = () => {
       ),
       start: event.start,
       end: event.end,
-      resource: event.slug,
+      tooltip: event.name,
     };
   });
   return (

@@ -1,10 +1,11 @@
-import { Calendar, momentLocalizer } from "react-big-calendar";
+import { Calendar, momentLocalizer, Views } from "react-big-calendar";
 import moment from "moment";
 
 const localizer = momentLocalizer(moment);
 
 const EventCalendar = (props: { events: any }) => {
   const { events } = props;
+  const views = [Views.MONTH];
 
   return (
     <div>
@@ -12,8 +13,11 @@ const EventCalendar = (props: { events: any }) => {
         <Calendar
           localizer={localizer}
           events={events}
+          defaultView="month"
+          views={views}
           startAccessor="start"
           endAccessor="end"
+          tooltipAccessor="tooltip"
           style={{ height: 500 }}
         />
       )}
