@@ -6,6 +6,14 @@ query EventCalendar {
         name
         start
         end
+        status
+        venue {
+          data {
+            attributes {
+              name
+            }
+          }
+        }
       }
     }
   }
