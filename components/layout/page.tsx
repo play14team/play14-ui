@@ -23,8 +23,8 @@ const Page = (props: PageProps) => {
       <h1 className="pt-5">{name}</h1>
       {loading && <Loader />}
       {error && <ErrorMessage message={error.message} />}
-      {children && children}
-      {!children && <p>Nothing there yet!</p>}
+      {!loading && !children && <p>Nothing there yet!</p>}
+      {children}
     </section>
   );
 };
