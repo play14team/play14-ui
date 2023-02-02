@@ -9,7 +9,7 @@ const Values: NextPage = () => {
   return (
     <Page name="Our values">
       <div className="container">
-        <p>
+        <p className="pt-70">
           Values are very important to us. They are what make #play14 what it
           is. Please, make sure you take a look at our manifesto and our code of
           conduct before you register to one of our events.
