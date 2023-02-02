@@ -124,21 +124,15 @@ const Navbar = () => {
                   </li>
 
                   <li className="nav-item">
-                    <Link href="/about" className="nav-link">
+                    <Link
+                      href="/about"
+                      className="nav-link"
+                      onClick={(e) => e.preventDefault()}
+                    >
                       About <i className="bx bx-chevron-down"></i>
                     </Link>
 
                     <ul className="dropdown-menu">
-                      <li className="nav-item">
-                        <Link
-                          href="/about"
-                          onClick={() => setCollapsed(true)}
-                          className="nav-link"
-                        >
-                          About us
-                        </Link>
-                      </li>
-
                       <li className="nav-item">
                         <Link
                           href="/about/story"
