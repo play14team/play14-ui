@@ -1,13 +1,37 @@
+import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import Link from "next/link";
 import HistoryItem from "../../components/about/historyitem";
+import ErrorMessage from "../../components/layout/error";
+import Loader from "../../components/layout/loader";
 import Page from "../../components/layout/page";
+import PlayerGrid from "../../components/players/grid";
+import { FoundersDocument, PlayerEntity } from "../../models/graphql";
 
 const Story: NextPage = () => {
+  const { data, loading, error } = useQuery(FoundersDocument);
+  const founders = data?.players?.data as PlayerEntity[];
+
   return (
     <Page name="Our story">
       <section className="history-area ptb-100 bg-fafafb">
         <div className="container">
+          <div className="section-title">
+            <h2>Founders</h2>
+          </div>
+          <p>
+            Hereunder are the four people who started the #play14 movement. They
+            are guilty as charged. Blame them for all games you play, all the
+            fun you get and all the friends you make. And if you want to know
+            more about how it all started, continue reading this page and
+            discover the key moments of this story.
+          </p>
+          <div className="pt-5">
+            {loading && <Loader />}
+            {error && <ErrorMessage message={error.message} />}
+            {founders && <PlayerGrid players={founders} />}
+          </div>
+
           <div className="section-title">
             <h2>Key moments</h2>
           </div>

@@ -1,0 +1,10 @@
+query Founders {
+  players(sort: "name:asc", filters: { position: { eq: "Founder" } }) {
+    data {
+      id
+      attributes {
+        ...PlayerItem
+      }
+    }
+  }
+}
