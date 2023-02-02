@@ -54,7 +54,7 @@ const HistoryItem = (props: HistoryProps) => {
   );
 };
 
-const getSup = (day: string) => {
+const getSup = (day: string | undefined) => {
   if (!day) return undefined;
 
   switch (day) {
