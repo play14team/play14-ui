@@ -1,21 +1,10 @@
 import React from "react";
 import type { NextPage } from "next";
-import dynamic from "next/dynamic";
 import Loader from "../../components/layout/loader";
 import Page from "../../components/layout/page";
 import MapboxMap from "../../components/layout/mapbox-gl";
-import MapboxGL from "../../components/layout/react-mapbox-gl";
-import Image from "next/image";
 import { useQuery } from "@apollo/client";
 import { EventEntity, MarkersDocument } from "../../models/graphql";
-
-const DynamicMap = dynamic(
-  () => import("../../components/layout/react-map-gl"),
-  {
-    ssr: false,
-    loading: () => <Loader />,
-  }
-);
 
 const MapPage: NextPage = () => {
   const { data, loading, error } = useQuery(MarkersDocument);
@@ -35,15 +24,6 @@ const MapPage: NextPage = () => {
           />
         )}
       </div>
-
-      {/* <div className="pb-100">
-        <MapboxGL />
-      </div> */}
-
-      {/* <h3>React Map GL</h3>
-      <div style={{ height: "1000px", width: "100%" }} className="pt-70 pb-100">
-        <DynamicMap />
-      </div> */}
     </Page>
   );
 };

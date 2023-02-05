@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { Enum_Event_Status, EventEntity } from "../../models/graphql";
+import moment from "moment";
+import Link from "next/link";
 
 interface MapboxMapProps {
   initialOptions?: Omit<mapboxgl.MapboxOptions, "container">;
@@ -51,13 +53,29 @@ const MapboxMap = ({
     setMap(mapboxMap);
 
     events.map((event) => {
+      const name = event.attributes?.name;
       const status = event.attributes?.status;
-      const location = event.attributes?.venue?.data?.attributes?.location;
-      const { longitude, latitude } = location;
+      const venue = event.attributes?.venue?.data?.attributes?.name;
+      const address = event.attributes?.venue?.data?.attributes?.address;
+      const { longitude, latitude } =
+        event.attributes?.venue?.data?.attributes?.location;
+      const start = event.attributes?.start;
+      const end = event.attributes?.end;
+      const slug = event.attributes?.slug;
+
+      const link = `<a href="/events/${slug}">${name}</a>`;
+
       new mapboxgl.Marker({
         color: mapColor(status),
       })
         .setLngLat([longitude, latitude])
+        .setPopup(
+          new mapboxgl.Popup().setHTML(
+            `<b>${link}</b><br/>${venue}<br/>${moment(start).format(
+              "MMM Do"
+            )} - ${moment(end).format("MMM Do")}<br/>${address}`
+          )
+        )
         .addTo(mapboxMap);
     });
 

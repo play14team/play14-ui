@@ -1,7 +1,7 @@
 query Markers {
   events(
     pagination: { limit: 10000 }
-    filters: { venue: { location: { ne: {} } } }
+    filters: { status: { ne: "Cancelled" }, venue: { location: { ne: {} } } }
   ) {
     data {
       id
@@ -14,6 +14,8 @@ query Markers {
         venue {
           data {
             attributes {
+              name
+              address
               location
             }
           }
