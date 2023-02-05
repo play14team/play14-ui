@@ -1,0 +1,24 @@
+query Markers {
+  events(
+    pagination: { limit: 10000 }
+    filters: { venue: { location: { ne: {} } } }
+  ) {
+    data {
+      id
+      attributes {
+        slug
+        name
+        start
+        end
+        status
+        venue {
+          data {
+            attributes {
+              location
+            }
+          }
+        }
+      }
+    }
+  }
+}
