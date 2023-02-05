@@ -34,11 +34,7 @@ const EventCard = (props: {
             />
           </Link>
           <span className="date">
-            <EventDate
-              start={event.start}
-              end={event.end}
-              className="published"
-            />
+            <EventDate start={event.start} end={event.end} displayYear />
           </span>
         </div>
 

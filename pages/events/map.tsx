@@ -2,7 +2,7 @@ import React from "react";
 import type { NextPage } from "next";
 import Loader from "../../components/layout/loader";
 import Page from "../../components/layout/page";
-import MapboxMap from "../../components/layout/mapbox-gl";
+import MapboxMap from "../../components/events/mapbox-gl";
 import { useQuery } from "@apollo/client";
 import { EventEntity, MarkersDocument } from "../../models/graphql";
 
@@ -18,7 +18,7 @@ const MapPage: NextPage = () => {
         {loading && <Loader />}
         {!loading && (
           <MapboxMap
-            initialOptions={{ center: [16, 41], zoom: 1.3 }}
+            initialOptions={{ center: [15, 35], zoom: 1.5 }}
             events={events}
             onMapLoaded={mapLoaded}
           />
