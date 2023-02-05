@@ -12,6 +12,9 @@ query Markers {
         start
         end
         status
+        registration {
+          link
+        }
         venue {
           data {
             id

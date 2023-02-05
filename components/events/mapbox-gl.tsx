@@ -15,21 +15,6 @@ interface MapboxMapProps {
   onMapRemoved?(): void;
 }
 
-const mapColor = (status: Enum_Event_Status | undefined) => {
-  switch (status) {
-    case Enum_Event_Status.Announced:
-      return "#ffc900";
-    case Enum_Event_Status.Open:
-      return "#92c900";
-    case Enum_Event_Status.Over:
-      return "#0098dd";
-    case Enum_Event_Status.Cancelled:
-      return "#393939";
-    default:
-      return "#ff5200";
-  }
-};
-
 const MapboxMap = ({
   initialOptions = {},
   events,
@@ -56,54 +41,14 @@ const MapboxMap = ({
 
     setMap(mapboxMap);
 
-    const clusters = events.reduce((clusters: any, event) => {
-      const venueId = event.attributes!.venue!.data!.id!;
-      clusters[venueId] = clusters[venueId] || [];
-      clusters[venueId].push(event);
-      return clusters;
-    }, {});
+    const clusters = getClusters(events);
 
     Object.keys(clusters).map((venueId) => {
       const events: EventEntity[] = clusters[venueId];
-
+      const popupContent = <Popup events={events} />;
       const popupNode = document.createElement("div");
-      const node = createRoot(popupNode);
-      const venue = events[0].attributes!.venue!.data!.attributes!;
+      createRoot(popupNode).render(popupContent);
 
-      const eventContent = events.map((event) => {
-        const slug = event.attributes!.slug;
-        const name = event.attributes!.name;
-        const start = event.attributes!.start;
-        const end = event.attributes!.end;
-        const status = event.attributes!.status;
-
-        return (
-          <div key={name}>
-            <div className="d-flex justify-content-between">
-              <b>
-                <Link href={`/events/${slug}`}>{name}</Link>
-              </b>
-              {status}
-            </div>
-            <div className="pb-2">
-              <EventDate start={start} end={end} />
-            </div>
-          </div>
-        );
-      });
-      const popupContent = (
-        <div>
-          <Link href={venue.website || "#"} target="_blank">
-            <b>{venue.name}</b>
-          </Link>
-          <br />
-          {venue.address}
-          <hr />
-          {eventContent}
-        </div>
-      );
-
-      node.render(popupContent);
       events.map((event) => {
         const status = event.attributes!.status;
         const { longitude, latitude } =
@@ -131,6 +76,85 @@ const MapboxMap = ({
   }, []);
 
   return <div ref={mapNode} style={{ width: "100%", height: "100%" }} />;
+};
+
+const mapColor = (status: Enum_Event_Status | undefined) => {
+  switch (status) {
+    case Enum_Event_Status.Announced:
+      return "#ffc900";
+    case Enum_Event_Status.Open:
+      return "#92c900";
+    case Enum_Event_Status.Over:
+      return "#0098dd";
+    case Enum_Event_Status.Cancelled:
+      return "#393939";
+    default:
+      return "#ff5200";
+  }
+};
+
+const Popup = (props: { events: EventEntity[] }) => {
+  const { events } = props;
+
+  const venue = events[0].attributes!.venue!.data!.attributes!;
+
+  return (
+    <>
+      <Link href={venue.website || "#"} target="_blank" className="orange">
+        <b>{venue.name}</b>
+      </Link>
+      <br />
+      {venue.address}
+      <hr />
+      {events.map((event) => {
+        const slug = event.attributes!.slug;
+        const name = event.attributes!.name;
+        const start = event.attributes!.start;
+        const end = event.attributes!.end;
+        const status = event.attributes!.status;
+
+        const color = mapColor(status);
+        const style = { color: color };
+
+        return (
+          <div key={name}>
+            <div className="d-flex justify-content-between">
+              <b>
+                <Link href={`/events/${slug}`} style={style}>
+                  {name}
+                </Link>
+              </b>
+              {status == Enum_Event_Status.Open &&
+                event.attributes?.registration?.link && (
+                  <Link
+                    href={event.attributes.registration.link}
+                    target="_blank"
+                    style={style}
+                  >
+                    <b>Register now</b>
+                  </Link>
+                )}
+            </div>
+            <div className="d-flex justify-content-between pb-2">
+              <span>
+                <EventDate start={start} end={end} />
+              </span>
+              {status}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+const getClusters = (events: EventEntity[]) => {
+  return events.reduce((clusters: any, event) => {
+    const venueId = event.attributes!.venue!.data!.id!;
+    clusters[venueId] = clusters[venueId] || [];
+    clusters[venueId].push(event);
+    return clusters;
+  }, {});
 };
 
 export default MapboxMap;
