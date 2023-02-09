@@ -17,7 +17,7 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
       latitude={Number(latitude)}
       onClose={props.onClose}
     >
-      <Link href={venue.website || "#"} target="_blank" className="orange">
+      <Link href={venue.website || "#"} target="_blank">
         <b>{venue.name}</b>
       </Link>
       <br />
@@ -46,7 +46,6 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
                   <Link
                     href={event.attributes.registration.link}
                     target="_blank"
-                    style={style}
                   >
                     <b>Register now</b>
                   </Link>
