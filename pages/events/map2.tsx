@@ -1,44 +1,30 @@
-import * as React from "react";
-import Map, {
-  Marker,
-  FullscreenControl,
-  GeolocateControl,
-  NavigationControl,
-} from "react-map-gl";
-
-import "mapbox-gl/dist/mapbox-gl.css";
+import React from "react";
+import type { NextPage } from "next";
+import Loader from "../../components/layout/loader";
 import Page from "../../components/layout/page";
-import GeocoderControl from "../../components/map/geocoder-control";
+import MapboxMap from "../../components/events/mapbox-gl";
+import { useQuery } from "@apollo/client";
+import { EventEntity, MarkersDocument } from "../../models/graphql";
+import ErrorMessage from "../../components/layout/error";
 
-const EventMap = () => {
+const MapPage: NextPage = () => {
+  const { data, loading, error } = useQuery(MarkersDocument);
+  const events = data?.events?.data as EventEntity[];
+
   return (
-    <Page
-      name="Events map"
-      description="All the #play14 events on an interactive map"
-    >
-      <div className="pt-5 pb-100">
-        <Map
-          initialViewState={{
-            latitude: 45,
-            longitude: 15,
-            zoom: 1.5,
-          }}
-          style={{ width: "100%", height: "100vh" }}
-          mapStyle="mapbox://styles/mapbox/streets-v12"
-          mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-        >
-          <FullscreenControl />
-          <NavigationControl />
-          <GeolocateControl />
-          <Marker longitude={15} latitude={45} color="orange" />
-          <GeocoderControl
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-            position="top-left"
+    <Page name="Events map" description="All the #play14 events on a map">
+      <div style={{ height: "1000px", width: "100%" }} className="pt-70 pb-100">
+        {loading && <Loader />}
+        {error && <ErrorMessage message={error.message} />}
+        {!loading && (
+          <MapboxMap
+            initialOptions={{ center: [15, 35], zoom: 1.5 }}
+            events={events}
           />
-        </Map>
+        )}
       </div>
     </Page>
   );
 };
 
-export default EventMap;
+export default MapPage;
