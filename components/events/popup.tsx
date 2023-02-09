@@ -3,20 +3,12 @@ import { Popup } from "react-map-gl";
 import { Enum_Event_Status, EventEntity } from "../../models/graphql";
 import EventDate from "./date";
 
-const EventPopup = (props: { event: EventEntity; onClose: () => void }) => {
-  const { event } = props;
-  const slug = event.attributes!.slug;
-  const name = event.attributes!.name;
-  const start = event.attributes!.start;
-  const end = event.attributes!.end;
-  const status = event.attributes!.status;
+const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
+  const { events } = props;
 
-  const color = mapColor(status);
-  const style = { color: color };
-
-  const geoJSON = event.attributes?.venue?.data?.attributes?.location;
-  const longitude = geoJSON.geometry.coordinates[0];
-  const latitude = geoJSON.geometry.coordinates[1];
+  const venue = events[0].attributes!.venue!.data!.attributes!;
+  const longitude = venue.location.geometry.coordinates[0];
+  const latitude = venue.location.geometry.coordinates[1];
 
   return (
     <Popup
@@ -25,36 +17,55 @@ const EventPopup = (props: { event: EventEntity; onClose: () => void }) => {
       latitude={Number(latitude)}
       onClose={props.onClose}
     >
-      <div key={name}>
-        <div className="d-flex justify-content-between">
-          <b>
-            <Link href={`/events/${slug}`} style={style}>
-              {name}
-            </Link>
-          </b>
-          {status == Enum_Event_Status.Open &&
-            event.attributes?.registration?.link && (
-              <Link
-                href={event.attributes.registration.link}
-                target="_blank"
-                style={style}
-              >
-                <b>Register now</b>
-              </Link>
-            )}
-        </div>
-        <div className="d-flex justify-content-between pb-2">
-          <span>
-            <EventDate start={start} end={end} />
-          </span>
-          {status}
-        </div>
-      </div>
+      <Link href={venue.website || "#"} target="_blank" className="orange">
+        <b>{venue.name}</b>
+      </Link>
+      <br />
+      {venue.address}
+      <hr />
+      {events.map((event) => {
+        const slug = event.attributes!.slug;
+        const name = event.attributes!.name;
+        const start = event.attributes!.start;
+        const end = event.attributes!.end;
+        const status = event.attributes!.status;
+
+        const color = mapColor(status);
+        const style = { color: color };
+
+        return (
+          <div key={name}>
+            <div className="d-flex justify-content-between">
+              <b>
+                <Link href={`/events/${slug}`} style={style}>
+                  {name}
+                </Link>
+              </b>
+              {status == Enum_Event_Status.Open &&
+                event.attributes?.registration?.link && (
+                  <Link
+                    href={event.attributes.registration.link}
+                    target="_blank"
+                    style={style}
+                  >
+                    <b>Register now</b>
+                  </Link>
+                )}
+            </div>
+            <div className="d-flex justify-content-between pb-2">
+              <span>
+                <EventDate start={start} end={end} />
+              </span>
+              {status}
+            </div>
+          </div>
+        );
+      })}
     </Popup>
   );
 };
 
-const mapColor = (status: Enum_Event_Status | undefined) => {
+export const mapColor = (status: Enum_Event_Status | undefined) => {
   switch (status) {
     case Enum_Event_Status.Announced:
       return "#ffc900";

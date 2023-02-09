@@ -10,24 +10,17 @@ import "mapbox-gl/dist/mapbox-gl.css";
 import Page from "../../components/layout/page";
 import GeocoderControl from "../../components/map/geocoder-control";
 import { useQuery } from "@apollo/client";
-import {
-  Enum_Event_Status,
-  EventEntity,
-  MarkersDocument,
-} from "../../models/graphql";
+import { EventEntity, MarkersDocument } from "../../models/graphql";
 import Loader from "../../components/layout/loader";
 import ErrorMessage from "../../components/layout/error";
 import { useMemo, useState } from "react";
-import Link from "next/link";
-import EventPopup from "../../components/events/popup";
+import EventPopup, { mapColor } from "../../components/events/popup";
 
 const EventMap = () => {
   const { data, loading, error } = useQuery(MarkersDocument);
   const events = data?.events?.data as EventEntity[];
 
   const [popupInfo, setPopupInfo] = useState(null);
-
-  // const clusters = getClusters(events);
 
   const pins = useMemo(
     () =>
@@ -45,7 +38,13 @@ const EventMap = () => {
             style={{ cursor: "pointer" }}
             onClick={(e) => {
               e.originalEvent.stopPropagation();
-              setPopupInfo(event);
+              setPopupInfo(
+                events.filter(
+                  (e) =>
+                    e.attributes!.venue!.data!.id ==
+                    event.attributes!.venue!.data!.id
+                )
+              );
             }}
           />
         );
@@ -84,7 +83,7 @@ const EventMap = () => {
 
             {popupInfo && (
               <EventPopup
-                event={popupInfo}
+                events={popupInfo}
                 onClose={() => setPopupInfo(null)}
               />
             )}
@@ -93,30 +92,6 @@ const EventMap = () => {
       </div>
     </Page>
   );
-};
-
-const getClusters = (events: EventEntity[]) => {
-  return events.reduce((clusters: any, event) => {
-    const venueId = event.attributes!.venue!.data!.id!;
-    clusters[venueId] = clusters[venueId] || [];
-    clusters[venueId].push(event);
-    return clusters;
-  }, {});
-};
-
-const mapColor = (status: Enum_Event_Status | undefined) => {
-  switch (status) {
-    case Enum_Event_Status.Announced:
-      return "#ffc900";
-    case Enum_Event_Status.Open:
-      return "#92c900";
-    case Enum_Event_Status.Over:
-      return "#0098dd";
-    case Enum_Event_Status.Cancelled:
-      return "#393939";
-    default:
-      return "#ff5200";
-  }
 };
 
 export default EventMap;
