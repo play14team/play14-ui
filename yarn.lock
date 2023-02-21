@@ -5950,6 +5950,14 @@ cosmiconfig@^7.0.0:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
+country-data@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.yarnpkg.com/country-data/-/country-data-0.0.31.tgz#80966b8e1d147fa6d6a589d32933f8793774956d"
+  integrity sha512-YqlY/i6ikZwoBFfdjK+hJTGaBdTgDpXLI15MCj2UsXZ2cPBb+Kx86AXmDH7PRGt0LUleck0cCgNdWeIhfbcxkQ==
+  dependencies:
+    currency-symbol-map "~2"
+    underscore ">1.4.4"
+
 cp-file@^7.0.0:
   version "7.0.0"
   resolved "https://registry.yarnpkg.com/cp-file/-/cp-file-7.0.0.tgz#b9454cfd07fe3b974ab9ea0e5f29655791a9b8cd"
@@ -6120,6 +6128,11 @@ csstype@^3.0.2:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.1.tgz#841b532c45c758ee546a11d5bd7b7b473c8c30b9"
   integrity sha512-DJR/VvkAvSZW9bTouZue2sSxDwdTN92uHjqeKVm+0dAqdfNykRzQ95tay8aXMBAAPpUiq4Qcug2L7neoRh2Egw==
+
+currency-symbol-map@~2:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/currency-symbol-map/-/currency-symbol-map-2.2.0.tgz#2b3c1872ff1ac2ce595d8273e58e1fff0272aea2"
+  integrity sha512-fPZJ3jqM68+AAgqQ7UaGbgHL/39rp6l7GyqS2k1HJPu/kpS8D07x/+Uup6a9tCUKIlOFcRrDCf1qxSt8jnI5BA==
 
 currently-unhandled@^0.4.1:
   version "0.4.1"
@@ -11390,6 +11403,11 @@ react-bootstrap@^2.7.0:
     uncontrollable "^7.2.1"
     warning "^4.0.3"
 
+react-country-flag@^3.0.2:
+  version "3.0.2"
+  resolved "https://registry.yarnpkg.com/react-country-flag/-/react-country-flag-3.0.2.tgz#54c37abe2c87251e95b0f40bb4c09b000f4669e7"
+  integrity sha512-JPaz+q3QD0/nZtHBKj5x3O7r/SgSG9kxbymdaIU0RqlDAcorJIe4KV0DFhWIdKh69q5cPVkIVERcMYGZdvXgAA==
+
 react-docgen-typescript@^2.1.1:
   version "2.2.2"
   resolved "https://registry.yarnpkg.com/react-docgen-typescript/-/react-docgen-typescript-2.2.2.tgz#4611055e569edc071204aadb20e1c93e1ab1659c"
@@ -13253,6 +13271,11 @@ uncontrollable@^7.2.1:
     "@types/react" ">=16.9.11"
     invariant "^2.2.4"
     react-lifecycles-compat "^3.0.4"
+
+underscore@>1.4.4:
+  version "1.13.6"
+  resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.13.6.tgz#04786a1f589dc6c09f761fc5f45b89e935136441"
+  integrity sha512-+A5Sja4HP1M08MaXya7p5LvjuM7K6q/2EaC0+iovj/wOcMsTzMvDFbasi/oSapiwOlt252IqsKqPjCl7huKS0A==
 
 undici@^5.12.0:
   version "5.14.0"

@@ -54,6 +54,8 @@ fragment EventDetails on Event {
         area
         address
         website
+        location
+        addressDetails
       }
     }
   }

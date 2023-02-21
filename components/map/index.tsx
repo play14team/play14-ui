@@ -1,0 +1,49 @@
+import Map, {
+  Marker,
+  Popup,
+  FullscreenControl,
+  NavigationControl,
+} from "react-map-gl";
+import "mapbox-gl/dist/mapbox-gl.css";
+
+const MapView = (props: { location: any; height?: string }) => {
+  const { height } = props;
+  const point = props.location.geometry;
+  const longitude = point.coordinates[0];
+  const latitude = point.coordinates[1];
+  const address = props.location.place_name;
+
+  return (
+    <Map
+      initialViewState={{
+        latitude: latitude,
+        longitude: longitude,
+        zoom: 15,
+      }}
+      style={{ width: "100%", height: height || "500px" }}
+      mapStyle="mapbox://styles/mapbox/streets-v12"
+      mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+    >
+      <FullscreenControl />
+      <NavigationControl />
+
+      <Marker
+        longitude={longitude}
+        latitude={latitude}
+        color="#ffc900"
+      ></Marker>
+
+      <Popup
+        anchor="top"
+        longitude={longitude}
+        latitude={latitude}
+        closeButton={false}
+        closeOnClick={false}
+      >
+        {address}
+      </Popup>
+    </Map>
+  );
+};
+
+export default MapView;

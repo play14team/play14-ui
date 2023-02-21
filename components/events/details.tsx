@@ -15,7 +15,6 @@ import {
 } from "../../models/graphql";
 import EventSidebar from "./sidebar";
 import UpcomingEventTimer from "./timer";
-import Location from "../layout/location";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
 import Gallery from "../layout/gallery";
@@ -26,6 +25,8 @@ import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
 import EventsNavigator from "./detailsnav";
 import moment from "moment";
+import ReactCountryFlag from "react-country-flag";
+import { countries } from "country-data";
 
 const EventDetails = (props: {
   event: FragmentType<typeof EventDetailsFragmentDoc>;
@@ -45,6 +46,7 @@ const EventDetails = (props: {
   const players = event.players?.data as PlayerEntity[];
   const hosts = event.hosts?.data as PlayerEntity[];
   const mentors = event.mentors?.data as PlayerEntity[];
+  const country = countries[eventLocation.country].name;
 
   return (
     <>
@@ -56,7 +58,17 @@ const EventDetails = (props: {
       <section className="events-details-area pt-70 pb-100">
         <ul className="d-flex list-unstyled justify-content-between">
           <li>
-            <h1>{event.name}</h1>
+            <h1>
+              {event.name}{" "}
+              {eventLocation.country && (
+                <ReactCountryFlag
+                  countryCode={eventLocation.country}
+                  svg
+                  title={country}
+                  aria-label={country}
+                />
+              )}
+            </h1>
           </li>
           <li>
             <h2>
@@ -86,35 +98,52 @@ const EventDetails = (props: {
           <div className="d-flex">
             <div className="flex-grow-1">
               <ul>
-                {venue.name && (
+                {venue && (
                   <li>
-                    <h5>
-                      <Link href={venue.website as string} target="_blank">
-                        <i className="bx bx-home"></i>
-                        {venue.name}
-                      </Link>
-                    </h5>
+                    <b>
+                      {venue.website && (
+                        <Link href={venue.website as string} target="_blank">
+                          <i className="bx bx-home"></i>
+                          {venue.name}
+                        </Link>
+                      )}
+                      {!venue.website && (
+                        <>
+                          <i className="bx bx-home"></i>
+                          {venue.name}
+                        </>
+                      )}
+                    </b>
                   </li>
                 )}
-                {venue.area && (
+                {!venue && (
                   <li>
-                    <i className="bx bx-map-alt"></i>
-                    {venue.area}
+                    <b>
+                      <i className="bx bx-home"></i>
+                      No venue yet
+                    </b>
                   </li>
                 )}
-                {venue.address && (
+
+                {venue && venue.addressDetails && (
+                  <li>
+                    <i className="bx bx-detail"></i>
+                    {venue.addressDetails}
+                  </li>
+                )}
+                {venue && (venue.location || venue.address) && (
                   <li>
                     <i className="bx bx-map"></i>
-                    {venue.address}
+                    {(venue.location && venue.location.place_name) ||
+                      venue.address}
                   </li>
                 )}
-                <li>
-                  <i className="bx bx-buildings"></i>
-                  <Location
-                    city={eventLocation.name}
-                    country={eventLocation.country}
-                  />
-                </li>
+                {eventLocation && eventLocation.country && (
+                  <li>
+                    <i className="bx bx-globe"></i>
+                    {country}
+                  </li>
+                )}
               </ul>
             </div>
             {event.contactEmail && (
@@ -135,6 +164,7 @@ const EventDetails = (props: {
         <div className="row">
           <div className="col-lg-8 col-md-12">
             {venue && <EventVenue venue={venue} />}
+            {!venue && <h5>Should display event location map instead</h5>}
           </div>
           <div className="col-lg-4 col-md-12">
             <EventSidebar event={event} />
