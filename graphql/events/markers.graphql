@@ -1,0 +1,32 @@
+query Markers {
+  events(
+    sort: "start:asc"
+    pagination: { limit: 10000 }
+    filters: { status: { ne: "Cancelled" }, venue: { location: { ne: {} } } }
+  ) {
+    data {
+      id
+      attributes {
+        slug
+        name
+        start
+        end
+        status
+        registration {
+          link
+        }
+        venue {
+          data {
+            id
+            attributes {
+              name
+              address
+              website
+              location
+            }
+          }
+        }
+      }
+    }
+  }
+}

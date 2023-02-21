@@ -1,9 +1,11 @@
-import Image, { StaticImageData } from "next/image";
+import Image from "next/image";
+import { Enum_Componentdefaulthistoryitem_Dateformat } from "../../models/graphql";
+import Moment from "react-moment";
 
 interface HistoryProps {
-  year: string;
-  month: string;
-  day?: string;
+  date: Date;
+  dateFormat: Enum_Componentdefaulthistoryitem_Dateformat;
+  additionalText: string;
   title: string;
   image?: string;
   imageAlt?: string;
@@ -11,16 +13,19 @@ interface HistoryProps {
 }
 
 const HistoryItem = (props: HistoryProps) => {
-  const { year, month, day, title, image, imageAlt, children } = props;
+  const { date, dateFormat, additionalText, title, image, imageAlt, children } =
+    props;
 
-  const sup = getSup(day);
+  const format = getFormat(dateFormat);
 
   return (
     <li className="timeline-block">
       <div className="timeline-date">
-        <span>{year}</span>
-        {month} {day}
-        <sup>{sup}</sup>
+        <span>
+          <Moment format="YYYY">{date}</Moment>
+        </span>
+        {format && <Moment format={format}>{date}</Moment>}
+        {additionalText}
       </div>
 
       <div className="timeline-icon">
@@ -54,22 +59,14 @@ const HistoryItem = (props: HistoryProps) => {
   );
 };
 
-const getSup = (day: string | undefined) => {
-  if (!day) return undefined;
-
-  switch (day) {
-    case "1":
-    case "21":
-    case "31":
-      return "st";
-    case "2":
-    case "22":
-      return "nd";
-    case "3":
-    case "23":
-      return "rd";
+const getFormat = (dateFormat: Enum_Componentdefaulthistoryitem_Dateformat) => {
+  switch (dateFormat) {
+    case Enum_Componentdefaulthistoryitem_Dateformat.Day:
+      return "MMMM Do";
+    case Enum_Componentdefaulthistoryitem_Dateformat.Month:
+      return "MMMM";
     default:
-      return "th";
+      return undefined;
   }
 };
 

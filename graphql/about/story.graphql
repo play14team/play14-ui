@@ -1,0 +1,35 @@
+query Story {
+  history {
+    data {
+      attributes {
+        founders
+        keyMoments
+        intro
+        items {
+          id
+          date
+          dateFormat
+          additionalText
+          title
+          description
+          image {
+            data {
+              attributes {
+                name
+                url
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  players(sort: "name:asc", filters: { position: { eq: "Founder" } }) {
+    data {
+      id
+      attributes {
+        ...PlayerItem
+      }
+    }
+  }
+}

@@ -4,13 +4,14 @@ interface EventDatesProps {
   start: Date;
   end: Date;
   className?: string;
+  displayYear?: boolean;
 }
 
-const EventDate = ({ start, end, className }: EventDatesProps) => {
+const EventDate = ({ start, end, displayYear }: EventDatesProps) => {
   const firstFormat = "MMMM dd";
   const secondFormat = `${
-    new Date(start).getMonth() != new Date(end).getMonth() ? "MMMM" : ""
-  }dd yyyy`;
+    new Date(start).getMonth() != new Date(end).getMonth() ? "MMMM " : ""
+  }dd ${displayYear ? "yyyy" : ""}`;
 
   return (
     <>
