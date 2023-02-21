@@ -17,8 +17,8 @@ const Home: NextPage = () => {
       <section id="title">
         <Title />
       </section>
-      <section id="summary" className="container pt-70">
-        <h3 className="pb-5">What is #play14?</h3>
+      <section id="summary" className="pt-70">
+        <h3 className="pb-4">What is #play14?</h3>
         <p>
           #play14 is a{" "}
           <strong>worldwide gathering of like-minded people</strong> who believe
@@ -56,116 +56,112 @@ const Home: NextPage = () => {
         <UpcomingEvents />
       </section>
       <section id="activities">
-        <div className="container">
-          <h3 className="pb-5">Activities</h3>
-          <p>
-            For two and a half days, people with{" "}
-            <Link href="/players">many different profiles and experiences</Link>{" "}
-            are invited to share{" "}
-            <Link href="/games">serious games and fun activities</Link>,
-            experiences and tips, knowledge and insights, laughs and smiles.{" "}
-            <strong>Everyone is welcome to join</strong>.
-          </p>
-          <p>
-            If you want to join and wonder what is going to happen, here are
-            some examples of activites we engage in:
-          </p>
-          <ul>
-            <li>
-              A{" "}
-              <Link href="/games/ball-pointLinkgame" target="_blank">
-                serious game
-              </Link>{" "}
-              that you use as a metaphor in order to understand a new concept
-            </li>
-            <li>
-              An{" "}
-              <Link href="/games/eggolution" target="_blank">
-                ice breaker
-              </Link>{" "}
-              game where people learn more about one another
-            </li>
-            <li>
-              A{" "}
-              <Link href="/games/brain-shock" target="_blank">
-                warm up
-              </Link>{" "}
-              or an{" "}
-              <Link href="/games/happy-salmon" target="_blank">
-                energizer
-              </Link>{" "}
-              that you can use to raise the level of awareness and energy
-            </li>
-            <li>
-              A facilitation technique that you can use in your daily work
-            </li>
-            <li>
-              A{" "}
-              <Link href="/games/cupcake-design-factory" target="_blank">
-                team building
-              </Link>{" "}
-              exercise that fosters collaboration and self organization
-            </li>
-            <li>
-              A{" "}
-              <Link href="/games/ball-runner" target="_blank">
-                game design
-              </Link>{" "}
-              session where you invent a new game to teach something new
-            </li>
-            <li>
-              A soul searching, deep-dive introspection session where you learn
-              about yourself
-            </li>
-            <li>
-              A one-on-one coaching session where you will find some answers
-              with the help of a friend
-            </li>
-            <li>
-              A brainstorming session on a question or problem that wakes you up
-              at night
-            </li>
-            <li>
-              A{" "}
-              <Link href="/games/doodling-together" target="_blank">
-                creative session
-              </Link>{" "}
-              where you sketch, doodle, or build something together
-            </li>
-            <li>
-              A fun and energetic time with{" "}
-              <Link href="https://youtu.be/N2quY1ZPF50" target="_blank">
-                dancing
-              </Link>
-              ,{" "}
-              <Link href="https://youtu.be/jpLCTQgHhqs" target="_blank">
-                singing
-              </Link>{" "}
-              or being silly together
-            </li>
-            <li>
-              An{" "}
-              <Link href="https://youtu.be/T7HPg2-xowc" target="_blank">
-                improv theater
-              </Link>{" "}
-              session where you can work on your confidence and ability to speak
-              publicly
-            </li>
-            <li>
-              A more esoteric session on a practice/hobby you want to share like
-              yoga, laughter yoga, Tai Chi, Qigong, meditation, mindfulness,
-              aikido, ...
-            </li>
-          </ul>
-        </div>
+        <h3 className="pb-4">Activities</h3>
+        <p>
+          For two and a half days, people with{" "}
+          <Link href="/players">many different profiles and experiences</Link>{" "}
+          are invited to share{" "}
+          <Link href="/games">serious games and fun activities</Link>,
+          experiences and tips, knowledge and insights, laughs and smiles.{" "}
+          <strong>Everyone is welcome to join</strong>.
+        </p>
+        <p>
+          If you want to join and wonder what is going to happen, here are some
+          examples of activites we engage in:
+        </p>
+        <ul>
+          <li>
+            A{" "}
+            <Link href="/games/ball-pointLinkgame" target="_blank">
+              serious game
+            </Link>{" "}
+            that you use as a metaphor in order to understand a new concept
+          </li>
+          <li>
+            An{" "}
+            <Link href="/games/eggolution" target="_blank">
+              ice breaker
+            </Link>{" "}
+            game where people learn more about one another
+          </li>
+          <li>
+            A{" "}
+            <Link href="/games/brain-shock" target="_blank">
+              warm up
+            </Link>{" "}
+            or an{" "}
+            <Link href="/games/happy-salmon" target="_blank">
+              energizer
+            </Link>{" "}
+            that you can use to raise the level of awareness and energy
+          </li>
+          <li>A facilitation technique that you can use in your daily work</li>
+          <li>
+            A{" "}
+            <Link href="/games/cupcake-design-factory" target="_blank">
+              team building
+            </Link>{" "}
+            exercise that fosters collaboration and self organization
+          </li>
+          <li>
+            A{" "}
+            <Link href="/games/ball-runner" target="_blank">
+              game design
+            </Link>{" "}
+            session where you invent a new game to teach something new
+          </li>
+          <li>
+            A soul searching, deep-dive introspection session where you learn
+            about yourself
+          </li>
+          <li>
+            A one-on-one coaching session where you will find some answers with
+            the help of a friend
+          </li>
+          <li>
+            A brainstorming session on a question or problem that wakes you up
+            at night
+          </li>
+          <li>
+            A{" "}
+            <Link href="/games/doodling-together" target="_blank">
+              creative session
+            </Link>{" "}
+            where you sketch, doodle, or build something together
+          </li>
+          <li>
+            A fun and energetic time with{" "}
+            <Link href="https://youtu.be/N2quY1ZPF50" target="_blank">
+              dancing
+            </Link>
+            ,{" "}
+            <Link href="https://youtu.be/jpLCTQgHhqs" target="_blank">
+              singing
+            </Link>{" "}
+            or being silly together
+          </li>
+          <li>
+            An{" "}
+            <Link href="https://youtu.be/T7HPg2-xowc" target="_blank">
+              improv theater
+            </Link>{" "}
+            session where you can work on your confidence and ability to speak
+            publicly
+          </li>
+          <li>
+            A more esoteric session on a practice/hobby you want to share like
+            yoga, laughter yoga, Tai Chi, Qigong, meditation, mindfulness,
+            aikido, ...
+          </li>
+        </ul>
       </section>
 
       <section id="gallery">
         <HomeGallery />
       </section>
 
-      <section id="manifesto and code of conduct" className="pt-70">
-        <h3 className="pb-5">Our values</h3>
+      <section id="manifesto and code of conduct" className="pt-100">
+        <h3 className="pb-4">Our values</h3>
         <p>
           A game/activity at #play14 could be pretty much anything as long as it
           respects our{" "}

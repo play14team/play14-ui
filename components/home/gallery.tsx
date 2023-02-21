@@ -9,8 +9,8 @@ const HomeGallery = () => {
   const images = data?.home?.data?.attributes?.images.data;
 
   return (
-    <div className="container pt-70">
-      <h3 className=" pb-5">Photo gallery</h3>
+    <div className="pt-100">
+      <h3 className=" pb-4">Photo gallery</h3>
       <p>
         However, #play14 is first and foremost a community of people, a family,
         and an incredible human adventure.

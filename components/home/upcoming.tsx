@@ -14,7 +14,7 @@ const UpcomingEvents = () => {
   const events = data?.events?.data as EventEntity[];
 
   return (
-    <div className="container pt-70">
+    <div className="pt-100">
       <h3>Upcoming events</h3>
       {loading && <Loader />}
       {error && <ErrorMessage message={error.message} />}
