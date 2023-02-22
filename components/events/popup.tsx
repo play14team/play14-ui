@@ -12,9 +12,10 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
 
   return (
     <Popup
-      anchor="top"
+      anchor="bottom-right"
       longitude={Number(longitude)}
       latitude={Number(latitude)}
+      offset={[0, -35]}
       onClose={props.onClose}
     >
       <Link href={venue.website || "#"} target="_blank">

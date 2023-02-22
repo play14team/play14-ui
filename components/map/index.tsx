@@ -34,9 +34,10 @@ const MapView = (props: { location: any; height?: string }) => {
       ></Marker>
 
       <Popup
-        anchor="top"
+        anchor="bottom-right"
         longitude={longitude}
         latitude={latitude}
+        offset={[0, -35]}
         closeButton={false}
         closeOnClick={false}
       >
