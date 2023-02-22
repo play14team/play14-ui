@@ -1,7 +1,7 @@
 import type { NextPage } from "next";
 import Image from "next/image";
 import Link from "next/link";
-import Page from "../../components/layout/page";
+import Page from "../components/layout/page";
 
 const Contact: NextPage = () => {
   return (
@@ -68,7 +68,7 @@ const Contact: NextPage = () => {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="mailto:team@play14.org" target="_blank">
               <Image src="/email.png" alt="Email" width={250} height={250} />
-              <p>Register to our newsletter</p>
+              <p>Sent us a message</p>
             </Link>
           </div>
         </div>

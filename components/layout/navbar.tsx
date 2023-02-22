@@ -176,7 +176,7 @@ const Navbar = () => {
                   </li>
 
                   <li className="nav-item">
-                    <Link href="/about/contact" className="nav-link">
+                    <Link href="/contact" className="nav-link">
                       Contact
                     </Link>
                   </li>
