@@ -12,6 +12,7 @@ import openTabSection from "../../libs/tabs";
 import Html from "../layout/html";
 import EventGrid from "../events/grid";
 import PlayersNavigator from "./detailsnav";
+import Map from "../map";
 
 const PlayerDetails = (props: {
   player: FragmentType<typeof PlayerDetailsFragmentDoc>;
@@ -53,9 +54,9 @@ const PlayerDetails = (props: {
             </div>
 
             <div className="col-lg-4 col-md-12 px-4">
-              {player.embeddedMapUrl && (
+              {player.location && (
                 <div className="events-details-location">
-                  <iframe title="Map" src={player.embeddedMapUrl}></iframe>
+                  <Map location={player.location} height={"450px"} zoom={10} />
                 </div>
               )}
             </div>

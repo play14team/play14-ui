@@ -18,12 +18,12 @@ import UpcomingEventTimer from "./timer";
 import EventSchedule from "./schedule";
 import PlayerGrid from "../players/grid";
 import Gallery from "../layout/gallery";
-import EventVenue from "./venue";
 import EventDescription from "./description";
 import EventSponsorships from "./sponsorships";
 import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
 import EventsNavigator from "./detailsnav";
+import Map from "../map";
 import moment from "moment";
 import ReactCountryFlag from "react-country-flag";
 import { countries } from "country-data";
@@ -163,8 +163,18 @@ const EventDetails = (props: {
 
         <div className="row">
           <div className="col-lg-8 col-md-12">
-            {venue && <EventVenue venue={venue} />}
-            {!venue && <h5>Should display event location map instead</h5>}
+            <div className="events-details-location">
+              {venue && venue.location && (
+                <Map location={venue.location} height={"450px"} popup />
+              )}
+              {!venue && eventLocation.location && (
+                <Map
+                  location={eventLocation.location}
+                  height={"450px"}
+                  zoom={12}
+                />
+              )}
+            </div>
           </div>
           <div className="col-lg-4 col-md-12">
             <EventSidebar event={event} />

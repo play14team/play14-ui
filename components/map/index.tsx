@@ -6,8 +6,13 @@ import Map, {
 } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 
-const MapView = (props: { location: any; height?: string }) => {
-  const { height } = props;
+const MapView = (props: {
+  location: any;
+  height?: string;
+  zoom?: number;
+  popup?: boolean;
+}) => {
+  const { height, zoom, popup } = props;
   const point = props.location.geometry;
   const longitude = point.coordinates[0];
   const latitude = point.coordinates[1];
@@ -18,7 +23,7 @@ const MapView = (props: { location: any; height?: string }) => {
       initialViewState={{
         latitude: latitude,
         longitude: longitude,
-        zoom: 15,
+        zoom: zoom || 15,
       }}
       style={{ width: "100%", height: height || "500px" }}
       mapStyle="mapbox://styles/mapbox/streets-v12"
@@ -33,16 +38,18 @@ const MapView = (props: { location: any; height?: string }) => {
         color="#ffc900"
       ></Marker>
 
-      <Popup
-        anchor="bottom-right"
-        longitude={longitude}
-        latitude={latitude}
-        offset={[0, -35]}
-        closeButton={false}
-        closeOnClick={false}
-      >
-        {address}
-      </Popup>
+      {popup && (
+        <Popup
+          anchor="bottom-right"
+          longitude={longitude}
+          latitude={latitude}
+          offset={[0, -35]}
+          closeButton={false}
+          closeOnClick={false}
+        >
+          {address}
+        </Popup>
+      )}
     </Map>
   );
 };

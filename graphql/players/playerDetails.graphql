@@ -19,6 +19,7 @@ fragment PlayerDetails on Player {
   country
   website
   embeddedMapUrl
+  location
   avatar {
     data {
       attributes {

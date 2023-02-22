@@ -43,6 +43,7 @@ fragment EventDetails on Event {
       attributes {
         name
         country
+        location
       }
     }
   }
