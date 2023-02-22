@@ -27,7 +27,7 @@ const Format: NextPage = () => {
         <p>
           Once you are there, the <strong>organizers job is over</strong>. They
           have provided a location, food and drinks for the rest of the event,
-          then it's{" "}
+          then it&apos;s{" "}
           <strong>up to you as a participant to make it a great event</strong>.
         </p>
         <p>
@@ -73,14 +73,15 @@ const Format: NextPage = () => {
           <li>
             <strong>Whatever happens is the only thing that could have</strong>
             <p>
-              Be prepared to be surprised. Don't be annoyed if you get feedback.
-              Don't be disappointed if it doesn't work. Try again if need be.
+              Be prepared to be surprised. Don&apos;t be annoyed if you get
+              feedback. Don&apos;t be disappointed if it doesn&apos;t work. Try
+              again if need be.
             </p>
           </li>
           <li>
-            <strong>When it's over, it's over</strong>
+            <strong>When it&apos;s over, it&apos;s over</strong>
             <p>
-              As a facilitator, it's up to you to mind your timebox. The
+              As a facilitator, it&apos;s up to you to mind your timebox. The
               organizers will not do it for your. Keep in mind that the
               participants of your session might want to go to another session
               after yours, and that the room might be reserved after. Feel free
@@ -114,7 +115,7 @@ const Format: NextPage = () => {
               </p>
               <p>
                 Neither the facilitator nor the other participants should feel
-                offended about that. It's just what it is.
+                offended about that. It&apos;s just what it is.
               </p>
             </div>
             <div className="col-lg-6 col-md-12 pt-5">
@@ -165,7 +166,7 @@ const Format: NextPage = () => {
         <div className="container pt-100">
           <h2>How does the schedule come up ?</h2>
           <p>
-            <strong>#play14</strong> being an unconference, it's up to the
+            <strong>#play14</strong> being an unconference, it&apos;s up to the
             participants to come up with the schedule. This is done every
             morning after some warm-up games, when we fill up the marketplace.
           </p>
