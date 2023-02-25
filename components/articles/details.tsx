@@ -178,7 +178,7 @@ const ArticleDetails = (props: {
             </div>
 
             <div className="col-lg-4 col-md-12">
-              <ArticleSidebar article={article} />
+              <ArticleSidebar />
             </div>
           </div>
         </div>
