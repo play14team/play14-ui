@@ -32,10 +32,10 @@ const ArticleDetails = (props: {
         <meta name="description" content={article.summary} />
       </Head>
 
-      <ArticlesNavigator current={article.slug} />
-
       <section className="blog-details-area pt-70 pb-100">
         <h1>{article.title}</h1>
+
+        <ArticlesNavigator current={article.slug} />
 
         <div className="container pt-5">
           <div className="row">
@@ -77,9 +77,13 @@ const ArticleDetails = (props: {
                     </ul>
                   </div>
 
-                  <Html>{article.content}</Html>
+                  <div className="pt-4">
+                    <Html>{article.content}</Html>
+                  </div>
 
-                  {article.images && <Gallery images={article.images.data} />}
+                  <div className="pt-4">
+                    {article.images && <Gallery images={article.images.data} />}
+                  </div>
                 </div>
 
                 <div className="article-footer">
@@ -159,7 +163,9 @@ const ArticleDetails = (props: {
                           width={200}
                           height={200}
                         />
-                        <h4>{author && author.name}</h4>
+                        <Link href={`/players/${author.slug}`}>
+                          <h4>{author && author.name}</h4>
+                        </Link>
                         <span className="d-block">
                           {author && author.position}
                         </span>

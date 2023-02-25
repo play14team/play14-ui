@@ -1,0 +1,41 @@
+query ArticleSidebar {
+  latest: articles(sort: "publishedAt:desc", pagination: { limit: 3 }) {
+    data {
+      id
+      attributes {
+        slug
+        title
+        publishedAt
+        defaultImage {
+          data {
+            attributes {
+              url
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+  categories: articles {
+    data {
+      attributes {
+        category
+      }
+    }
+  }
+  tags: articles {
+    data {
+      attributes {
+        tags {
+          data {
+            id
+            attributes {
+              value
+            }
+          }
+        }
+      }
+    }
+  }
+}
