@@ -1,9 +1,0 @@
-query ArticleSlugs {
-  articles(sort: "publishedAt:desc", pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        slug
-      }
-    }
-  }
-}

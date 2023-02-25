@@ -1,0 +1,19 @@
+query ArticleNav {
+  articles(sort: "publishedAt:desc", pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+        title
+        publishedAt
+        defaultImage {
+          data {
+            attributes {
+              url
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

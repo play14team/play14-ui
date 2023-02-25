@@ -11,6 +11,11 @@ const NotFoundPage = () => (
     </Head>
     <h1>404: Not Found</h1>
     <p>You just hit a page that doesn&#39;t exist...</p>
+    <Image
+      src={notound}
+      alt="#play14 404"
+      style={{ marginBottom: `1.45rem` }}
+    />
     <p>
       Please, stop playing with our URLs and{" "}
       <b>
@@ -19,11 +24,6 @@ const NotFoundPage = () => (
         </Link>
       </b>
     </p>
-    <Image
-      src={notound}
-      alt="#play14 404"
-      style={{ marginBottom: `1.45rem` }}
-    />
   </Layout>
 );
 

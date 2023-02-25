@@ -10509,8 +10509,8 @@ blockquote::after,
   -webkit-box-pack: justify !important;
   -ms-flex-pack: justify !important;
   justify-content: space-between !important;
-  margin-top: 30px;
-  padding-top: 30px;
+  margin-top: 10px;
+  padding-top: 10px;
   padding-bottom: 30px;
   border-top: 1px solid #eeeeee;
   border-bottom: 1px solid #eeeeee;

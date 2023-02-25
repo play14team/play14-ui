@@ -1,0 +1,71 @@
+query Article($slug: String!) {
+  articles(filters: { slug: { eq: $slug } }) {
+    data {
+      attributes {
+        ...ArticleDetails
+      }
+    }
+  }
+}
+
+fragment ArticleDetails on Article {
+  slug
+  title
+  category
+  summary
+  publishedAt
+  updatedAt
+  cannonical
+  tags {
+    data {
+      id
+      attributes {
+        value
+      }
+    }
+  }
+  defaultImage {
+    data {
+      attributes {
+        url
+        name
+        blurhash
+      }
+    }
+  }
+  images {
+    data {
+      attributes {
+        name
+        url
+        width
+        height
+        hash
+        mime
+        provider
+        size
+      }
+    }
+  }
+  author {
+    data {
+      id
+      attributes {
+        name
+        slug
+        position
+        tagline
+        avatar {
+          data {
+            attributes {
+              name
+              url
+              blurhash
+            }
+          }
+        }
+      }
+    }
+  }
+  content
+}

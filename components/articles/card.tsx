@@ -60,6 +60,13 @@ const ArticleCard = (props: {
           <h3>
             <Link href={url}>{article.title}</Link>
           </h3>
+          <p>
+            {article.summary.length > 200
+              ? article.summary
+                  .substring(0, article.summary.indexOf(" ", 200))
+                  .concat("...")
+              : article.summary}
+          </p>
         </div>
       </div>
     </div>
