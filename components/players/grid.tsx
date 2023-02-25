@@ -5,7 +5,7 @@ const PlayerGrid = (props: { title?: string; players: PlayerEntity[] }) => {
   const { title, players } = props;
 
   return (
-    <section className="scientist-area pb-70">
+    <section className="scientist-area ptb-70">
       <div className="container">
         {title && players.length > 0 && (
           <div className="section-title">

@@ -30,7 +30,7 @@ const Events: NextPage = () => {
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
           />
-          <div className="pt-70">{events && <EventGrid events={events} />}</div>
+          <EventGrid events={events} />
           <Paging
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}

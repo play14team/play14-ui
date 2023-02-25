@@ -12,22 +12,19 @@ const Paging = (props: {
 
   for (let index = 1; index < pagination.pageCount + 1; index++) {
     items.push(
-      <li
-        className={`page-item ${
-          isCurrentPage(pagination, index) ? "active" : ""
-        }`}
-        style={{ backgroundColor: color, borderColor: "ff5200" }}
-      >
-        <Link className="page-link" onClick={(e) => onNextPage(index)} href="#">
-          <span
-            style={{
-              color: isCurrentPage(pagination, index) ? "#ffffff" : color,
-            }}
-          >
-            {index}
-          </span>
+      isCurrentPage(pagination, index) ? (
+        <span className="page-numbers current" aria-current="page">
+          {index}
+        </span>
+      ) : (
+        <Link
+          href="#"
+          className="page-numbers"
+          onClick={(e) => onNextPage(index)}
+        >
+          {index}
         </Link>
-      </li>
+      )
     );
   }
 
@@ -38,58 +35,48 @@ const Paging = (props: {
       : pagination.page * pagination.pageSize;
 
   return (
-    <nav aria-label="pagination" style={{ paddingTop: "20px" }}>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6 col-sm-6 col-md-6">
-            <ul className="pagination pagination-sm">
-              <li
-                className={`page-item ${
-                  pagination.page == 1 ? "disabled" : ""
-                }`}
-              >
-                <Link
-                  className="page-link"
-                  href="#"
-                  aria-label="Previous"
-                  onClick={(e) => {
-                    onNextPage(pagination.page - 1);
-                  }}
-                  style={{ color: color }}
-                >
-                  <span aria-hidden="true">&laquo;</span>
-                </Link>
-              </li>
-
-              {items}
-
-              <li
-                className={`page-item ${
-                  pagination.page == pagination.pageCount ? "disabled" : ""
-                }`}
-              >
-                <Link
-                  className="page-link"
-                  href="#"
-                  aria-label="Next"
-                  onClick={(e) => {
-                    onNextPage(pagination.page + 1);
-                  }}
-                  style={{ color: color }}
-                >
-                  <span aria-hidden="true">&raquo;</span>
-                </Link>
-              </li>
-            </ul>
-          </div>
-          <div className="col-lg-6 col-sm-6 col-md-6 float-end">
-            <span className="float-end">
-              {itemMin} to {itemMax} of {pagination.total}
+    <div className="row">
+      <div className="col-lg-12 col-sm-12 col-md-12">
+        <div className="pagination-area text-center">
+          {pagination.page == 1 ? (
+            <span className="page-numbers isDisabled" aria-current="page">
+              <i className="bx bx-chevrons-left"></i>
             </span>
-          </div>
+          ) : (
+            <Link
+              href="#"
+              className="prev page-numbers"
+              onClick={(e) => {
+                onNextPage(pagination.page - 1);
+              }}
+            >
+              <i className="bx bx-chevrons-left"></i>
+            </Link>
+          )}
+
+          {items}
+
+          {pagination.page == pagination.pageCount ? (
+            <span className="page-numbers isDisabled" aria-current="page">
+              <i className="bx bx-chevrons-right"></i>
+            </span>
+          ) : (
+            <Link
+              href="#"
+              className="next page-numbers"
+              onClick={(e) => {
+                onNextPage(pagination.page + 1);
+              }}
+            >
+              <i className="bx bx-chevrons-right"></i>
+            </Link>
+          )}
         </div>
       </div>
-    </nav>
+      <div className="col-lg-12 col-sm-12 col-md-12 text-center pt-1">
+        {itemMin} to {itemMax} of {pagination.total}
+      </div>
+    </div>
   );
 };
 

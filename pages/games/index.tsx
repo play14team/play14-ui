@@ -1,10 +1,7 @@
 import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useState } from "react";
 import GameGrid from "../../components/games/grid";
-import ErrorMessage from "../../components/layout/error";
-import Loader from "../../components/layout/loader";
 import Page from "../../components/layout/page";
 import Paging from "../../components/layout/paging";
 import { GameEntity, GamesDocument, Pagination } from "../../models/graphql";
@@ -28,9 +25,7 @@ const Games: NextPage = () => {
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
           />
-          <div className="pt-70">
-            <GameGrid games={games} />
-          </div>
+          <GameGrid games={games} />
           <Paging
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}

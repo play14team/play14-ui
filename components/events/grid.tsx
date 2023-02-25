@@ -5,7 +5,7 @@ const EventGrid = (props: { events: EventEntity[] }) => {
   const { events } = props;
 
   return (
-    <div className="events-area pt-70 pb-70">
+    <div className="events-area ptb-70">
       <div className="container">
         <div className="row">
           {events &&

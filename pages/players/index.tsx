@@ -32,9 +32,7 @@ const Players: NextPage = () => {
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}
           />
-          <div className="pt-70">
-            <PlayerGrid players={players} />
-          </div>
+          <PlayerGrid players={players} />
           <Paging
             pagination={pagination}
             onNextPage={(nextPage) => setPage(nextPage)}

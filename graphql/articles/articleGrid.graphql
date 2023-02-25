@@ -1,0 +1,55 @@
+query Articles($page: Int!, $pageSize: Int!) {
+  articles(
+    sort: "publishedAt:desc"
+    pagination: { page: $page, pageSize: $pageSize }
+  ) {
+    data {
+      id
+      attributes {
+        ...ArticleItem
+      }
+    }
+    meta {
+      pagination {
+        page
+        pageSize
+        total
+        pageCount
+      }
+    }
+  }
+}
+
+fragment ArticleItem on Article {
+  slug
+  title
+  summary
+  category
+  publishedAt
+  defaultImage {
+    data {
+      attributes {
+        url
+        name
+        blurhash
+      }
+    }
+  }
+  author {
+    data {
+      id
+      attributes {
+        slug
+        name
+        avatar {
+          data {
+            attributes {
+              name
+              url
+            }
+          }
+        }
+      }
+    }
+  }
+}
