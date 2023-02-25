@@ -76,7 +76,7 @@ const ArticleSidebar = () => {
           {categoryCount &&
             Object.keys(categoryCount).map((category) => (
               <li key={category}>
-                <Link href={`/articles/categories/${category}`}>
+                <Link href={`/articles/categories/${category.toLowerCase()}`}>
                   {category}
                   <span className="post-count">
                     ({categoryCount[category]})

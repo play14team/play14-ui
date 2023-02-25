@@ -1,7 +1,8 @@
-query Articles($page: Int!, $pageSize: Int!) {
+query Articles($page: Int!, $pageSize: Int!, $category: String, $tag: String) {
   articles(
     sort: "publishedAt:desc"
     pagination: { page: $page, pageSize: $pageSize }
+    filters: { category: { eqi: $category }, tags: { value: { eqi: $tag } } }
   ) {
     data {
       id
