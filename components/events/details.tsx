@@ -54,7 +54,6 @@ const EventDetails = (props: {
         <title>#play14 - {event && event.name}</title>
         <meta name="description" content={description} />
       </Head>
-      <EventsNavigator current={event.slug} />
       <section className="events-details-area pt-70 pb-100">
         <ul className="d-flex list-unstyled justify-content-between">
           <li>
@@ -76,6 +75,7 @@ const EventDetails = (props: {
             </h2>
           </li>
         </ul>
+        <EventsNavigator current={event.slug} />
         <div className="events-details-image">
           <div style={{ position: "relative", width: "100%", height: "250px" }}>
             {defaultImage && (

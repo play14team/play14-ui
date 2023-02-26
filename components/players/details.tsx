@@ -31,11 +31,11 @@ const PlayerDetails = (props: {
         <title>#play14 - {player && player.name}</title>
         <meta name="description" content={description} />
       </Head>
-      <PlayersNavigator current={player.slug} />
       <section className="case-studies-details-area pt-70 pb-100">
         <div className="container">
           <h1>{player.name}</h1>
-          <div className="row">
+          <PlayersNavigator current={player.slug} />
+          <div className="row pt-5">
             <div className="col-lg-4 col-md-12">
               <div className="single-scientist-box">
                 <Image

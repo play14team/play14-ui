@@ -19,9 +19,9 @@ const GameDetails = (props: {
         <title>#play14 - {game && game.name}</title>
         <meta name="description" content={game.summary?.substring(0, 200)} />
       </Head>
-      <GamesNavigator current={game.slug} />
       <section className="services-details-area pt-70 pb-100">
         <h1>{game.name}</h1>
+        <GamesNavigator current={game.slug} />
         <div className="container pt-5">
           <div className="row">
             <div className="col-lg-8 col-md-12">

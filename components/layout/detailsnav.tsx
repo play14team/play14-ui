@@ -1,59 +1,96 @@
 import Link from "next/link";
+import Image from "next/image";
+import { UploadFile } from "../../models/graphql";
+import Moment from "react-moment";
+
+export interface NavLink {
+  slug: string;
+  name: string;
+  image: UploadFile;
+  date: Date;
+}
 
 const DetailsNavigator = (props: {
-  current: string;
-  slugs: string[] | undefined;
-  listUrl: string;
+  previous: NavLink;
+  next: NavLink;
+  entity: string;
 }) => {
-  const { current, slugs, listUrl } = props;
-  if (!slugs) return <></>;
-
-  const index = slugs.indexOf(current) || 0;
-  const previous = index > 0 ? slugs[index - 1] : "#";
-  const next = index < slugs.length - 1 ? slugs[index + 1] : "#";
+  const { previous, next, entity } = props;
+  console.log(next);
 
   return (
-    <nav aria-label="pagination" style={{ paddingTop: "20px" }}>
-      <div className="container">
-        <div className="row">
-          <div className="col-lg-6 col-sm-6 col-md-6">
-            <ul className="pagination pagination-sm">
-              <li className={`page-item ${previous == "#" ? "disabled" : ""}`}>
-                <Link
-                  className="page-link orange"
-                  href={previous}
-                  aria-label="Previous"
+    <nav className="tracer-post-navigation">
+      {previous && (
+        <div className="prev-link-wrapper" style={{ flex: "none" }}>
+          <div className="info-prev-link-wrapper">
+            <Link href={`/${entity}/${previous.slug}`}>
+              <span className="image-prev">
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100px",
+                  }}
                 >
-                  <span aria-hidden="true">&laquo;</span>
-                </Link>
-              </li>
+                  <Image
+                    src={previous.image.url}
+                    alt={previous.image.name}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
 
-              <li className="page-item">
-                <Link
-                  className="page-link orange"
-                  href={listUrl}
-                  aria-label="Grid"
-                >
-                  <i
-                    className="bx bx-grid-alt"
-                    style={{ verticalAlign: "middle" }}
-                  ></i>
-                </Link>
-              </li>
+                <span className="post-nav-title">Prev</span>
+              </span>
 
-              <li className={`page-item ${next == "#" ? "disabled" : ""}`}>
-                <Link
-                  className="page-link orange"
-                  href={next}
-                  aria-label="Next"
-                >
-                  <span aria-hidden="true">&raquo;</span>
-                </Link>
-              </li>
-            </ul>
+              <span className="prev-link-info-wrapper">
+                <span className="prev-title">{previous.name}</span>
+                <span className="meta-wrapper">
+                  <span className="date-post">
+                    <Moment format="MMM Do, YYYY">{previous.date}</Moment>
+                  </span>
+                </span>
+              </span>
+            </Link>
           </div>
         </div>
-      </div>
+      )}
+      {!previous && <p> </p>}
+
+      {next && (
+        <div className="next-link-wrapper" style={{ flex: "none" }}>
+          <div className="info-next-link-wrapper">
+            <Link href={`/${entity}/${next.slug}`}>
+              <span className="next-link-info-wrapper">
+                <span className="next-title">{next.name}</span>
+                <span className="meta-wrapper">
+                  <span className="date-post">
+                    <Moment format="MMM Do, YYYY">{next.date}</Moment>
+                  </span>
+                </span>
+              </span>
+
+              <span className="image-next">
+                <div
+                  style={{
+                    position: "relative",
+                    width: "100%",
+                    height: "100px",
+                  }}
+                >
+                  <Image
+                    src={next.image.url}
+                    alt={next.image.name}
+                    fill
+                    style={{ objectFit: "cover" }}
+                  />
+                </div>
+                <span className="post-nav-title">Next</span>
+              </span>
+            </Link>
+          </div>
+        </div>
+      )}
     </nav>
   );
 };

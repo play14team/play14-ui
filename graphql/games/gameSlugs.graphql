@@ -1,9 +1,0 @@
-query GameSlugs {
-  games(sort: "name:asc", pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        slug
-      }
-    }
-  }
-}

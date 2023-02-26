@@ -1,0 +1,19 @@
+query EventNav {
+  events(sort: "start:desc", pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+        name
+        start
+        defaultImage {
+          data {
+            attributes {
+              url
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

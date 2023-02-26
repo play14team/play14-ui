@@ -1,0 +1,19 @@
+query PlayerNav {
+  players(sort: "name:asc", pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+        name
+        updatedAt
+        avatar {
+          data {
+            attributes {
+              url
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}

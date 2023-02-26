@@ -1,0 +1,19 @@
+query GameNav {
+  games(sort: "name:asc", pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+        name
+        publishedAt
+        defaultImage {
+          data {
+            attributes {
+              url
+              name
+            }
+          }
+        }
+      }
+    }
+  }
+}
