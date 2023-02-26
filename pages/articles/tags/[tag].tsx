@@ -28,15 +28,19 @@ const ArticlesByTag: NextPage = () => {
     <Page name={`Articles - Tag : ${tag}`} loading={loading} error={error}>
       {data && (
         <>
-          <Paging
-            pagination={pagination}
-            onNextPage={(nextPage) => setPage(nextPage)}
-          />
+          {pagination.pageCount > 1 && (
+            <Paging
+              pagination={pagination}
+              onNextPage={(nextPage) => setPage(nextPage)}
+            />
+          )}
           <ArticleGrid articles={articles} />
-          <Paging
-            pagination={pagination}
-            onNextPage={(nextPage) => setPage(nextPage)}
-          />
+          {pagination.pageCount > 1 && (
+            <Paging
+              pagination={pagination}
+              onNextPage={(nextPage) => setPage(nextPage)}
+            />
+          )}
         </>
       )}
     </Page>

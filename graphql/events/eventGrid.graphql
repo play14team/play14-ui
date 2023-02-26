@@ -18,7 +18,7 @@ query Events($page: Int!, $pageSize: Int!) {
 }
 
 query UpcomingEvents($today: DateTime!) {
-  events(sort: "start:desc", filters: { end: { gte: $today } }) {
+  events(sort: "start:asc", filters: { end: { gte: $today } }) {
     data {
       id
       attributes {

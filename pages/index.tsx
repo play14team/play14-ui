@@ -183,12 +183,7 @@ const Home: NextPage = () => {
       </section>
 
       <section id="benefits" className="pt-70">
-        <p>
-          Join us in order to develop your <strong>facilitation skills</strong>,
-          increase your <strong>ability to accompany change</strong> in your
-          organization, <strong>foster your creativity</strong> and improve your{" "}
-          <strong>capacity to innovate</strong>.
-        </p>
+        <p>#play14 is really open to anyone who wishes to give it a try.</p>
         <div className="d-flex justify-content-center">
           <blockquote>
             You can discover more about a person in an hour of play than a year
@@ -199,6 +194,12 @@ const Home: NextPage = () => {
             </strong>
           </blockquote>
         </div>
+        <p>
+          Join us in order to develop your <strong>facilitation skills</strong>,
+          increase your <strong>ability to accompany change</strong> in your
+          organization, <strong>foster your creativity</strong> and improve your{" "}
+          <strong>capacity to innovate</strong>.
+        </p>
       </section>
     </section>
   );

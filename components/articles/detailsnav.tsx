@@ -20,7 +20,7 @@ const ArticlesNavigator = (props: { current: string }) => {
     <>
       <div className="tracer-post-navigation">
         {previous && (
-          <div className="prev-link-wrapper">
+          <div className="prev-link-wrapper" style={{ flex: "none" }}>
             <div className="info-prev-link-wrapper">
               <Link href={`/articles/${previous.attributes?.slug}`}>
                 <span className="image-prev">
