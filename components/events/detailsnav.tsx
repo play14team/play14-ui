@@ -1,12 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { EventNavDocument, Event } from "../../models/graphql";
 import DetailsNavigator, { NavLink } from "../layout/detailsnav";
+import Loader from "../layout/loader";
 
 const EventsNavigator = (props: { current: string }) => {
   const { data, loading } = useQuery(EventNavDocument);
   const { current } = props;
 
-  if (loading) return;
+  if (loading) return <Loader size="18vh" />;
 
   const events = data.events?.data;
   const index = events.findIndex((a) => a.attributes?.slug == current);

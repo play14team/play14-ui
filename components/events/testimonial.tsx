@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import ReactAudioPlayer from "react-audio-player";
 import { Testimonial } from "../../models/graphql";
 import Html from "../layout/html";
@@ -37,7 +38,13 @@ const TestimonialItem = (props: { testimonial: Testimonial }) => {
               />
             )}
             <div className="title">
-              <h3>{author ? author.name : "Anonymous"}</h3>
+              <h3>
+                {author ? (
+                  <Link href={`/players/${author.slug}`}>{author.name}</Link>
+                ) : (
+                  "Anonymous"
+                )}
+              </h3>
               <span>{author && author.tagline}</span>
             </div>
           </div>

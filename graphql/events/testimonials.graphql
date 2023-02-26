@@ -17,6 +17,7 @@ query Testimonials {
             attributes {
               name
               slug
+              tagline
               avatar {
                 data {
                   attributes {

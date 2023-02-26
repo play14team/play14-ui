@@ -1,12 +1,13 @@
 import { useQuery } from "@apollo/client";
 import { Player, PlayerNavDocument } from "../../models/graphql";
 import DetailsNavigator, { NavLink } from "../layout/detailsnav";
+import Loader from "../layout/loader";
 
 const PlayersNavigator = (props: { current: string }) => {
   const { data, loading } = useQuery(PlayerNavDocument);
   const { current } = props;
 
-  if (loading) return;
+  if (loading) return <Loader size="18vh" />;
 
   const players = data.players?.data;
   const index = players.findIndex((a) => a.attributes?.slug == current);

@@ -10,6 +10,13 @@ const PlayerSidebar = (props: { player: Player }) => {
         <ul>
           <li>
             <div className="icon">
+              <i className="bx bx-message"></i>
+            </div>
+            <span>Occupation</span>
+            {player.tagline}
+          </li>
+          <li>
+            <div className="icon">
               <i className="bx bx-user-pin"></i>
             </div>
             <span>Role</span>

@@ -53,6 +53,10 @@ const PlayerDetails = (props: {
               </div>
             </div>
 
+            <div className="col-lg-4 col-md-12">
+              <PlayerSidebar player={player} />
+            </div>
+
             <div className="col-lg-4 col-md-12 px-4">
               {player.location && (
                 <div className="events-details-location">
@@ -60,16 +64,8 @@ const PlayerDetails = (props: {
                 </div>
               )}
             </div>
-
-            <div className="col-lg-4 col-md-12">
-              <PlayerSidebar player={player} />
-            </div>
           </div>
           <div className="row">
-            <div className="case-studies-details-desc">
-              <h5>{player.tagline}</h5>
-            </div>
-
             {/* tabs */}
             <div className="row">
               <div className="courses-details-desc">
