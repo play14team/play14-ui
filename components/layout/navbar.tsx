@@ -105,6 +105,16 @@ const Navbar = () => {
 
                       <li className="nav-item">
                         <Link
+                          href="/events/testimonials"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
+                          Testimonials
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link
                           href="/events/organizing"
                           onClick={() => setCollapsed(true)}
                           className="nav-link"

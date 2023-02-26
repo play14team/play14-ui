@@ -1,0 +1,34 @@
+query Testimonials {
+  testimonials(pagination: { limit: 10000 }) {
+    data {
+      id
+      attributes {
+        content
+        audio {
+          data {
+            attributes {
+              name
+              url
+            }
+          }
+        }
+        author {
+          data {
+            attributes {
+              name
+              slug
+              avatar {
+                data {
+                  attributes {
+                    name
+                    url
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
