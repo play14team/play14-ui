@@ -1,8 +1,6 @@
 import { useQuery } from "@apollo/client";
-import Link from "next/link";
-import Image from "next/image";
-import { ArticleNavDocument } from "../../models/graphql";
-import Moment from "react-moment";
+import { ArticleNavDocument, Article } from "../../models/graphql";
+import DetailsNavigator, { NavLink } from "../layout/detailsnav";
 
 const ArticlesNavigator = (props: { current: string }) => {
   const { data, loading } = useQuery(ArticleNavDocument);
@@ -16,88 +14,23 @@ const ArticlesNavigator = (props: { current: string }) => {
   const next = index < articles.length - 1 ? articles[index + 1] : null;
 
   return (
-    <nav className="tracer-post-navigation">
-      {previous && (
-        <div className="prev-link-wrapper" style={{ flex: "none" }}>
-          <div className="info-prev-link-wrapper">
-            <Link href={`/articles/${previous.attributes?.slug}`}>
-              <span className="image-prev">
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100px",
-                  }}
-                >
-                  <Image
-                    src={
-                      previous.attributes?.defaultImage.data?.attributes?.url
-                    }
-                    alt={
-                      previous.attributes?.defaultImage.data?.attributes?.name
-                    }
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-
-                <span className="post-nav-title">Prev</span>
-              </span>
-
-              <span className="prev-link-info-wrapper">
-                <span className="prev-title">{previous.attributes?.title}</span>
-                <span className="meta-wrapper">
-                  <span className="date-post">
-                    <Moment format="MMM Do, YYYY">
-                      {previous.attributes?.publishedAt}
-                    </Moment>
-                  </span>
-                </span>
-              </span>
-            </Link>
-          </div>
-        </div>
-      )}
-      {!previous && <p> </p>}
-
-      {next && (
-        <div className="next-link-wrapper" style={{ flex: "none" }}>
-          <div className="info-next-link-wrapper">
-            <Link href={`/articles/${next.attributes?.slug}`}>
-              <span className="next-link-info-wrapper">
-                <span className="next-title">{next.attributes?.title}</span>
-                <span className="meta-wrapper">
-                  <span className="date-post">
-                    <Moment format="MMM Do, YYYY">
-                      {next.attributes?.publishedAt}
-                    </Moment>
-                  </span>
-                </span>
-              </span>
-
-              <span className="image-next">
-                <div
-                  style={{
-                    position: "relative",
-                    width: "100%",
-                    height: "100px",
-                  }}
-                >
-                  <Image
-                    src={next.attributes?.defaultImage.data?.attributes?.url}
-                    alt={next.attributes?.defaultImage.data?.attributes?.name}
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
-                </div>
-                <span className="post-nav-title">Next</span>
-              </span>
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+    <DetailsNavigator
+      previous={getLink(previous?.attributes as Article)}
+      next={getLink(next?.attributes as Article)}
+      entity="articles"
+    />
   );
+};
+
+const getLink = (game: Article): NavLink => {
+  if (!game) return null;
+
+  return {
+    slug: game.slug,
+    name: game.title,
+    image: game.defaultImage.data.attributes,
+    date: game.publishedAt!,
+  };
 };
 
 export default ArticlesNavigator;
