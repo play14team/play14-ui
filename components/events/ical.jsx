@@ -15,7 +15,11 @@ const ICalendar = ({ event }) => {
 
   return (
     <ICalendarLink event={evt} filename={`${event.name}.ics`}>
-      <i className="bx bx-calendar" style={{ fontSize: "25px" }}></i>
+      <i
+        className="bx bx-calendar"
+        title="Add to your calendar"
+        style={{ fontSize: "25px" }}
+      ></i>
     </ICalendarLink>
   );
 };

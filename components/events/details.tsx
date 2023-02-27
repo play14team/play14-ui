@@ -153,6 +153,7 @@ const EventDetails = (props: {
                   <Link href={`mailto:${event.contactEmail}`}>
                     <i
                       className="bx bx-envelope"
+                      title="Send an email to the team"
                       style={{ fontSize: "25px" }}
                     ></i>
                   </Link>
