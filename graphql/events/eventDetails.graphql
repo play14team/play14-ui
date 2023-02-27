@@ -51,9 +51,6 @@ fragment EventDetails on Event {
     data {
       attributes {
         name
-        embeddedMapUrl
-        area
-        address
         website
         location
         addressDetails

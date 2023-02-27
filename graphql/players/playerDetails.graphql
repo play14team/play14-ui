@@ -15,10 +15,7 @@ fragment PlayerDetails on Player {
   company
   tagline
   bio
-  city
-  country
   website
-  embeddedMapUrl
   location
   avatar {
     data {
