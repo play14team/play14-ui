@@ -1,10 +1,8 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import { client } from "../../graphql/apollo";
-import { gql } from "@apollo/client";
 import { GetStaticProps, InferGetStaticPropsType } from "next";
 import Html from "../../components/layout/html";
-import { Hosting } from "../../models/graphql";
+import { Hosting, HostingDocument } from "../../models/graphql";
 import Page from "../../components/layout/page";
 
 const Organizing: NextPage = ({
@@ -24,19 +22,7 @@ const Organizing: NextPage = ({
 export const getStaticProps: GetStaticProps<{ hosting: Hosting }> = async (
   context
 ) => {
-  const { data } = await client.query({
-    query: gql`
-      query Hosting {
-        hosting {
-          data {
-            attributes {
-              content
-            }
-          }
-        }
-      }
-    `,
-  });
+  const { data } = await client.query({ query: HostingDocument });
 
   return {
     props: { hosting: data.hosting?.data?.attributes },
