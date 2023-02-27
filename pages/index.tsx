@@ -7,6 +7,8 @@ import Title from "../components/layout/title";
 import UpcomingEvents from "../components/home/upcoming";
 import HomeGallery from "../components/home/gallery";
 import EventMap from "../components/events/map";
+import Expectations from "../components/home/expectations";
+import { Enum_Expectation_Type } from "../models/graphql";
 
 const Home: NextPage = () => {
   return (
@@ -183,7 +185,12 @@ const Home: NextPage = () => {
       </section>
 
       <section id="benefits" className="pt-70">
-        <p>#play14 is really open to anyone who wishes to give it a try.</p>
+        <p>
+          Join us in order to develop your <strong>facilitation skills</strong>,
+          increase your <strong>ability to accompany change</strong> in your
+          organization, <strong>foster your creativity</strong> and improve your{" "}
+          <strong>capacity to innovate</strong>.
+        </p>
         <div className="d-flex justify-content-center">
           <blockquote>
             You can discover more about a person in an hour of play than a year
@@ -194,12 +201,12 @@ const Home: NextPage = () => {
             </strong>
           </blockquote>
         </div>
+        <h3 className="pb-5 pt-70">What to expect</h3>
         <p>
-          Join us in order to develop your <strong>facilitation skills</strong>,
-          increase your <strong>ability to accompany change</strong> in your
-          organization, <strong>foster your creativity</strong> and improve your{" "}
-          <strong>capacity to innovate</strong>.
+          Here are some of the things that you can expect when attending a
+          #play14 event. However, be ready to &quot;Expect the unexpected!&quot;
         </p>
+        <Expectations type={Enum_Expectation_Type.Main} />
       </section>
     </section>
   );

@@ -1,0 +1,13 @@
+query Expectations($type: String!) {
+  expectations(filters: { type: { eq: $type } }) {
+    data {
+      id
+      attributes {
+        title
+        type
+        icon
+        content
+      }
+    }
+  }
+}

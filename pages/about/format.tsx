@@ -2,6 +2,8 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import Page from "../../components/layout/page";
+import { Enum_Expectation_Type } from "../../models/graphql";
+import Expectations from "../../components/home/expectations";
 
 const Format: NextPage = () => {
   return (
@@ -230,6 +232,11 @@ const Format: NextPage = () => {
               <li>...</li>
             </ul>
           </p>
+        </div>
+        <div className="pt-5">
+          <h3>What else do I need to know?</h3>
+          <p>Here is what you need to know when attending a #play14 event.</p>
+          <Expectations type={Enum_Expectation_Type.Secondary} />
         </div>
       </section>
     </Page>
