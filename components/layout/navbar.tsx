@@ -115,11 +115,11 @@ const Navbar = () => {
 
                       <li className="nav-item">
                         <Link
-                          href="/events/organizing"
+                          href="/events/hosting"
                           onClick={() => setCollapsed(true)}
                           className="nav-link"
                         >
-                          Organizing an event
+                          Hosting an event
                         </Link>
                       </li>
                     </ul>
