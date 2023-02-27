@@ -132,11 +132,10 @@ const EventDetails = (props: {
                     {venue.addressDetails}
                   </li>
                 )}
-                {venue && (venue.location || venue.address) && (
+                {venue && venue.location && (
                   <li>
                     <i className="bx bx-map"></i>
-                    {(venue.location && venue.location.place_name) ||
-                      venue.address}
+                    {venue.location.place_name}
                   </li>
                 )}
                 {eventLocation && eventLocation.country && (
