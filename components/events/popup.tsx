@@ -17,12 +17,13 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
       latitude={Number(latitude)}
       offset={[0, -35]}
       onClose={props.onClose}
+      style={{ minWidth: "200px" }}
     >
       <Link href={venue.website || "#"} target="_blank">
         <b>{venue.name}</b>
       </Link>
       <br />
-      {venue.address}
+      {venue.location?.place_name}
       <hr />
       {events.map((event) => {
         const slug = event.attributes!.slug;

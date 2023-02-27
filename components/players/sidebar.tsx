@@ -1,9 +1,9 @@
 import Link from "next/link";
 import { Player } from "../../models/graphql";
-import Location from "../layout/location";
 
 const PlayerSidebar = (props: { player: Player }) => {
   const { player } = props;
+
   return (
     <aside className="case-studies-sidebar-sticky">
       <div className="case-studies-details-info">
@@ -48,13 +48,13 @@ const PlayerSidebar = (props: { player: Player }) => {
             </li>
           )}
 
-          {(player.city || player.country) && (
+          {player.location && (
             <li>
               <div className="icon">
                 <i className="bx bx-map"></i>
               </div>
               <span>Location</span>
-              <Location city={player.city} country={player.country} />
+              {player.location.place_name}
             </li>
           )}
         </ul>
