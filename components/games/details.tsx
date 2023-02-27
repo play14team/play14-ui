@@ -106,7 +106,7 @@ const GameDetails = (props: {
 
                 <hr></hr>
 
-                <div className="row content">
+                <div className="content">
                   <Html>{game.description}</Html>
                 </div>
 
