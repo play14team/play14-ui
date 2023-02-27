@@ -67,6 +67,16 @@ const Home: NextPage = () => {
           experiences and tips, knowledge and insights, laughs and smiles.{" "}
           <strong>Everyone is welcome to join</strong>.
         </p>
+        <div className="d-flex justify-content-center">
+          <blockquote>
+            You can discover more about a person in an hour of play than a year
+            of conversation
+            <br />
+            <strong>
+              <em className="d-flex justify-content-end pt-4">Plato</em>
+            </strong>
+          </blockquote>
+        </div>
         <p>
           If you want to join and wonder what is going to happen, here are some
           examples of activites we engage in:
@@ -156,6 +166,13 @@ const Home: NextPage = () => {
             aikido, ...
           </li>
         </ul>
+
+        <p>
+          Join us in order to develop your <strong>facilitation skills</strong>,
+          increase your <strong>ability to accompany change</strong> in your
+          organization, <strong>foster your creativity</strong> and improve your{" "}
+          <strong>capacity to innovate</strong>.
+        </p>
       </section>
 
       <section id="gallery">
@@ -179,28 +196,14 @@ const Home: NextPage = () => {
         </div>
       </section>
 
-      <section id="event map">
-        <h3 className="pb-5 pt-70">Event map</h3>
+      <section id="event map" className="pb-5 pt-70">
         <EventMap />
+        <p>
+          More on the <Link href="/events/map">live map</Link>
+        </p>
       </section>
 
       <section id="benefits" className="pt-70">
-        <p>
-          Join us in order to develop your <strong>facilitation skills</strong>,
-          increase your <strong>ability to accompany change</strong> in your
-          organization, <strong>foster your creativity</strong> and improve your{" "}
-          <strong>capacity to innovate</strong>.
-        </p>
-        <div className="d-flex justify-content-center">
-          <blockquote>
-            You can discover more about a person in an hour of play than a year
-            of conversation
-            <br />
-            <strong>
-              <em className="d-flex justify-content-end pt-4">Plato</em>
-            </strong>
-          </blockquote>
-        </div>
         <h3 className="pb-5 pt-70">What to expect</h3>
         <p>
           Here are some of the things that you can expect when attending a
