@@ -27,6 +27,7 @@ import Map from "../map";
 import moment from "moment";
 import ReactCountryFlag from "react-country-flag";
 import { countries } from "country-data";
+import ICalendar from "./ical";
 
 const EventDetails = (props: {
   event: FragmentType<typeof EventDetailsFragmentDoc>;
@@ -158,6 +159,11 @@ const EventDetails = (props: {
                 </li>
               </ul>
             )}
+            <ul className="d-flex">
+              <li>
+                <ICalendar event={event} />
+              </li>
+            </ul>
           </div>
         </div>
 
