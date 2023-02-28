@@ -38,6 +38,21 @@ const Values: NextPage = () => {
           height={500}
           className="pt-5 pb-100"
         />
+        <h3 className="centered pt-5 pb-3">Boy/Girl scout rule</h3>
+        There is a saying among the scouts.
+        <blockquote>
+          Always leave the campground cleaner than you found it.
+        </blockquote>
+        <p>
+          Be mindful of other people well being by cleaning after yourself when
+          you leave a space. That goes for the space you played on, the space
+          you ate on, the space you rested on, etc.
+        </p>
+        <p>
+          Remember that the hosting team is not there to clean after you, but
+          are also participants of the event. They also want to facilitate and
+          attend sessions, as much as you do.
+        </p>
       </div>
     </Page>
   );
