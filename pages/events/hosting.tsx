@@ -5,6 +5,16 @@ import Html from "../../components/layout/html";
 import { Hosting, HostingDocument } from "../../models/graphql";
 import Page from "../../components/layout/page";
 
+export const getStaticProps: GetStaticProps<{ hosting: Hosting }> = async (
+  context
+) => {
+  const { data } = await client.query({ query: HostingDocument });
+
+  return {
+    props: { hosting: data.hosting?.data?.attributes },
+  };
+};
+
 const Organizing: NextPage = ({
   hosting,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -17,16 +27,6 @@ const Organizing: NextPage = ({
       </div>
     </Page>
   );
-};
-
-export const getStaticProps: GetStaticProps<{ hosting: Hosting }> = async (
-  context
-) => {
-  const { data } = await client.query({ query: HostingDocument });
-
-  return {
-    props: { hosting: data.hosting?.data?.attributes },
-  };
 };
 
 export default Organizing;
