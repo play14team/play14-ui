@@ -5,7 +5,7 @@ const GameGrid = (props: { games: GameEntity[] }) => {
   const { games } = props;
 
   return (
-    <div className="courses-area bg-fafafb pt-70 pb-70">
+    <div className="courses-area pt-70 pb-70">
       <div className="container">
         <div className="row">
           {games &&

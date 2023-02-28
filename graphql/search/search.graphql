@@ -23,5 +23,12 @@ query Search($input: String!) {
         }
       }
     }
+    articles {
+      data {
+        attributes {
+          ...ArticleItem
+        }
+      }
+    }
   }
 }

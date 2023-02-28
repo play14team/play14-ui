@@ -1,12 +1,14 @@
 import { useQuery } from "@apollo/client";
 import Head from "next/head";
 import { useRouter } from "next/router";
+import ArticleGrid from "../components/articles/grid";
 import EventGrid from "../components/events/grid";
 import GameGrid from "../components/games/grid";
 import ErrorMessage from "../components/layout/error";
 import Loader from "../components/layout/loader";
 import PlayerGrid from "../components/players/grid";
 import {
+  ArticleEntity,
   EventEntity,
   GameEntity,
   PlayerEntity,
@@ -26,6 +28,7 @@ const SearchPage = () => {
   const events = data?.search?.events?.data as EventEntity[];
   const players = data?.search?.players?.data as PlayerEntity[];
   const games = data?.search?.games?.data as GameEntity[];
+  const articles = data?.search?.articles?.data as ArticleEntity[];
 
   return (
     <>
@@ -60,9 +63,21 @@ const SearchPage = () => {
             <GameGrid games={games} />
           </div>
         )}
-        {events.length == 0 && players.length == 0 && games.length == 0 && (
-          <h5 className="pb-70">No search result found</h5>
+        {articles && articles.length > 0 && (
+          <div>
+            <div className="d-flex justify-content-between">
+              <h3>Articles</h3>
+              <p>{articles.length} found</p>
+            </div>
+            <ArticleGrid articles={articles} />
+          </div>
         )}
+        {events.length == 0 &&
+          players.length == 0 &&
+          games.length == 0 &&
+          articles.length == 0 && (
+            <h5 className="pb-70">No search result found</h5>
+          )}
       </div>
     </>
   );
