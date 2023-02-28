@@ -1,35 +1,20 @@
 import type { GetStaticProps, InferGetStaticPropsType, NextPage } from "next";
 import Image from "next/image";
 import Page from "../../components/layout/page";
-import { Enum_Expectation_Type } from "../../models/graphql";
+import { Enum_Expectation_Type, FormatDocument } from "../../models/graphql";
 import Expectations from "../../components/home/expectations";
 import { client } from "../../graphql/apollo";
-import { gql } from "@apollo/client";
 import Html from "../../components/layout/html";
 
 export const getStaticProps: GetStaticProps<{
-  openspace: string;
-  lawOfTwoFeet: string;
-  butterfly: string;
-  bumblebee: string;
-  schedule: string;
+  openspace?: string;
+  lawOfTwoFeet?: string;
+  butterfly?: string;
+  bumblebee?: string;
+  schedule?: string;
 }> = async (context) => {
   const { data } = await client.query({
-    query: gql`
-      query {
-        format {
-          data {
-            attributes {
-              openspace
-              lawOfTwoFeet
-              butterfly
-              bumblebee
-              schedule
-            }
-          }
-        }
-      }
-    `,
+    query: FormatDocument,
   });
 
   return {
