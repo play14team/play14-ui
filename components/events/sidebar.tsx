@@ -11,11 +11,13 @@ import payment3 from "../../styles/images/payment/payment3.png";
 import Html from "../layout/html";
 import EventTime from "./time";
 import EventStatus from "./status";
+import { useRouter } from "next/router";
 
 const EventSidebar = (props: { event: EventDetailsFragment }) => {
   const { event } = props;
 
-  const url = encodeURI(window.location.href);
+  const router = useRouter();
+  const url = router.asPath;
   const eventName = encodeURI(event.name);
   const text = encodeURI("Take a look at #play14 ") + eventName;
 
