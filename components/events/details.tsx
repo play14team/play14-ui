@@ -1,12 +1,10 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
-import { FragmentType, graphql, useFragment } from "../../models";
 import {
   ComponentEventsSponsorship,
   ComponentEventsTimetable,
   Enum_Event_Status,
-  EventDetailsFragmentDoc,
+  Event,
   EventLocation,
   Maybe,
   PlayerEntity,
@@ -24,22 +22,12 @@ import EventDate from "./date";
 import openTabSection from "../../libs/tabs";
 import EventsNavigator from "./detailsnav";
 import Map from "../map";
-import moment from "moment";
 import ReactCountryFlag from "react-country-flag";
 import { countries } from "country-data";
 import ICalendar from "./ical";
 
-const EventDetails = (props: {
-  event: FragmentType<typeof EventDetailsFragmentDoc>;
-}) => {
-  const event = useFragment(EventDetailsFragmentDoc, props.event);
-
-  const description = `${event.name} @ ${
-    event.venue?.data?.attributes?.name
-  } from ${moment(event.start).format("MMMM Do")} to ${moment(event.end).format(
-    "MMMM Do YYYY"
-  )}`;
-
+const EventDetails = (props: { event: Event }) => {
+  const { event } = props;
   const defaultImage = event.defaultImage.data?.attributes as UploadFile;
   const eventLocation = event.location?.data?.attributes as EventLocation;
   const venue = event.venue?.data?.attributes as Venue;
@@ -50,202 +38,193 @@ const EventDetails = (props: {
   const country = countries[eventLocation.country].name;
 
   return (
-    <>
-      <Head>
-        <title>#play14 - {event && event.name}</title>
-        <meta name="description" content={description} />
-      </Head>
-      <section className="events-details-area pt-70 pb-100">
-        <ul className="d-flex list-unstyled justify-content-between">
-          <li>
-            <h1>
-              {event.name}{" "}
-              {eventLocation.country && (
-                <ReactCountryFlag
-                  countryCode={eventLocation.country}
-                  svg
-                  title={country}
-                  aria-label={country}
-                />
+    <section className="events-details-area pt-70 pb-100">
+      <ul className="d-flex list-unstyled justify-content-between">
+        <li>
+          <h1>
+            {event.name}{" "}
+            {eventLocation.country && (
+              <ReactCountryFlag
+                countryCode={eventLocation.country}
+                svg
+                title={country}
+                aria-label={country}
+              />
+            )}
+          </h1>
+        </li>
+        <li>
+          <h2>
+            <EventDate start={event.start} end={event.end} />
+          </h2>
+        </li>
+      </ul>
+      <EventsNavigator current={event.slug} />
+      <div className="events-details-image">
+        <div style={{ position: "relative", width: "100%", height: "250px" }}>
+          {defaultImage && (
+            <Image
+              src={defaultImage.url}
+              alt={defaultImage.name}
+              fill
+              sizes="100vw"
+              style={{
+                objectFit: "cover",
+              }}
+              priority
+            />
+          )}
+        </div>
+        {isAnnouncedOrOpen() && <UpcomingEventTimer date={event.start} />}
+      </div>
+
+      <div className="events-details-header">
+        <div className="d-flex">
+          <div className="flex-grow-1">
+            <ul>
+              {venue && (
+                <li>
+                  <b>
+                    {venue.website && (
+                      <Link href={venue.website as string} target="_blank">
+                        <i className="bx bx-home"></i>
+                        {venue.name}
+                      </Link>
+                    )}
+                    {!venue.website && (
+                      <>
+                        <i className="bx bx-home"></i>
+                        {venue.name}
+                      </>
+                    )}
+                  </b>
+                </li>
               )}
-            </h1>
-          </li>
-          <li>
-            <h2>
-              <EventDate start={event.start} end={event.end} />
-            </h2>
-          </li>
-        </ul>
-        <EventsNavigator current={event.slug} />
-        <div className="events-details-image">
-          <div style={{ position: "relative", width: "100%", height: "250px" }}>
-            {defaultImage && (
-              <Image
-                src={defaultImage.url}
-                alt={defaultImage.name}
-                fill
-                sizes="100vw"
-                style={{
-                  objectFit: "cover",
-                }}
-                priority
+              {!venue && (
+                <li>
+                  <b>
+                    <i className="bx bx-home"></i>
+                    No venue yet
+                  </b>
+                </li>
+              )}
+
+              {venue && venue.addressDetails && (
+                <li>
+                  <i className="bx bx-detail"></i>
+                  {venue.addressDetails}
+                </li>
+              )}
+              {venue && venue.location && (
+                <li>
+                  <i className="bx bx-map"></i>
+                  {venue.location.place_name}
+                </li>
+              )}
+              {eventLocation && eventLocation.country && (
+                <li>
+                  <i className="bx bx-globe"></i>
+                  {country}
+                </li>
+              )}
+            </ul>
+          </div>
+          {event.contactEmail && (
+            <ul className="d-flex">
+              <li>
+                <Link href={`mailto:${event.contactEmail}`}>
+                  <i
+                    className="bx bx-envelope"
+                    title="Send an email to the team"
+                    style={{ fontSize: "25px" }}
+                  ></i>
+                </Link>
+              </li>
+            </ul>
+          )}
+          <ul className="d-flex">
+            <li>
+              <ICalendar event={event} />
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="row">
+        <div className="col-lg-8 col-md-12">
+          <div className="events-details-location">
+            {venue && venue.location && (
+              <Map location={venue.location} height={"450px"} popup />
+            )}
+            {!venue && eventLocation.location && (
+              <Map
+                location={eventLocation.location}
+                height={"450px"}
+                zoom={12}
               />
             )}
           </div>
-          {isAnnouncedOrOpen() && <UpcomingEventTimer date={event.start} />}
         </div>
-
-        <div className="events-details-header">
-          <div className="d-flex">
-            <div className="flex-grow-1">
-              <ul>
-                {venue && (
-                  <li>
-                    <b>
-                      {venue.website && (
-                        <Link href={venue.website as string} target="_blank">
-                          <i className="bx bx-home"></i>
-                          {venue.name}
-                        </Link>
-                      )}
-                      {!venue.website && (
-                        <>
-                          <i className="bx bx-home"></i>
-                          {venue.name}
-                        </>
-                      )}
-                    </b>
-                  </li>
-                )}
-                {!venue && (
-                  <li>
-                    <b>
-                      <i className="bx bx-home"></i>
-                      No venue yet
-                    </b>
-                  </li>
-                )}
-
-                {venue && venue.addressDetails && (
-                  <li>
-                    <i className="bx bx-detail"></i>
-                    {venue.addressDetails}
-                  </li>
-                )}
-                {venue && venue.location && (
-                  <li>
-                    <i className="bx bx-map"></i>
-                    {venue.location.place_name}
-                  </li>
-                )}
-                {eventLocation && eventLocation.country && (
-                  <li>
-                    <i className="bx bx-globe"></i>
-                    {country}
-                  </li>
-                )}
-              </ul>
-            </div>
-            {event.contactEmail && (
-              <ul className="d-flex">
-                <li>
-                  <Link href={`mailto:${event.contactEmail}`}>
-                    <i
-                      className="bx bx-envelope"
-                      title="Send an email to the team"
-                      style={{ fontSize: "25px" }}
-                    ></i>
-                  </Link>
-                </li>
-              </ul>
-            )}
-            <ul className="d-flex">
-              <li>
-                <ICalendar event={event} />
-              </li>
-            </ul>
-          </div>
+        <div className="col-lg-4 col-md-12">
+          <EventSidebar event={event} />
         </div>
+      </div>
 
-        <div className="row">
-          <div className="col-lg-8 col-md-12">
-            <div className="events-details-location">
-              {venue && venue.location && (
-                <Map location={venue.location} height={"450px"} popup />
-              )}
-              {!venue && eventLocation.location && (
-                <Map
-                  location={eventLocation.location}
-                  height={"450px"}
-                  zoom={12}
+      {/* tabs */}
+      <div className="row">
+        <div className="courses-details-desc">
+          <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <li className="current" onClick={(e) => openTabSection(e, "tab1")}>
+              Overview
+            </li>
+            <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
+            <li onClick={(e) => openTabSection(e, "tab3")}>
+              Players{" "}
+              {players && players.length > 0 ? `(${players.length})` : ""}
+            </li>
+            <li onClick={(e) => openTabSection(e, "tab4")}>
+              Photos{" "}
+              {event.images && event.images.data.length > 0
+                ? `(${event.images.data.length})`
+                : ""}
+            </li>
+          </ul>
+
+          <div className="tab-content">
+            {/* tab1 */}
+            <div id="tab1" className="tab-pane tabs_item">
+              {hosts && <PlayerGrid title="Team" players={hosts} />}
+              {mentors && <PlayerGrid title="Mentors" players={mentors} />}
+              {event.sponsorships && (
+                <EventSponsorships
+                  sponsorships={
+                    event.sponsorships as Array<ComponentEventsSponsorship>
+                  }
                 />
               )}
+              {event.description && (
+                <EventDescription description={event.description} />
+              )}
             </div>
-          </div>
-          <div className="col-lg-4 col-md-12">
-            <EventSidebar event={event} />
-          </div>
-        </div>
 
-        {/* tabs */}
-        <div className="row">
-          <div className="courses-details-desc">
-            <ul className="nav nav-tabs" id="myTab" role="tablist">
-              <li
-                className="current"
-                onClick={(e) => openTabSection(e, "tab1")}
-              >
-                Overview
-              </li>
-              <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
-              <li onClick={(e) => openTabSection(e, "tab3")}>
-                Players{" "}
-                {players && players.length > 0 ? `(${players.length})` : ""}
-              </li>
-              <li onClick={(e) => openTabSection(e, "tab4")}>
-                Photos{" "}
-                {event.images && event.images.data.length > 0
-                  ? `(${event.images.data.length})`
-                  : ""}
-              </li>
-            </ul>
+            {/* tab2 */}
+            <div id="tab2" className="tab-pane tabs_item">
+              {timetable && <EventSchedule timetable={timetable} />}
+            </div>
 
-            <div className="tab-content">
-              {/* tab1 */}
-              <div id="tab1" className="tab-pane tabs_item">
-                {hosts && <PlayerGrid title="Team" players={hosts} />}
-                {mentors && <PlayerGrid title="Mentors" players={mentors} />}
-                {event.sponsorships && (
-                  <EventSponsorships
-                    sponsorships={
-                      event.sponsorships as Array<ComponentEventsSponsorship>
-                    }
-                  />
-                )}
-                {event.description && (
-                  <EventDescription description={event.description} />
-                )}
-              </div>
+            {/* tab3 */}
+            <div id="tab3" className="tab-pane tabs_item">
+              {players && <PlayerGrid title="Players" players={players} />}
+            </div>
 
-              {/* tab2 */}
-              <div id="tab2" className="tab-pane tabs_item">
-                {timetable && <EventSchedule timetable={timetable} />}
-              </div>
-
-              {/* tab3 */}
-              <div id="tab3" className="tab-pane tabs_item">
-                {players && <PlayerGrid title="Players" players={players} />}
-              </div>
-
-              {/* tab4 */}
-              <div id="tab4" className="tab-pane tabs_item">
-                {event.images && <Gallery images={event.images.data} />}
-              </div>
+            {/* tab4 */}
+            <div id="tab4" className="tab-pane tabs_item">
+              {event.images && <Gallery images={event.images.data} />}
             </div>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 
   function isAnnouncedOrOpen() {

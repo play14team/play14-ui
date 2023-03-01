@@ -8,19 +8,20 @@ export type PageProps = {
   description?: string | undefined;
   loading?: boolean | undefined;
   error?: ApolloError | undefined;
+  hideName?: boolean;
   children: React.ReactNode;
 };
 
 const Page = (props: PageProps) => {
-  const { name, description, loading, error, children } = props;
+  const { name, description, loading, error, hideName, children } = props;
 
   return (
     <section id={name}>
       <Head>
-        <title>#play14 - {name}</title>
+        <title>{`#play14 - ${name ? name : "loading..."}`}</title>
         {description && <meta name="description" content={description} />}
       </Head>
-      <h1 className="pt-5">{name}</h1>
+      {!hideName && <h1 className="pt-5">{name}</h1>}
       {loading && <Loader />}
       {error && <ErrorMessage message={error.message} />}
       {!loading && !children && <p>Nothing there yet!</p>}
