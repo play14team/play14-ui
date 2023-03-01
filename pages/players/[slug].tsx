@@ -1,11 +1,9 @@
 import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useRouter } from "next/router";
-import ErrorMessage from "../../components/layout/error";
-import Loader from "../../components/layout/loader";
+import Page from "../../components/layout/page";
 import PlayerDetails from "../../components/players/details";
-import { PlayerDocument } from "../../models/graphql";
+import { Player, PlayerDocument } from "../../models/graphql";
 
 const PlayerDetailsPage: NextPage = () => {
   const router = useRouter();
@@ -14,15 +12,18 @@ const PlayerDetailsPage: NextPage = () => {
     variables: { slug: slug },
   });
 
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage message={error.message} />;
+  const player = data?.players?.data[0].attributes as Player;
 
-  const playerDetails = data?.players?.data[0].attributes;
-  if (!playerDetails) {
-    return <>Player {slug} not found!</>;
-  }
-
-  return <PlayerDetails player={playerDetails} />;
+  return (
+    <Page
+      name={player && player.name}
+      description={player ? `${player.name} (${player.position})` : ""}
+      loading={loading}
+      error={error}
+    >
+      {player && <PlayerDetails player={player} />}
+    </Page>
+  );
 };
 
 export default PlayerDetailsPage;

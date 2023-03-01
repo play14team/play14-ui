@@ -2,9 +2,8 @@ import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import GameDetails from "../../components/games/details";
-import ErrorMessage from "../../components/layout/error";
-import Loader from "../../components/layout/loader";
-import { GameDocument } from "../../models/graphql";
+import Page from "../../components/layout/page";
+import { GameDocument, Game } from "../../models/graphql";
 
 const GameDetail: NextPage = () => {
   const router = useRouter();
@@ -13,15 +12,20 @@ const GameDetail: NextPage = () => {
     variables: { slug: slug },
   });
 
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage message={error.message} />;
+  const game = data?.games?.data[0].attributes as Game;
 
-  const gameDetails = data?.games?.data[0].attributes;
-  if (!gameDetails) {
-    return <>Game {slug} not found!</>;
-  }
-
-  return <GameDetails game={gameDetails} />;
+  return (
+    <Page
+      name={game && game.name}
+      description={
+        game && game.summary?.substring(0, game.summary.indexOf(" ", 200))
+      }
+      loading={loading}
+      error={error}
+    >
+      {game && <GameDetails game={game} />}
+    </Page>
+  );
 };
 
 export default GameDetail;

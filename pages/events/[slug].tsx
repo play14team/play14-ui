@@ -21,14 +21,14 @@ const EventDetailsPage: NextPage = () => {
       name={event && event.name}
       description={
         event &&
-        `${event.name} @ ${event.venue?.data?.attributes?.name} from ${moment(
-          event.start
-        ).format("MMMM Do")} to ${moment(event.end).format("MMMM Do YYYY")}`
+        `${event.name} @ ${event.venue?.data?.attributes?.name} 
+        from ${moment(event.start).format("MMMM Do")} 
+        to ${moment(event.end).format("MMMM Do YYYY")}`
       }
+      loading={loading}
+      error={error}
       hideName
     >
-      {loading && <Loader />}
-      {error && <ErrorMessage message={error.message} />}
       {event && <EventDetails event={event} />}
     </Page>
   );

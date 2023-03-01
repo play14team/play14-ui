@@ -13,7 +13,7 @@ const EventCalendar = (props: { events: any }) => {
   };
 
   return (
-    <div>
+    <div className="pt-70 pb-100">
       {events && (
         <Calendar
           localizer={localizer}

@@ -2,9 +2,8 @@ import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
 import ArticleDetails from "../../components/articles/details";
-import ErrorMessage from "../../components/layout/error";
-import Loader from "../../components/layout/loader";
-import { ArticleDocument } from "../../models/graphql";
+import Page from "../../components/layout/page";
+import { Article, ArticleDocument } from "../../models/graphql";
 
 const ArticleDetail: NextPage = () => {
   const router = useRouter();
@@ -12,16 +11,18 @@ const ArticleDetail: NextPage = () => {
   const { data, loading, error } = useQuery(ArticleDocument, {
     variables: { slug: slug },
   });
+  const article = data?.articles?.data[0].attributes as Article;
 
-  if (loading) return <Loader />;
-  if (error) return <ErrorMessage message={error.message} />;
-
-  const articleDetails = data?.articles?.data[0].attributes;
-  if (!articleDetails) {
-    return <>Article {slug} not found!</>;
-  }
-
-  return <ArticleDetails article={articleDetails} />;
+  return (
+    <Page
+      name={article && article.title}
+      description={article && article.summary}
+      loading={loading}
+      error={error}
+    >
+      {article && <ArticleDetails article={article} />}
+    </Page>
+  );
 };
 
 export default ArticleDetail;
