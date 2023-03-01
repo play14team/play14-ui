@@ -6,7 +6,13 @@ const ICalendar = ({ event }) => {
     startTime: event.start,
     endTime: event.end,
     location: event.venue?.data?.attributes
-      ? `${event.venue.data.attributes.name} - ${event.venue.data.attributes.location.place_name}`
+      ? `${event.venue.data.attributes.name}${
+          event.venue.data.attributes.location ? " - " : ""
+        }${
+          event.venue.data.attributes.location
+            ? event.venue.data.attributes.location.place_name
+            : ""
+        }`
       : "No venue yet",
     url: event.venue?.data?.attributes
       ? event.venue.data.attributes.website
