@@ -13,11 +13,16 @@ const Paging = (props: {
   for (let index = 1; index < pagination.pageCount + 1; index++) {
     items.push(
       isCurrentPage(pagination, index) ? (
-        <span className="page-numbers current" aria-current="page">
+        <span
+          id={`page-${index}`}
+          className="page-numbers current"
+          aria-current="page"
+        >
           {index}
         </span>
       ) : (
         <Link
+          id={`page-${index}`}
           href="#"
           className="page-numbers"
           onClick={(e) => onNextPage(index)}
@@ -39,11 +44,16 @@ const Paging = (props: {
       <div className="col-lg-12 col-sm-12 col-md-12">
         <div className="pagination-area text-center">
           {pagination.page == 1 ? (
-            <span className="page-numbers isDisabled" aria-current="page">
+            <span
+              id="prev"
+              className="page-numbers isDisabled"
+              aria-current="page"
+            >
               <i className="bx bx-chevrons-left"></i>
             </span>
           ) : (
             <Link
+              id="prev"
               href="#"
               className="prev page-numbers"
               onClick={(e) => {
@@ -57,11 +67,16 @@ const Paging = (props: {
           {items}
 
           {pagination.page == pagination.pageCount ? (
-            <span className="page-numbers isDisabled" aria-current="page">
+            <span
+              id="next"
+              className="page-numbers isDisabled"
+              aria-current="page"
+            >
               <i className="bx bx-chevrons-right"></i>
             </span>
           ) : (
             <Link
+              id="next"
               href="#"
               className="next page-numbers"
               onClick={(e) => {
