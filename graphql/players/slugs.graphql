@@ -1,0 +1,9 @@
+query PlayerSlugs {
+  players(pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}
