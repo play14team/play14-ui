@@ -1,0 +1,9 @@
+query ArticleSlugs {
+  articles(pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}
