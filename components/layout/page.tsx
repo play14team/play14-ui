@@ -21,7 +21,7 @@ const Page = (props: PageProps) => {
         <title>{`#play14 - ${name ? name : "loading..."}`}</title>
         {description && <meta name="description" content={description} />}
       </Head>
-      {!hideName && <h1 className="pt-5">{name}</h1>}
+      {!hideName && <h1 className="pt-5 centered">{name}</h1>}
       {loading && <Loader />}
       {error && <ErrorMessage message={error.message} />}
       {!loading && !children && <p>Nothing there yet!</p>}

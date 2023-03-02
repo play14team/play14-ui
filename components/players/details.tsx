@@ -38,10 +38,6 @@ const PlayerDetails = (props: { player: Player }) => {
             </div>
           </div>
 
-          <div className="col-lg-4 col-md-12">
-            <PlayerSidebar player={player} />
-          </div>
-
           <div className="col-lg-4 col-md-12 px-4">
             {player.location && (
               <div className="events-details-location">
@@ -49,67 +45,60 @@ const PlayerDetails = (props: { player: Player }) => {
               </div>
             )}
           </div>
+
+          <div className="col-lg-4 col-md-12">
+            <PlayerSidebar player={player} />
+          </div>
         </div>
-        <div className="row">
-          {/* tabs */}
-          <div className="row">
-            <div className="courses-details-desc">
-              <ul className="nav nav-tabs" id="myTab" role="tablist">
-                <li
-                  onClick={(e) => openTabSection(e, "tab1")}
-                  className="current"
-                >
-                  Biography
-                </li>
-                <li onClick={(e) => openTabSection(e, "tab2")}>
-                  Attended{" "}
-                  {attended && attended.length > 0
-                    ? `(${attended.length})`
-                    : ""}
-                </li>
-                <li onClick={(e) => openTabSection(e, "tab3")}>
-                  Hosted{" "}
-                  {hosted && hosted.length > 0 ? `(${hosted.length})` : ""}
-                </li>
-                <li onClick={(e) => openTabSection(e, "tab4")}>
-                  Mentored{" "}
-                  {mentored && mentored.length > 0
-                    ? `(${mentored.length})`
-                    : ""}
-                </li>
-              </ul>
 
-              <div className="tab-content">
-                {/* tab1 */}
-                <div id="tab1" className="tab-pane tabs_item">
-                  {(player.bio && <Html>{player.bio}</Html>) || (
-                    <p>This player is pretty shy with their life story!</p>
-                  )}
-                </div>
+        <div className="courses-details-desc">
+          <ul className="nav nav-tabs" id="myTab" role="tablist">
+            <li onClick={(e) => openTabSection(e, "tab1")} className="current">
+              Biography
+            </li>
+            <li onClick={(e) => openTabSection(e, "tab2")}>
+              Attended{" "}
+              {attended && attended.length > 0 ? `(${attended.length})` : ""}
+            </li>
+            <li onClick={(e) => openTabSection(e, "tab3")}>
+              Hosted {hosted && hosted.length > 0 ? `(${hosted.length})` : ""}
+            </li>
+            <li onClick={(e) => openTabSection(e, "tab4")}>
+              Mentored{" "}
+              {mentored && mentored.length > 0 ? `(${mentored.length})` : ""}
+            </li>
+          </ul>
 
-                {/* tab2 */}
-                <div id="tab2" className="tab-pane tabs_item">
-                  {(attended && attended.length > 0 && (
-                    <EventGrid events={attended} />
-                  )) || <p>This player has not attended any event yet</p>}
-                </div>
+          <div className="tab-content" style={{ minHeight: "650px" }}>
+            {/* tab1 */}
+            <div id="tab1" className="tab-pane tabs_item">
+              {(player.bio && <Html>{player.bio}</Html>) || (
+                <p>This player is pretty shy with their life story!</p>
+              )}
+            </div>
 
-                {/* tab3 */}
-                <div id="tab3" className="tab-pane tabs_item">
-                  {(hosted && hosted.length > 0 && (
-                    <EventGrid events={hosted} />
-                  )) || <p>This player has not hosted any event yet</p>}
-                </div>
+            {/* tab2 */}
+            <div id="tab2" className="tab-pane tabs_item">
+              {(attended && attended.length > 0 && (
+                <EventGrid events={attended} />
+              )) || <p>This player has not attended any event yet</p>}
+            </div>
 
-                {/* tab4 */}
-                <div id="tab4" className="tab-pane tabs_item">
-                  {(mentored && mentored.length > 0 && (
-                    <EventGrid events={mentored} />
-                  )) || <p>This player has not mentored any event yet</p>}
-                </div>
-              </div>
+            {/* tab3 */}
+            <div id="tab3" className="tab-pane tabs_item">
+              {(hosted && hosted.length > 0 && (
+                <EventGrid events={hosted} />
+              )) || <p>This player has not hosted any event yet</p>}
+            </div>
+
+            {/* tab4 */}
+            <div id="tab4" className="tab-pane tabs_item">
+              {(mentored && mentored.length > 0 && (
+                <EventGrid events={mentored} />
+              )) || <p>This player has not mentored any event yet</p>}
             </div>
           </div>
+          <hr />
         </div>
       </div>
     </div>
