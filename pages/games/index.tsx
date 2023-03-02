@@ -4,7 +4,13 @@ import { useState } from "react";
 import GameGrid from "../../components/games/grid";
 import Page from "../../components/layout/page";
 import Paging from "../../components/layout/paging";
-import { GameEntity, GamesDocument, Pagination } from "../../models/graphql";
+import { client } from "../../graphql/apollo";
+import {
+  GameEntity,
+  GameNavDocument,
+  GamesDocument,
+  Pagination,
+} from "../../models/graphql";
 
 const Games: NextPage = () => {
   const [pageSize] = useState(18);
@@ -16,6 +22,10 @@ const Games: NextPage = () => {
 
   const games = data?.games?.data as GameEntity[];
   const pagination = data?.games?.meta.pagination as Pagination;
+
+  if (!loading) {
+    client.query({ query: GameNavDocument });
+  }
 
   return (
     <Page name="Games" loading={loading} error={error}>

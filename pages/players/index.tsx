@@ -1,17 +1,16 @@
 import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
-import Head from "next/head";
 import { useState } from "react";
-import Loader from "../../components/layout/loader";
-import ErrorMessage from "../../components/layout/error";
 import PlayerGrid from "../../components/players/grid";
 import Paging from "../../components/layout/paging";
 import {
   Pagination,
   PlayerEntity,
+  PlayerNavDocument,
   PlayersDocument,
 } from "../../models/graphql";
 import Page from "../../components/layout/page";
+import { client } from "../../graphql/apollo";
 
 const Players: NextPage = () => {
   const [pageSize] = useState(60);
@@ -23,6 +22,10 @@ const Players: NextPage = () => {
 
   const players = data?.players?.data as PlayerEntity[];
   const pagination = data?.players?.meta.pagination as Pagination;
+
+  if (!loading) {
+    client.query({ query: PlayerNavDocument });
+  }
 
   return (
     <Page name="Players" loading={loading} error={error}>

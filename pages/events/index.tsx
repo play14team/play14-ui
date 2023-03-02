@@ -2,9 +2,15 @@ import { useQuery } from "@apollo/client";
 import type { NextPage } from "next";
 import { useState } from "react";
 import EventGrid from "../../components/events/grid";
-import { EventEntity, EventsDocument, Pagination } from "../../models/graphql";
+import {
+  EventEntity,
+  EventNavDocument,
+  EventsDocument,
+  Pagination,
+} from "../../models/graphql";
 import Paging from "../../components/layout/paging";
 import Page from "../../components/layout/page";
+import { client } from "../../graphql/apollo";
 
 const Events: NextPage = () => {
   const [pageSize] = useState(18);
@@ -16,6 +22,10 @@ const Events: NextPage = () => {
 
   const events = data?.events?.data as EventEntity[];
   const pagination = data?.events?.meta.pagination as Pagination;
+
+  if (!loading) {
+    client.query({ query: EventNavDocument });
+  }
 
   return (
     <Page
