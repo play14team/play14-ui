@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import { Article, UploadFile } from "../../models/graphql";
 import ArticleSidebar from "./sidebar";
@@ -7,16 +6,15 @@ import ArticlesNavigator from "./detailsnav";
 import Gallery from "../layout/gallery";
 import Link from "next/link";
 import Moment from "react-moment";
-import { ar } from "date-fns/locale";
+import { useRouter } from "next/router";
 
 const ArticleDetails = (props: { article: Article }) => {
   const { article } = props;
-
-  if (!article) return;
+  const router = useRouter();
 
   const image = article.defaultImage?.data?.attributes as UploadFile;
   const author = article.author?.data?.attributes;
-  const url = encodeURI(window.location.href);
+  const url = router.asPath;
   const text = encodeURI("Take a look at this #play14 article");
 
   return (
