@@ -2,10 +2,11 @@ import Link from "next/link";
 import Image from "next/image";
 import event1 from "../../styles/images/events/event1.jpg";
 import EventDate from "./date";
-
 import { FragmentType, useFragment } from "../../models/fragment-masking";
 import EventStatus from "./status";
 import { EventItemFragmentDoc } from "../../models/graphql";
+import ReactCountryFlag from "react-country-flag";
+import { countries } from "country-data";
 
 const EventCard = (props: {
   event: FragmentType<typeof EventItemFragmentDoc>;
@@ -13,6 +14,9 @@ const EventCard = (props: {
   const event = useFragment(EventItemFragmentDoc, props.event);
   const url = `/events/${encodeURIComponent(event.slug)}`;
   const image = event.defaultImage.data?.attributes;
+
+  const countryCode = event.location?.data?.attributes?.country;
+  const countryName = countries[countryCode].name;
 
   return (
     <article className="col-lg-4 col-sm-6 col-md-6">
@@ -46,9 +50,14 @@ const EventCard = (props: {
             <li>
               <span className="location">
                 <i className="bx bx-map"></i>{" "}
-                {event.location?.data?.attributes?.name}
-                {event.location?.data?.attributes?.country && ", "}
-                {event.location?.data?.attributes?.country}
+                {event.location?.data?.attributes?.name}{" "}
+                <ReactCountryFlag
+                  countryCode={countryCode}
+                  svg
+                  title={countryName}
+                  aria-label={countryName}
+                  style={{ paddingBottom: "2px" }}
+                />
               </span>
             </li>
             <li>

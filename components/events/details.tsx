@@ -49,6 +49,7 @@ const EventDetails = (props: { event: Event }) => {
                 svg
                 title={country}
                 aria-label={country}
+                style={{ paddingBottom: "8px" }}
               />
             )}
           </li>
