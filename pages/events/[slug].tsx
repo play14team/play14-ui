@@ -1,20 +1,45 @@
-import type { NextPage } from "next";
+import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import EventDetails from "../../components/events/details";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
-import Loader from "../../components/layout/loader";
-import { Event, EventDocument } from "../../models/graphql";
-import ErrorMessage from "../../components/layout/error";
+import { Event, EventDocument, EventSlugsDocument } from "../../models/graphql";
 import Page from "../../components/layout/page";
 import moment from "moment";
+import { client } from "../../graphql/apollo";
 
-const EventDetailsPage: NextPage = () => {
-  const router = useRouter();
-  const slug = router.query.slug as string;
-  const { data, loading, error } = useQuery(EventDocument, {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const { data } = await client.query({ query: EventSlugsDocument });
+
+  const paths = data.events?.data?.map((s) => {
+    const { slug } = s.attributes;
+    return {
+      params: { slug },
+    };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+};
+
+export const getStaticProps: GetStaticProps<{ event: Event }> = async (
+  context
+) => {
+  const { slug } = context.params;
+  const { data } = await client.query({
+    query: EventDocument,
     variables: { slug: slug },
   });
+
   const event = data?.events?.data[0].attributes as Event;
+
+  return {
+    props: { event: event },
+  };
+};
+
+const EventDetailsPage: NextPage = (props: { event: Event }) => {
+  const event = props.event;
 
   return (
     <Page
@@ -25,8 +50,6 @@ const EventDetailsPage: NextPage = () => {
         from ${moment(event.start).format("MMMM Do")} 
         to ${moment(event.end).format("MMMM Do YYYY")}`
       }
-      loading={loading}
-      error={error}
       hideName
     >
       {event && <EventDetails event={event} />}
