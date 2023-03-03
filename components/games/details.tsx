@@ -97,7 +97,7 @@ const GameDetails = (props: { game: Game }) => {
 
               <hr></hr>
 
-              <div className="content">
+              <div className="content pt-5">
                 <Html>{game.description}</Html>
               </div>
 

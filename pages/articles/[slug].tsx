@@ -1,6 +1,4 @@
-import { useQuery } from "@apollo/client";
 import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
-import { useRouter } from "next/router";
 import ArticleDetails from "../../components/articles/details";
 import Page from "../../components/layout/page";
 import { client } from "../../graphql/apollo";

@@ -1,0 +1,9 @@
+query GameSlugs {
+  games(pagination: { limit: 10000 }) {
+    data {
+      attributes {
+        slug
+      }
+    }
+  }
+}
