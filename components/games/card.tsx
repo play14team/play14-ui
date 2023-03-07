@@ -68,7 +68,7 @@ const GameCard = (props: {
             })}
 
           <h3>
-            <Link href={game.slug}>{game.name}</Link>
+            <Link href={url}>{game.name}</Link>
           </h3>
           <p>
             {game.summary && game.summary.length > 200
