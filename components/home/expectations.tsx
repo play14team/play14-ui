@@ -32,7 +32,6 @@ const Expectations = (props: { type: Enum_Expectation_Type }) => {
                 </div>
               </div>
             ))}
-          ;
         </div>
       </div>
     </section>
