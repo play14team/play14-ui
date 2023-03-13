@@ -12,9 +12,13 @@ import { Enum_Expectation_Type } from "../models/graphql";
 
 const Home: NextPage = () => {
   return (
-    <section id="home">
+    <>
       <Head>
         <title>#play14 - play is the way</title>
+        <meta
+          name="description"
+          content="#play14 is a worldwide gathering of like-minded people who believe that playing is the best way to learn, share and be creative!"
+        />
       </Head>
       <section id="title">
         <Title />
@@ -211,7 +215,7 @@ const Home: NextPage = () => {
         </p>
         <Expectations type={Enum_Expectation_Type.Main} />
       </section>
-    </section>
+    </>
   );
 };
 
