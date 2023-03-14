@@ -18,19 +18,19 @@ fragment GameDetails on Game {
   credits
   description
   publishedAt
-  tags {
+  tags(pagination: { limit: 10000 }) {
     id
     value
   }
-  materials {
+  materials(pagination: { limit: 10000 }) {
     id
     value
   }
-  preparationSteps {
+  preparationSteps(pagination: { limit: 10000 }) {
     id
     value
   }
-  safety {
+  safety(pagination: { limit: 10000 }) {
     id
     key
     value
@@ -44,7 +44,7 @@ fragment GameDetails on Game {
       }
     }
   }
-  images {
+  images(pagination: { limit: 10000 }) {
     data {
       attributes {
         name
@@ -58,7 +58,7 @@ fragment GameDetails on Game {
       }
     }
   }
-  resources {
+  resources(pagination: { limit: 10000 }) {
     data {
       id
       attributes {

@@ -24,7 +24,7 @@ fragment EventDetails on Event {
       }
     }
   }
-  images {
+  images(pagination: { limit: 10000 }) {
     data {
       attributes {
         name
@@ -61,7 +61,7 @@ fragment EventDetails on Event {
     id
     day
     description
-    timeslots {
+    timeslots(pagination: { limit: 10000 }) {
       id
       time
       description
@@ -71,7 +71,7 @@ fragment EventDetails on Event {
     link
     widgetCode
   }
-  sponsorships {
+  sponsorships(pagination: { limit: 10000 }) {
     id
     category
     sponsors {
@@ -98,7 +98,7 @@ fragment EventDetails on Event {
       }
     }
   }
-  hosts(sort: "name") {
+  hosts(sort: "name", pagination: { limit: 10000 }) {
     data {
       id
       attributes {
@@ -106,7 +106,7 @@ fragment EventDetails on Event {
       }
     }
   }
-  mentors(sort: "name") {
+  mentors(sort: "name", pagination: { limit: 10000 }) {
     data {
       id
       attributes {
@@ -114,7 +114,7 @@ fragment EventDetails on Event {
       }
     }
   }
-  players(sort: "name") {
+  players(sort: "name", pagination: { limit: 10000 }) {
     data {
       id
       attributes {

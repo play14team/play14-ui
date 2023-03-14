@@ -2,7 +2,7 @@ query Home {
   home {
     data {
       attributes {
-        images {
+        images(pagination: { limit: 10000 }) {
           data {
             attributes {
               name

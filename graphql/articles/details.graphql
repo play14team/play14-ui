@@ -16,7 +16,7 @@ fragment ArticleDetails on Article {
   publishedAt
   updatedAt
   cannonical
-  tags {
+  tags(pagination: { limit: 10000 }) {
     data {
       id
       attributes {
@@ -33,7 +33,7 @@ fragment ArticleDetails on Article {
       }
     }
   }
-  images {
+  images(pagination: { limit: 10000 }) {
     data {
       attributes {
         name
