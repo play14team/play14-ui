@@ -16,6 +16,10 @@ COPY . .
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry during the build.
 # ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV production
+ENV NEXT_PUBLIC_STRAPI_API_URL https://community.play14.org
+ARG NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+ENV NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
 
 RUN yarn build
 
@@ -24,7 +28,9 @@ FROM node:16-alpine AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
-ENV NEXT_PUBLIC_STRAPI_API_URL https://api.play14.org
+ENV NEXT_PUBLIC_STRAPI_API_URL https://community.play14.org
+ARG NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
+ENV NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
 # Uncomment the following line in case you want to disable telemetry during runtime.
 # ENV NEXT_TELEMETRY_DISABLED 1
 
