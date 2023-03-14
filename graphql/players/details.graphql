@@ -30,7 +30,7 @@ fragment PlayerDetails on Player {
     url
     type
   }
-  attended(sort: "start:desc") {
+  attended(sort: "start:desc", pagination: { limit: 10000 }) {
     data {
       id
       attributes {
@@ -38,7 +38,7 @@ fragment PlayerDetails on Player {
       }
     }
   }
-  hosted(sort: "start:desc") {
+  hosted(sort: "start:desc", pagination: { limit: 10000 }) {
     data {
       id
       attributes {
@@ -46,7 +46,7 @@ fragment PlayerDetails on Player {
       }
     }
   }
-  mentored(sort: "start:desc") {
+  mentored(sort: "start:desc", pagination: { limit: 10000 }) {
     data {
       id
       attributes {

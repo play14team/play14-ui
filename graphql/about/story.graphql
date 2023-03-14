@@ -5,7 +5,7 @@ query Story {
         founders
         keyMoments
         intro
-        items {
+        items(pagination: { limit: 10000 }) {
           id
           date
           dateFormat
