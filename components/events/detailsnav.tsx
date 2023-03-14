@@ -30,7 +30,7 @@ const getLink = (event: Event): NavLink => {
     slug: event.slug,
     name: event.name,
     image: event.defaultImage.data.attributes,
-    date: event.publishedAt!,
+    date: event.start!,
   };
 };
 
