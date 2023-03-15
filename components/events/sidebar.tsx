@@ -30,15 +30,23 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
         <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Start</span>
-            <EventTime time={event.start} />
+            <EventTime time={event.start} timezone={event.timezone} />
           </div>
         </li>
         <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>End</span>
-            <EventTime time={event.end} />
+            <EventTime time={event.end} timezone={event.timezone} />
           </div>
         </li>
+        {event.timezone && (
+          <li>
+            <div className="d-flex justify-content-between align-items-center">
+              <span>Timezone</span>
+              {event.timezone}
+            </div>
+          </li>
+        )}
         <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Registered</span>

@@ -13,6 +13,7 @@ fragment EventDetails on Event {
   name
   start
   end
+  timezone
   status
   description
   contactEmail

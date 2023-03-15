@@ -38,7 +38,12 @@ const EventCard = (props: {
             />
           </Link>
           <span className="date">
-            <EventDate start={event.start} end={event.end} displayYear />
+            <EventDate
+              start={event.start}
+              end={event.end}
+              timezone={event.timezone}
+              displayYear
+            />
           </span>
         </div>
 

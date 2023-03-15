@@ -54,7 +54,11 @@ const EventDetails = (props: { event: Event }) => {
             )}
           </li>
           <li>
-            <EventDate start={event.start} end={event.end} />
+            <EventDate
+              start={event.start}
+              end={event.end}
+              timezone={event.timezone}
+            />
           </li>
         </ul>
       </h1>

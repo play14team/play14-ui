@@ -1,31 +1,28 @@
-import DateFormatter from "../layout/date-formatter";
+import Moment from "react-moment";
+import "moment-timezone";
 
 interface EventDatesProps {
   start: Date;
   end: Date;
-  className?: string;
+  timezone?: string;
   displayYear?: boolean;
 }
 
-const EventDate = ({ start, end, displayYear }: EventDatesProps) => {
-  const firstFormat = "MMMM dd";
+const EventDate = ({ start, end, timezone, displayYear }: EventDatesProps) => {
+  const firstFormat = "MMMM DD";
   const secondFormat = `${
     new Date(start).getMonth() != new Date(end).getMonth() ? "MMMM " : ""
-  }dd ${displayYear ? "yyyy" : ""}`;
+  }DD ${displayYear ? "YYYY" : ""}`;
 
   return (
     <>
-      <DateFormatter
-        date={start}
-        formatString={firstFormat}
-        className="published"
-      />
+      <Moment tz={timezone || "UTC"} format={firstFormat}>
+        {start}
+      </Moment>
       -
-      <DateFormatter
-        date={end}
-        formatString={secondFormat}
-        className="published"
-      />
+      <Moment tz={timezone || "UTC"} format={secondFormat}>
+        {end}
+      </Moment>
     </>
   );
 };

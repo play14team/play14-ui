@@ -33,6 +33,7 @@ fragment EventItem on Event {
   name
   start
   end
+  timezone
   status
   defaultImage {
     data {

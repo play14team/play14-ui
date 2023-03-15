@@ -11,6 +11,7 @@ query Markers {
         name
         start
         end
+        timezone
         status
         registration {
           link

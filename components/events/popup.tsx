@@ -30,6 +30,7 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
         const name = event.attributes!.name;
         const start = event.attributes!.start;
         const end = event.attributes!.end;
+        const timezone = event.attributes!.timezone;
         const status = event.attributes!.status;
 
         const color = mapColor(status);
@@ -55,7 +56,7 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
             </div>
             <div className="d-flex justify-content-between pb-2">
               <span>
-                <EventDate start={start} end={end} />
+                <EventDate start={start} end={end} timezone={timezone} />
               </span>
               {status}
             </div>
