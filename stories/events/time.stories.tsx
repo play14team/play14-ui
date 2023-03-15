@@ -7,4 +7,4 @@ export default {
   component: EventTime,
 } as ComponentMeta<typeof EventTime>;
 
-export const Default = () => <EventTime time={new Date()} />;
+export const Default = () => <EventTime time={new Date()} timezone="UTC" />;
