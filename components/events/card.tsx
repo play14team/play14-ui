@@ -21,20 +21,19 @@ const EventCard = (props: {
   return (
     <article className="col-lg-4 col-sm-6 col-md-6">
       <div className="single-events-box">
-        <div className="image">
+        <div
+          className="image"
+          style={{ position: "relative", height: "300px" }}
+        >
           <Link href={url} className="d-block">
             <Image
               src={(image && image.url) || event1}
               alt={(image && image.name) || "image"}
-              width={400}
-              height={400}
               priority
               placeholder="blur"
               blurDataURL={(image && image.blurhash) || undefined}
-              style={{
-                maxWidth: "100%",
-                objectFit: "cover",
-              }}
+              fill
+              style={{ objectFit: "cover" }}
             />
           </Link>
           <span className="date">
