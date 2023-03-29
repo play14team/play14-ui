@@ -4,6 +4,7 @@ import {
   Enum_Componenteventsmedia_Type,
   Enum_Event_Status,
   EventDetailsFragment,
+  PlayerEntity,
 } from "../../models/graphql";
 import payment1 from "../../styles/images/payment/payment1.png";
 import payment2 from "../../styles/images/payment/payment2.png";
@@ -12,8 +13,11 @@ import Html from "../layout/html";
 import EventTime from "./time";
 import EventStatus from "./status";
 
-const EventSidebar = (props: { event: EventDetailsFragment }) => {
-  const { event } = props;
+const EventSidebar = (props: {
+  event: EventDetailsFragment;
+  participants: PlayerEntity[];
+}) => {
+  const { event, participants } = props;
 
   const url = window && window.location.href;
   const eventName = encodeURI(event.name);
@@ -48,7 +52,7 @@ const EventSidebar = (props: { event: EventDetailsFragment }) => {
         <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Registered</span>
-            {event.players?.data.length}
+            {participants.length}
           </div>
         </li>
 

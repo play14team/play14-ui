@@ -37,6 +37,11 @@ const EventDetails = (props: { event: Event }) => {
   const mentors = event.mentors?.data as PlayerEntity[];
   const country = countries[eventLocation.country].name;
 
+  const participants = concatWithoutDuplicates(
+    players,
+    concatWithoutDuplicates(hosts, mentors)
+  );
+
   return (
     <>
       <h1 className="pt-5">
@@ -170,7 +175,7 @@ const EventDetails = (props: { event: Event }) => {
             </div>
           </div>
           <div className="col-lg-4 col-md-12">
-            <EventSidebar event={event} />
+            <EventSidebar event={event} participants={participants} />
           </div>
         </div>
 
@@ -187,7 +192,9 @@ const EventDetails = (props: { event: Event }) => {
               <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
               <li onClick={(e) => openTabSection(e, "tab3")}>
                 Players{" "}
-                {players && players.length > 0 ? `(${players.length})` : ""}
+                {participants && participants.length > 0
+                  ? `(${participants.length})`
+                  : ""}
               </li>
               <li onClick={(e) => openTabSection(e, "tab4")}>
                 Photos{" "}
@@ -221,7 +228,9 @@ const EventDetails = (props: { event: Event }) => {
 
               {/* tab3 */}
               <div id="tab3" className="tab-pane tabs_item">
-                {players && <PlayerGrid title="Players" players={players} />}
+                {players && (
+                  <PlayerGrid title="Players" players={participants} />
+                )}
               </div>
 
               {/* tab4 */}
@@ -245,6 +254,27 @@ const EventDetails = (props: { event: Event }) => {
 
   function isOpen() {
     return event.status === Enum_Event_Status.Open;
+  }
+
+  function concatWithoutDuplicates(
+    arr1: PlayerEntity[],
+    arr2: PlayerEntity[]
+  ): PlayerEntity[] {
+    const newArray: PlayerEntity[] = [...arr1];
+
+    arr2.map((i) => {
+      if (
+        newArray.findIndex(
+          (player) => player.attributes?.name == i.attributes?.name
+        ) < 0
+      ) {
+        newArray.push(i);
+      }
+    });
+
+    return newArray.sort((a, b) =>
+      a.attributes?.name.localeCompare(b.attributes?.name)
+    );
   }
 };
 
