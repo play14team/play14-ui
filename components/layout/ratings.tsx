@@ -5,7 +5,6 @@ const Ratings = (props: { name: string; value: number }) => {
   const stars = [];
 
   for (let index = 1; index <= value; index++) {
-    console.log(index);
     stars.push(<i className={`fa fa-star ${styles.ratingColor}`}></i>);
   }
   for (let index = value + 1; index <= 5; index++) {

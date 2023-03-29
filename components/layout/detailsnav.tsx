@@ -16,7 +16,6 @@ const DetailsNavigator = (props: {
   entity: string;
 }) => {
   const { previous, next, entity } = props;
-  console.log(next);
 
   return (
     <nav className="tracer-post-navigation">
