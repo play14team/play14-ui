@@ -14,18 +14,21 @@ const PlayerCard = (props: {
   return (
     <div className="col-lg-3 col-sm-6 col-md-6">
       <div className="single-scientist-box">
-        {avatar && (
-          <Link href={url}>
-            <Image
-              src={avatar.url}
-              alt={avatar.name}
-              width={500}
-              height={500}
-              placeholder="blur"
-              blurDataURL={(avatar && avatar.blurhash) || undefined}
-            />
-          </Link>
-        )}
+        <div style={{ position: "relative", height: "300px" }}>
+          {avatar && (
+            <Link href={url}>
+              <Image
+                src={avatar.url}
+                alt={avatar.name}
+                placeholder="blur"
+                blurDataURL={(avatar && avatar.blurhash) || undefined}
+                priority
+                fill
+                style={{ objectFit: "cover" }}
+              />
+            </Link>
+          )}
+        </div>
         <div className="content">
           <Link href={url}>
             <h3>{player.name}</h3>
