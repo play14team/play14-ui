@@ -1,33 +1,14 @@
 import { useQuery } from "@apollo/client";
-import type { GetStaticPaths, GetStaticProps, NextPage } from "next";
+import type { GetServerSideProps, NextPage } from "next";
 import { useRouter } from "next/router";
 import Page from "../../components/layout/page";
 import PlayerDetails from "../../components/players/details";
 import { client } from "../../graphql/apollo";
-import {
-  Player,
-  PlayerDocument,
-  PlayerSlugsDocument,
-} from "../../models/graphql";
+import { Player, PlayerDocument } from "../../models/graphql";
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await client.query({ query: PlayerSlugsDocument });
-
-  const paths = data.players?.data?.map((s) => {
-    const { slug } = s.attributes;
-    return {
-      params: { slug },
-    };
-  });
-  return {
-    paths,
-    fallback: false,
-  };
-};
-
-export const getStaticProps: GetStaticProps<{ player: Player }> = async (
-  context
-) => {
+export const getServerSideProps: GetServerSideProps<{
+  player: Player;
+}> = async (context) => {
   const { slug } = context.params;
   const { data } = await client.query({
     query: PlayerDocument,
