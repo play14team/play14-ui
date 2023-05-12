@@ -9,7 +9,7 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cdn.play14.org",
+        hostname: "play14-cdn.azureedge.net",
         port: "",
         pathname: "/strapi-uploads/assets/**",
       },
