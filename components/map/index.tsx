@@ -18,6 +18,10 @@ const MapView = (props: {
   const latitude = point.coordinates[1];
   const address = props.location.place_name;
 
+  const token =
+    process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ||
+    "pk.eyJ1IjoicGxheTE0IiwiYSI6ImNsaHk1dzRlNDB6Z2szbG1kMnJybHFpeWMifQ.gRYXSA5Gjoph0caYvDvHMA";
+
   return (
     <Map
       initialViewState={{
@@ -27,7 +31,7 @@ const MapView = (props: {
       }}
       style={{ width: "100%", height: height || "500px" }}
       mapStyle="mapbox://styles/mapbox/streets-v12"
-      mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+      mapboxAccessToken={token}
     >
       <FullscreenControl />
       <NavigationControl />

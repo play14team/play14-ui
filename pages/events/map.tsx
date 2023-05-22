@@ -22,6 +22,10 @@ const EventMap = () => {
 
   const [popupInfo, setPopupInfo] = useState(null);
 
+  const token =
+    process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ||
+    "pk.eyJ1IjoicGxheTE0IiwiYSI6ImNsaHk1dzRlNDB6Z2szbG1kMnJybHFpeWMifQ.gRYXSA5Gjoph0caYvDvHMA";
+
   const pins = useMemo(
     () =>
       events &&
@@ -69,15 +73,12 @@ const EventMap = () => {
             }}
             style={{ width: "100%", height: "800px" }}
             mapStyle="mapbox://styles/mapbox/streets-v12"
-            mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
+            mapboxAccessToken={token}
           >
             <FullscreenControl />
             <NavigationControl />
             <GeolocateControl />
-            <GeocoderControl
-              mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
-              position="top-left"
-            />
+            <GeocoderControl mapboxAccessToken={token} position="top-left" />
 
             {pins}
 
