@@ -32,6 +32,7 @@ export const getStaticProps: GetStaticProps<{ game: Game }> = async (
 
   return {
     props: { game: game },
+    revalidate: 10,
   };
 };
 

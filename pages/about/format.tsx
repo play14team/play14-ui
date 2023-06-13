@@ -19,6 +19,7 @@ export const getStaticProps: GetStaticProps<{
 
   return {
     props: { ...data.format.data.attributes },
+    revalidate: 10,
   };
 };
 
