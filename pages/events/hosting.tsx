@@ -12,7 +12,6 @@ export const getStaticProps: GetStaticProps<{ hosting: Hosting }> = async (
 
   return {
     props: { hosting: data.hosting?.data?.attributes },
-    revalidate: 10,
   };
 };
 
