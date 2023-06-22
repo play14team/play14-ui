@@ -14413,10 +14413,10 @@ yargs@^17.0.0, yargs@^17.3.1:
     y18n "^5.0.5"
     yargs-parser "^21.1.1"
 
-yet-another-react-lightbox@^2.2.7:
-  version "2.2.7"
-  resolved "https://registry.yarnpkg.com/yet-another-react-lightbox/-/yet-another-react-lightbox-2.2.7.tgz#8e82ade7aa731340db585144ce5e61f365acb539"
-  integrity sha512-v6/P2NUOjAQ9egmPYyn8BG3qs6tszVNGWC5fVaKaURqDXcwEqpoSBr4/9djWwiW6DdzxJh06KRV9Fas2HHeExg==
+yet-another-react-lightbox@^2.6.2:
+  version "2.6.2"
+  resolved "https://registry.yarnpkg.com/yet-another-react-lightbox/-/yet-another-react-lightbox-2.6.2.tgz#3f4765eb99cc70e4c09661ea4a958d75632b1ce9"
+  integrity sha512-P03quWhfmmqvgraMPxJybiwlwtCnHeO1oCDjJoyDIU/mif0AzJQR1ZAYMCAgNdV1jrJNovDfN3LjWP5L5QzmyA==
 
 yn@3.1.1:
   version "3.1.1"

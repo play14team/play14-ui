@@ -46,7 +46,7 @@
     "react-spinners": "^0.13.7",
     "sass": "^1.57.1",
     "sharp": "^0.31.3",
-    "yet-another-react-lightbox": "^2.2.7"
+    "yet-another-react-lightbox": "^2.6.2"
   },
   "devDependencies": {
     "@babel/core": "^7.20.5",
