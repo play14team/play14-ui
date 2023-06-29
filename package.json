@@ -19,7 +19,6 @@
   "dependencies": {
     "@apollo/client": "^3.7.15",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
-    "@next/font": "^13.4.4",
     "@types/react-big-calendar": "^0.38.4",
     "bootstrap": "^5.2.3",
     "country-data": "^0.0.31",
