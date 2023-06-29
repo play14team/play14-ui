@@ -207,6 +207,9 @@ const EventDetails = (props: { event: Event }) => {
             <div className="tab-content">
               {/* tab1 */}
               <div id="tab1" className="tab-pane tabs_item">
+                {event.description && (
+                  <EventDescription description={event.description} />
+                )}
                 {hosts && <PlayerGrid title="Team" players={hosts} />}
                 {mentors && <PlayerGrid title="Mentors" players={mentors} />}
                 {event.sponsorships && (
@@ -215,9 +218,6 @@ const EventDetails = (props: { event: Event }) => {
                       event.sponsorships as Array<ComponentEventsSponsorship>
                     }
                   />
-                )}
-                {event.description && (
-                  <EventDescription description={event.description} />
                 )}
               </div>
 
