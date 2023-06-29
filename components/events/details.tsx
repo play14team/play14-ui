@@ -25,6 +25,7 @@ import Map from "../map";
 import ReactCountryFlag from "react-country-flag";
 import { countries } from "country-data";
 import ICalendar from "./ical";
+import Html from "../layout/html";
 
 const EventDetails = (props: { event: Event }) => {
   const { event } = props;
@@ -183,20 +184,38 @@ const EventDetails = (props: { event: Event }) => {
         <div className="row">
           <div className="courses-details-desc">
             <ul className="nav nav-tabs" id="myTab" role="tablist">
+              {/* Overview */}
               <li
                 className="current"
-                onClick={(e) => openTabSection(e, "tab1")}
+                onClick={(e) => openTabSection(e, "overviewTab")}
               >
                 Overview
               </li>
-              <li onClick={(e) => openTabSection(e, "tab2")}>Schedule</li>
-              <li onClick={(e) => openTabSection(e, "tab3")}>
+
+              {/* Registration */}
+              {event.status == Enum_Event_Status.Open &&
+                event.registration &&
+                event.registration.widgetCode && (
+                  <li onClick={(e) => openTabSection(e, "registrationTab")}>
+                    Registration
+                  </li>
+                )}
+
+              {/* Schedule */}
+              <li onClick={(e) => openTabSection(e, "scheduleTab")}>
+                Schedule
+              </li>
+
+              {/* Players */}
+              <li onClick={(e) => openTabSection(e, "playersTab")}>
                 Players{" "}
                 {participants && participants.length > 0
                   ? `(${participants.length})`
                   : ""}
               </li>
-              <li onClick={(e) => openTabSection(e, "tab4")}>
+
+              {/* Photos */}
+              <li onClick={(e) => openTabSection(e, "photosTab")}>
                 Photos{" "}
                 {event.images && event.images.data.length > 0
                   ? `(${event.images.data.length})`
@@ -205,8 +224,8 @@ const EventDetails = (props: { event: Event }) => {
             </ul>
 
             <div className="tab-content">
-              {/* tab1 */}
-              <div id="tab1" className="tab-pane tabs_item">
+              {/* Overview */}
+              <div id="overviewTab" className="tab-pane tabs_item">
                 {event.description && (
                   <EventDescription description={event.description} />
                 )}
@@ -220,22 +239,26 @@ const EventDetails = (props: { event: Event }) => {
                   />
                 )}
               </div>
-
-              {/* tab2 */}
-              <div id="tab2" className="tab-pane tabs_item">
+              {/* Schedule */}
+              <div id="scheduleTab" className="tab-pane tabs_item">
                 {timetable && <EventSchedule timetable={timetable} />}
               </div>
 
-              {/* tab3 */}
-              <div id="tab3" className="tab-pane tabs_item">
+              {/* Players */}
+              <div id="playersTab" className="tab-pane tabs_item">
                 {players && (
                   <PlayerGrid title="Players" players={participants} />
                 )}
               </div>
 
-              {/* tab4 */}
-              <div id="tab4" className="tab-pane tabs_item">
+              {/* Photos */}
+              <div id="photosTab" className="tab-pane tabs_item">
                 {event.images && <Gallery images={event.images.data} />}
+              </div>
+
+              {/* Registration */}
+              <div id="registrationTab" className="tab-pane tabs_item">
+                <Html>{event.registration.widgetCode}</Html>
               </div>
             </div>
           </div>

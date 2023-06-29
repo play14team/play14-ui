@@ -36,6 +36,11 @@ const Meta = () => {
         property="og:image"
         content="/public/play14_black_bg_transparent.svg"
       />
+      <script
+        type="text/javascript"
+        src="https://widget.weezevent.com/weez.js"
+        defer
+      ></script>
     </Head>
   );
 };

@@ -1,4 +1,4 @@
-const openTabSection = (evt, tabNmae) => {
+const openTabSection = (evt, tabName) => {
   let i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabs_item");
   for (i = 0; i < tabcontent.length; i++) {
@@ -11,8 +11,8 @@ const openTabSection = (evt, tabNmae) => {
     tablinks[i].className = tablinks[i].className.replace("current", "");
   }
 
-  document.getElementById(tabNmae).style.display = "block";
-  document.getElementById(tabNmae).className += " fadeInUp animated";
+  document.getElementById(tabName).style.display = "block";
+  document.getElementById(tabName).className += " fadeInUp animated";
   evt.currentTarget.className += "current";
 };
 

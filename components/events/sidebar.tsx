@@ -12,6 +12,7 @@ import payment3 from "../../styles/images/payment/payment3.png";
 import Html from "../layout/html";
 import EventTime from "./time";
 import EventStatus from "./status";
+import openTabSection from "../../libs/tabs";
 
 const EventSidebar = (props: {
   event: EventDetailsFragment;
@@ -49,12 +50,12 @@ const EventSidebar = (props: {
             </div>
           </li>
         )}
-        <li>
+        {/* <li>
           <div className="d-flex justify-content-between align-items-center">
             <span>Registered</span>
             {participants.length}
           </div>
-        </li>
+        </li> */}
 
         {event.media &&
           event.media.map(
@@ -114,14 +115,6 @@ const EventSidebar = (props: {
             </div>
           </div>
         </li> */}
-
-        {event.status == Enum_Event_Status.Open &&
-          event.registration &&
-          event.registration.widgetCode && (
-            <li>
-              <Html>{event.registration.widgetCode}</Html>
-            </li>
-          )}
       </ul>
 
       {event.status == Enum_Event_Status.Open &&
