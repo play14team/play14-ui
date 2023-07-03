@@ -20,7 +20,7 @@
     "@apollo/client": "^3.7.15",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "@types/react-big-calendar": "^0.38.4",
-    "bootstrap": "^5.2.3",
+    "bootstrap": "^5.3.0",
     "country-data": "^0.0.31",
     "date-fns": "^2.29.3",
     "graphql": "^16.6.0",
