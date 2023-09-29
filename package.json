@@ -44,7 +44,7 @@
     "react-photo-album": "^2.0.0",
     "react-spinners": "^0.13.7",
     "sass": "^1.62.1",
-    "sharp": "^0.31.3",
+    "sharp": "^0.32.6",
     "yet-another-react-lightbox": "^2.6.2"
   },
   "devDependencies": {
