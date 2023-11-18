@@ -9,13 +9,14 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
   const venue = events[0].attributes!.venue!.data!.attributes!;
   const longitude = venue.location.geometry.coordinates[0];
   const latitude = venue.location.geometry.coordinates[1];
+  const offset: [number, number] = [0, -35];
 
   return (
     <Popup
       anchor="bottom-right"
       longitude={Number(longitude)}
       latitude={Number(latitude)}
-      offset={[0, -35]}
+      offset={offset}
       onClose={props.onClose}
       style={{ minWidth: "200px" }}
     >

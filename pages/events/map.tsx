@@ -31,29 +31,33 @@ const EventMap = () => {
       events &&
       events.map((event, index) => {
         const geoJSON = event.attributes?.venue?.data?.attributes?.location;
-        const longitude = geoJSON.geometry.coordinates[0];
-        const latitude = geoJSON.geometry.coordinates[1];
-        return (
-          <Marker
-            key={`marker-${index}`}
-            longitude={longitude}
-            latitude={latitude}
-            color={mapColor(event.attributes.status)}
-            style={{ cursor: "pointer" }}
-            onClick={(e) => {
-              e.originalEvent.stopPropagation();
-              setPopupInfo(
-                events.filter(
-                  (e) =>
-                    e.attributes!.venue!.data!.id ==
-                    event.attributes!.venue!.data!.id
-                )
-              );
-            }}
-          />
-        );
+
+        if (geoJSON && geoJSON.geometry) {
+          const longitude = geoJSON.geometry.coordinates[0];
+          const latitude = geoJSON.geometry.coordinates[1];
+
+          return (
+            <Marker
+              key={`marker-${index}`}
+              longitude={longitude}
+              latitude={latitude}
+              color={mapColor(event.attributes.status)}
+              style={{ cursor: "pointer" }}
+              onClick={(e) => {
+                e.originalEvent.stopPropagation();
+                setPopupInfo(
+                  events.filter(
+                    (e) =>
+                      e.attributes!.venue!.data!.id ==
+                      event.attributes!.venue!.data!.id,
+                  ),
+                );
+              }}
+            />
+          );
+        }
       }),
-    [events]
+    [events],
   );
 
   return (

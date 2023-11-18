@@ -1,10 +1,11 @@
-import Map, {
-  Marker,
-  Popup,
-  FullscreenControl,
-  NavigationControl,
-} from "react-map-gl";
+import { Point } from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
+import Map, {
+  FullscreenControl,
+  Marker,
+  NavigationControl,
+  Popup,
+} from "react-map-gl";
 
 const MapView = (props: {
   location: any;
@@ -21,6 +22,8 @@ const MapView = (props: {
   const token =
     process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ||
     "pk.eyJ1IjoicGxheTE0IiwiYSI6ImNsaHk1dzRlNDB6Z2szbG1kMnJybHFpeWMifQ.gRYXSA5Gjoph0caYvDvHMA";
+
+  const offset = new Point(0, -35);
 
   return (
     <Map
@@ -47,7 +50,7 @@ const MapView = (props: {
           anchor="bottom-right"
           longitude={longitude}
           latitude={latitude}
-          offset={[0, -35]}
+          offset={offset}
           closeButton={false}
           closeOnClick={false}
         >
