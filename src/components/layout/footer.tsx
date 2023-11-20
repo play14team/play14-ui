@@ -1,7 +1,7 @@
+import footerMap from "@/styles/images/footer-map.png"
 import Image from "next/image"
-import logo from "../../public/logo/play14_600x200_transparent.png"
 import Link from "next/link"
-import footerMap from "../../styles/images/footer-map.png"
+import logo from "/public/logo/play14_600x200_transparent.png"
 
 const Footer = () => {
   const socialLinks = [

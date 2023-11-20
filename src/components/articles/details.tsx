@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/router"
+import { useRouter } from "next/navigation"
 import Moment from "react-moment"
 import { Article, UploadFile } from "../../models/graphql"
 import Gallery from "../layout/gallery"

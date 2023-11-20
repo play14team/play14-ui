@@ -1,6 +1,10 @@
+import Footer from "@/components/layout/footer"
+import Navbar from "@/components/layout/navbar"
+import { ApolloProvider } from "@/components/providers/apollo-provider"
 import "@/styles/main.scss"
 import type { Metadata } from "next"
 import { Inter } from "next/font/google"
+import Script from "next/script"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -16,7 +20,18 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <Script src="https://widget.weezevent.com/weez.js" />
+      <body className={inter.className}>
+        <ApolloProvider>
+          <Navbar />
+          <main>
+            <div className="container">
+              <div className="pt-100 pb-70">{children}</div>
+            </div>
+          </main>
+          <Footer />
+        </ApolloProvider>
+      </body>
     </html>
   )
 }
