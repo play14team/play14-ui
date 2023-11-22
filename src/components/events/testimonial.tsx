@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import ReactAudioPlayer from "react-audio-player"
 import { Testimonial } from "../../models/graphql"
-import Html from "../layout/html"
+import HtmlContent from "../layout/html-content"
 
 const TestimonialItem = (props: { testimonial: Testimonial }) => {
   const { testimonial } = props
@@ -13,7 +13,9 @@ const TestimonialItem = (props: { testimonial: Testimonial }) => {
   return (
     <div className="col-lg-6 col-md-6">
       <div className="single-testimonials-item">
-        {testimonial.content && <Html>{testimonial.content}</Html>}
+        {testimonial.content && (
+          <HtmlContent>{testimonial.content}</HtmlContent>
+        )}
         {audio && (
           <div className="pt-3">
             <ReactAudioPlayer src={audio.url} controls />

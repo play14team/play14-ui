@@ -1,5 +1,7 @@
-import "yet-another-react-lightbox/styles.css"
+"use client"
+
 import "yet-another-react-lightbox/plugins/thumbnails.css"
+import "yet-another-react-lightbox/styles.css"
 
 import { useState } from "react"
 

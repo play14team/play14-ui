@@ -1,6 +1,6 @@
+import moment from "moment"
 import Image from "next/image"
 import { Enum_Componentdefaulthistoryitem_Dateformat } from "../../models/graphql"
-import Moment from "react-moment"
 
 interface HistoryProps {
   date: Date
@@ -21,10 +21,8 @@ const HistoryItem = (props: HistoryProps) => {
   return (
     <li className="timeline-block">
       <div className="timeline-date">
-        <span>
-          <Moment format="YYYY">{date}</Moment>
-        </span>
-        {format && <Moment format={format}>{date}</Moment>}
+        <span>{moment(date).format("YYYY")}</span>
+        {format && moment(date).format(format)}
         {additionalText}
       </div>
 

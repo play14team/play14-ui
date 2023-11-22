@@ -1,6 +1,6 @@
+import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import Moment from "react-moment"
 import { Game } from "../../models/graphql"
 import Ratings from "../layout/ratings"
 
@@ -129,7 +129,7 @@ const GameSidebar = (props: { game: Game }) => {
               <i className="bx bx-book-open"></i>
             </div>
             <span>Pubished</span>
-            <Moment format="MMMM DD, YYYY">{game.publishedAt}</Moment>
+            {moment(game.publishedAt).format("MMMM DD, YYYY")}
           </li>
         </ul>
       </div>

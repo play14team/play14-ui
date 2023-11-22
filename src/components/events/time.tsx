@@ -1,12 +1,8 @@
-import Moment from "react-moment"
+import moment from "moment"
 import "moment-timezone"
 
-const EventTime = (props: { time: Date; timezone: string }) => {
-  return (
-    <Moment tz={props.timezone} format="ddd, MMM Do - HH:mm">
-      {props.time}
-    </Moment>
-  )
+const EventTime = ({ time, timezone }: { time: Date; timezone: string }) => {
+  return <>{moment(time).tz(timezone).format("ddd, MMM Do - HH:mm")}</>
 }
 
 export default EventTime

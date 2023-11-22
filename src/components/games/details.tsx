@@ -1,7 +1,7 @@
 import Image from "next/image"
 import { Game, UploadFile } from "../../models/graphql"
 import Gallery from "../layout/gallery"
-import Html from "../layout/html"
+import HtmlContent from "../layout/html-content"
 import GamesNavigator from "./detailsnav"
 import GameSidebar from "./sidebar"
 
@@ -97,7 +97,7 @@ const GameDetails = (props: { game: Game }) => {
               <hr></hr>
 
               <div className="content pt-5">
-                <Html>{game.description}</Html>
+                <HtmlContent>{game.description}</HtmlContent>
               </div>
 
               {game.images && game.images.data.length > 1 && (

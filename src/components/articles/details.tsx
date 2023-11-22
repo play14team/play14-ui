@@ -1,20 +1,19 @@
+import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import Moment from "react-moment"
+import { usePathname } from "next/navigation"
 import { Article, UploadFile } from "../../models/graphql"
 import Gallery from "../layout/gallery"
-import Html from "../layout/html"
+import HtmlContent from "../layout/html-content"
 import ArticlesNavigator from "./detailsnav"
 import ArticleSidebar from "./sidebar"
 
 const ArticleDetails = (props: { article: Article }) => {
   const { article } = props
-  const router = useRouter()
+  const pathname = usePathname()
 
   const image = article.defaultImage?.data?.attributes as UploadFile
   const author = article.author?.data?.attributes
-  const url = router.asPath
   const text = encodeURI("Take a look at this #play14 article")
 
   return (
@@ -52,16 +51,14 @@ const ArticleDetails = (props: { article: Article }) => {
                       <i className="bx bx-calendar"></i>
                       <span>Last Updated</span>
                       <Link href="#">
-                        <Moment format="MMM Do, YYYY">
-                          {article.updatedAt}
-                        </Moment>
+                        {moment(article.updatedAt).format("MMM Do, YYYY")}
                       </Link>
                     </li>
                   </ul>
                 </div>
 
                 <div className="pt-4">
-                  <Html>{article.content!}</Html>
+                  <HtmlContent>{article.content!}</HtmlContent>
                 </div>
 
                 <div className="pt-4">
@@ -92,7 +89,7 @@ const ArticleDetails = (props: { article: Article }) => {
                     </li>
                     <li>
                       <Link
-                        href={`http://www.facebook.com/sharer.php?u=${url}&p[title]=${text}`}
+                        href={`http://www.facebook.com/sharer.php?u=${pathname}&p[title]=${text}`}
                         className="facebook"
                         target="_blank"
                         rel="noreferrer"
@@ -102,7 +99,7 @@ const ArticleDetails = (props: { article: Article }) => {
                     </li>
                     <li>
                       <Link
-                        href={`http://twitter.com/share?url=${url}&text=${text}`}
+                        href={`http://twitter.com/share?url=${pathname}&text=${text}`}
                         className="twitter"
                         target="_blank"
                         rel="noreferrer"
@@ -112,7 +109,7 @@ const ArticleDetails = (props: { article: Article }) => {
                     </li>
                     <li>
                       <Link
-                        href={`http://pinterest.com/pin/create/button/?url=${url}&description=${text}`}
+                        href={`http://pinterest.com/pin/create/button/?url=${pathname}&description=${text}`}
                         className="linkedin"
                         target="_blank"
                         rel="noreferrer"
@@ -122,7 +119,7 @@ const ArticleDetails = (props: { article: Article }) => {
                     </li>
                     <li>
                       <Link
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${text}`}
+                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${pathname}&title=${text}`}
                         className="instagram"
                         target="_blank"
                         rel="noreferrer"

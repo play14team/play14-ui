@@ -9,8 +9,9 @@ import Script from "next/script"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "#play14",
-  description: "Play is the way",
+  title: "#play14 - play is the way",
+  description:
+    "#play14 is a worldwide gathering of like-minded people who believe that playing is the best way to learn, share and be creative!",
 }
 
 export default function RootLayout({

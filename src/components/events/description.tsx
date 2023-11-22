@@ -1,4 +1,4 @@
-import Html from "../layout/html"
+import HtmlContent from "../layout/html-content"
 
 const EventDescription = (props: { description: string }) => {
   const { description } = props
@@ -8,7 +8,7 @@ const EventDescription = (props: { description: string }) => {
         <span className="sub-title">Details</span>
       </div>
       <div className="events-details-desc">
-        <Html>{description}</Html>
+        <HtmlContent>{description}</HtmlContent>
       </div>
     </>
   )

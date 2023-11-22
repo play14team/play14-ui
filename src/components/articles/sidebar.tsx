@@ -1,7 +1,7 @@
 import { useQuery } from "@apollo/client"
+import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import Moment from "react-moment"
 import { ArticleSidebarDocument } from "../../models/graphql"
 
 const ArticleSidebar = () => {
@@ -61,9 +61,9 @@ const ArticleSidebar = () => {
               </Link>
               <div className="info">
                 <span>
-                  <Moment format="MMM Do, YYYY">
-                    {article.attributes?.publishedAt}
-                  </Moment>{" "}
+                  {moment(article.attributes?.publishedAt).format(
+                    "MMM Do, YYYY",
+                  )}{" "}
                 </span>
                 <h4 className="title usmall">
                   <Link href="/blog-details">{article.attributes?.title}</Link>

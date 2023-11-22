@@ -1,6 +1,6 @@
+import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import Moment from "react-moment"
 import { FragmentType, useFragment } from "../../models"
 import { ArticleItemFragmentDoc } from "../../models/graphql"
 import article1 from "/styles/images/gallery/gallery5.jpg"
@@ -54,7 +54,7 @@ const ArticleCard = (props: {
             </li>
             <li>
               <i className="flaticon-calendar"></i>
-              <Moment format="MMM Do, YYYY">{article.publishedAt}</Moment>
+              {moment(article.publishedAt).format("MMM Do, YYYY")}
             </li>
           </ul>
           <h3>

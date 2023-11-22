@@ -1,23 +1,17 @@
-import { countries } from "country-data"
+import countries from "i18n-iso-countries"
 import Image from "next/image"
 import Link from "next/link"
-import { FragmentType, useFragment } from "../../models/fragment-masking"
-import { EventItemFragmentDoc } from "../../models/graphql"
+import ReactCountryFlag from "react-country-flag"
+import { Event } from "../../models/graphql"
 import event1 from "../../styles/images/events/event1.jpg"
 import EventDate from "./date"
 import EventStatus from "./status"
-//@ts-ignore
-import ReactCountryFlag from "react-country-flag"
 
-const EventCard = (props: {
-  event: FragmentType<typeof EventItemFragmentDoc>
-}) => {
-  const event = useFragment(EventItemFragmentDoc, props.event)
+const EventCard = ({ event }: { event: Event }) => {
   const url = `/events/${encodeURIComponent(event.slug)}`
-  const image = event.defaultImage.data?.attributes
-
-  const countryCode = event.location?.data?.attributes?.country as string
-  const countryName = countries[countryCode].name
+  const image = event.defaultImage.data?.attributes!
+  const countryCode = event.location?.data?.attributes?.country!
+  const countryName = countries.getName(countryCode, "en")
 
   return (
     <article className="col-lg-4 col-sm-6 col-md-6">
@@ -41,7 +35,7 @@ const EventCard = (props: {
             <EventDate
               start={event.start}
               end={event.end}
-              timezone={event.timezone as string}
+              timezone={event.timezone}
               displayYear
             />
           </span>

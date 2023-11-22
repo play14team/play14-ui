@@ -1,7 +1,7 @@
-import Link from "next/link"
+import moment from "moment"
 import Image from "next/image"
+import Link from "next/link"
 import { UploadFile } from "../../models/graphql"
-import Moment from "react-moment"
 
 export interface NavLink {
   slug: string
@@ -46,7 +46,7 @@ const DetailsNavigator = (props: {
                 <span className="prev-title">{previous.name}</span>
                 <span className="meta-wrapper">
                   <span className="date-post">
-                    <Moment format="MMM Do, YYYY">{previous.date}</Moment>
+                    {moment(previous.date).format("MMM Do, YYYY")}
                   </span>
                 </span>
               </span>
@@ -64,7 +64,7 @@ const DetailsNavigator = (props: {
                 <span className="next-title">{next.name}</span>
                 <span className="meta-wrapper">
                   <span className="date-post">
-                    <Moment format="MMM Do, YYYY">{next.date}</Moment>
+                    {moment(next.date).format("MMM Do, YYYY")}
                   </span>
                 </span>
               </span>

@@ -25,7 +25,7 @@ import EventSponsorships from "./sponsorships"
 import UpcomingEventTimer from "./timer"
 //@ts-ignore
 import ReactCountryFlag from "react-country-flag"
-import Html from "../layout/html"
+import HtmlContent from "../layout/html-content"
 import ICalendar from "./ical"
 
 const EventDetails = (props: { event: Event }) => {
@@ -259,7 +259,7 @@ const EventDetails = (props: { event: Event }) => {
 
               {/* Registration */}
               <div id="registrationTab" className="tab-pane tabs_item">
-                <Html>{event.registration?.widgetCode!}</Html>
+                <HtmlContent>{event.registration?.widgetCode!}</HtmlContent>
               </div>
             </div>
           </div>

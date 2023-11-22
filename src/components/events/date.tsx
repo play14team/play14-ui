@@ -1,10 +1,11 @@
-import Moment from "react-moment"
+import { Maybe } from "@/models/graphql"
+import moment from "moment"
 import "moment-timezone"
 
 interface EventDatesProps {
   start: Date
   end: Date
-  timezone?: string
+  timezone: Maybe<string> | undefined
   displayYear?: boolean
 }
 
@@ -13,16 +14,12 @@ const EventDate = ({ start, end, timezone, displayYear }: EventDatesProps) => {
   const secondFormat = `${
     new Date(start).getMonth() != new Date(end).getMonth() ? "MMMM " : ""
   }DD ${displayYear ? "YYYY" : ""}`
+  const tz = timezone || "UTC"
 
   return (
     <>
-      <Moment tz={timezone || "UTC"} format={firstFormat}>
-        {start}
-      </Moment>
-      -
-      <Moment tz={timezone || "UTC"} format={secondFormat}>
-        {end}
-      </Moment>
+      {moment(start).tz(tz).format(firstFormat)} -{" "}
+      {moment(end).tz(tz).format(secondFormat)}
     </>
   )
 }

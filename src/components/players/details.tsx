@@ -1,12 +1,12 @@
 import Image from "next/image"
-import { Player, UploadFile } from "../../models/graphql"
-import SocialNetworks from "../layout/socialnetworks"
-import PlayerSidebar from "./sidebar"
 import openTabSection from "../../libs/tabs"
-import Html from "../layout/html"
+import { Player, UploadFile } from "../../models/graphql"
 import EventGrid from "../events/grid"
-import PlayersNavigator from "./detailsnav"
+import HtmlContent from "../layout/html-content"
+import SocialNetworks from "../layout/socialnetworks"
 import Map from "../map"
+import PlayersNavigator from "./detailsnav"
+import PlayerSidebar from "./sidebar"
 
 const PlayerDetails = (props: { player: Player }) => {
   const { player } = props
@@ -72,7 +72,7 @@ const PlayerDetails = (props: { player: Player }) => {
           <div className="tab-content" style={{ minHeight: "650px" }}>
             {/* tab1 */}
             <div id="tab1" className="tab-pane tabs_item">
-              {(player.bio && <Html>{player.bio}</Html>) || (
+              {(player.bio && <HtmlContent>{player.bio}</HtmlContent>) || (
                 <p>This player is pretty shy with their life story!</p>
               )}
             </div>

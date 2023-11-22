@@ -1,20 +1,14 @@
 import { EventEntity } from "../../models/graphql"
 import EventCard from "./card"
 
-const EventGrid = (props: { events: EventEntity[] }) => {
-  const { events } = props
-
+const EventGrid = ({ events }: { events: EventEntity[] }) => {
   return (
     <div className="events-area ptb-70">
       <div className="container">
         <div className="row">
-          {events &&
-            events.map(
-              (event: any) =>
-                event.attributes && (
-                  <EventCard key={event.id} event={event.attributes} />
-                ),
-            )}
+          {events.map((e) => {
+            return <EventCard key={e.id} event={e.attributes!} />
+          })}
         </div>
       </div>
     </div>
