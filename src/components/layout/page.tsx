@@ -1,15 +1,15 @@
 import { ApolloError } from "@apollo/client"
 import Head from "next/head"
+import { PropsWithChildren } from "react"
 import ErrorMessage from "./error"
 import Loader from "./loader"
 
-export type PageProps = {
+export interface PageProps extends PropsWithChildren {
   name: string
   description?: string | undefined
   loading?: boolean | undefined
   error?: ApolloError | undefined
   hideName?: boolean
-  children: React.ReactNode
 }
 
 const Page = (props: PageProps) => {
@@ -18,7 +18,7 @@ const Page = (props: PageProps) => {
   return (
     <section id={name}>
       <Head>
-        <title>{`#play14 - ${name ? name : "loading..."}`}</title>
+        <title>{`#play14 - ${name ? name : "play is the way"}`}</title>
         {description && <meta name="description" content={description} />}
       </Head>
       {!hideName && <h1 className="pt-5 centered">{name}</h1>}
