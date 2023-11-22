@@ -1,13 +1,14 @@
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
+import defaultPlayer from "public/default-player.png"
 import { UploadFile } from "../../models/graphql"
 
 export interface NavLink {
   slug: string
   name: string
   image: UploadFile
-  date: Date
+  date?: Date
 }
 
 const DetailsNavigator = (props: {
@@ -31,12 +32,7 @@ const DetailsNavigator = (props: {
                     height: "100px",
                   }}
                 >
-                  <Image
-                    src={previous.image.url}
-                    alt={previous.image.name}
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
+                  {getImage(previous.image)}
                 </div>
 
                 <span className="post-nav-title">Prev</span>
@@ -46,7 +42,8 @@ const DetailsNavigator = (props: {
                 <span className="prev-title">{previous.name}</span>
                 <span className="meta-wrapper">
                   <span className="date-post">
-                    {moment(previous.date).format("MMM Do, YYYY")}
+                    {previous.date &&
+                      moment(previous.date).format("MMM Do, YYYY")}
                   </span>
                 </span>
               </span>
@@ -64,7 +61,7 @@ const DetailsNavigator = (props: {
                 <span className="next-title">{next.name}</span>
                 <span className="meta-wrapper">
                   <span className="date-post">
-                    {moment(next.date).format("MMM Do, YYYY")}
+                    {next.date && moment(next.date).format("MMM Do, YYYY")}
                   </span>
                 </span>
               </span>
@@ -77,12 +74,7 @@ const DetailsNavigator = (props: {
                     height: "100px",
                   }}
                 >
-                  <Image
-                    src={next.image.url}
-                    alt={next.image.name}
-                    fill
-                    style={{ objectFit: "cover" }}
-                  />
+                  {getImage(next.image)}
                 </div>
                 <span className="post-nav-title">Next</span>
               </span>
@@ -91,6 +83,17 @@ const DetailsNavigator = (props: {
         </div>
       )}
     </nav>
+  )
+}
+
+function getImage(image?: UploadFile) {
+  return (
+    <Image
+      src={image ? image.url : defaultPlayer}
+      alt={image ? image.name : "default player image"}
+      fill
+      style={{ objectFit: "cover" }}
+    />
   )
 }
 

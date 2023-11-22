@@ -1,20 +1,14 @@
 import Image from "next/image"
-import openTabSection from "../../libs/tabs"
+import defaultPlayer from "public/default-player.png"
 import { Player, UploadFile } from "../../models/graphql"
-import EventGrid from "../events/grid"
-import HtmlContent from "../layout/html-content"
 import SocialNetworks from "../layout/socialnetworks"
 import Map from "../map"
-import PlayersNavigator from "./detailsnav"
+import PlayersNavigator from "./nav"
 import PlayerSidebar from "./sidebar"
+import PlayerTabs from "./tabs"
 
-const PlayerDetails = (props: { player: Player }) => {
-  const { player } = props
-
+const PlayerDetails = ({ player }: { player: Player }) => {
   const avatar = player.avatar?.data?.attributes as UploadFile
-  const attended = player.attended?.data
-  const hosted = player.hosted?.data
-  const mentored = player.mentored?.data
 
   return (
     <div className="case-studies-details-area pb-100">
@@ -24,8 +18,8 @@ const PlayerDetails = (props: { player: Player }) => {
           <div className="col-lg-4 col-md-12">
             <div className="single-scientist-box">
               <Image
-                src={avatar.url || "#"}
-                alt={avatar.name}
+                src={avatar ? avatar.url : defaultPlayer}
+                alt={avatar ? avatar.name : "default player image"}
                 width={350}
                 height={350}
                 priority
@@ -39,11 +33,9 @@ const PlayerDetails = (props: { player: Player }) => {
           </div>
 
           <div className="col-lg-4 col-md-12 px-4">
-            {player.location && (
-              <div className="events-details-location">
-                <Map location={player.location} height={"450px"} zoom={10} />
-              </div>
-            )}
+            <div className="events-details-location">
+              <Map location={player.location} height={"450px"} zoom={10} />
+            </div>
           </div>
 
           <div className="col-lg-4 col-md-12">
@@ -51,55 +43,7 @@ const PlayerDetails = (props: { player: Player }) => {
           </div>
         </div>
 
-        <div className="courses-details-desc">
-          <ul className="nav nav-tabs" id="myTab" role="tablist">
-            <li onClick={(e) => openTabSection(e, "tab1")} className="current">
-              Biography
-            </li>
-            <li onClick={(e) => openTabSection(e, "tab2")}>
-              Attended{" "}
-              {attended && attended.length > 0 ? `(${attended.length})` : ""}
-            </li>
-            <li onClick={(e) => openTabSection(e, "tab3")}>
-              Hosted {hosted && hosted.length > 0 ? `(${hosted.length})` : ""}
-            </li>
-            <li onClick={(e) => openTabSection(e, "tab4")}>
-              Mentored{" "}
-              {mentored && mentored.length > 0 ? `(${mentored.length})` : ""}
-            </li>
-          </ul>
-
-          <div className="tab-content" style={{ minHeight: "650px" }}>
-            {/* tab1 */}
-            <div id="tab1" className="tab-pane tabs_item">
-              {(player.bio && <HtmlContent>{player.bio}</HtmlContent>) || (
-                <p>This player is pretty shy with their life story!</p>
-              )}
-            </div>
-
-            {/* tab2 */}
-            <div id="tab2" className="tab-pane tabs_item">
-              {(attended && attended.length > 0 && (
-                <EventGrid events={attended} />
-              )) || <p>This player has not attended any event yet</p>}
-            </div>
-
-            {/* tab3 */}
-            <div id="tab3" className="tab-pane tabs_item">
-              {(hosted && hosted.length > 0 && (
-                <EventGrid events={hosted} />
-              )) || <p>This player has not hosted any event yet</p>}
-            </div>
-
-            {/* tab4 */}
-            <div id="tab4" className="tab-pane tabs_item">
-              {(mentored && mentored.length > 0 && (
-                <EventGrid events={mentored} />
-              )) || <p>This player has not mentored any event yet</p>}
-            </div>
-          </div>
-          <hr />
-        </div>
+        <PlayerTabs player={player} />
       </div>
     </div>
   )

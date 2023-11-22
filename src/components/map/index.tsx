@@ -1,3 +1,5 @@
+"use client"
+
 import { Point } from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import Map, {
@@ -7,30 +9,34 @@ import Map, {
   Popup,
 } from "react-map-gl"
 
-const MapView = (props: {
-  location: any
+const MapView = ({
+  location,
+  height,
+  zoom,
+  popup,
+}: {
+  location?: any
   height?: string
   zoom?: number
   popup?: boolean
 }) => {
-  const { height, zoom, popup } = props
-  const point = props.location.geometry
-  const longitude = point.coordinates[0]
-  const latitude = point.coordinates[1]
-  const address = props.location.place_name
+  const point = location ? location.geometry : null
+  const longitude = point ? point.coordinates[0] : 10
+  const latitude = point ? point.coordinates[1] : 40
+  const address = location ? location.place_name : null
 
   const token =
     process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ||
     "pk.eyJ1IjoicGxheTE0IiwiYSI6ImNsaHk1dzRlNDB6Z2szbG1kMnJybHFpeWMifQ.gRYXSA5Gjoph0caYvDvHMA"
-
   const offset = new Point(0, -35)
+  const zoomLevel = location ? zoom || 15 : 1
 
   return (
     <Map
       initialViewState={{
         latitude: latitude,
         longitude: longitude,
-        zoom: zoom || 15,
+        zoom: zoomLevel,
       }}
       style={{ width: "100%", height: height || "500px" }}
       mapStyle="mapbox://styles/mapbox/streets-v12"
@@ -39,11 +45,9 @@ const MapView = (props: {
       <FullscreenControl />
       <NavigationControl />
 
-      <Marker
-        longitude={longitude}
-        latitude={latitude}
-        color="#ffc900"
-      ></Marker>
+      {location && (
+        <Marker longitude={longitude} latitude={latitude} color="#ffc900" />
+      )}
 
       {popup && (
         <Popup
