@@ -13,21 +13,27 @@ import EventSchedule from "./schedule"
 import EventSponsorships from "./sponsorships"
 import TabHeaders from "./tab-headers"
 
-export default function EventTabs({ event }: { event: Event }) {
+export default function EventTabs({
+  event,
+  participants,
+}: {
+  event: Event
+  participants: PlayerEntity[]
+}) {
   const timetable = event.timetable as Array<Maybe<ComponentEventsTimetable>>
   const players = event.players?.data as PlayerEntity[]
   const hosts = event.hosts?.data as PlayerEntity[]
   const mentors = event.mentors?.data as PlayerEntity[]
 
-  const participants = concatWithoutDuplicates(
-    players,
-    concatWithoutDuplicates(hosts, mentors),
-  )
+  // const participants = concatWithoutDuplicates(
+  //   players,
+  //   concatWithoutDuplicates(hosts, mentors),
+  // )
 
   return (
     <div className="row">
       <div className="courses-details-desc">
-        <TabHeaders event={event} numberOfParticipants={participants.length} />
+        <TabHeaders event={event} participantCount={participants.length} />
 
         <div className="tab-content">
           {/* Overview */}
@@ -70,25 +76,25 @@ export default function EventTabs({ event }: { event: Event }) {
   )
 }
 
-function concatWithoutDuplicates(
-  arr1: PlayerEntity[],
-  arr2: PlayerEntity[],
-): PlayerEntity[] {
-  const newArray: PlayerEntity[] = [...arr1]
+// function concatWithoutDuplicates(
+//   arr1: PlayerEntity[],
+//   arr2: PlayerEntity[],
+// ): PlayerEntity[] {
+//   const newArray: PlayerEntity[] = [...arr1]
 
-  arr2.map((i) => {
-    if (
-      newArray.findIndex(
-        (player) => player.attributes?.name == i.attributes?.name,
-      ) < 0
-    ) {
-      newArray.push(i)
-    }
-  })
+//   arr2.map((i) => {
+//     if (
+//       newArray.findIndex(
+//         (player) => player.attributes?.name == i.attributes?.name,
+//       ) < 0
+//     ) {
+//       newArray.push(i)
+//     }
+//   })
 
-  return newArray.sort((a, b) => {
-    const name1 = a.attributes?.name!
-    const name2 = b.attributes?.name!
-    return name1.localeCompare(name2)
-  })
-}
+//   return newArray.sort((a, b) => {
+//     const name1 = a.attributes?.name!
+//     const name2 = b.attributes?.name!
+//     return name1.localeCompare(name2)
+//   })
+// }

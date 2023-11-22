@@ -1,6 +1,6 @@
 import { CodegenConfig } from "@graphql-codegen/cli"
 
-const SERVER = process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337"
+const SERVER = process.env.STRAPI_API_URL || "http://localhost:1337"
 
 const config: CodegenConfig = {
   overwrite: true,

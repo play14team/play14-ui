@@ -1,13 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
-import { FragmentType, graphql, useFragment } from "../../models"
-import { PlayerItemFragmentDoc, UploadFile } from "../../models/graphql"
+import { Player, UploadFile } from "../../models/graphql"
 import SocialNetworks from "../layout/socialnetworks"
 
-const PlayerCard = (props: {
-  player: FragmentType<typeof PlayerItemFragmentDoc>
-}) => {
-  const player = useFragment(PlayerItemFragmentDoc, props.player)
+const PlayerCard = ({ player }: { player: Player }) => {
   const url = player.slug ? `/players/${player.slug}` : "#"
   const avatar = player.avatar?.data?.attributes as UploadFile
 
