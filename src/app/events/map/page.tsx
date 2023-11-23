@@ -8,10 +8,7 @@ export default async function EventMapPage() {
   const events = data?.events?.data as EventEntity[]
 
   return (
-    <Page
-      name="Events map"
-      description="All the #play14 events on an interactive map"
-    >
+    <Page name="Events map">
       <div className="pt-5 pb-100">
         <EventMap events={events} />
       </div>

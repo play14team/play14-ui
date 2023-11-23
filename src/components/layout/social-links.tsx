@@ -1,21 +1,23 @@
 "use client"
 
-import { Event } from "@/models/graphql"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 
-export default function SocialLinks({ event }: { event: Event }) {
+export default function SocialLinks({
+  text,
+  className,
+}: {
+  text: string
+  className: string
+}) {
   const origin =
     typeof window !== "undefined" && window.location.origin
       ? window.location.origin
       : ""
   const url = `${origin}${usePathname()}`
 
-  const eventName = encodeURI(event.name!)
-  const text = encodeURI("Take a look at #play14 ") + eventName
-
   return (
-    <ul className="social-link">
+    <ul className={className}>
       <li>
         <Link
           href={`http://www.facebook.com/sharer.php?u=${url}&p[title]=${text}`}

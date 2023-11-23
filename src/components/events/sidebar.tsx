@@ -5,7 +5,7 @@ import {
   Event,
   PlayerEntity,
 } from "../../models/graphql"
-import SocialLinks from "./social-links"
+import SocialLinks from "../layout/social-links"
 import EventStatus from "./status"
 import EventTime from "./time"
 
@@ -16,6 +16,9 @@ const EventSidebar = ({
   event: Event
   participants: PlayerEntity[]
 }) => {
+  const eventName = encodeURI(event.name!)
+  const text = encodeURI("Take a look at #play14 ") + eventName
+
   return (
     <aside className="events-details-info">
       <h4 className="orange pb-3" style={{ textAlign: "center" }}>
@@ -134,7 +137,7 @@ const EventSidebar = ({
             <span>
               Share this event <i className="flaticon-share"></i>
             </span>
-            <SocialLinks event={event} />
+            <SocialLinks text={text} className="social-link" />
           </div>
         </div>
       )}

@@ -2,7 +2,7 @@ import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
 import LoadMore from "@/components/players/load-more"
 import { Pagination, PlayerEntity } from "@/models/graphql"
-import { getPlayers } from "../../components/players/get-players.action"
+import { getPlayers } from "../../components/players/get.action"
 
 export default async function Players() {
   const { data } = await getPlayers(1, 60)

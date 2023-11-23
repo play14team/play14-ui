@@ -3,7 +3,7 @@ import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { Event, EventDocument, EventEntity } from "@/models/graphql"
-import { getEventSlugs } from "../../../components/events/get-events.action"
+import { getEventSlugs } from "../../../components/events/get.action"
 
 export async function generateStaticParams() {
   const { data } = await getEventSlugs()

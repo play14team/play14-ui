@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client"
+import { getClient } from "@/libs/apollo-client"
 import {
   Article,
   ArticleEntity,
@@ -6,14 +6,13 @@ import {
   UploadFile,
 } from "../../models/graphql"
 import DetailsNavigator, { NavLink } from "../layout/detailsnav"
-import Loader from "../layout/loader"
 
-const ArticlesNavigator = (props: { current: string }) => {
-  const { data, loading } = useQuery(ArticleNavDocument)
-  const { current } = props
-
-  if (loading) return <Loader size="18vh" />
-  if (!data) return
+export default async function ArticlesNavigator({
+  current,
+}: {
+  current: string
+}) {
+  const { data } = await getClient().query({ query: ArticleNavDocument })
 
   const articles = data.articles?.data as ArticleEntity[]
   const index = articles.findIndex((a) => a.attributes?.slug == current)
@@ -29,15 +28,13 @@ const ArticlesNavigator = (props: { current: string }) => {
   )
 }
 
-const getLink = (game: Article): NavLink | null => {
-  if (!game) return null
+const getLink = (article: Article): NavLink | null => {
+  if (!article) return null
 
   return {
-    slug: game.slug,
-    name: game.title,
-    image: game.defaultImage?.data?.attributes as UploadFile,
-    date: game.publishedAt!,
+    slug: article.slug,
+    name: article.title,
+    image: article.defaultImage?.data?.attributes as UploadFile,
+    date: article.publishedAt,
   }
 }
-
-export default ArticlesNavigator

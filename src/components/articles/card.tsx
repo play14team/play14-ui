@@ -1,14 +1,10 @@
+import article1 from "@/styles/images/gallery/gallery5.jpg"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { FragmentType, useFragment } from "../../models"
-import { ArticleItemFragmentDoc } from "../../models/graphql"
-import article1 from "/styles/images/gallery/gallery5.jpg"
+import { Article } from "../../models/graphql"
 
-const ArticleCard = (props: {
-  article: FragmentType<typeof ArticleItemFragmentDoc>
-}) => {
-  const article = useFragment(ArticleItemFragmentDoc, props.article)
+const ArticleCard = ({ article }: { article: Article }) => {
   const url = `/articles/${encodeURIComponent(article.slug!)}`
   const image = article.defaultImage.data?.attributes
   const author = article.author?.data?.attributes

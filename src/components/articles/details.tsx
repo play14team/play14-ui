@@ -1,17 +1,14 @@
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 import { Article, UploadFile } from "../../models/graphql"
 import Gallery from "../layout/gallery"
 import HtmlContent from "../layout/html-content"
-import ArticlesNavigator from "./detailsnav"
+import SocialLinks from "../layout/social-links"
+import ArticlesNavigator from "./nav"
 import ArticleSidebar from "./sidebar"
 
-const ArticleDetails = (props: { article: Article }) => {
-  const { article } = props
-  const pathname = usePathname()
-
+const ArticleDetails = ({ article }: { article: Article }) => {
   const image = article.defaultImage?.data?.attributes as UploadFile
   const author = article.author?.data?.attributes
   const text = encodeURI("Take a look at this #play14 article")
@@ -83,51 +80,7 @@ const ArticleDetails = (props: { article: Article }) => {
                 </div>
 
                 <div className="article-share">
-                  <ul className="social">
-                    <li>
-                      <span>Share:</span>
-                    </li>
-                    <li>
-                      <Link
-                        href={`http://www.facebook.com/sharer.php?u=${pathname}&p[title]=${text}`}
-                        className="facebook"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i className="bx bxl-facebook"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={`http://twitter.com/share?url=${pathname}&text=${text}`}
-                        className="twitter"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i className="bx bxl-twitter"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={`http://pinterest.com/pin/create/button/?url=${pathname}&description=${text}`}
-                        className="linkedin"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i className="bx bxl-pinterest"></i>
-                      </Link>
-                    </li>
-                    <li>
-                      <Link
-                        href={`https://www.linkedin.com/sharing/share-offsite/?url=${pathname}&title=${text}`}
-                        className="instagram"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <i className="bx bxl-linkedin"></i>
-                      </Link>
-                    </li>
-                  </ul>
+                  <SocialLinks text={text} className="social" />
                 </div>
               </div>
 

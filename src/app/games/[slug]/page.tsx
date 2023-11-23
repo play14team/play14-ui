@@ -3,7 +3,7 @@ import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { Game, GameDocument, GameEntity } from "@/models/graphql"
-import { getGameSlugs } from "../../../components/games/get-games.action"
+import { getGameSlugs } from "../../../components/games/get.action"
 
 export async function generateStaticParams() {
   const { data } = await getGameSlugs()

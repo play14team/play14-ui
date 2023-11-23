@@ -1,15 +1,11 @@
-import { useQuery } from "@apollo/client"
+import { getClient } from "@/libs/apollo-client"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
 import { ArticleSidebarDocument } from "../../models/graphql"
 
-const ArticleSidebar = () => {
-  const { data, loading } = useQuery(ArticleSidebarDocument)
-
-  if (loading) return
-  if (!data) return
-
+const ArticleSidebar = async () => {
+  const { data } = await getClient().query({ query: ArticleSidebarDocument })
   const latest = data.latest?.data
   const categories = data.categories?.data!
   const categoryCount = categories.reduce((groups, item) => {

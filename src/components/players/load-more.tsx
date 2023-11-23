@@ -4,7 +4,7 @@ import { useIntersection } from "@/hooks/useIntersaction"
 import { Pagination, PlayerEntity } from "@/models/graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
-import { getPlayers } from "./get-players.action"
+import { getPlayers } from "./get.action"
 import PlayerGrid from "./grid"
 
 export default function LoadMore({ pagination }: { pagination: Pagination }) {

@@ -1,14 +1,14 @@
 "use client"
 
 import { useIntersection } from "@/hooks/useIntersaction"
-import { EventEntity, Pagination } from "@/models/graphql"
+import { ArticleEntity, Pagination } from "@/models/graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
-import { getEvents } from "./get.action"
-import EventGrid from "./grid"
+import { getArticles } from "./get.action"
+import ArticleGrid from "./grid"
 
 export default function LoadMore({ pagination }: { pagination: Pagination }) {
-  const [events, setEvents] = useState<EventEntity[]>([])
+  const [articles, setArticles] = useState<ArticleEntity[]>([])
   const triggerRef = useRef(null)
   const isVisible = useIntersection(triggerRef, "0px")
   const callback = useCallback(loadMore, [pagination.page, pagination.pageSize])
@@ -20,15 +20,15 @@ export default function LoadMore({ pagination }: { pagination: Pagination }) {
   }, [callback, isVisible])
 
   function loadMore() {
-    getEvents(pagination.page + 1, pagination.pageSize).then((res) => {
-      const Events = res.data.events?.data as EventEntity[]
-      setEvents(Events)
+    getArticles(pagination.page + 1, pagination.pageSize).then((res) => {
+      const articles = res.data.articles?.data as ArticleEntity[]
+      setArticles(articles)
     })
   }
 
   if (pagination.page === pagination.pageCount) return
 
-  if (events.length == 0)
+  if (articles.length == 0)
     return (
       <div>
         <div ref={triggerRef}></div>
@@ -40,7 +40,7 @@ export default function LoadMore({ pagination }: { pagination: Pagination }) {
 
   return (
     <>
-      <EventGrid events={events} />
+      <ArticleGrid articles={articles} />
       <LoadMore pagination={newPagination} />
     </>
   )

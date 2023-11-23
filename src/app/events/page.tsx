@@ -1,4 +1,4 @@
-import { getEvents } from "@/components/events/get-events.action"
+import { getEvents } from "@/components/events/get.action"
 import EventGrid from "@/components/events/grid"
 import LoadMore from "@/components/events/load-more"
 import Page from "@/components/layout/page"
