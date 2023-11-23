@@ -17,6 +17,8 @@ export const metadata: Metadata = {
     "#play14 is a worldwide gathering of like-minded people who believe that playing is the best way to learn, share and be creative!",
 }
 
+const displayWebVitals = process.env.NEXT_PUBLIC_WEB_VITALS || false
+
 export default function RootLayout({
   children,
 }: {
@@ -32,7 +34,7 @@ export default function RootLayout({
             <div className="container">
               <div className="pt-100 pb-70">
                 <Suspense fallback={<Loader />}>
-                  <WebVitals />
+                  {displayWebVitals && <WebVitals />}
                   {children}
                 </Suspense>
               </div>

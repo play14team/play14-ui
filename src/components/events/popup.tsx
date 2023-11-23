@@ -3,8 +3,14 @@ import { Popup } from "react-map-gl"
 import { Enum_Event_Status, EventEntity } from "../../models/graphql"
 import EventDate from "./date"
 
-const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
-  const { events } = props
+const EventPopup = ({
+  events,
+  onClose,
+}: {
+  events: EventEntity[]
+  onClose: () => void
+}) => {
+  if (!events || events.length == 0) return
 
   const venue = events[0].attributes!.venue!.data!.attributes!
   const longitude = venue.location.geometry.coordinates[0]
@@ -17,7 +23,7 @@ const EventPopup = (props: { events: EventEntity[]; onClose: () => void }) => {
       longitude={Number(longitude)}
       latitude={Number(latitude)}
       offset={offset}
-      onClose={props.onClose}
+      onClose={onClose}
       style={{ minWidth: "200px" }}
     >
       <Link href={venue.website || "#"} target="_blank">

@@ -1,4 +1,4 @@
-import EventMap from "@/components/events/map"
+import StaticEventMap from "@/components/events/static-map"
 import Expectations from "@/components/home/expectations"
 import HomeGallery from "@/components/home/gallery"
 import UpcomingEvents from "@/components/home/upcoming"
@@ -194,7 +194,7 @@ export default function Home() {
       </section>
 
       <section id="event map" className="pb-5 pt-70">
-        <EventMap />
+        <StaticEventMap />
         <p>
           More on the <Link href="/events/map">live map</Link>
         </p>
