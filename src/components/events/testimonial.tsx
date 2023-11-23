@@ -1,11 +1,12 @@
+"use client"
+
 import Image from "next/image"
 import Link from "next/link"
 import ReactAudioPlayer from "react-audio-player"
 import { Testimonial } from "../../models/graphql"
 import HtmlContent from "../layout/html-content"
 
-const TestimonialItem = (props: { testimonial: Testimonial }) => {
-  const { testimonial } = props
+const TestimonialItem = ({ testimonial }: { testimonial: Testimonial }) => {
   const author = testimonial.author?.data?.attributes
   const avatar = author?.avatar?.data?.attributes
   const audio = testimonial.audio?.data?.attributes
