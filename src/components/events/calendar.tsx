@@ -10,7 +10,7 @@ interface EventCalendarProps {
   events: CalendarEvent[]
 }
 
-interface CalendarEvent extends Event {
+export interface CalendarEvent extends Event {
   slug: string
   tooltip: string
 }
