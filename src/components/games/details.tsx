@@ -2,7 +2,7 @@ import Image from "next/image"
 import { Game, UploadFile } from "../../models/graphql"
 import Gallery from "../layout/gallery"
 import HtmlContent from "../layout/html-content"
-import GamesNavigator from "./detailsnav"
+import GamesNavigator from "./nav"
 import GameSidebar from "./sidebar"
 
 const GameDetails = (props: { game: Game }) => {
@@ -30,6 +30,7 @@ const GameDetails = (props: { game: Game }) => {
                       style={{
                         maxWidth: "100%",
                         objectFit: "cover",
+                        border: "1px solid #ddd",
                       }}
                     />
                   </div>

@@ -4,7 +4,7 @@ import LoadMore from "@/components/players/load-more"
 import { Pagination, PlayerEntity } from "@/models/graphql"
 import { getPlayers } from "../../components/players/get-players.action"
 
-export default async function PlayerPage() {
+export default async function Players() {
   const { data } = await getPlayers(1, 60)
 
   const players = data?.players?.data as PlayerEntity[]

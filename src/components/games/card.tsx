@@ -1,13 +1,9 @@
-import Link from "next/link"
+import game1 from "@/styles/images/gallery/gallery5.jpg"
 import Image from "next/image"
-import { FragmentType, useFragment } from "../../models"
-import { GameItemFragmentDoc } from "../../models/graphql"
-import game1 from "/styles/images/gallery/gallery5.jpg"
+import Link from "next/link"
+import { Game } from "../../models/graphql"
 
-const GameCard = (props: {
-  game: FragmentType<typeof GameItemFragmentDoc>
-}) => {
-  const game = useFragment(GameItemFragmentDoc, props.game)
+const GameCard = ({ game }: { game: Game }) => {
   const url = `/games/${encodeURIComponent(game.slug)}`
   const image = game.defaultImage.data?.attributes
   const proposedby = game.proposedBy?.data
