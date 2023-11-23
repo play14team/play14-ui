@@ -20,7 +20,12 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 blurDataURL={(avatar && avatar.blurhash) || undefined}
                 priority
                 fill
-                style={{ objectFit: "cover" }}
+                style={{
+                  objectFit: "cover",
+                  border: "1px solid #ddd",
+                  boxShadow: "8px 8px #eee",
+                  borderRadius: "15px",
+                }}
               />
             </Link>
           )}
