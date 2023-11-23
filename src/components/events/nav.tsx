@@ -1,4 +1,4 @@
-import { useQuery } from "@apollo/client"
+import { getClient } from "@/libs/apollo-client"
 import {
   Event,
   EventEntity,
@@ -6,14 +6,13 @@ import {
   UploadFile,
 } from "../../models/graphql"
 import DetailsNavigator, { NavLink } from "../layout/detailsnav"
-import Loader from "../layout/loader"
 
-const EventsNavigator = (props: { current: string }) => {
-  const { data, loading } = useQuery(EventNavDocument)
-  const { current } = props
-
-  if (loading) return <Loader size="18vh" />
-  if (!data) return <></>
+export default async function EventsNavigator({
+  current,
+}: {
+  current: string
+}) {
+  const { data } = await getClient().query({ query: EventNavDocument })
 
   const events = data.events?.data as EventEntity[]
   const index = events.findIndex((a) => a.attributes?.slug == current)
@@ -39,5 +38,3 @@ const getLink = (event: Event): NavLink | null => {
     date: event.start!,
   }
 }
-
-export default EventsNavigator

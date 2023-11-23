@@ -1,7 +1,8 @@
 import parse from "html-react-parser"
 
-const HtmlContent = (props: { children: string }) => {
-  const { children } = props
+const HtmlContent = ({ children }: { children: string }) => {
+  if (!children) return <></>
+
   return <>{parse(children)}</>
 }
 

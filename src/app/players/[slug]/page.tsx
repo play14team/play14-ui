@@ -27,10 +27,7 @@ export default async function Player(props: SlugParamsProps) {
   const player = await getPlayer(props)
 
   return (
-    <Page
-      name={player && player.name}
-      description={player ? `${player.name} (${player.position})` : ""}
-    >
+    <Page name={player && player.name}>
       {player && <PlayerDetails player={player} />}
     </Page>
   )

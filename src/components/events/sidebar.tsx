@@ -2,22 +2,20 @@ import Link from "next/link"
 import {
   Enum_Componenteventsmedia_Type,
   Enum_Event_Status,
-  EventDetailsFragment,
+  Event,
   PlayerEntity,
 } from "../../models/graphql"
+import SocialLinks from "./social-links"
 import EventStatus from "./status"
 import EventTime from "./time"
 
-const EventSidebar = (props: {
-  event: EventDetailsFragment
+const EventSidebar = ({
+  event,
+  participants,
+}: {
+  event: Event
   participants: PlayerEntity[]
 }) => {
-  const { event, participants } = props
-
-  const url = window && window.location.href
-  const eventName = encodeURI(event.name)
-  const text = encodeURI("Take a look at #play14 ") + eventName
-
   return (
     <aside className="events-details-info">
       <h4 className="orange pb-3" style={{ textAlign: "center" }}>
@@ -136,49 +134,7 @@ const EventSidebar = (props: {
             <span>
               Share this event <i className="flaticon-share"></i>
             </span>
-
-            <ul className="social-link">
-              <li>
-                <Link
-                  href={`http://www.facebook.com/sharer.php?u=${url}&p[title]=${text}`}
-                  target="_blank"
-                  rel="noopener"
-                  className="d-block"
-                >
-                  <i className="bx bxl-facebook"></i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`http://twitter.com/share?url=${url}&text=${text}`}
-                  target="_blank"
-                  rel="noopener"
-                  className="d-block"
-                >
-                  <i className="bx bxl-twitter"></i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`http://pinterest.com/pin/create/button/?url=${url}&description=${text}`}
-                  target="_blank"
-                  rel="noopener"
-                  className="d-block"
-                >
-                  <i className="bx bxl-pinterest"></i>
-                </Link>
-              </li>
-              <li>
-                <Link
-                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${text}`}
-                  target="_blank"
-                  rel="noopener"
-                  className="d-block"
-                >
-                  <i className="bx bxl-linkedin"></i>
-                </Link>
-              </li>
-            </ul>
+            <SocialLinks event={event} />
           </div>
         </div>
       )}

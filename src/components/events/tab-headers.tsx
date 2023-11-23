@@ -1,4 +1,5 @@
 "use client"
+
 import openTabSection from "@/libs/tabs"
 import { Enum_Event_Status, Event } from "@/models/graphql"
 

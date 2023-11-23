@@ -1,11 +1,13 @@
+"use client"
+
 import Link from "next/link"
 import { ComponentEventsTimetable, Maybe } from "../../models/graphql"
 
-const EventSchedule = (props: {
+const EventSchedule = ({
+  timetable,
+}: {
   timetable: Array<Maybe<ComponentEventsTimetable>>
 }) => {
-  const { timetable } = props
-
   return (
     <div className="courses-curriculum">
       {timetable.map((item) => {

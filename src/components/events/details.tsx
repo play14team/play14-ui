@@ -1,5 +1,5 @@
 import { concatArrays } from "@/libs/concat-arrays"
-import { countries } from "country-data"
+import countries from "i18n-iso-countries"
 import Image from "next/image"
 import Link from "next/link"
 import ReactCountryFlag from "react-country-flag"
@@ -13,8 +13,8 @@ import {
 } from "../../models/graphql"
 import Map from "../map"
 import EventDate from "./date"
-import EventsNavigator from "./detailsnav"
 import ICalendar from "./ical"
+import EventsNavigator from "./nav"
 import EventSidebar from "./sidebar"
 import EventTabs from "./tabs"
 import UpcomingEventTimer from "./timer"
@@ -23,11 +23,10 @@ export default function EventDetails({ event }: { event: Event }) {
   const defaultImage = event.defaultImage.data?.attributes as UploadFile
   const eventLocation = event.location?.data?.attributes as EventLocation
   const venue = event.venue?.data?.attributes as Venue
-  const country = countries[eventLocation.country!].name
+  const country = countries.getName(eventLocation.country!, "en")
   const players = event.players?.data as PlayerEntity[]
   const hosts = event.hosts?.data as PlayerEntity[]
   const mentors = event.mentors?.data as PlayerEntity[]
-
   const participants = concatArrays([players, hosts, mentors])
 
   return (
@@ -167,7 +166,11 @@ export default function EventDetails({ event }: { event: Event }) {
           </div>
         </div>
 
-        <EventTabs event={event} participants={participants} />
+        <div className="row">
+          <div className="courses-details-desc">
+            <EventTabs event={event} participants={participants} />
+          </div>
+        </div>
       </div>
     </>
   )

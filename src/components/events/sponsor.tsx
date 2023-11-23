@@ -1,5 +1,5 @@
-import Link from "next/link"
 import Image from "next/image"
+import Link from "next/link"
 import { Sponsor, UploadFile } from "../../models/graphql"
 import SocialNetworks from "../layout/socialnetworks"
 
@@ -20,6 +20,7 @@ const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {
               height={500}
               placeholder="blur"
               blurDataURL={(logo && logo.blurhash) || undefined}
+              style={{ borderRadius: "10px" }}
             />
           </Link>
         )}
