@@ -1,11 +1,15 @@
 import { PlayerEntity } from "../../models/graphql"
 import PlayerCard from "./card"
 
-const PlayerGrid = (props: { title?: string; players: PlayerEntity[] }) => {
-  const { title, players } = props
-
+const PlayerGrid = ({
+  title,
+  players,
+}: {
+  title?: string
+  players: PlayerEntity[]
+}) => {
   return (
-    <section className="scientist-area ptb-70">
+    <section className="scientist-area">
       <div className="container">
         {title && players.length > 0 && (
           <div className="section-title">

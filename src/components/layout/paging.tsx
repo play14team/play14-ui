@@ -1,13 +1,12 @@
 import Link from "next/link"
 import { Pagination } from "../../models/graphql"
 
-const Paging = (props: {
+interface PagingProps {
   pagination: Pagination
-  onNextPage: (nextPage: number) => void
-}) => {
-  const { pagination, onNextPage } = props
-  const color = "#ff5200"
+  onNextPage: (page: number) => void
+}
 
+const Paging = ({ pagination, onNextPage }: PagingProps) => {
   const items = []
 
   for (let index = 1; index < pagination.pageCount + 1; index++) {
@@ -96,6 +95,7 @@ const Paging = (props: {
 }
 
 export default Paging
+
 function isCurrentPage(pagination: Pagination, index: number) {
   return pagination.page == index
 }

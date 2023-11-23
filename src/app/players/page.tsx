@@ -5,20 +5,17 @@ import { Pagination, PlayerEntity } from "@/models/graphql"
 import { getPlayers } from "../../components/players/get-players.action"
 
 export default async function PlayerPage() {
-  const pageSize = 60
-  const { data } = await getPlayers(1, pageSize)
+  const { data } = await getPlayers(1, 60)
 
   const players = data?.players?.data as PlayerEntity[]
   const pagination = data?.players?.meta.pagination as Pagination
 
   return (
     <Page name="Players">
-      {data && (
-        <>
-          <PlayerGrid players={players} />
-          <LoadMore pagination={pagination} />
-        </>
-      )}
+      <div className="ptb-70">
+        <PlayerGrid players={players} />
+        <LoadMore pagination={pagination} />
+      </div>
     </Page>
   )
 }
