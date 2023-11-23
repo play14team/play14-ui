@@ -28,7 +28,10 @@ const EventCard = ({ event }: { event: Event }) => {
               placeholder="blur"
               blurDataURL={(image && image.blurhash) || undefined}
               fill
-              style={{ objectFit: "cover" }}
+              style={{
+                objectFit: "cover",
+                borderRadius: "10px 10px 0px 0px",
+              }}
             />
           </Link>
           <span className="date">

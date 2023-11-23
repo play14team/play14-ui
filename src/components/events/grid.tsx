@@ -3,7 +3,7 @@ import EventCard from "./card"
 
 const EventGrid = ({ events }: { events: EventEntity[] }) => {
   return (
-    <div className="events-area ptb-70">
+    <div className="events-area">
       <div className="container">
         <div className="row">
           {events.map((e) => {
