@@ -14,7 +14,11 @@ const EventCard = ({ event }: { event: Event }) => {
   const countryName = countries.getName(countryCode, "en")
 
   return (
-    <article className="col-lg-4 col-sm-6 col-md-6">
+    <article
+      id={event.name}
+      key={event.name}
+      className="col-lg-4 col-sm-6 col-md-6"
+    >
       <div className="single-events-box">
         <div
           className="image"

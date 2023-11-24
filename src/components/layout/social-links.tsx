@@ -18,7 +18,7 @@ export default function SocialLinks({
 
   return (
     <ul className={className}>
-      <li>
+      <li key="facebook">
         <Link
           href={`http://www.facebook.com/sharer.php?u=${url}&p[title]=${text}`}
           target="_blank"
@@ -28,7 +28,7 @@ export default function SocialLinks({
           <i className="bx bxl-facebook"></i>
         </Link>
       </li>
-      <li>
+      <li key="twitter">
         <Link
           href={`http://twitter.com/share?url=${url}&text=${text}`}
           target="_blank"
@@ -38,7 +38,7 @@ export default function SocialLinks({
           <i className="bx bxl-twitter"></i>
         </Link>
       </li>
-      <li>
+      <li key="pinterest">
         <Link
           href={`http://pinterest.com/pin/create/button/?url=${url}&description=${text}`}
           target="_blank"
@@ -48,7 +48,7 @@ export default function SocialLinks({
           <i className="bx bxl-pinterest"></i>
         </Link>
       </li>
-      <li>
+      <li key="linkedin">
         <Link
           href={`https://www.linkedin.com/sharing/share-offsite/?url=${url}&title=${text}`}
           target="_blank"

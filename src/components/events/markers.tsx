@@ -19,8 +19,6 @@ export default function EventMarkers({ events }: { events: EventEntity[] }) {
             venueId == event.attributes?.venue?.data?.id!
           const markerEvents = events.filter(predicate)
 
-          console.log("Marker events", markerEvents)
-
           return (
             <Marker
               key={`marker-${index}`}

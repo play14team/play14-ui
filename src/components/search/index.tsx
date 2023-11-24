@@ -14,7 +14,6 @@ import {
 export default async function Search({ input }: { input: string | undefined }) {
   if (!input) return
 
-  console.log("input", input)
   const { data } = await getClient().query({
     query: SearchDocument,
     variables: { input },

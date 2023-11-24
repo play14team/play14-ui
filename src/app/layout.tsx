@@ -17,13 +17,16 @@ export const metadata: Metadata = {
     "#play14 is a worldwide gathering of like-minded people who believe that playing is the best way to learn, share and be creative!",
 }
 
-const displayWebVitals = process.env.NEXT_PUBLIC_WEB_VITALS || false
+const displayWebVitals =
+  Boolean(process.env.NEXT_PUBLIC_WEB_VITALS).valueOf() || false
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+  console.log("displayWebVitals", displayWebVitals)
+
   return (
     <html lang="en">
       <Script src="https://widget.weezevent.com/weez.js" />

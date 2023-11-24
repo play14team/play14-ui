@@ -8,7 +8,11 @@ const PlayerCard = ({ player }: { player: Player }) => {
   const avatar = player.avatar?.data?.attributes as UploadFile
 
   return (
-    <div className="col-lg-3 col-sm-6 col-md-6">
+    <article
+      id={player.name}
+      key={player.name}
+      className="col-lg-3 col-sm-6 col-md-6"
+    >
       <div className="single-scientist-box">
         <div style={{ position: "relative", height: "300px" }}>
           {avatar && (
@@ -40,7 +44,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
           )}
         </div>
       </div>
-    </div>
+    </article>
   )
 }
 

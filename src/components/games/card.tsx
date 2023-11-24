@@ -9,7 +9,7 @@ const GameCard = ({ game }: { game: Game }) => {
   const proposedby = game.proposedBy?.data
 
   return (
-    <div className="col-lg-4 col-md-6">
+    <article id={game.name} key={game.name} className="col-lg-4 col-md-6">
       <div className="single-courses-box">
         <div className="courses-image">
           <Link href={url} className="d-block image">
@@ -84,7 +84,7 @@ const GameCard = ({ game }: { game: Game }) => {
           </ul>
         </div>
       </div>
-    </div>
+    </article>
   )
 }
 

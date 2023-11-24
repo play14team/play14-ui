@@ -11,7 +11,11 @@ const ArticleCard = ({ article }: { article: Article }) => {
   const avatar = author && author.avatar?.data?.attributes
 
   return (
-    <div className="col-lg-4 col-md-6">
+    <article
+      id={article.title}
+      key={article.title}
+      className="col-lg-4 col-md-6"
+    >
       <div className="single-blog-post bg-fffbf5">
         <div className="post-image">
           <Link href={url} className="d-block image">
@@ -65,7 +69,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
           </p>
         </div>
       </div>
-    </div>
+    </article>
   )
 }
 
