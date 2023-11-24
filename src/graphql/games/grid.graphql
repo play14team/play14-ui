@@ -31,12 +31,30 @@ fragment GameItem on Game {
         name
         slug
         avatar {
-          ...Image
+          data {
+            id
+            attributes {
+              name
+              url
+              blurhash
+              width
+              height
+            }
+          }
         }
       }
     }
   }
   defaultImage {
-    ...Image
+    data {
+      id
+      attributes {
+        name
+        url
+        blurhash
+        width
+        height
+      }
+    }
   }
 }

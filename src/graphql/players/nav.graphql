@@ -6,7 +6,16 @@ query PlayerNav {
         name
         updatedAt
         avatar {
-          ...Image
+          data {
+            id
+            attributes {
+              name
+              url
+              blurhash
+              width
+              height
+            }
+          }
         }
       }
     }

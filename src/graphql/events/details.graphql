@@ -18,10 +18,28 @@ fragment EventDetails on Event {
   description
   contactEmail
   defaultImage {
-    ...Image
+    data {
+      id
+      attributes {
+        name
+        url
+        blurhash
+        width
+        height
+      }
+    }
   }
   images(pagination: { limit: 10000 }) {
-    ...Images
+    data {
+      id
+      attributes {
+        name
+        url
+        blurhash
+        width
+        height
+      }
+    }
   }
   location {
     data {
@@ -66,7 +84,16 @@ fragment EventDetails on Event {
           name
           url
           logo {
-            ...Image
+            data {
+              id
+              attributes {
+                name
+                url
+                blurhash
+                width
+                height
+              }
+            }
           }
           socialNetworks {
             id

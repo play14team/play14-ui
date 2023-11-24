@@ -13,7 +13,13 @@ query Story {
           title
           description
           image {
-            ...Image
+            data {
+              id
+              attributes {
+                name
+                url
+              }
+            }
           }
         }
       }

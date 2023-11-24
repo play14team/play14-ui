@@ -3,7 +3,18 @@ query Home {
     data {
       attributes {
         images(pagination: { limit: 10000 }) {
-          ...Images
+          data {
+            attributes {
+              name
+              url
+              width
+              height
+              hash
+              mime
+              provider
+              size
+            }
+          }
         }
       }
     }

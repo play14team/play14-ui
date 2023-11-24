@@ -6,7 +6,16 @@ query ArticleNav {
         title
         publishedAt
         defaultImage {
-          ...Image
+          data {
+            id
+            attributes {
+              name
+              url
+              blurhash
+              width
+              height
+            }
+          }
         }
       }
     }

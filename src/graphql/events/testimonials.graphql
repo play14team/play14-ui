@@ -19,7 +19,16 @@ query Testimonials {
               slug
               tagline
               avatar {
-                ...Image
+                data {
+                  id
+                  attributes {
+                    name
+                    url
+                    blurhash
+                    width
+                    height
+                  }
+                }
               }
             }
           }

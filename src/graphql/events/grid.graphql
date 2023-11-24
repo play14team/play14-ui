@@ -36,7 +36,16 @@ fragment EventItem on Event {
   timezone
   status
   defaultImage {
-    ...Image
+    data {
+      id
+      attributes {
+        name
+        url
+        blurhash
+        width
+        height
+      }
+    }
   }
   location {
     data {
