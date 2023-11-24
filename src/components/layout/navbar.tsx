@@ -43,7 +43,7 @@ const Navbar = () => {
                 onClick={() => setCollapsed(true)}
                 className="navbar-brand"
               >
-                <Image src={logo} alt="logo" height={53} />
+                <Image src={logo} alt="logo" height={53} unoptimized />
               </Link>
 
               <button

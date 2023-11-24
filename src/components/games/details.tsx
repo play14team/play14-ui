@@ -32,6 +32,7 @@ const GameDetails = (props: { game: Game }) => {
                         objectFit: "cover",
                         border: "1px solid #ddd",
                       }}
+                      unoptimized
                     />
                   </div>
                 </div>

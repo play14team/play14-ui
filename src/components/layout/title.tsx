@@ -5,7 +5,13 @@ const Title = () => {
   return (
     <div>
       <div className="d-flex justify-content-center pt-5">
-        <Image src={logo} alt="#play14 logo" width={600} height={333} />
+        <Image
+          src={logo}
+          alt="#play14 logo"
+          width={600}
+          height={333}
+          unoptimized
+        />
       </div>
       <div className="d-flex justify-content-center pt-5">
         <h1>

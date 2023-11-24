@@ -52,6 +52,7 @@ const ArticleSidebar = async () => {
                     }
                     fill
                     style={{ objectFit: "cover" }}
+                    unoptimized
                   />
                 </div>
               </Link>

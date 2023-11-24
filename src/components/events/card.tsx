@@ -36,6 +36,7 @@ const EventCard = ({ event }: { event: Event }) => {
                 objectFit: "cover",
                 borderRadius: "10px 10px 0px 0px",
               }}
+              unoptimized
             />
           </Link>
           <span className="date">

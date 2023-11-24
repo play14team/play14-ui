@@ -25,6 +25,7 @@ const GameCard = ({ game }: { game: Game }) => {
                 maxWidth: "100%",
                 objectFit: "cover",
               }}
+              unoptimized
             />
           </Link>
           {
@@ -53,6 +54,7 @@ const GameCard = ({ game }: { game: Game }) => {
                         }
                         className="rounded-circle"
                         alt={game.name}
+                        unoptimized
                       />
                     )}
                     <Link href={`/players/${player.attributes.slug}`}>

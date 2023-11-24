@@ -38,6 +38,7 @@ const Footer = () => {
                     maxWidth: "100%",
                     height: "auto",
                   }}
+                  unoptimized
                 />
               </Link>
               <p>play is the way</p>
@@ -162,6 +163,7 @@ const Footer = () => {
             maxWidth: "100%",
             height: "auto",
           }}
+          unoptimized
         />
       </div>
     </footer>

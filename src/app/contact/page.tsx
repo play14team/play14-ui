@@ -49,6 +49,7 @@ export default function Contact() {
                 alt="Slack"
                 width={250}
                 height={250}
+                unoptimized
               />
               <p>Join us on Slack</p>
             </Link>
@@ -60,13 +61,20 @@ export default function Contact() {
                 alt="Mailchimp"
                 width={250}
                 height={250}
+                unoptimized
               />
               <p>Register to our newsletter</p>
             </Link>
           </div>
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="mailto:team@play14.org" target="_blank">
-              <Image src="/email.png" alt="Email" width={250} height={250} />
+              <Image
+                src="/email.png"
+                alt="Email"
+                width={250}
+                height={250}
+                unoptimized
+              />
               <p>Sent us a message</p>
             </Link>
           </div>

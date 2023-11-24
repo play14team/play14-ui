@@ -47,6 +47,7 @@ const HistoryItem = (props: HistoryProps) => {
                   alt={imageAlt || "image"}
                   width={250}
                   height={250}
+                  unoptimized
                 />
               </div>
             </div>

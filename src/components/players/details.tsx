@@ -23,6 +23,7 @@ const PlayerDetails = ({ player }: { player: Player }) => {
                 width={350}
                 height={350}
                 priority
+                unoptimized
               />
               <div className="content">
                 {player.socialNetworks && (

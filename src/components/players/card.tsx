@@ -30,6 +30,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
                   boxShadow: "8px 8px #eee",
                   borderRadius: "15px",
                 }}
+                unoptimized
               />
             </Link>
           )}

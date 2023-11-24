@@ -93,6 +93,7 @@ function getImage(image?: UploadFile) {
       alt={image ? image.name : "default player image"}
       fill
       style={{ objectFit: "cover" }}
+      unoptimized
     />
   )
 }

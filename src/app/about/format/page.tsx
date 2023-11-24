@@ -26,6 +26,7 @@ export default async function Format() {
                 alt="law of two feet"
                 width={400}
                 height={400}
+                unoptimized
               />
             </div>
           </div>
@@ -40,6 +41,7 @@ export default async function Format() {
                 alt="Bumblebee"
                 width={400}
                 height={400}
+                unoptimized
               />
               <HtmlContent>{bumblebee!}</HtmlContent>
             </div>
@@ -51,6 +53,7 @@ export default async function Format() {
                 alt="Butterfly"
                 width={400}
                 height={400}
+                unoptimized
               />
             </div>
           </div>

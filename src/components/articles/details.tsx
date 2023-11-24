@@ -33,6 +33,7 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                     maxWidth: "100%",
                     objectFit: "cover",
                   }}
+                  unoptimized
                 />
               </div>
 
@@ -95,6 +96,7 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                         alt={author.name}
                         width={200}
                         height={200}
+                        unoptimized
                       />
                       <Link href={`/players/${author.slug}`}>
                         <h4>{author && author.name}</h4>

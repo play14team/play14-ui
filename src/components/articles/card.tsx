@@ -31,6 +31,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
                 maxWidth: "100%",
                 objectFit: "cover",
               }}
+              unoptimized
             />
           </Link>
         </div>
@@ -47,6 +48,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
                     priority
                     className="rounded-circle"
                     alt={author.name}
+                    unoptimized
                   />
                 )}
                 {author && <span>{author.name}</span>}

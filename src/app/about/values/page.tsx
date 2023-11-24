@@ -26,6 +26,7 @@ export default async function Values() {
           width={800}
           height={800}
           className="pt-5 pb-100"
+          unoptimized
         />
         <div className="pt-5">
           <CodeOfConduct />
@@ -36,6 +37,7 @@ export default async function Values() {
           width={1000}
           height={500}
           className="pt-5 pb-100"
+          unoptimized
         />
         <h3 className="centered pt-5 pb-3">Boy/Girl scout rule</h3>
         There is a saying among the scouts.
