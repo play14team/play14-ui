@@ -1,10 +1,9 @@
 import HistoryItem from "@/components/about/historyitem"
+import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
-import { PlayerEntity, StoryDocument } from "@/models/graphql"
-
-import HtmlContent from "@/components/layout/html-content"
 import { getClient } from "@/libs/apollo-client"
+import { PlayerEntity, StoryDocument } from "@/models/graphql"
 
 export default async function Story() {
   const { data } = await getClient().query({ query: StoryDocument })
@@ -16,7 +15,7 @@ export default async function Story() {
       <section className="history-area ptb-100 bg-fafafb">
         <div className="container">
           <div className="section-title">
-            {history && <h2>{history.founders || "Founders"}</h2>}
+            {history && <h3>{history.founders || "Founders"}</h3>}
           </div>
           {history && (
             <div className="px-5">
@@ -27,8 +26,8 @@ export default async function Story() {
             {founders && <PlayerGrid players={founders} />}
           </div>
 
-          <div className="section-title">
-            {history && <h2>{history.keyMoments || "Key moments"}</h2>}
+          <div className="section-title pt-70">
+            {history && <h3>{history.keyMoments || "Key moments"}</h3>}
           </div>
 
           <ol className="timeline history-timeline">

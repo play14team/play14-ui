@@ -22,36 +22,48 @@ export default async function Values() {
         <div className="pt-5">
           <Manifesto />
         </div>
-        <Image
-          src={manifestoImage}
-          alt="manifesto"
-          className="pt-5 pb-100"
-          unoptimized
-        />
+        <div className="centered pt-5 pb-100">
+          <Image
+            src={manifestoImage}
+            alt="manifesto"
+            style={{
+              borderRadius: "10px",
+              boxShadow: "8px 8px #eee",
+            }}
+            unoptimized
+          />
+        </div>
         <div className="pt-5">
           <CodeOfConduct />
         </div>
-        <Image
-          src={codeOfConductImage}
-          alt="code of conduct"
-          className="pt-5 pb-100"
-          unoptimized
-        />
-        <h3 className="centered pt-5 pb-3">Boy/Girl scout rule</h3>
-        There is a saying among the scouts.
-        <blockquote>
-          Always leave the campground cleaner than you found it.
-        </blockquote>
-        <p>
-          Be mindful of other people well being by cleaning after yourself when
-          you leave a space. That goes for the space you played on, the space
-          you ate on, the space you rested on, etc.
-        </p>
-        <p>
-          Remember that the hosting team is not there to clean after you, but
-          are also participants of the event. They also want to facilitate and
-          attend sessions, as much as you do.
-        </p>
+        <div className="centered pt-5 pb-100">
+          <Image
+            src={codeOfConductImage}
+            alt="code of conduct"
+            style={{
+              borderRadius: "10px",
+              boxShadow: "8px 8px #eee",
+            }}
+            unoptimized
+          />
+        </div>
+        <div className="pb-100">
+          <h3 className="centered pt-5 pb-3">Boy/Girl scout rule</h3>
+          There is a saying among the scouts.
+          <blockquote>
+            Always leave the campground cleaner than you found it.
+          </blockquote>
+          <p>
+            Be mindful of other people well being by cleaning after yourself
+            when you leave a space. That goes for the space you played on, the
+            space you ate on, the space you rested on, etc.
+          </p>
+          <p>
+            Remember that the hosting team is not there to clean after you, but
+            are also participants of the event. They also want to facilitate and
+            attend sessions, as much as you do.
+          </p>
+        </div>
       </div>
     </Page>
   )

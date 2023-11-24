@@ -27,6 +27,10 @@ export default async function Format() {
               <Image
                 src={lawOfTwoFeetImage}
                 alt="law of two feet"
+                style={{
+                  borderRadius: "10px",
+                  boxShadow: "8px 8px #eee",
+                }}
                 unoptimized
               />
             </div>
@@ -37,13 +41,29 @@ export default async function Format() {
           <h3>Bumblebees and Butterflies</h3>
           <div className="row">
             <div className="col-lg-4 col-md-12 pt-5">
-              <Image src={bumblebeeImage} alt="Bumblebee" unoptimized />
+              <Image
+                src={bumblebeeImage}
+                alt="Bumblebee"
+                style={{
+                  borderRadius: "10px",
+                  boxShadow: "8px 8px #eee",
+                }}
+                unoptimized
+              />
               <HtmlContent>{bumblebee!}</HtmlContent>
             </div>
             <div className="col-lg-2"></div>
             <div className="col-lg-4 col-md-12 pt-5">
               <HtmlContent>{butterfly!}</HtmlContent>
-              <Image src={butterflyImage} alt="Butterfly" unoptimized />
+              <Image
+                src={butterflyImage}
+                alt="Butterfly"
+                style={{
+                  borderRadius: "10px",
+                  boxShadow: "8px 8px #eee",
+                }}
+                unoptimized
+              />
             </div>
           </div>
         </div>
