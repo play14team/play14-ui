@@ -1,3 +1,9 @@
-export default function Search() {
-  return <div>Search</div>
+import Search from "@/components/search"
+
+export default async function SearchPage({
+  searchParams,
+}: {
+  searchParams?: { [input: string]: string | undefined }
+}) {
+  return <Search input={searchParams?.input} />
 }
