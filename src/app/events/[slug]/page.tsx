@@ -1,9 +1,8 @@
 import EventDetails from "@/components/events/details"
+import { getEvent, getEventSlugs } from "@/components/events/get.action"
 import Page from "@/components/layout/page"
-import { getClient } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import { Event, EventDocument, EventEntity } from "@/models/graphql"
-import { getEventSlugs } from "../../../components/events/get.action"
+import { EventEntity } from "@/models/graphql"
 
 export async function generateStaticParams() {
   const { data } = await getEventSlugs()
@@ -31,14 +30,4 @@ export default async function Event(props: SlugParamsProps) {
       {event && <EventDetails event={event} />}
     </Page>
   )
-}
-
-async function getEvent({ params }: SlugParamsProps) {
-  const { slug } = params
-  const { data } = await getClient().query({
-    query: EventDocument,
-    variables: { slug },
-  })
-
-  return data?.events?.data[0].attributes as Event
 }

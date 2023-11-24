@@ -1,9 +1,8 @@
 import ArticleDetails from "@/components/articles/details"
+import { getArticle, getArticleSlugs } from "@/components/articles/get.action"
 import Page from "@/components/layout/page"
-import { getClient } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import { Article, ArticleDocument, ArticleEntity } from "@/models/graphql"
-import { getArticleSlugs } from "../../../components/articles/get.action"
+import { ArticleEntity } from "@/models/graphql"
 
 export async function generateStaticParams() {
   const { data } = await getArticleSlugs()
@@ -31,14 +30,4 @@ export default async function Article(props: SlugParamsProps) {
       {article && <ArticleDetails article={article} />}
     </Page>
   )
-}
-
-async function getArticle({ params }: SlugParamsProps) {
-  const { slug } = params
-  const { data } = await getClient().query({
-    query: ArticleDocument,
-    variables: { slug },
-  })
-
-  return data?.articles?.data[0].attributes as Article
 }
