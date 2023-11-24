@@ -1,4 +1,4 @@
-import game1 from "@/styles/images/gallery/gallery5.jpg"
+import defaultGame from "@/styles/images/gallery/gallery5.jpg"
 import Image from "next/image"
 import Link from "next/link"
 import { Game } from "../../models/graphql"
@@ -13,20 +13,38 @@ const GameCard = ({ game }: { game: Game }) => {
       <div className="single-courses-box">
         <div className="courses-image">
           <Link href={url} className="d-block image">
-            <Image
-              src={(image && image.url) || game1}
-              alt={(image && image.name) || "image"}
-              width={400}
-              height={400}
-              priority
-              placeholder="blur"
-              blurDataURL={(image && image.blurhash) || undefined}
-              style={{
-                maxWidth: "100%",
-                objectFit: "cover",
-              }}
-              unoptimized
-            />
+            {image && (
+              <Image
+                src={image.url}
+                alt={image.name}
+                placeholder="blur"
+                blurDataURL={image.blurhash!}
+                sizes="100vw"
+                width={800}
+                height={800}
+                style={{
+                  objectFit: "cover",
+                  borderRadius: "10px 10px 0px 0px",
+                  maxWidth: "100%",
+                  height: "300px",
+                }}
+                unoptimized
+              />
+            )}
+            {!image && (
+              <Image
+                src={defaultGame}
+                alt={"default game image"}
+                placeholder="blur"
+                style={{
+                  objectFit: "cover",
+                  borderRadius: "10px 10px 0px 0px",
+                  maxWidth: "100%",
+                  maxHeight: "300px",
+                }}
+                unoptimized
+              />
+            )}
           </Link>
           {
             <div className="price shadow" style={{ fontSize: "12px" }}>

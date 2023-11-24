@@ -1,5 +1,5 @@
 import Image from "next/image"
-import logo from "/public/logo/play14_1500x500_transparent.png"
+import logo from "public/logo/play14_1500x500_transparent.png"
 
 const Title = () => {
   return (
