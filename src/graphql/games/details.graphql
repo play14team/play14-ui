@@ -37,24 +37,25 @@ fragment GameDetails on Game {
   }
   defaultImage {
     data {
+      id
       attributes {
-        url
         name
+        url
         blurhash
+        width
+        height
       }
     }
   }
   images(pagination: { limit: 10000 }) {
     data {
+      id
       attributes {
         name
         url
+        blurhash
         width
         height
-        hash
-        mime
-        provider
-        size
       }
     }
   }
@@ -83,10 +84,13 @@ fragment GameDetails on Game {
         slug
         avatar {
           data {
+            id
             attributes {
               name
               url
               blurhash
+              width
+              height
             }
           }
         }
@@ -101,10 +105,13 @@ fragment GameDetails on Game {
         slug
         avatar {
           data {
+            id
             attributes {
               name
               url
               blurhash
+              width
+              height
             }
           }
         }

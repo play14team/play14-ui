@@ -7,9 +7,13 @@ query PlayerNav {
         updatedAt
         avatar {
           data {
+            id
             attributes {
-              url
               name
+              url
+              blurhash
+              width
+              height
             }
           }
         }

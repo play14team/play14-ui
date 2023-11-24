@@ -7,9 +7,13 @@ query EventNav {
         start
         defaultImage {
           data {
+            id
             attributes {
-              url
               name
+              url
+              blurhash
+              width
+              height
             }
           }
         }

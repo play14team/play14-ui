@@ -5,7 +5,7 @@ import { Pagination, PlayerEntity } from "@/models/graphql"
 import { getPlayers } from "../../components/players/get.action"
 
 export default async function Players() {
-  const { data } = await getPlayers(1, 60)
+  const { data } = await getPlayers(1, 5000)
 
   const players = data?.players?.data as PlayerEntity[]
   const pagination = data?.players?.meta.pagination as Pagination

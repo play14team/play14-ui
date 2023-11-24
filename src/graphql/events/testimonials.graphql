@@ -20,9 +20,13 @@ query Testimonials {
               tagline
               avatar {
                 data {
+                  id
                   attributes {
                     name
                     url
+                    blurhash
+                    width
+                    height
                   }
                 }
               }

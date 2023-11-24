@@ -50,6 +50,7 @@ const ArticleSidebar = async () => {
                     alt={
                       article.attributes?.defaultImage?.data?.attributes?.name!
                     }
+                    sizes="100vw"
                     fill
                     style={{ objectFit: "cover" }}
                     unoptimized

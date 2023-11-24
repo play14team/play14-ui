@@ -23,10 +23,13 @@ fragment PlayerItem on Player {
   position
   avatar {
     data {
+      id
       attributes {
-        url
         name
+        url
         blurhash
+        width
+        height
       }
     }
   }

@@ -19,9 +19,13 @@ fragment PlayerDetails on Player {
   location
   avatar {
     data {
+      id
       attributes {
         name
         url
+        blurhash
+        width
+        height
       }
     }
   }

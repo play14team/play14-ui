@@ -1,4 +1,4 @@
-import article1 from "@/styles/images/gallery/gallery5.jpg"
+import defaultArticle from "@/styles/images/gallery/gallery5.jpg"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
@@ -19,20 +19,38 @@ const ArticleCard = ({ article }: { article: Article }) => {
       <div className="single-blog-post bg-fffbf5">
         <div className="post-image">
           <Link href={url} className="d-block image">
-            <Image
-              src={(image && image.url) || article1}
-              alt={(image && image.name) || "image"}
-              width={400}
-              height={400}
-              priority
-              placeholder="blur"
-              blurDataURL={(image && image.blurhash) || undefined}
-              style={{
-                maxWidth: "100%",
-                objectFit: "cover",
-              }}
-              unoptimized
-            />
+            {image && (
+              <Image
+                src={image.url}
+                alt={image.name}
+                width={image.width!}
+                height={image.height!}
+                blurDataURL={image.blurhash!}
+                placeholder="blur"
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                  width: "400px",
+                  height: "400px",
+                }}
+                unoptimized
+              />
+            )}
+            {!image && (
+              <Image
+                src={defaultArticle}
+                alt={"default article image"}
+                width={400}
+                height={400}
+                placeholder="blur"
+                style={{
+                  objectFit: "cover",
+                  width: "400px",
+                  height: "400px",
+                }}
+                unoptimized
+              />
+            )}
           </Link>
         </div>
 

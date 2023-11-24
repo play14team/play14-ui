@@ -1,6 +1,9 @@
 import Page from "@/components/layout/page"
 import Image from "next/image"
 import Link from "next/link"
+import emailImage from "public/email.png"
+import mailChimpImage from "public/mailchimp.png"
+import slackImage from "public/slack-dark.png"
 
 export default function Contact() {
   return (
@@ -45,10 +48,10 @@ export default function Contact() {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="http://bit.ly/play14slack" target="_blank">
               <Image
-                src="/slack-dark.png"
+                src={slackImage}
                 alt="Slack"
-                width={250}
-                height={250}
+                width={400}
+                height={400}
                 unoptimized
               />
               <p>Join us on Slack</p>
@@ -57,10 +60,10 @@ export default function Contact() {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="http://eepurl.com/bsyYXz" target="_blank">
               <Image
-                src="/mailchimp.png"
+                src={mailChimpImage}
                 alt="Mailchimp"
-                width={250}
-                height={250}
+                width={400}
+                height={400}
                 unoptimized
               />
               <p>Register to our newsletter</p>
@@ -69,10 +72,10 @@ export default function Contact() {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="mailto:team@play14.org" target="_blank">
               <Image
-                src="/email.png"
+                src={emailImage}
                 alt="Email"
-                width={250}
-                height={250}
+                width={400}
+                height={400}
                 unoptimized
               />
               <p>Sent us a message</p>

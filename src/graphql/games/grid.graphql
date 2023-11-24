@@ -32,10 +32,13 @@ fragment GameItem on Game {
         slug
         avatar {
           data {
+            id
             attributes {
               name
               url
               blurhash
+              width
+              height
             }
           }
         }
@@ -44,10 +47,13 @@ fragment GameItem on Game {
   }
   defaultImage {
     data {
+      id
       attributes {
-        url
         name
+        url
         blurhash
+        width
+        height
       }
     }
   }

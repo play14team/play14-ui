@@ -29,10 +29,13 @@ fragment ArticleItem on Article {
   publishedAt
   defaultImage {
     data {
+      id
       attributes {
-        url
         name
+        url
         blurhash
+        width
+        height
       }
     }
   }
@@ -44,9 +47,13 @@ fragment ArticleItem on Article {
         name
         avatar {
           data {
+            id
             attributes {
               name
               url
+              blurhash
+              width
+              height
             }
           }
         }

@@ -91,6 +91,7 @@ function getImage(image?: UploadFile) {
     <Image
       src={image ? image.url : defaultPlayer}
       alt={image ? image.name : "default player image"}
+      sizes="100vw"
       fill
       style={{ objectFit: "cover" }}
       unoptimized

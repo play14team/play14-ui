@@ -1,5 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
+import defaultPlayer from "public/default-player.png"
 import { Player, UploadFile } from "../../models/graphql"
 import SocialNetworks from "../layout/socialnetworks"
 
@@ -20,10 +21,28 @@ const PlayerCard = ({ player }: { player: Player }) => {
               <Image
                 src={avatar.url}
                 alt={avatar.name}
+                width={avatar.width!}
+                height={avatar.height!}
+                blurDataURL={avatar.blurhash!}
                 placeholder="blur"
-                blurDataURL={(avatar && avatar.blurhash) || undefined}
-                priority
-                fill
+                sizes="100vw"
+                style={{
+                  objectFit: "cover",
+                  border: "1px solid #ddd",
+                  boxShadow: "8px 8px #eee",
+                  borderRadius: "15px",
+                  maxHeight: "300px",
+                }}
+                unoptimized
+              />
+            </Link>
+          )}
+          {!avatar && (
+            <Link href={url}>
+              <Image
+                src={defaultPlayer}
+                alt="default player image"
+                placeholder="blur"
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",
@@ -35,6 +54,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
             </Link>
           )}
         </div>
+
         <div className="content">
           <Link href={url}>
             <h3>{player.name}</h3>

@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import notound from "/public/play14_broken.png"
+import notound from "public/play14_broken.png"
 
 const NotFoundPage = () => (
   <>

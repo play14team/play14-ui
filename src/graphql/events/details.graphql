@@ -19,23 +19,25 @@ fragment EventDetails on Event {
   contactEmail
   defaultImage {
     data {
+      id
       attributes {
         name
         url
+        blurhash
+        width
+        height
       }
     }
   }
   images(pagination: { limit: 10000 }) {
     data {
+      id
       attributes {
         name
         url
+        blurhash
         width
         height
-        hash
-        mime
-        provider
-        size
       }
     }
   }
@@ -83,10 +85,13 @@ fragment EventDetails on Event {
           url
           logo {
             data {
+              id
               attributes {
                 name
                 url
                 blurhash
+                width
+                height
               }
             }
           }

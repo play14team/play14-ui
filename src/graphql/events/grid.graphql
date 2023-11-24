@@ -37,10 +37,13 @@ fragment EventItem on Event {
   status
   defaultImage {
     data {
+      id
       attributes {
         name
         url
         blurhash
+        width
+        height
       }
     }
   }
