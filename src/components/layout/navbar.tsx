@@ -4,7 +4,6 @@ import Image from "next/image"
 import Link from "next/link"
 import logo from "public/logo/play14_white_bg_transparent.svg"
 import React, { useState } from "react"
-import SearchBox from "./searchbox"
 
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(true)
@@ -194,7 +193,7 @@ const Navbar = () => {
                   </li>
                 </ul>
 
-                <SearchBox />
+                {/* <SearchBox /> */}
               </div>
             </nav>
           </div>

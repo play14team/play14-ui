@@ -29,7 +29,7 @@ export default async function Format() {
                 alt="law of two feet"
                 style={{
                   borderRadius: "10px",
-                  boxShadow: "8px 8px #eee",
+                  boxShadow: "5px 5px #eee",
                 }}
                 unoptimized
               />
@@ -46,7 +46,7 @@ export default async function Format() {
                 alt="Bumblebee"
                 style={{
                   borderRadius: "10px",
-                  boxShadow: "8px 8px #eee",
+                  boxShadow: "5px 5px #eee",
                 }}
                 unoptimized
               />
@@ -60,7 +60,7 @@ export default async function Format() {
                 alt="Butterfly"
                 style={{
                   borderRadius: "10px",
-                  boxShadow: "8px 8px #eee",
+                  boxShadow: "5px 5px #eee",
                 }}
                 unoptimized
               />

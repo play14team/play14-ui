@@ -21,15 +21,15 @@ const PlayerCard = ({ player }: { player: Player }) => {
               <Image
                 src={avatar.url}
                 alt={avatar.name}
-                width={avatar.width!}
-                height={avatar.height!}
+                width={400}
+                height={400}
                 blurDataURL={avatar.blurhash!}
                 placeholder="blur"
                 sizes="100vw"
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",
-                  boxShadow: "8px 8px #eee",
+                  boxShadow: "5px 5px #eee",
                   borderRadius: "15px",
                   maxHeight: "300px",
                 }}
@@ -46,7 +46,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",
-                  boxShadow: "8px 8px #eee",
+                  boxShadow: "5px 5px #eee",
                   borderRadius: "15px",
                 }}
                 unoptimized
