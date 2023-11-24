@@ -7,12 +7,7 @@ query ArticleSidebar {
         title
         publishedAt
         defaultImage {
-          data {
-            attributes {
-              url
-              name
-            }
-          }
+          ...Image
         }
       }
     }

@@ -3,6 +3,8 @@ import Manifesto from "@/components/layout/manifesto"
 import Page from "@/components/layout/page"
 import Image from "next/image"
 import Link from "next/link"
+import codeOfConductImage from "public/values/CoC.jpg"
+import manifestoImage from "public/values/manifesto.jpg"
 
 export default async function Values() {
   return (
@@ -21,10 +23,8 @@ export default async function Values() {
           <Manifesto />
         </div>
         <Image
-          src="/values/manifesto.jpg"
+          src={manifestoImage}
           alt="manifesto"
-          width={800}
-          height={800}
           className="pt-5 pb-100"
           unoptimized
         />
@@ -32,10 +32,8 @@ export default async function Values() {
           <CodeOfConduct />
         </div>
         <Image
-          src="/values/CoC.jpg"
+          src={codeOfConductImage}
           alt="code of conduct"
-          width={1000}
-          height={500}
           className="pt-5 pb-100"
           unoptimized
         />

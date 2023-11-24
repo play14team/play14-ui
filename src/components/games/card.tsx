@@ -17,11 +17,11 @@ const GameCard = ({ game }: { game: Game }) => {
               <Image
                 src={image.url}
                 alt={image.name}
-                placeholder="blur"
+                width={image.width!}
+                height={image.height!}
                 blurDataURL={image.blurhash!}
+                placeholder="blur"
                 sizes="100vw"
-                width={800}
-                height={800}
                 style={{
                   objectFit: "cover",
                   borderRadius: "10px 10px 0px 0px",

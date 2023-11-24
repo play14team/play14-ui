@@ -19,12 +19,7 @@ query Testimonials {
               slug
               tagline
               avatar {
-                data {
-                  attributes {
-                    name
-                    url
-                  }
-                }
+                ...Image
               }
             }
           }

@@ -22,13 +22,7 @@ fragment PlayerItem on Player {
   name
   position
   avatar {
-    data {
-      attributes {
-        url
-        name
-        blurhash
-      }
-    }
+    ...Image
   }
   socialNetworks {
     id

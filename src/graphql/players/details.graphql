@@ -18,12 +18,7 @@ fragment PlayerDetails on Player {
   website
   location
   avatar {
-    data {
-      attributes {
-        name
-        url
-      }
-    }
+    ...Image
   }
   socialNetworks {
     id

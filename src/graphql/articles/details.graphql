@@ -25,27 +25,10 @@ fragment ArticleDetails on Article {
     }
   }
   defaultImage {
-    data {
-      attributes {
-        url
-        name
-        blurhash
-      }
-    }
+    ...Image
   }
   images(pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        name
-        url
-        width
-        height
-        hash
-        mime
-        provider
-        size
-      }
-    }
+    ...Images
   }
   author {
     data {
@@ -56,13 +39,7 @@ fragment ArticleDetails on Article {
         position
         tagline
         avatar {
-          data {
-            attributes {
-              name
-              url
-              blurhash
-            }
-          }
+          ...Image
         }
       }
     }

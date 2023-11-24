@@ -4,6 +4,9 @@ import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { Enum_Expectation_Type, FormatDocument } from "@/models/graphql"
 import Image from "next/image"
+import bumblebeeImage from "public/openspace/bumblebee.png"
+import butterflyImage from "public/openspace/butterfly.png"
+import lawOfTwoFeetImage from "public/openspace/two-feet.png"
 
 export default async function Format() {
   const { data } = await getClient().query({ query: FormatDocument })
@@ -22,10 +25,8 @@ export default async function Format() {
             </div>
             <div className="col-lg-6 col-md-12 pt-5">
               <Image
-                src="/openspace/two-feet.png"
+                src={lawOfTwoFeetImage}
                 alt="law of two feet"
-                width={400}
-                height={400}
                 unoptimized
               />
             </div>
@@ -36,25 +37,13 @@ export default async function Format() {
           <h3>Bumblebees and Butterflies</h3>
           <div className="row">
             <div className="col-lg-4 col-md-12 pt-5">
-              <Image
-                src="/openspace/bumblebee.png"
-                alt="Bumblebee"
-                width={400}
-                height={400}
-                unoptimized
-              />
+              <Image src={bumblebeeImage} alt="Bumblebee" unoptimized />
               <HtmlContent>{bumblebee!}</HtmlContent>
             </div>
             <div className="col-lg-2"></div>
             <div className="col-lg-4 col-md-12 pt-5">
               <HtmlContent>{butterfly!}</HtmlContent>
-              <Image
-                src="/openspace/butterfly.png"
-                alt="Butterfly"
-                width={400}
-                height={400}
-                unoptimized
-              />
+              <Image src={butterflyImage} alt="Butterfly" unoptimized />
             </div>
           </div>
         </div>

@@ -29,18 +29,17 @@ const EventCard = ({ event }: { event: Event }) => {
               <Image
                 src={image.url}
                 alt={image.name}
-                placeholder="blur"
+                width={image.width!}
+                height={image.height!}
                 blurDataURL={image.blurhash!}
+                placeholder="blur"
                 sizes="100vw"
-                width={600}
-                height={500}
                 style={{
                   objectFit: "cover",
                   borderRadius: "10px 10px 0px 0px",
                   maxWidth: "100%",
                   height: "300px",
                 }}
-                unoptimized
               />
             )}
             {!image && (

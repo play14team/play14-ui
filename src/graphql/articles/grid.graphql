@@ -28,13 +28,7 @@ fragment ArticleItem on Article {
   category
   publishedAt
   defaultImage {
-    data {
-      attributes {
-        url
-        name
-        blurhash
-      }
-    }
+    ...Image
   }
   author {
     data {
@@ -43,12 +37,7 @@ fragment ArticleItem on Article {
         slug
         name
         avatar {
-          data {
-            attributes {
-              name
-              url
-            }
-          }
+          ...Image
         }
       }
     }

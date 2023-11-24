@@ -21,11 +21,11 @@ const PlayerCard = ({ player }: { player: Player }) => {
               <Image
                 src={avatar.url}
                 alt={avatar.name}
-                placeholder="blur"
+                width={avatar.width!}
+                height={avatar.height!}
                 blurDataURL={avatar.blurhash!}
+                placeholder="blur"
                 sizes="100vw"
-                width={300}
-                height={300}
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",
