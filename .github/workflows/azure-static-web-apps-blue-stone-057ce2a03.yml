@@ -44,7 +44,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env:
           NODE_VERSION: 18
-          NEXT_PUBLIC_STRAPI_API_URL: https://community.play14.org
+          STRAPI_API_URL: https://community.play14.org
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
