@@ -1,6 +1,6 @@
+import Filters from "@/components/games/filters"
 import { getClient } from "@/libs/apollo-client"
 import GameGrid from "../../../../components/games/grid"
-import Page from "../../../../components/layout/page"
 import { GameEntity, GamesDocument } from "../../../../models/graphql"
 
 export default async function GameTag({ params }: { params: { tag: string } }) {
@@ -12,9 +12,12 @@ export default async function GameTag({ params }: { params: { tag: string } }) {
   const games = data?.games?.data as GameEntity[]
 
   return (
-    <Page name={`Games with tag "${params.tag}"`}>
-      <h3 className="centered">{games.length} found</h3>
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name={`Games with tag "${params.tag}"`} />
+      </div>
+      <h4 className="centered">Found {games.length} games with this tag</h4>
       <div className="pt-70">{data && <GameGrid games={games} />}</div>
-    </Page>
+    </>
   )
 }

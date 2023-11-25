@@ -1,7 +1,7 @@
+import Filters from "@/components/games/filters"
 import { getClient } from "@/libs/apollo-client"
 import { camelPad } from "@/libs/camelPad"
 import GameGrid from "../../../../components/games/grid"
-import Page from "../../../../components/layout/page"
 import { GameEntity, GamesDocument } from "../../../../models/graphql"
 
 export default async function GameCategory({
@@ -22,9 +22,12 @@ export default async function GameCategory({
       : camelPad(params.category)
 
   return (
-    <Page name={`Games with category "${cat}"`}>
-      <h3 className="centered">{games.length} found</h3>
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name={`Games with category "${cat}"`} />
+      </div>
+      <h4 className="centered">Found {games.length} games in this category</h4>
       <div className="pt-70">{data && <GameGrid games={games} />}</div>
-    </Page>
+    </>
   )
 }

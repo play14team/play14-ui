@@ -1,6 +1,6 @@
+import Filters from "@/components/games/filters"
 import GameGrid from "@/components/games/grid"
 import LoadMore from "@/components/games/load-more"
-import Page from "@/components/layout/page"
 import { GameEntity, Pagination } from "@/models/graphql"
 import { Metadata } from "next"
 import { getGames } from "../../components/games/get.action"
@@ -16,12 +16,12 @@ export default async function Games() {
   const pagination = data?.games?.meta.pagination as Pagination
 
   return (
-    <Page name="Games">
-      <div className="ptb-70">
-        {/* <Tags /> */}
-        <GameGrid games={games} />
-        <LoadMore pagination={pagination} />
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name="Games" />
       </div>
-    </Page>
+      <GameGrid games={games} />
+      <LoadMore pagination={pagination} />
+    </>
   )
 }

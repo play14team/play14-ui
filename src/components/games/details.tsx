@@ -84,13 +84,15 @@ const GameDetails = (props: { game: Game }) => {
                   </div>
 
                   {game.materials && game.materials.length > 0 && (
-                    <div className="content">
-                      <h3>Materials</h3>
-                      <ul>
-                        {game.materials.map((m) => (
-                          <li key={m?.id}>{m?.value}</li>
-                        ))}
-                      </ul>
+                    <div className="col-lg-12 col-md-12">
+                      <div className="content">
+                        <h3>Materials</h3>
+                        <ul>
+                          {game.materials.map((m) => (
+                            <li key={m?.id}>{m?.value}</li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   )}
 
