@@ -3,10 +3,15 @@ import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { Enum_Expectation_Type, FormatDocument } from "@/models/graphql"
+import { Metadata } from "next"
 import Image from "next/image"
 import bumblebeeImage from "public/openspace/bumblebee.png"
 import butterflyImage from "public/openspace/butterfly.png"
 import lawOfTwoFeetImage from "public/openspace/two-feet.png"
+
+export const metadata: Metadata = {
+  title: "About | Our format",
+}
 
 export default async function Format() {
   const { data } = await getClient().query({ query: FormatDocument })

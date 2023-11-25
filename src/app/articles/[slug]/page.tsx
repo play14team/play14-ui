@@ -15,10 +15,19 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: SlugParamsProps) {
   const article = await getArticle(props)
+  const images = article.images?.data.map((i) => i.attributes?.url!) as string[]
 
   return {
-    title: `#play14 - ${article.title}`,
-    description: article.content,
+    title: `Articles | ${article.title}`,
+    description: article.content?.substring(0, 200),
+    openGraph: {
+      title: article.title,
+      description: article.content?.substring(0, 200),
+      type: "article",
+      publishedTime: article.publishedAt,
+      authors: article.author?.data?.attributes?.name,
+      images: [article.defaultImage.data?.attributes?.url!].concat(images),
+    },
   }
 }
 

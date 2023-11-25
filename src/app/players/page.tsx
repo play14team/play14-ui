@@ -2,7 +2,12 @@ import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
 import LoadMore from "@/components/players/load-more"
 import { Pagination, PlayerEntity } from "@/models/graphql"
+import { Metadata } from "next"
 import { getPlayers } from "../../components/players/get.action"
+
+export const metadata: Metadata = {
+  title: "Players",
+}
 
 export default async function Players() {
   const { data } = await getPlayers(1, 32)

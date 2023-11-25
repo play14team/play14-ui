@@ -1,10 +1,15 @@
 import CodeOfConduct from "@/components/layout/codeofconduct"
 import Manifesto from "@/components/layout/manifesto"
 import Page from "@/components/layout/page"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import codeOfConductImage from "public/values/CoC.jpg"
 import manifestoImage from "public/values/manifesto.jpg"
+
+export const metadata: Metadata = {
+  title: "About | Our values",
+}
 
 export default async function Values() {
   return (

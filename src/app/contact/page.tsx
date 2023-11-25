@@ -1,9 +1,14 @@
 import Page from "@/components/layout/page"
+import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import emailImage from "public/email.png"
 import mailChimpImage from "public/mailchimp.png"
 import slackImage from "public/slack-dark.png"
+
+export const metadata: Metadata = {
+  title: "Contact",
+}
 
 export default function Contact() {
   return (

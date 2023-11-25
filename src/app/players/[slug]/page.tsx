@@ -20,8 +20,14 @@ export async function generateMetadata(props: SlugParamsProps) {
   const player = await getPlayer(props)
 
   return {
-    title: `#play14 - ${player.name}`,
-    description: player.bio,
+    title: `Players - ${player.name}`,
+    description: player.bio?.substring(0, 200),
+    openGraph: {
+      title: player.name,
+      description: player.bio?.substring(0, 200),
+      type: "article",
+      images: player.avatar?.data?.attributes?.url,
+    },
   }
 }
 

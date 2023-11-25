@@ -2,6 +2,11 @@ import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { Hosting, HostingDocument } from "@/models/graphql"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Events | Hosting",
+}
 
 export default async function Hosting() {
   const { data } = await getClient().query({ query: HostingDocument })

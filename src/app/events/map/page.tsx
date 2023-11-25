@@ -2,6 +2,11 @@ import EventMap from "@/components/events/map"
 import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { EventEntity, MarkersDocument } from "@/models/graphql"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Events | Map",
+}
 
 export default async function EventMapPage() {
   const { data } = await getClient().query({ query: MarkersDocument })

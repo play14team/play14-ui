@@ -2,6 +2,11 @@ import TestimonialItem from "@/components/events/testimonial"
 import Page from "@/components/layout/page"
 import { getClient } from "@/libs/apollo-client"
 import { TestimonialEntity, TestimonialsDocument } from "@/models/graphql"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Events | Testimonials",
+}
 
 export default async function Testimonials() {
   const { data } = await getClient().query({ query: TestimonialsDocument })

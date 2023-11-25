@@ -4,6 +4,11 @@ import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
 import { getClient } from "@/libs/apollo-client"
 import { PlayerEntity, StoryDocument } from "@/models/graphql"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "About | Our story",
+}
 
 export default async function Story() {
   const { data } = await getClient().query({ query: StoryDocument })

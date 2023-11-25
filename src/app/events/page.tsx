@@ -3,6 +3,11 @@ import EventGrid from "@/components/events/grid"
 import LoadMore from "@/components/events/load-more"
 import Page from "@/components/layout/page"
 import { EventEntity, Pagination } from "@/models/graphql"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Events",
+}
 
 export default async function Events() {
   const { data } = await getEvents(1, 18)
