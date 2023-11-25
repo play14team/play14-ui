@@ -6,9 +6,9 @@ const EventGrid = ({ events }: { events: EventEntity[] }) => {
     <div className="events-area">
       <div className="container">
         <div className="row">
-          {events.map((e) => {
-            return <EventCard key={e.id} event={e.attributes!} />
-          })}
+          {events.map((event) => (
+            <EventCard key={event.id} event={event.attributes!} />
+          ))}
         </div>
       </div>
     </div>

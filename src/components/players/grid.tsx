@@ -18,12 +18,9 @@ const PlayerGrid = ({
         )}
         <div className="row">
           {players &&
-            players.map(
-              (player: any) =>
-                player.attributes && (
-                  <PlayerCard key={player.id} player={player.attributes} />
-                ),
-            )}
+            players.map((player) => (
+              <PlayerCard key={player.id} player={player.attributes!} />
+            ))}
         </div>
       </div>
     </section>
