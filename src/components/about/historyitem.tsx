@@ -50,7 +50,7 @@ const HistoryItem = (props: HistoryProps) => {
                   unoptimized
                   style={{
                     borderRadius: "10px",
-                    boxShadow: "8px 8px #eee",
+                    boxShadow: "5px 5px #eee",
                   }}
                 />
               </div>

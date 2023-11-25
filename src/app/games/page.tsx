@@ -5,7 +5,7 @@ import { GameEntity, Pagination } from "@/models/graphql"
 import { getGames } from "../../components/games/get.action"
 
 export default async function Games() {
-  const { data } = await getGames(1, 1000)
+  const { data } = await getGames(1, 18)
 
   const games = data?.games?.data as GameEntity[]
   const pagination = data?.games?.meta.pagination as Pagination
