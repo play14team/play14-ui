@@ -57,6 +57,10 @@ export default function Contact() {
                 alt="Slack"
                 width={400}
                 height={400}
+                className="shadow"
+                style={{
+                  borderRadius: "70px",
+                }}
                 unoptimized
               />
               <p>Join us on Slack</p>
@@ -69,6 +73,10 @@ export default function Contact() {
                 alt="Mailchimp"
                 width={400}
                 height={400}
+                className="shadow"
+                style={{
+                  borderRadius: "70px",
+                }}
                 unoptimized
               />
               <p>Register to our newsletter</p>
@@ -81,6 +89,10 @@ export default function Contact() {
                 alt="Email"
                 width={400}
                 height={400}
+                className="shadow"
+                style={{
+                  borderRadius: "70px",
+                }}
                 unoptimized
               />
               <p>Sent us a message</p>

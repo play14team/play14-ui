@@ -19,10 +19,10 @@ export async function generateMetadata(props: SlugParamsProps) {
 
   return {
     title: `Games - ${game.name}`,
-    description: game.description,
+    description: game.summary,
     openGraph: {
       title: game.name,
-      description: game.description?.substring(0, 200),
+      description: game.summary,
       type: "article",
       publishedTime: game.publishedAt,
       authors: game.documentedBy?.data.map((p) => p.attributes?.name),

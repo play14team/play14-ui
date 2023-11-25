@@ -16,8 +16,9 @@ export default async function ArticleTag({
   const articles = data?.articles?.data as ArticleEntity[]
 
   return (
-    <Page name={`Articles - Tag : ${params.tag}`}>
-      {data && <ArticleGrid articles={articles} />}
+    <Page name={`Articles with tag "${params.tag}"`}>
+      <h3 className="centered">{articles.length} found</h3>
+      <div className="pt-70">{data && <ArticleGrid articles={articles} />}</div>
     </Page>
   )
 }

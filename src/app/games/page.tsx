@@ -18,6 +18,7 @@ export default async function Games() {
   return (
     <Page name="Games">
       <div className="ptb-70">
+        {/* <Tags /> */}
         <GameGrid games={games} />
         <LoadMore pagination={pagination} />
       </div>

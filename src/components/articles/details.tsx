@@ -43,7 +43,9 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                     <li>
                       <i className="bx bx-folder-open"></i>
                       <span>Category</span>
-                      <Link href="#">{article.category}</Link>
+                      <Link href={`/articles/categories/${article.category}`}>
+                        {article.category}
+                      </Link>
                     </li>
                     <li>
                       <i className="bx bx-calendar"></i>

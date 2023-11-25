@@ -16,8 +16,9 @@ export default async function ArticleCategory({
   const articles = data?.articles?.data as ArticleEntity[]
 
   return (
-    <Page name={`Articles - Category : ${params.category}`}>
-      {data && <ArticleGrid articles={articles} />}
+    <Page name={`Articles with category "${params.category}"`}>
+      <h3 className="centered">{articles.length} found</h3>
+      <div className="pt-70">{data && <ArticleGrid articles={articles} />}</div>
     </Page>
   )
 }

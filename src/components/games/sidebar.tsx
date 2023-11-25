@@ -1,4 +1,3 @@
-import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
 import { Game } from "../../models/graphql"
@@ -9,8 +8,6 @@ const GameSidebar = (props: { game: Game }) => {
 
   return (
     <aside className="services-details-info">
-      <div className="single-industries-serve-box orange">{game.category}</div>
-
       <div className="services-contact-info">
         <ul>
           <li>
@@ -124,14 +121,6 @@ const GameSidebar = (props: { game: Game }) => {
                   </Link>
                 )
               })}
-          </li>
-
-          <li>
-            <div className="icon">
-              <i className="bx bx-book-open"></i>
-            </div>
-            <span>Pubished</span>
-            {moment(game.publishedAt).format("MMMM DD, YYYY")}
           </li>
         </ul>
       </div>

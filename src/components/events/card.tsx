@@ -19,7 +19,10 @@ const EventCard = ({ event }: { event: Event }) => {
       key={event.name}
       className="col-lg-4 col-sm-6 col-md-6"
     >
-      <div className="single-events-box">
+      <div
+        className="single-events-box shadow"
+        style={{ borderRadius: "10px" }}
+      >
         <div
           className="image"
           style={{ position: "relative", height: "300px" }}

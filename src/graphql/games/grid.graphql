@@ -1,5 +1,9 @@
-query Games($page: Int!, $pageSize: Int!) {
-  games(sort: "name:asc", pagination: { page: $page, pageSize: $pageSize }) {
+query Games($page: Int!, $pageSize: Int!, $category: String, $tag: String) {
+  games(
+    sort: "name:asc"
+    pagination: { page: $page, pageSize: $pageSize }
+    filters: { category: { eqi: $category }, tags: { value: { eqi: $tag } } }
+  ) {
     data {
       id
       attributes {

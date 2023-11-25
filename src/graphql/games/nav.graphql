@@ -4,6 +4,10 @@ query GameNav {
       attributes {
         slug
         name
+        category
+        tags {
+          value
+        }
         publishedAt
         defaultImage {
           data {

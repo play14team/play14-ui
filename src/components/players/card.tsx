@@ -26,10 +26,10 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 blurDataURL={avatar.blurhash!}
                 placeholder="blur"
                 sizes="100vw"
+                className="shadow"
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",
-                  boxShadow: "5px 5px #eee",
                   borderRadius: "15px",
                   maxHeight: "300px",
                 }}
@@ -43,10 +43,10 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 src={defaultPlayer}
                 alt="default player image"
                 placeholder="blur"
+                className="shadow"
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",
-                  boxShadow: "5px 5px #eee",
                   borderRadius: "15px",
                 }}
                 unoptimized

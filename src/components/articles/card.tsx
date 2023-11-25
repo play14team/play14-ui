@@ -16,7 +16,7 @@ const ArticleCard = ({ article }: { article: Article }) => {
       key={article.title}
       className="col-lg-4 col-md-6"
     >
-      <div className="single-blog-post bg-fffbf5">
+      <div className="single-blog-post shadow">
         <div className="post-image">
           <Link href={url} className="d-block image">
             {image && (
@@ -30,8 +30,8 @@ const ArticleCard = ({ article }: { article: Article }) => {
                 sizes="100vw"
                 style={{
                   objectFit: "cover",
-                  width: "400px",
-                  height: "400px",
+                  width: "450px",
+                  height: "450px",
                 }}
                 unoptimized
               />

@@ -48,9 +48,9 @@ const HistoryItem = (props: HistoryProps) => {
                   width={250}
                   height={250}
                   unoptimized
+                  className="shadow"
                   style={{
                     borderRadius: "10px",
-                    boxShadow: "5px 5px #eee",
                   }}
                 />
               </div>

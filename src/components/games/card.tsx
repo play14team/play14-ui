@@ -1,3 +1,4 @@
+import { camelPad } from "@/libs/camelPad"
 import defaultGame from "@/styles/images/gallery/gallery5.jpg"
 import Image from "next/image"
 import Link from "next/link"
@@ -46,11 +47,9 @@ const GameCard = ({ game }: { game: Game }) => {
               />
             )}
           </Link>
-          {
-            <div className="price shadow" style={{ fontSize: "12px" }}>
-              {game.category}
-            </div>
-          }
+          <div className="price shadow" style={{ fontSize: "10px" }}>
+            {camelPad(game.category)}
+          </div>
         </div>
         <div className="courses-content">
           {proposedby &&

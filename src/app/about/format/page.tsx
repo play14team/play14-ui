@@ -32,9 +32,9 @@ export default async function Format() {
               <Image
                 src={lawOfTwoFeetImage}
                 alt="law of two feet"
+                className="shadow"
                 style={{
                   borderRadius: "10px",
-                  boxShadow: "5px 5px #eee",
                 }}
                 unoptimized
               />
@@ -49,9 +49,9 @@ export default async function Format() {
               <Image
                 src={bumblebeeImage}
                 alt="Bumblebee"
+                className="shadow"
                 style={{
                   borderRadius: "10px",
-                  boxShadow: "5px 5px #eee",
                 }}
                 unoptimized
               />
@@ -63,9 +63,9 @@ export default async function Format() {
               <Image
                 src={butterflyImage}
                 alt="Butterfly"
+                className="shadow"
                 style={{
                   borderRadius: "10px",
-                  boxShadow: "5px 5px #eee",
                 }}
                 unoptimized
               />

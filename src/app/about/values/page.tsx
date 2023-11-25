@@ -31,9 +31,9 @@ export default async function Values() {
           <Image
             src={manifestoImage}
             alt="manifesto"
+            className="shadow"
             style={{
               borderRadius: "10px",
-              boxShadow: "5px 5px #eee",
             }}
             unoptimized
           />
@@ -45,9 +45,9 @@ export default async function Values() {
           <Image
             src={codeOfConductImage}
             alt="code of conduct"
+            className="shadow"
             style={{
               borderRadius: "10px",
-              boxShadow: "5px 5px #eee",
             }}
             unoptimized
           />
