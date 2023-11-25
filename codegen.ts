@@ -1,6 +1,9 @@
 import { CodegenConfig } from "@graphql-codegen/cli"
+require("dotenv").config({ path: ".env.local" })
 
 const SERVER = process.env.STRAPI_API_URL || "http://localhost:1337"
+
+console.log("Generating from: ", SERVER)
 
 const config: CodegenConfig = {
   overwrite: true,

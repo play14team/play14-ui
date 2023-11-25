@@ -5,7 +5,7 @@ import { ArticleEntity, Pagination } from "@/models/graphql"
 import { getArticles } from "../../components/articles/get.action"
 
 export default async function Articles() {
-  const { data } = await getArticles(1, 1000)
+  const { data } = await getArticles(1, 18)
 
   const articles = data?.articles?.data as ArticleEntity[]
   const pagination = data?.articles?.meta.pagination as Pagination

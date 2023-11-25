@@ -34,3 +34,10 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Docker
+
+```sh
+docker build --build-arg STRAPI_API_URL=https://community.play14.org --build-arg STRAPI_API_SECRET={secret} --build-arg NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN={token} -t play14-web .
+docker run -p 3000:3000 -d -e STRAPI_API_URL=https://community.play14.org -e STRAPI_API_SECRET={secret} -e NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN={token}  play14-web
+```
