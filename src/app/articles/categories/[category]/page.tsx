@@ -1,6 +1,6 @@
+import Filters from "@/components/articles/filters"
 import { getClient } from "@/libs/apollo-client"
 import ArticleGrid from "../../../../components/articles/grid"
-import Page from "../../../../components/layout/page"
 import { ArticleEntity, ArticlesDocument } from "../../../../models/graphql"
 
 export default async function ArticleCategory({
@@ -16,9 +16,14 @@ export default async function ArticleCategory({
   const articles = data?.articles?.data as ArticleEntity[]
 
   return (
-    <Page name={`Articles with category "${params.category}"`}>
-      <h3 className="centered">{articles.length} found</h3>
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name={`Articles with category "${params.category}"`} />
+      </div>
+      <h4 className="centered">
+        Found {articles.length} articles with this category
+      </h4>
       <div className="pt-70">{data && <ArticleGrid articles={articles} />}</div>
-    </Page>
+    </>
   )
 }

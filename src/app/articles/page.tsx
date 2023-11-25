@@ -1,6 +1,6 @@
+import Filters from "@/components/articles/filters"
 import ArticleGrid from "@/components/articles/grid"
 import LoadMore from "@/components/articles/load-more"
-import Page from "@/components/layout/page"
 import { ArticleEntity, Pagination } from "@/models/graphql"
 import { Metadata } from "next"
 import { getArticles } from "../../components/articles/get.action"
@@ -16,11 +16,12 @@ export default async function Articles() {
   const pagination = data?.articles?.meta.pagination as Pagination
 
   return (
-    <Page name="Articles">
-      <div className="ptb-70">
-        <ArticleGrid articles={articles} />
-        <LoadMore pagination={pagination} />
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name="Articles" />
       </div>
-    </Page>
+      <ArticleGrid articles={articles} />
+      <LoadMore pagination={pagination} />
+    </>
   )
 }

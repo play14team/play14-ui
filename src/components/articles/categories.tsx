@@ -1,13 +1,13 @@
 import { getClient } from "@/libs/apollo-client"
-import { GameEntity, GameNavDocument } from "@/models/graphql"
+import { ArticleEntity, ArticleNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
 export default async function Categories() {
-  const { data } = await getClient().query({ query: GameNavDocument })
-  const games = data.games?.data as GameEntity[]
+  const { data } = await getClient().query({ query: ArticleNavDocument })
+  const articles = data.articles?.data as ArticleEntity[]
 
   const categories = [
-    ...new Set(games.map((g) => g.attributes?.category.toLowerCase())),
+    ...new Set(articles.map((a) => a.attributes?.category?.toLowerCase())),
   ]
 
   return (
@@ -19,7 +19,7 @@ export default async function Categories() {
               <i className="bx bx-folder"></i>
             </span>
 
-            <Link href={`/games/categories/${cat}`}>{cat}</Link>
+            <Link href={`/articles/categories/${cat}`}>{cat}</Link>
           </div>
         ))}
       </div>
