@@ -11,19 +11,19 @@ export default function Filters({ name }: { name: ReactNode }) {
             <span>
               <i className="bx bx-globe"></i>
             </span>
-            <Link href="/events/countries">Countries</Link>
+            <Link href="/events/countries">Country</Link>
           </div>
           <div className="article-tags">
             <span>
               <i className="bx bx-calendar"></i>
             </span>
-            <Link href="/events/statuses">Statuses</Link>
+            <Link href="/events/statuses">Status</Link>
           </div>
           <div className="article-tags">
             <span>
               <i className="bx bx-map-pin"></i>
             </span>
-            <Link href="/events/locations">Locations</Link>
+            <Link href="/events/locations">Location</Link>
           </div>
         </div>
       </Collapsible>

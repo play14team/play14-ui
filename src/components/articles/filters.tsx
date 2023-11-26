@@ -10,7 +10,7 @@ export default function Filters({ name }: { name: string }) {
             <span>
               <i className="bx bx-folder-open"></i>
             </span>
-            <Link href="/articles/categories">Categories</Link>
+            <Link href="/articles/categories">Category</Link>
           </div>
           <div className="article-tags">
             <span>
