@@ -18,7 +18,7 @@ export default async function Locations() {
         {locations.map((item, index) => (
           <div key={index} className="article-tags">
             <span>
-              <i className="bx bx-location-plus"></i>
+              <i className="bx bx-map-pin"></i>
             </span>
 
             <Link href={`/events/locations/${item}`}>

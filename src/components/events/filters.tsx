@@ -9,7 +9,7 @@ export default function Filters({ name }: { name: ReactNode }) {
         <div className="article-footer">
           <div className="article-tags">
             <span>
-              <i className="bx bx-map-pin"></i>
+              <i className="bx bx-globe"></i>
             </span>
             <Link href="/events/countries">Countries</Link>
           </div>
@@ -21,7 +21,7 @@ export default function Filters({ name }: { name: ReactNode }) {
           </div>
           <div className="article-tags">
             <span>
-              <i className="bx bx-location-plus"></i>
+              <i className="bx bx-map-pin"></i>
             </span>
             <Link href="/events/locations">Locations</Link>
           </div>
