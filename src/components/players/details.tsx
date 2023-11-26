@@ -23,6 +23,8 @@ const PlayerDetails = ({ player }: { player: Player }) => {
                 width={350}
                 height={350}
                 priority
+                className="shadow"
+                style={{ borderRadius: "10px" }}
                 unoptimized
               />
               <div className="content">

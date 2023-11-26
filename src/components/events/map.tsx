@@ -16,22 +16,24 @@ const token =
 
 export default function EventMap({ events }: { events: EventEntity[] }) {
   return (
-    <Map
-      initialViewState={{
-        latitude: 25,
-        longitude: 15,
-        zoom: 1.5,
-      }}
-      style={{ width: "100%", height: "800px" }}
-      mapStyle="mapbox://styles/mapbox/streets-v12"
-      mapboxAccessToken={token}
-    >
-      <FullscreenControl />
-      <NavigationControl />
-      <GeolocateControl />
-      <GeocoderControl mapboxAccessToken={token} position="top-left" />
+    <div className="shadow">
+      <Map
+        initialViewState={{
+          latitude: 25,
+          longitude: 15,
+          zoom: 1.5,
+        }}
+        style={{ width: "100%", height: "800px" }}
+        mapStyle="mapbox://styles/mapbox/streets-v12"
+        mapboxAccessToken={token}
+      >
+        <FullscreenControl />
+        <NavigationControl />
+        <GeolocateControl />
+        <GeocoderControl mapboxAccessToken={token} position="top-left" />
 
-      <EventMarkers events={events} />
-    </Map>
+        <EventMarkers events={events} />
+      </Map>
+    </div>
   )
 }

@@ -29,9 +29,11 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                   priority
                   placeholder="blur"
                   blurDataURL={(image && image.blurhash) || undefined}
+                  className="shadow"
                   style={{
                     maxWidth: "100%",
                     objectFit: "cover",
+                    borderRadius: "10px",
                   }}
                   unoptimized
                 />
@@ -57,60 +59,62 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                   </ul>
                 </div>
 
+                <div className="article-footer">
+                  <div className="article-tags">
+                    <span>
+                      <i className="bx bx-purchase-tag"></i>
+                    </span>
+
+                    {article.tags?.data.map((tag) => (
+                      <Link
+                        key={tag.id}
+                        href={`/articles/tags/${tag.attributes?.value}`}
+                      >
+                        {tag.attributes?.value}
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="article-share">
+                    <SocialLinks text={text} className="social" />
+                  </div>
+                </div>
+
                 <div className="pt-4">
                   <HtmlContent>{article.content!}</HtmlContent>
                 </div>
+
+                {author && (
+                  <div className=" pt-70">
+                    <div className="article-author">
+                      <div className="author-profile-header"></div>
+                      <div className="author-profile">
+                        <div className="author-profile-title">
+                          <Image
+                            src={author.avatar?.data?.attributes?.url!}
+                            className="shadow-sm"
+                            alt={author.name}
+                            width={200}
+                            height={200}
+                            unoptimized
+                          />
+                          <Link href={`/players/${author.slug}`}>
+                            <h4>{author && author.name}</h4>
+                          </Link>
+                          <span className="d-block">
+                            {author && author.position}
+                          </span>
+                          <p>{author && author.tagline}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 <div className="pt-4">
                   {article.images && <Gallery images={article.images.data} />}
                 </div>
               </div>
-
-              <div className="article-footer">
-                <div className="article-tags">
-                  <span>
-                    <i className="bx bx-purchase-tag"></i>
-                  </span>
-
-                  {article.tags?.data.map((tag) => (
-                    <Link
-                      key={tag.id}
-                      href={`/articles/tags/${tag.attributes?.value}`}
-                    >
-                      {tag.attributes?.value}
-                    </Link>
-                  ))}
-                </div>
-
-                <div className="article-share">
-                  <SocialLinks text={text} className="social" />
-                </div>
-              </div>
-
-              {author && (
-                <div className="article-author">
-                  <div className="author-profile-header"></div>
-                  <div className="author-profile">
-                    <div className="author-profile-title">
-                      <Image
-                        src={author.avatar?.data?.attributes?.url!}
-                        className="shadow-sm"
-                        alt={author.name}
-                        width={200}
-                        height={200}
-                        unoptimized
-                      />
-                      <Link href={`/players/${author.slug}`}>
-                        <h4>{author && author.name}</h4>
-                      </Link>
-                      <span className="d-block">
-                        {author && author.position}
-                      </span>
-                      <p>{author && author.tagline}</p>
-                    </div>
-                  </div>
-                </div>
-              )}
             </div>
           </div>
 

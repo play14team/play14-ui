@@ -7,8 +7,8 @@ const GameSidebar = (props: { game: Game }) => {
   const { game } = props
 
   return (
-    <aside className="services-details-info">
-      <div className="services-contact-info">
+    <aside className="services-details-info" style={{ marginTop: "15px" }}>
+      <div className="services-contact-info" style={{ borderRadius: "10px" }}>
         <ul>
           <li>
             <div className="icon">

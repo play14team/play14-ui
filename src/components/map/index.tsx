@@ -32,36 +32,38 @@ const MapView = ({
   const zoomLevel = location ? zoom || 15 : 1
 
   return (
-    <Map
-      initialViewState={{
-        latitude: latitude,
-        longitude: longitude,
-        zoom: zoomLevel,
-      }}
-      style={{ width: "100%", height: height || "500px" }}
-      mapStyle="mapbox://styles/mapbox/streets-v12"
-      mapboxAccessToken={token}
-    >
-      <FullscreenControl />
-      <NavigationControl />
+    <div className="shadow">
+      <Map
+        initialViewState={{
+          latitude: latitude,
+          longitude: longitude,
+          zoom: zoomLevel,
+        }}
+        style={{ width: "100%", height: height || "500px" }}
+        mapStyle="mapbox://styles/mapbox/streets-v12"
+        mapboxAccessToken={token}
+      >
+        <FullscreenControl />
+        <NavigationControl />
 
-      {location && (
-        <Marker longitude={longitude} latitude={latitude} color="#ffc900" />
-      )}
+        {location && (
+          <Marker longitude={longitude} latitude={latitude} color="#ffc900" />
+        )}
 
-      {popup && (
-        <Popup
-          anchor="bottom-right"
-          longitude={longitude}
-          latitude={latitude}
-          offset={offset}
-          closeButton={false}
-          closeOnClick={false}
-        >
-          {address}
-        </Popup>
-      )}
-    </Map>
+        {popup && (
+          <Popup
+            anchor="bottom-right"
+            longitude={longitude}
+            latitude={latitude}
+            offset={offset}
+            closeButton={false}
+            closeOnClick={false}
+          >
+            {address}
+          </Popup>
+        )}
+      </Map>
+    </div>
   )
 }
 

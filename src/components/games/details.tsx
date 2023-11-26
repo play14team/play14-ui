@@ -29,10 +29,11 @@ const GameDetails = (props: { game: Game }) => {
                     priority
                     placeholder="blur"
                     blurDataURL={(image && image.blurhash) || undefined}
+                    className="shadow"
                     style={{
                       maxWidth: "100%",
                       objectFit: "cover",
-                      border: "1px solid #ddd",
+                      borderRadius: "10px",
                     }}
                     unoptimized
                   />
