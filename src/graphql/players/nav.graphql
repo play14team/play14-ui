@@ -4,6 +4,7 @@ query PlayerNav {
       attributes {
         slug
         name
+        position
         updatedAt
         avatar {
           data {

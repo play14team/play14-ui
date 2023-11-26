@@ -19,7 +19,7 @@ const PlayerSidebar = (props: { player: Player }) => {
             <div className="icon">
               <i className="bx bx-user-pin"></i>
             </div>
-            <span>Role</span>
+            <span>Position</span>
             {player.position}
           </li>
           {player.company && (

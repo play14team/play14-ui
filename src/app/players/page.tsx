@@ -1,4 +1,4 @@
-import Page from "@/components/layout/page"
+import Filters from "@/components/players/filters"
 import PlayerGrid from "@/components/players/grid"
 import LoadMore from "@/components/players/load-more"
 import { Pagination, PlayerEntity } from "@/models/graphql"
@@ -16,11 +16,12 @@ export default async function Players() {
   const pagination = data?.players?.meta.pagination as Pagination
 
   return (
-    <Page name="Players">
-      <div className="ptb-70">
-        <PlayerGrid players={players} />
-        <LoadMore pagination={pagination} />
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name="Players" />
       </div>
-    </Page>
+      <PlayerGrid players={players} />
+      <LoadMore pagination={pagination} />
+    </>
   )
 }

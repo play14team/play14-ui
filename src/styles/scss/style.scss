@@ -9088,11 +9088,9 @@ Blog Details Area CSS
     background: #fdfcfc;
 
     .author-profile-header {
-      height: 115px;
+      height: 25px;
       border-radius: 5px 5px 0 0;
       background: {
-        color: $main-color;
-        image: url(../images/bg.jpg);
         position: center center;
         size: cover;
         repeat: no-repeat;
