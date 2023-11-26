@@ -1,5 +1,18 @@
-query Events($page: Int!, $pageSize: Int!) {
-  events(sort: "start:desc", pagination: { page: $page, pageSize: $pageSize }) {
+query Events(
+  $page: Int!
+  $pageSize: Int!
+  $status: String
+  $location: String
+  $country: String
+) {
+  events(
+    sort: "start:desc"
+    pagination: { page: $page, pageSize: $pageSize }
+    filters: {
+      status: { eqi: $status }
+      location: { slug: { eqi: $location }, country: { eqi: $country } }
+    }
+  ) {
     data {
       id
       attributes {

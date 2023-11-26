@@ -14,9 +14,10 @@ export default async function GameTag({ params }: { params: { tag: string } }) {
   return (
     <>
       <div className="centered pt-5 pb-5">
-        <Filters name={`Games with tag "${params.tag}"`} />
+        <Filters
+          name={`Found ${games.length} games with tag "${params.tag}"`}
+        />
       </div>
-      <h4 className="centered">Found {games.length} games with this tag</h4>
       <div className="pt-70">{data && <GameGrid games={games} />}</div>
     </>
   )

@@ -24,9 +24,8 @@ export default async function GameCategory({
   return (
     <>
       <div className="centered pt-5 pb-5">
-        <Filters name={`Games with category "${cat}"`} />
+        <Filters name={`Found ${games.length} games with category "${cat}"`} />
       </div>
-      <h4 className="centered">Found {games.length} games in this category</h4>
       <div className="pt-70">{data && <GameGrid games={games} />}</div>
     </>
   )

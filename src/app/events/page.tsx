@@ -1,7 +1,7 @@
+import Filters from "@/components/events/filters"
 import { getEvents } from "@/components/events/get.action"
 import EventGrid from "@/components/events/grid"
 import LoadMore from "@/components/events/load-more"
-import Page from "@/components/layout/page"
 import { EventEntity, Pagination } from "@/models/graphql"
 import { Metadata } from "next"
 
@@ -16,11 +16,12 @@ export default async function Events() {
   const pagination = data?.events?.meta.pagination as Pagination
 
   return (
-    <Page name="Events">
-      <div className="ptb-70">
-        <EventGrid events={events} />
-        <LoadMore pagination={pagination} />
+    <>
+      <div className="centered pt-5 pb-5">
+        <Filters name="Events" />
       </div>
-    </Page>
+      <EventGrid events={events} />
+      <LoadMore pagination={pagination} />
+    </>
   )
 }

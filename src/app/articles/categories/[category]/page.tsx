@@ -18,11 +18,10 @@ export default async function ArticleCategory({
   return (
     <>
       <div className="centered pt-5 pb-5">
-        <Filters name={`Articles with category "${params.category}"`} />
+        <Filters
+          name={`Found ${articles.length} articles with category "${params.category}"`}
+        />
       </div>
-      <h4 className="centered">
-        Found {articles.length} articles with this category
-      </h4>
       <div className="pt-70">{data && <ArticleGrid articles={articles} />}</div>
     </>
   )

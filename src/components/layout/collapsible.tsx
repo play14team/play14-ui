@@ -1,11 +1,11 @@
 "use client"
 
-import { PropsWithChildren } from "react"
+import { PropsWithChildren, ReactNode } from "react"
 import { useCollapse } from "react-collapsed"
 import "./collapsible.module.scss"
 
 interface CollapsibleProps extends PropsWithChildren {
-  name: string
+  name: ReactNode
 }
 
 export default function Collapsible({ name, children }: CollapsibleProps) {

@@ -18,11 +18,10 @@ export default async function ArticleTag({
   return (
     <>
       <div className="centered pt-5 pb-5">
-        <Filters name={`Articles with tag "${params.tag}"`} />
+        <Filters
+          name={`Found ${articles.length} articles with tag "${params.tag}"`}
+        />
       </div>
-      <h4 className="centered">
-        Found {articles.length} articles with this tag
-      </h4>
       <div className="pt-70">{data && <ArticleGrid articles={articles} />}</div>
     </>
   )

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import Collapsible from "../ui/collapsible"
+import Collapsible from "../layout/collapsible"
 
 export default function Filters({ name }: { name: string }) {
   return (
