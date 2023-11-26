@@ -1,12 +1,13 @@
 import GameDetails from "@/components/games/details"
 import Page from "@/components/layout/page"
+import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { GameEntity } from "@/models/graphql"
 import { getGame, getGameSlugs } from "../../../components/games/get.action"
 
 export async function generateStaticParams() {
-  const { data } = await getGameSlugs()
-  const games = data.games?.data as GameEntity[]
+  const response = await getGameSlugs()
+  const games = dataAsArrayOf<GameEntity>(response.games)
 
   return games.map((game) => ({
     slug: game.attributes?.slug!,

@@ -21,7 +21,7 @@ export default function LoadMore({ pagination }: { pagination: Pagination }) {
 
   function loadMore() {
     getArticles(pagination.page + 1, pagination.pageSize).then((res) => {
-      const articles = res.data.articles?.data as ArticleEntity[]
+      const articles = res.articles?.data as ArticleEntity[]
       setArticles(articles)
     })
   }

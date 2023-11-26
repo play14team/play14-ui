@@ -1,6 +1,6 @@
 "use server"
 
-import { getClient } from "@/libs/apollo-client"
+import { query } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import {
   Game,
@@ -10,7 +10,7 @@ import {
 } from "@/models/graphql"
 
 export async function getGames(page: number, pageSize: number) {
-  return await getClient().query({
+  return await query({
     query: GamesDocument,
     variables: { page, pageSize },
   })
@@ -18,16 +18,16 @@ export async function getGames(page: number, pageSize: number) {
 
 export async function getGame({ params }: SlugParamsProps) {
   const { slug } = params
-  const { data } = await getClient().query({
+  const response = await query({
     query: GameDocument,
     variables: { slug },
   })
 
-  return data?.games?.data[0].attributes as Game
+  return response.games?.data[0].attributes as Game
 }
 
 export async function getGameSlugs() {
-  return await getClient().query({
+  return await query({
     query: GameSlugsDocument,
   })
 }

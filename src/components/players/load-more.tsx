@@ -21,7 +21,7 @@ export default function LoadMore({ pagination }: { pagination: Pagination }) {
 
   function loadMore() {
     getPlayers(pagination.page + 1, pagination.pageSize).then((res) => {
-      const players = res.data.players?.data as PlayerEntity[]
+      const players = res.players?.data as PlayerEntity[]
       setPlayers(players)
     })
   }

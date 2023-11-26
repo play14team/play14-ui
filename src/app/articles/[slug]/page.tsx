@@ -1,12 +1,13 @@
 import ArticleDetails from "@/components/articles/details"
 import { getArticle, getArticleSlugs } from "@/components/articles/get.action"
 import Page from "@/components/layout/page"
+import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { ArticleEntity } from "@/models/graphql"
 
 export async function generateStaticParams() {
-  const { data } = await getArticleSlugs()
-  const articles = data.articles?.data as ArticleEntity[]
+  const response = await getArticleSlugs()
+  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
 
   return articles.map((article) => ({
     slug: article.attributes?.slug!,

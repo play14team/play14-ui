@@ -1,6 +1,6 @@
 "use server"
 
-import { getClient } from "@/libs/apollo-client"
+import { query } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import {
   Event,
@@ -10,7 +10,7 @@ import {
 } from "@/models/graphql"
 
 export async function getEvents(page: number, pageSize: number) {
-  return await getClient().query({
+  return await query({
     query: EventsDocument,
     variables: { page, pageSize },
   })
@@ -18,16 +18,16 @@ export async function getEvents(page: number, pageSize: number) {
 
 export async function getEvent({ params }: SlugParamsProps) {
   const { slug } = params
-  const { data } = await getClient().query({
+  const response = await query({
     query: EventDocument,
     variables: { slug },
   })
 
-  return data?.events?.data[0].attributes as Event
+  return response.events?.data[0].attributes as Event
 }
 
 export async function getEventSlugs() {
-  return await getClient().query({
+  return await query({
     query: EventSlugsDocument,
   })
 }

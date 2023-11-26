@@ -1,5 +1,6 @@
 import Page from "@/components/layout/page"
 import PlayerDetails from "@/components/players/details"
+import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { PlayerEntity } from "@/models/graphql"
 import {
@@ -8,8 +9,8 @@ import {
 } from "../../../components/players/get.action"
 
 export async function generateStaticParams() {
-  const { data } = await getPlayerSlugs()
-  const players = data.players?.data as PlayerEntity[]
+  const response = await getPlayerSlugs()
+  const players = dataAsArrayOf<PlayerEntity>(response.players)
 
   return players.map((player) => ({
     slug: player.attributes?.slug!,

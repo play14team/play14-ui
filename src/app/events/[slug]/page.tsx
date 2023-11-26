@@ -1,12 +1,13 @@
 import EventDetails from "@/components/events/details"
 import { getEvent, getEventSlugs } from "@/components/events/get.action"
 import Page from "@/components/layout/page"
+import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { EventEntity } from "@/models/graphql"
 
 export async function generateStaticParams() {
-  const { data } = await getEventSlugs()
-  const events = data.events?.data as EventEntity[]
+  const response = await getEventSlugs()
+  const events = dataAsArrayOf<EventEntity>(response.events)
 
   return events.map((event) => ({
     slug: event.attributes?.slug!,

@@ -1,7 +1,8 @@
 import Filters from "@/components/articles/filters"
 import ArticleGrid from "@/components/articles/grid"
 import LoadMore from "@/components/articles/load-more"
-import { ArticleEntity, Pagination } from "@/models/graphql"
+import { dataAsArrayOf, getPagination } from "@/libs/apollo-client"
+import { ArticleEntity } from "@/models/graphql"
 import { Metadata } from "next"
 import { getArticles } from "../../components/articles/get.action"
 
@@ -10,10 +11,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Articles() {
-  const { data } = await getArticles(1, 18)
-
-  const articles = data?.articles?.data as ArticleEntity[]
-  const pagination = data?.articles?.meta.pagination as Pagination
+  const response = await getArticles(1, 18)
+  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
+  const pagination = getPagination(response.articles)
 
   return (
     <>

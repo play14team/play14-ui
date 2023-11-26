@@ -2,7 +2,8 @@ import Filters from "@/components/events/filters"
 import { getEvents } from "@/components/events/get.action"
 import EventGrid from "@/components/events/grid"
 import LoadMore from "@/components/events/load-more"
-import { EventEntity, Pagination } from "@/models/graphql"
+import { dataAsArrayOf, getPagination } from "@/libs/apollo-client"
+import { EventEntity } from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -10,10 +11,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Events() {
-  const { data } = await getEvents(1, 18)
-
-  const events = data?.events?.data as EventEntity[]
-  const pagination = data?.events?.meta.pagination as Pagination
+  const response = await getEvents(1, 18)
+  const events = dataAsArrayOf<EventEntity>(response.events)
+  const pagination = getPagination(response.events)
 
   return (
     <>

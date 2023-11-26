@@ -1,3 +1,4 @@
+import { Pagination } from "@/models/graphql"
 import {
   ApolloClient,
   ApolloLink,
@@ -10,7 +11,7 @@ import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rs
 
 const STRAPI_GRAPHQL_ENDPOINT = process.env.STRAPI_API_URL + "/graphql"
 
-export const { getClient } = registerApolloClient(() => {
+const { getClient } = registerApolloClient(() => {
   const httpLink = new HttpLink({
     uri: STRAPI_GRAPHQL_ENDPOINT,
     // you can disable result caching here if you want to
@@ -82,4 +83,8 @@ export function dataAs<TEntity>(result: any) {
   if (!entity) throw new Error("Query response does not return expected entity")
 
   return entity
+}
+
+export function getPagination(result: any) {
+  return result.meta.pagination as Pagination
 }
