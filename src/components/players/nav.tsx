@@ -1,4 +1,4 @@
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   Player,
   PlayerEntity,
@@ -12,9 +12,8 @@ export default async function PlayersNavigator({
 }: {
   current: string
 }) {
-  const { data } = await getClient().query({ query: PlayerNavDocument })
-
-  const players = data.players?.data as PlayerEntity[]
+  const response = await query({ query: PlayerNavDocument })
+  const players = dataAsArrayOf<PlayerEntity>(response.players)
   const index = players.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? players[index - 1] : null
   const next = index < players.length - 1 ? players[index + 1] : null

@@ -1,19 +1,18 @@
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { deduplicate } from "@/libs/arrays"
 import { EventEntity, EventNavDocument } from "@/models/graphql"
 import Link from "next/link"
 import Country from "../layout/country"
 
 export default async function Countries() {
-  const { data } = await getClient().query({ query: EventNavDocument })
-  const events = data.events?.data as EventEntity[]
+  const response = await query({ query: EventNavDocument })
+  const events = dataAsArrayOf<EventEntity>(response.events)
 
-  const countryCodes = [
-    ...new Set(
-      events
-        .map((c) => c.attributes?.location?.data?.attributes?.country!)
-        .filter((c) => c !== ""),
-    ),
-  ]
+  const countryCodes = deduplicate(
+    events
+      .map((c) => c.attributes?.location?.data?.attributes?.country!)
+      .filter((c) => c !== ""),
+  )
 
   return (
     <div className="blog-details-desc pb-70">

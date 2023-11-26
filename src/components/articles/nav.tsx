@@ -1,4 +1,4 @@
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   Article,
   ArticleEntity,
@@ -12,9 +12,8 @@ export default async function ArticlesNavigator({
 }: {
   current: string
 }) {
-  const { data } = await getClient().query({ query: ArticleNavDocument })
-
-  const articles = data.articles?.data as ArticleEntity[]
+  const response = await query({ query: ArticleNavDocument })
+  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
   const index = articles.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? articles[index - 1] : null
   const next = index < articles.length - 1 ? articles[index + 1] : null

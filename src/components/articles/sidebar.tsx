@@ -1,20 +1,20 @@
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { ArticleSidebarDocument } from "../../models/graphql"
+import { ArticleEntity, ArticleSidebarDocument } from "../../models/graphql"
 
 const ArticleSidebar = async () => {
-  const { data } = await getClient().query({ query: ArticleSidebarDocument })
-  const latest = data.latest?.data
-  const categories = data.categories?.data!
+  const response = await query({ query: ArticleSidebarDocument })
+  const latest = dataAsArrayOf<ArticleEntity>(response.latest)
+  const categories = dataAsArrayOf<ArticleEntity>(response.categories)
   const categoryCount = categories.reduce((groups, item) => {
     //@ts-ignore
     groups[item.attributes.category] = groups[item.attributes.category] + 1 || 1
     return groups
   }, {})
 
-  const tags = data.tags?.data!
+  const tags = dataAsArrayOf<ArticleEntity>(response.tags)
   const tagsCount = tags.reduce((groups, item) => {
     const tags = item.attributes?.tags?.data
     tags?.map((tag) => {

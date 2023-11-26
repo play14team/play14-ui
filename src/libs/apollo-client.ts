@@ -3,6 +3,7 @@ import {
   ApolloLink,
   HttpLink,
   InMemoryCache,
+  TypedDocumentNode,
 } from "@apollo/client"
 import { setContext } from "@apollo/client/link/context"
 import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc"
@@ -39,4 +40,46 @@ function getAuthenticatedLink(link: ApolloLink) {
   })
 
   return authLink.concat(link)
+}
+
+interface QueryParameters<TQuery, TQueryVariables> {
+  query: TypedDocumentNode<TQuery, TQueryVariables>
+  variables?: TQueryVariables | undefined
+}
+
+export async function query<TQuery, TQueryVariables>({
+  query,
+  variables,
+}: QueryParameters<TQuery, TQueryVariables>) {
+  const { data } = await getClient().query({
+    query,
+    variables: variables ?? {},
+  })
+
+  return data as TQuery
+}
+
+export function attributesAs<TEntity>(result: any) {
+  const attributes = result?.data?.attributes
+  if (!attributes)
+    throw new Error("Query response does not return expected attributes")
+
+  const entity = attributes as TEntity
+  if (!entity) throw new Error("Query response does not return expected entity")
+
+  return entity
+}
+
+export function dataAsArrayOf<TEntity>(result: any) {
+  return dataAs<TEntity[]>(result)
+}
+
+export function dataAs<TEntity>(result: any) {
+  const data = result?.data
+  if (!data) throw new Error("Query response does not return expected data")
+
+  const entity = data as TEntity
+  if (!entity) throw new Error("Query response does not return expected entity")
+
+  return entity
 }

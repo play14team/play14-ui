@@ -1,4 +1,4 @@
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   Event,
   EventEntity,
@@ -12,9 +12,8 @@ export default async function EventsNavigator({
 }: {
   current: string
 }) {
-  const { data } = await getClient().query({ query: EventNavDocument })
-
-  const events = data.events?.data as EventEntity[]
+  const response = await query({ query: EventNavDocument })
+  const events = dataAsArrayOf<EventEntity>(response.events)
   const index = events.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? events[index - 1] : null
   const next = index < events.length - 1 ? events[index + 1] : null

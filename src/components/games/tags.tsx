@@ -1,18 +1,16 @@
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { deduplicate } from "@/libs/arrays"
 import { GameEntity, GameNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
 export default async function Tags() {
-  const { data } = await getClient().query({ query: GameNavDocument })
-  const games = data.games?.data as GameEntity[]
-
-  const tags = [
-    ...new Set(
-      games.flatMap(
-        (g) => g.attributes?.tags?.map((t) => t?.value.toLowerCase()),
-      ),
+  const response = await query({ query: GameNavDocument })
+  const games = dataAsArrayOf<GameEntity>(response.games)
+  const tags = deduplicate(
+    games.flatMap(
+      (g) => g.attributes?.tags?.map((t) => t?.value.toLowerCase()),
     ),
-  ]
+  )
 
   return (
     <div className="blog-details-desc pb-70">

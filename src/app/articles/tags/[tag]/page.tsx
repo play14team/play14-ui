@@ -1,5 +1,5 @@
 import Filters from "@/components/articles/filters"
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import ArticleGrid from "../../../../components/articles/grid"
 import { ArticleEntity, ArticlesDocument } from "../../../../models/graphql"
 
@@ -8,12 +8,12 @@ export default async function ArticleTag({
 }: {
   params: { tag: string }
 }) {
-  const { data } = await getClient().query({
+  const response = await query({
     query: ArticlesDocument,
     variables: { page: 1, pageSize: 1000, tag: params.tag },
   })
 
-  const articles = data?.articles?.data as ArticleEntity[]
+  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
 
   return (
     <>
@@ -22,7 +22,9 @@ export default async function ArticleTag({
           name={`Found ${articles.length} articles with tag "${params.tag}"`}
         />
       </div>
-      <div className="pt-70">{data && <ArticleGrid articles={articles} />}</div>
+      <div className="pt-70">
+        <ArticleGrid articles={articles} />
+      </div>
     </>
   )
 }

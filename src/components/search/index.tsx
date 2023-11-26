@@ -2,7 +2,7 @@ import ArticleGrid from "@/components/articles/grid"
 import EventGrid from "@/components/events/grid"
 import GameGrid from "@/components/games/grid"
 import PlayerGrid from "@/components/players/grid"
-import { getClient } from "@/libs/apollo-client"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   ArticleEntity,
   EventEntity,
@@ -14,15 +14,15 @@ import {
 export default async function Search({ input }: { input: string | undefined }) {
   if (!input) return
 
-  const { data } = await getClient().query({
+  const response = await query({
     query: SearchDocument,
     variables: { input },
   })
 
-  const events = data?.search?.events?.data as EventEntity[]
-  const players = data?.search?.players?.data as PlayerEntity[]
-  const games = data?.search?.games?.data as GameEntity[]
-  const articles = data?.search?.articles?.data as ArticleEntity[]
+  const events = dataAsArrayOf<EventEntity>(response.search?.events)
+  const players = dataAsArrayOf<PlayerEntity>(response.search?.players)
+  const games = dataAsArrayOf<GameEntity>(response.search?.games)
+  const articles = dataAsArrayOf<ArticleEntity>(response.search?.articles)
 
   return (
     <div className="pt-70">

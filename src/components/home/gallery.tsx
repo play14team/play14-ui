@@ -1,10 +1,11 @@
-import { getClient } from "@/libs/apollo-client"
-import { HomeDocument } from "../../models/graphql"
+import { attributesAs, query } from "@/libs/apollo-client"
+import { Home, HomeDocument } from "../../models/graphql"
 import Gallery from "../layout/gallery"
 
 const HomeGallery = async () => {
-  const { data } = await getClient().query({ query: HomeDocument })
-  const images = data?.home?.data?.attributes?.images.data
+  const response = await query({ query: HomeDocument })
+  const home = attributesAs<Home>(response.home)
+  const images = home.images.data
 
   return (
     <div className="pt-100">

@@ -2,8 +2,8 @@ import HistoryItem from "@/components/about/historyitem"
 import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
-import { getClient } from "@/libs/apollo-client"
-import { PlayerEntity, StoryDocument } from "@/models/graphql"
+import { attributesAs, dataAsArrayOf, query } from "@/libs/apollo-client"
+import { History, PlayerEntity, StoryDocument } from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -11,14 +11,14 @@ export const metadata: Metadata = {
 }
 
 export default async function Story() {
-  const { data } = await getClient().query({ query: StoryDocument })
-  const founders = data?.players?.data as PlayerEntity[]
-  const history = data?.history?.data?.attributes
+  const response = await query({ query: StoryDocument })
+  const founders = dataAsArrayOf<PlayerEntity>(response?.players)
+  const history = attributesAs<History>(response?.history)
 
   return (
     <Page name="Our story">
-      <section className="history-area ptb-100 bg-fafafb">
-        <div className="container">
+      <section className="history-area pt-70 pb-100">
+        <div className="container  bg-fafafb pt-5 pb-70">
           <div className="section-title">
             {history && <h3>{history.founders || "Founders"}</h3>}
           </div>

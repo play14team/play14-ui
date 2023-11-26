@@ -5,6 +5,7 @@ export default function Filters({ name }: { name: string }) {
   return (
     <div className="blog-details-desc pb-5">
       <Collapsible name={name}>
+        <h5 className="pt-5">Filter by</h5>
         <div className="article-footer">
           <div className="article-tags">
             <span>

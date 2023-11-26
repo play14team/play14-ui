@@ -1,4 +1,4 @@
-import { concatArrays } from "@/libs/concat-arrays"
+import { deduplicate } from "@/libs/arrays"
 import countries from "i18n-iso-countries"
 import Image from "next/image"
 import Link from "next/link"
@@ -27,7 +27,7 @@ export default function EventDetails({ event }: { event: Event }) {
   const players = event.players?.data as PlayerEntity[]
   const hosts = event.hosts?.data as PlayerEntity[]
   const mentors = event.mentors?.data as PlayerEntity[]
-  const participants = concatArrays([players, hosts, mentors])
+  const participants = deduplicate(players, hosts, mentors)
 
   return (
     <>

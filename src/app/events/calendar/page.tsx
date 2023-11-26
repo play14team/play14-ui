@@ -1,7 +1,7 @@
 import EventCalendar, { CalendarEvent } from "@/components/events/calendar"
 import Page from "@/components/layout/page"
-import { getClient } from "@/libs/apollo-client"
-import { EventCalendarDocument } from "@/models/graphql"
+import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { EventCalendarDocument, EventEntity } from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
 }
 
 export default async function Calendar() {
-  const { data } = await getClient().query({ query: EventCalendarDocument })
-  const events = data?.events?.data.map((e) => {
+  const response = await query({ query: EventCalendarDocument })
+  const events = dataAsArrayOf<EventEntity>(response.events).map((e) => {
     const event = e.attributes
     if (!event) return {}
     return {
