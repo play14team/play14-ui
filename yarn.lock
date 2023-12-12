@@ -1955,9 +1955,6 @@ brace-expansion@^1.1.7:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.11.tgz#3c7fcbf529d87226f3d2f52b966ff5271eb441dd"
   integrity sha512-iCuPHDFgrHX7H2vEI/5xpz07zSHB00TpugqhmYtVmMO6518mCuRMoOYFldEBl0g187ufozdaHgWKcYFb61qGiA==
-  dependencies:
-    balanced-match "^1.0.0"
-    concat-map "0.0.1"
 
 braces@^3.0.2, braces@~3.0.2:
   version "3.0.2"
@@ -4688,10 +4685,10 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-safe-action@^5.0.3:
-  version "5.0.3"
-  resolved "https://registry.yarnpkg.com/next-safe-action/-/next-safe-action-5.0.3.tgz#622ccb0ec00ec561108bbefa01419e778e2fd740"
-  integrity sha512-97Tvu4BDA2jCSexDSgUW2H/zXizDKnudukTbqXkGXDHhpe6P3rkaUpHSBjkHSxID8ejKolPcnHBy8N+dJ8gI8g==
+next-safe-action@^5.1.2:
+  version "5.2.1"
+  resolved "https://registry.yarnpkg.com/next-safe-action/-/next-safe-action-5.2.1.tgz#823b3e1feebd2b232e7199e4ea6327ce6373a415"
+  integrity sha512-ta2+e3ZOhQ4BocMsy7J1PuPOyfa3eCtIF0PzcaYMHwShHR+e3VQ3KwilYAJPK814BO/tg0dFAxk09VucGiIzHQ==
 
 next@14.0.3:
   version "14.0.3"
