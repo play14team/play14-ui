@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.8.7",
-    "@apollo/experimental-nextjs-app-support": "^0.5.1",
+    "@apollo/experimental-nextjs-app-support": "^0.5.2",
     "@mapbox/mapbox-gl-geocoder": "^5.0.1",
     "clsx": "^2.0.0",
     "graphql": "^16.8.1",
