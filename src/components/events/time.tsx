@@ -1,5 +1,4 @@
-import moment from "moment"
-import "moment-timezone"
+import moment from "moment-timezone"
 
 const EventTime = ({ time, timezone }: { time: Date; timezone: string }) => {
   const mommentInTime = moment(time)

@@ -1,6 +1,5 @@
 import { Maybe } from "@/models/graphql"
-import moment from "moment"
-import "moment-timezone"
+import moment from "moment-timezone"
 
 interface EventDatesProps {
   start: Date
