@@ -8,6 +8,7 @@ import {
   EventSlugsDocument,
   EventsDocument,
 } from "@/models/graphql"
+import moment from "moment"
 
 export async function getEvents(page: number, pageSize: number) {
   return await query({
@@ -27,7 +28,9 @@ export async function getEvent({ params }: SlugParamsProps) {
 }
 
 export async function getEventSlugs() {
+  const today = moment().format()
   return await query({
     query: EventSlugsDocument,
+    variables: { today: today },
   })
 }
