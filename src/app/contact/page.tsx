@@ -2,9 +2,6 @@ import Page from "@/components/layout/page"
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import emailImage from "public/email.png"
-import mailChimpImage from "public/mailchimp.png"
-import slackImage from "public/slack-dark.png"
 
 export const metadata: Metadata = {
   title: "Contact",
@@ -53,7 +50,7 @@ export default function Contact() {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="http://bit.ly/play14slack" target="_blank">
               <Image
-                src={slackImage}
+                src="slack-dark.png"
                 alt="Slack"
                 width={400}
                 height={400}
@@ -69,7 +66,7 @@ export default function Contact() {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="http://eepurl.com/bsyYXz" target="_blank">
               <Image
-                src={mailChimpImage}
+                src="mailchimp.png"
                 alt="Mailchimp"
                 width={400}
                 height={400}
@@ -85,7 +82,7 @@ export default function Contact() {
           <div className="col-lg-4 col-md-12 pt-5">
             <Link href="mailto:team@play14.org" target="_blank">
               <Image
-                src={emailImage}
+                src="email.png"
                 alt="Email"
                 width={400}
                 height={400}

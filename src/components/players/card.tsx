@@ -1,6 +1,5 @@
 import Image from "next/image"
 import Link from "next/link"
-import defaultPlayer from "public/default-player.png"
 import { Player, UploadFile } from "../../models/graphql"
 import SocialNetworks from "../layout/socialnetworks"
 
@@ -40,7 +39,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
           {!avatar && (
             <Link href={url}>
               <Image
-                src={defaultPlayer}
+                src="/default-player.png"
                 alt="default player image"
                 placeholder="blur"
                 className="shadow"

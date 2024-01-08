@@ -5,9 +5,6 @@ import { attributesAs, query } from "@/libs/apollo-client"
 import { Enum_Expectation_Type, Format, FormatDocument } from "@/models/graphql"
 import { Metadata } from "next"
 import Image from "next/image"
-import bumblebeeImage from "public/openspace/bumblebee.png"
-import butterflyImage from "public/openspace/butterfly.png"
-import lawOfTwoFeetImage from "public/openspace/two-feet.png"
 
 export const metadata: Metadata = {
   title: "About | Our format",
@@ -30,9 +27,11 @@ export default async function Format() {
             </div>
             <div className="col-lg-6 col-md-12 pt-5">
               <Image
-                src={lawOfTwoFeetImage}
+                src="/openspace/two-feet.png"
                 alt="law of two feet"
                 className="shadow"
+                width={925}
+                height={577}
                 style={{
                   borderRadius: "10px",
                 }}
@@ -47,9 +46,11 @@ export default async function Format() {
           <div className="row">
             <div className="col-lg-4 col-md-12 pt-5">
               <Image
-                src={bumblebeeImage}
+                src="/openspace/bumblebee.png"
                 alt="Bumblebee"
                 className="shadow"
+                width={603}
+                height={614}
                 style={{
                   borderRadius: "10px",
                 }}
@@ -61,9 +62,11 @@ export default async function Format() {
             <div className="col-lg-4 col-md-12 pt-5">
               <HtmlContent>{butterfly!}</HtmlContent>
               <Image
-                src={butterflyImage}
+                src="/openspace/butterfly.png"
                 alt="Butterfly"
                 className="shadow"
+                width={1083}
+                height={1033}
                 style={{
                   borderRadius: "10px",
                 }}

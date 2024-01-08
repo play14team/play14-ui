@@ -1,7 +1,6 @@
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import defaultPlayer from "public/default-player.png"
 import { UploadFile } from "../../models/graphql"
 
 export interface NavLink {
@@ -89,7 +88,7 @@ const DetailsNavigator = (props: {
 function getImage(image?: UploadFile) {
   return (
     <Image
-      src={image ? image.url : defaultPlayer}
+      src={image ? image.url : "default-player.png"}
       alt={image ? image.name : "default player image"}
       sizes="100vw"
       fill

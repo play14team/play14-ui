@@ -1,5 +1,4 @@
 import Image from "next/image"
-import defaultPlayer from "public/default-player.png"
 import { Player, UploadFile } from "../../models/graphql"
 import SocialNetworks from "../layout/socialnetworks"
 import Map from "../map"
@@ -18,7 +17,7 @@ const PlayerDetails = ({ player }: { player: Player }) => {
           <div className="col-lg-4 col-md-12">
             <div className="single-scientist-box">
               <Image
-                src={avatar ? avatar.url : defaultPlayer}
+                src={avatar ? avatar.url : "default-player.png"}
                 alt={avatar ? avatar.name : "default player image"}
                 width={350}
                 height={350}

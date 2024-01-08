@@ -1,7 +1,6 @@
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import notound from "public/play14_broken.png"
 
 export const metadata: Metadata = {
   title: "Not found",
@@ -12,7 +11,7 @@ const NotFoundPage = () => (
     <h1>404: Not Found</h1>
     <p>You just hit a page that doesn&#39;t exist...</p>
     <Image
-      src={notound}
+      src="play14_broken.png"
       alt="#play14 404"
       style={{ marginBottom: `1.45rem` }}
       unoptimized

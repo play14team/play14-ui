@@ -2,10 +2,8 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import logo from "public/logo/play14_white_bg_transparent.svg"
 import React, { useState } from "react"
 import SearchBox from "./searchbox"
-
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(true)
 
@@ -43,7 +41,13 @@ const Navbar = () => {
                 onClick={() => setCollapsed(true)}
                 className="navbar-brand"
               >
-                <Image src={logo} alt="logo" height={53} unoptimized />
+                <Image
+                  src="/logo/play14_white_bg_transparent.svg"
+                  alt="logo"
+                  height={60}
+                  width={180}
+                  unoptimized
+                />
               </Link>
 
               <button

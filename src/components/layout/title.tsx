@@ -1,12 +1,11 @@
 import Image from "next/image"
-import logo from "public/logo/play14_1500x500_transparent.png"
 
 const Title = () => {
   return (
     <div>
       <div className="d-flex justify-content-center pt-5">
         <Image
-          src={logo}
+          src="logo/play14_1500x500_transparent.png"
           alt="#play14 logo"
           width={600}
           height={333}

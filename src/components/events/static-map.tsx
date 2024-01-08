@@ -1,10 +1,16 @@
 import Image from "next/image"
-import movement from "public/play14-movement.png"
 
 const StaticEventMap = () => {
   return (
     <div>
-      <Image src={movement} alt="#play14 movement" priority unoptimized />
+      <Image
+        src="play14-movement.png"
+        alt="#play14 movement"
+        width={1221}
+        height={765}
+        priority
+        unoptimized
+      />
     </div>
   )
 }

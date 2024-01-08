@@ -4,8 +4,6 @@ import Page from "@/components/layout/page"
 import { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
-import codeOfConductImage from "public/values/CoC.jpg"
-import manifestoImage from "public/values/manifesto.jpg"
 
 export const metadata: Metadata = {
   title: "About | Our values",
@@ -29,9 +27,11 @@ export default async function Values() {
         </div>
         <div className="centered pt-5 pb-100">
           <Image
-            src={manifestoImage}
+            src="/values/manifesto.jpg"
             alt="manifesto"
             className="shadow"
+            width={600}
+            height={800}
             style={{
               borderRadius: "10px",
             }}
@@ -43,9 +43,11 @@ export default async function Values() {
         </div>
         <div className="centered pt-5 pb-100">
           <Image
-            src={codeOfConductImage}
+            src="/values/CoC.jpg"
             alt="code of conduct"
             className="shadow"
+            width={4032}
+            height={3024}
             style={{
               borderRadius: "10px",
             }}

@@ -195,9 +195,9 @@ export default function Home() {
 
       <section id="event map" className="pb-5 pt-70">
         <StaticEventMap />
-        <p>
-          More on the <Link href="/events/map">live map</Link>
-        </p>
+        <h5 className="centered pt-5">
+          <Link href="/events/map">Go to the live map</Link>
+        </h5>
       </section>
 
       <section id="benefits" className="pt-70">
