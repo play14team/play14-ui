@@ -1,4 +1,4 @@
-import countries from "i18n-iso-countries"
+import clm from "country-locale-map"
 import ReactCountryFlag from "react-country-flag"
 
 interface CountryProps {
@@ -7,7 +7,7 @@ interface CountryProps {
 }
 
 export default function Country({ countryCode, flagPosition }: CountryProps) {
-  const countryName = countries.getName(countryCode, "en")
+  const countryName = clm.getCountryNameByAlpha2(countryCode)
   return (
     <>
       {flagPosition == "after" && countryName}

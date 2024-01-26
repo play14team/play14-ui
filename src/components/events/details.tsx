@@ -1,5 +1,5 @@
 import { deduplicate } from "@/libs/arrays"
-import countries from "i18n-iso-countries"
+import clm from "country-locale-map"
 import Image from "next/image"
 import Link from "next/link"
 import ReactCountryFlag from "react-country-flag"
@@ -23,7 +23,7 @@ export default function EventDetails({ event }: { event: Event }) {
   const defaultImage = event.defaultImage.data?.attributes as UploadFile
   const eventLocation = event.location?.data?.attributes as EventLocation
   const venue = event.venue?.data?.attributes as Venue
-  const country = countries.getName(eventLocation.country!, "en")
+  const country = clm.getCountryNameByAlpha2(eventLocation.country!)
   const players = event.players?.data as PlayerEntity[]
   const hosts = event.hosts?.data as PlayerEntity[]
   const mentors = event.mentors?.data as PlayerEntity[]
