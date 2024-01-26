@@ -21,8 +21,9 @@ export default function LoadMore({ pagination }: { pagination: Pagination }) {
 
   function loadMore() {
     getEvents(pagination.page + 1, pagination.pageSize).then((res) => {
-      const Events = res.events?.data as EventEntity[]
-      setEvents(Events)
+      const events = res.events?.data as EventEntity[]
+      console.log(events)
+      setEvents(events)
     })
   }
 

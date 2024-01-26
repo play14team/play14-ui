@@ -1,5 +1,5 @@
 import defaultEvent from "@/styles/images/events/event1.jpg"
-import countries from "i18n-iso-countries"
+import clm from "country-locale-map"
 import Image from "next/image"
 import Link from "next/link"
 import ReactCountryFlag from "react-country-flag"
@@ -11,7 +11,7 @@ const EventCard = ({ event }: { event: Event }) => {
   const url = `/events/${encodeURIComponent(event.slug)}`
   const image = event.defaultImage.data?.attributes!
   const countryCode = event.location?.data?.attributes?.country!
-  const countryName = countries.getName(countryCode, "en")
+  const countryName = clm.getCountryNameByAlpha2(countryCode)
 
   return (
     <article
@@ -77,17 +77,28 @@ const EventCard = ({ event }: { event: Event }) => {
           </h3>
           <ul className="d-flex list-unstyled justify-content-between">
             <li>
-              <span className="location">
-                <i className="bx bx-map"></i>{" "}
-                {event.location?.data?.attributes?.name}{" "}
-                <ReactCountryFlag
-                  countryCode={countryCode}
-                  svg
-                  title={countryName}
-                  aria-label={countryName}
-                  style={{ paddingBottom: "2px" }}
-                />
-              </span>
+              {countryName && (
+                <span className="location" style={{ padding: "0px" }}>
+                  <ReactCountryFlag
+                    countryCode={countryCode}
+                    svg
+                    title={countryName}
+                    aria-label={countryName}
+                    style={{
+                      marginRight: "7px",
+                      marginBottom: "4px",
+                      width: "25px",
+                    }}
+                  />
+                  {countryName}
+                </span>
+              )}
+              {!countryName && (
+                <span className="location">
+                  <i className="bx bx-world"></i>{" "}
+                  {event.location?.data?.attributes?.name}
+                </span>
+              )}
             </li>
             <li>
               <span className="location">

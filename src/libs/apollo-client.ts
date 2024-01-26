@@ -1,3 +1,5 @@
+import "server-only"
+
 import { Pagination } from "@/models/graphql"
 import {
   ApolloClient,
