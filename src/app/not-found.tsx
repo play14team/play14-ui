@@ -14,7 +14,6 @@ const NotFoundPage = () => (
       src="play14_broken.png"
       alt="#play14 404"
       style={{ marginBottom: `1.45rem` }}
-      unoptimized
     />
     <p>
       Please, stop playing with our URLs and{" "}

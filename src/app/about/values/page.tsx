@@ -35,7 +35,6 @@ export default async function Values() {
             style={{
               borderRadius: "10px",
             }}
-            unoptimized
           />
         </div>
         <div className="pt-5">
@@ -51,7 +50,6 @@ export default async function Values() {
             style={{
               borderRadius: "10px",
             }}
-            unoptimized
           />
         </div>
         <div className="pb-100">

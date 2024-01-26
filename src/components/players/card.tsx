@@ -32,7 +32,6 @@ const PlayerCard = ({ player }: { player: Player }) => {
                   borderRadius: "15px",
                   maxHeight: "300px",
                 }}
-                unoptimized
               />
             </Link>
           )}
@@ -48,7 +47,6 @@ const PlayerCard = ({ player }: { player: Player }) => {
                   border: "1px solid #ddd",
                   borderRadius: "15px",
                 }}
-                unoptimized
               />
             </Link>
           )}

@@ -9,7 +9,6 @@ const Title = () => {
           alt="#play14 logo"
           width={600}
           height={333}
-          unoptimized
         />
       </div>
       <div className="d-flex justify-content-center pt-5">

@@ -93,7 +93,6 @@ function getImage(image?: UploadFile) {
       sizes="100vw"
       fill
       style={{ objectFit: "cover" }}
-      unoptimized
     />
   )
 }

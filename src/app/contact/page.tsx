@@ -58,7 +58,6 @@ export default function Contact() {
                 style={{
                   borderRadius: "70px",
                 }}
-                unoptimized
               />
               <p>Join us on Slack</p>
             </Link>
@@ -74,7 +73,6 @@ export default function Contact() {
                 style={{
                   borderRadius: "70px",
                 }}
-                unoptimized
               />
               <p>Register to our newsletter</p>
             </Link>
@@ -90,7 +88,6 @@ export default function Contact() {
                 style={{
                   borderRadius: "70px",
                 }}
-                unoptimized
               />
               <p>Sent us a message</p>
             </Link>

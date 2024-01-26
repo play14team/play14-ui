@@ -24,7 +24,6 @@ const PlayerDetails = ({ player }: { player: Player }) => {
                 priority
                 className="shadow"
                 style={{ borderRadius: "10px" }}
-                unoptimized
               />
               <div className="content">
                 {player.socialNetworks && (

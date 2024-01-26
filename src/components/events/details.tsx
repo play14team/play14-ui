@@ -68,7 +68,6 @@ export default function EventDetails({ event }: { event: Event }) {
                   objectFit: "cover",
                 }}
                 priority
-                unoptimized
               />
             )}
           </div>

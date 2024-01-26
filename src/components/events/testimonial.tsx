@@ -30,7 +30,6 @@ const TestimonialItem = ({ testimonial }: { testimonial: Testimonial }) => {
                 alt={avatar.name}
                 width={200}
                 height={200}
-                unoptimized
               />
             )}
             {!avatar && (
@@ -39,7 +38,6 @@ const TestimonialItem = ({ testimonial }: { testimonial: Testimonial }) => {
                 alt="anonymous"
                 width={200}
                 height={200}
-                unoptimized
               />
             )}
             <div className="title">

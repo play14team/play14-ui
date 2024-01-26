@@ -35,7 +35,6 @@ export default async function Format() {
                 style={{
                   borderRadius: "10px",
                 }}
-                unoptimized
               />
             </div>
           </div>
@@ -54,7 +53,6 @@ export default async function Format() {
                 style={{
                   borderRadius: "10px",
                 }}
-                unoptimized
               />
               <HtmlContent>{bumblebee!}</HtmlContent>
             </div>
@@ -70,7 +68,6 @@ export default async function Format() {
                 style={{
                   borderRadius: "10px",
                 }}
-                unoptimized
               />
             </div>
           </div>

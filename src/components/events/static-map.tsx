@@ -9,7 +9,6 @@ const StaticEventMap = () => {
         width={1221}
         height={765}
         priority
-        unoptimized
       />
     </div>
   )

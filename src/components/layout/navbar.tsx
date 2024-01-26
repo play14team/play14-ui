@@ -46,7 +46,6 @@ const Navbar = () => {
                   alt="logo"
                   height={60}
                   width={180}
-                  unoptimized
                 />
               </Link>
 

@@ -35,7 +35,6 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                     objectFit: "cover",
                     borderRadius: "10px",
                   }}
-                  unoptimized
                 />
               </div>
 
@@ -96,7 +95,6 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                             alt={author.name}
                             width={200}
                             height={200}
-                            unoptimized
                           />
                           <Link href={`/players/${author.slug}`}>
                             <h4>{author && author.name}</h4>

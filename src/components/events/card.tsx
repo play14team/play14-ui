@@ -43,7 +43,6 @@ const EventCard = ({ event }: { event: Event }) => {
                   maxWidth: "100%",
                   height: "300px",
                 }}
-                unoptimized
               />
             )}
             {!image && (
@@ -57,7 +56,6 @@ const EventCard = ({ event }: { event: Event }) => {
                   maxWidth: "100%",
                   maxHeight: "300px",
                 }}
-                unoptimized
               />
             )}
           </Link>

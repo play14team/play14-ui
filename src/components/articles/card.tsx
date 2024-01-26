@@ -33,7 +33,6 @@ const ArticleCard = ({ article }: { article: Article }) => {
                   width: "450px",
                   height: "450px",
                 }}
-                unoptimized
               />
             )}
             {!image && (
@@ -48,7 +47,6 @@ const ArticleCard = ({ article }: { article: Article }) => {
                   width: "400px",
                   height: "400px",
                 }}
-                unoptimized
               />
             )}
           </Link>
@@ -66,7 +64,6 @@ const ArticleCard = ({ article }: { article: Article }) => {
                     priority
                     className="rounded-circle"
                     alt={author.name}
-                    unoptimized
                   />
                 )}
                 {author && <span>{author.name}</span>}
