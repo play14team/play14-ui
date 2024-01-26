@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   title: "Games",
 }
 
+export const revalidate = 3600
+
 export default async function Games() {
   const response = await getGames(1, 18)
   const games = dataAsArrayOf<GameEntity>(response.games)
