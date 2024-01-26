@@ -19,6 +19,7 @@ export default async function Events() {
     <>
       <div className="centered pt-5 pb-5">
         <Filters name="Events" />
+        <p>Total: {pagination.total}</p>
       </div>
       <EventGrid events={events} />
       <LoadMore pagination={pagination} />

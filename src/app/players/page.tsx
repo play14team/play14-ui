@@ -19,6 +19,7 @@ export default async function Players() {
     <>
       <div className="centered pt-5 pb-5">
         <Filters name="Players" />
+        <p>Total: {pagination.total}</p>
       </div>
       <PlayerGrid players={players} />
       <LoadMore pagination={pagination} />

@@ -19,6 +19,7 @@ export default async function Articles() {
     <>
       <div className="centered pt-5 pb-5">
         <Filters name="Articles" />
+        <p>Total: {pagination.total}</p>
       </div>
       <ArticleGrid articles={articles} />
       <LoadMore pagination={pagination} />
