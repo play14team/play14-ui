@@ -1,5 +1,6 @@
 import Filters from "@/components/events/filters"
 import { getEvents } from "@/components/events/get.action"
+import EventGrid from "@/components/events/grid"
 import LoadMore from "@/components/events/load-more"
 import { dataAsArrayOf, getPagination } from "@/libs/apollo-client"
 import { EventEntity } from "@/models/graphql"
@@ -20,7 +21,7 @@ export default async function Events() {
         <Filters name="Events" />
         <p>Total: {pagination.total}</p>
       </div>
-      {/* <EventGrid events={events} /> */}
+      <EventGrid events={events} />
       <LoadMore pagination={pagination} />
     </>
   )
