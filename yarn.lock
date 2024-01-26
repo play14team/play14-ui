@@ -529,10 +529,10 @@
     "@babel/helper-validator-identifier" "^7.22.20"
     to-fast-properties "^2.0.0"
 
-"@decs/typeschema@^0.12.1":
-  version "0.12.1"
-  resolved "https://registry.yarnpkg.com/@decs/typeschema/-/typeschema-0.12.1.tgz#1f6154b18e2532350e3f1ca89ff0aded46345f7e"
-  integrity sha512-PhoCbaJ6T+9EfvUkemgYVnNfLmLoP2+Aa5yvQ3sIzH4fmIgDEFPGSRPuaTO04c99sqLeKuhHEY+WLzNubGABOA==
+"@decs/typeschema@^0.12.2":
+  version "0.12.2"
+  resolved "https://registry.yarnpkg.com/@decs/typeschema/-/typeschema-0.12.2.tgz#d170bef9ac84a2104bd277f9a2b831fc26c2b76a"
+  integrity sha512-PA8uAH/Xfsa5X2UNNSnb5i6vB8qWZywp4+d2U8kNMCO7qwirYRPbFCHwIfWBJyURh4rULn3Ey+VBADLcK2xxaQ==
 
 "@emnapi/runtime@^0.45.0":
   version "0.45.0"
@@ -1563,10 +1563,10 @@
   dependencies:
     undici-types "~5.26.4"
 
-"@types/node@^20.11.5":
-  version "20.11.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.5.tgz#be10c622ca7fcaa3cf226cf80166abc31389d86e"
-  integrity sha512-g557vgQjUUfN76MZAN/dt1z3dzcUsimuysco0KeluHgrPdJXkP/XdAURgyO2W9fZWHRtRBiVKzKn8vyOAwlG+w==
+"@types/node@^20.11.7":
+  version "20.11.7"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.11.7.tgz#cb49aedd758c978c30806d0c38b520ed2a3df6e0"
+  integrity sha512-GPmeN1C3XAyV5uybAf4cMLWT9fDWcmQhZVtMFu7OR32WjrqGG+Wnk2V1d0bmtUyE/Zy1QJ9BxyiTih9z8Oks8A==
   dependencies:
     undici-types "~5.26.4"
 
@@ -3858,10 +3858,10 @@ human-signals@^5.0.0:
   resolved "https://registry.yarnpkg.com/human-signals/-/human-signals-5.0.0.tgz#42665a284f9ae0dade3ba41ebc37eb4b852f3a28"
   integrity sha512-AXcZb6vzzrFAUE61HnN4mpLqd/cSIwNQjtNWR0euPm6y0iqx3G4gOXaIDdtdDwZmhwe82LA6+zinmW4UBWVePQ==
 
-husky@^8.0.3:
-  version "8.0.3"
-  resolved "https://registry.yarnpkg.com/husky/-/husky-8.0.3.tgz#4936d7212e46d1dea28fef29bb3a108872cd9184"
-  integrity sha512-+dQSyqPh4x1hlO1swXBiNb2HzTDN1I2IGLQx1GrBuiqFJfoMrnZWwVmatvSiO+Iz8fBUnf+lekwNo4c2LlXItg==
+husky@^9.0.6:
+  version "9.0.6"
+  resolved "https://registry.yarnpkg.com/husky/-/husky-9.0.6.tgz#cee0245d60480b12279cf492ec6cfc1aeb7fa759"
+  integrity sha512-EEuw/rfTiMjOfuL7pGO/i9otg1u36TXxqjIA6D9qxVjd/UXoDOsLor/BSFf5hTK50shwzCU3aVVwdXDp/lp7RA==
 
 i18n-iso-countries@^7.8.0:
   version "7.8.0"
@@ -4681,10 +4681,10 @@ map-obj@^4.0.0:
   resolved "https://registry.yarnpkg.com/map-obj/-/map-obj-4.3.0.tgz#9304f906e93faae70880da102a9f1df0ea8bb05a"
   integrity sha512-hdN1wVrZbb29eBGiGjJbeP8JbKjq1urkHJ/LIP/NY48MZ1QVXUsQBV1G1zvYFHn1XE06cwjBsOI2K3Ulnj1YXQ==
 
-mapbox-gl@^3.1.0:
-  version "3.1.0"
-  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-3.1.0.tgz#1c82e8854a3d7ddb7802a6a1a33b67e8c64dd985"
-  integrity sha512-X6gaQ7WCNwMK6MnQn+rlq6ugzRItdE775TSzmyGPy0wN6hs/8PONi/G+hioeGV5ZyQ0a0BmvmF+gCUH0FBvavw==
+mapbox-gl@^3.1.2:
+  version "3.1.2"
+  resolved "https://registry.yarnpkg.com/mapbox-gl/-/mapbox-gl-3.1.2.tgz#4e49681d5b8464978bc6bc0d8dd6ed0cfbc94ecc"
+  integrity sha512-+KoLEqZM8GxO/ViPz9tKgGURteKne+Y0pXiVCNsowymiZFH3FiL6dt9oZE95owMg5XqD3Kygz5mfchR1ZgmWlA==
   dependencies:
     "@mapbox/geojson-rewind" "^0.5.2"
     "@mapbox/jsonlint-lines-primitives" "^2.0.2"
@@ -4899,12 +4899,12 @@ natural-compare@^1.4.0:
   resolved "https://registry.yarnpkg.com/natural-compare/-/natural-compare-1.4.0.tgz#4abebfeed7541f2c27acfb29bdbbd15c8d5ba4f7"
   integrity sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
 
-next-safe-action@^6.0.1:
-  version "6.0.1"
-  resolved "https://registry.yarnpkg.com/next-safe-action/-/next-safe-action-6.0.1.tgz#ed4ee54539475dd99482eefd6c24620bad3ae688"
-  integrity sha512-iXkjorrUrz3sHMo1MVdBx5WzcCGktrBe+XqMfBav++eegXMdOkZB2+LqUTPXmaidv0lo+/fSRLOcNmr/S9IqTw==
+next-safe-action@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/next-safe-action/-/next-safe-action-6.0.2.tgz#4b39973223cfaccf57449a39ea860267898f6ab3"
+  integrity sha512-czJrcw4Ov6obePv/AwUki+Z90xxFH6Gx9V5cBN/TU/cuEggxj151kTggo0h1fAiYqZEOxw5PRbDvutvm9/exaw==
   dependencies:
-    "@decs/typeschema" "^0.12.1"
+    "@decs/typeschema" "^0.12.2"
   optionalDependencies:
     zod "^3.22.4"
 
