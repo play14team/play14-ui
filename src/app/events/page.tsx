@@ -10,6 +10,8 @@ export const metadata: Metadata = {
   title: "Events",
 }
 
+export const revalidate = 60
+
 export default async function Events() {
   const response = await getEvents(1, 18)
   const events = dataAsArrayOf<EventEntity>(response.events)
