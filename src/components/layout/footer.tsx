@@ -31,7 +31,7 @@ const Footer = () => {
             <div className="single-footer-widget">
               <Link href="/" className="logo">
                 <Image
-                  src="logo/play14_600x200_transparent.png"
+                  src="/logo/play14_600x200_transparent.png"
                   alt="logo"
                   width={600}
                   height={200}
