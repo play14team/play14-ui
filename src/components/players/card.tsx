@@ -41,8 +41,9 @@ const PlayerCard = ({ player }: { player: Player }) => {
               <Image
                 src="/default-player.png"
                 alt="default player image"
-                placeholder="blur"
                 className="shadow"
+                width={500}
+                height={500}
                 style={{
                   objectFit: "cover",
                   border: "1px solid #ddd",

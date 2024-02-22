@@ -16,16 +16,30 @@ const PlayerDetails = ({ player }: { player: Player }) => {
         <div className="row">
           <div className="col-lg-4 col-md-12">
             <div className="single-scientist-box">
-              <Image
-                src={avatar ? avatar.url : "default-player.png"}
-                alt={avatar ? avatar.name : "default player image"}
-                width={350}
-                height={350}
-                priority
-                className="shadow"
-                style={{ borderRadius: "10px" }}
-                unoptimized
-              />
+              {avatar && (
+                <Image
+                  src={avatar.url}
+                  alt={avatar.name}
+                  width={350}
+                  height={350}
+                  priority
+                  className="shadow"
+                  style={{ borderRadius: "10px" }}
+                  unoptimized
+                />
+              )}
+              {!avatar && (
+                <Image
+                  src={"/default-player.png"}
+                  alt={"default player image"}
+                  width={350}
+                  height={350}
+                  priority
+                  className="shadow"
+                  style={{ borderRadius: "10px" }}
+                  unoptimized
+                />
+              )}
               <div className="content">
                 {player.socialNetworks && (
                   <SocialNetworks socialNetworks={player.socialNetworks} />

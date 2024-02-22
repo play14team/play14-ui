@@ -8,6 +8,8 @@ import Title from "@/components/layout/title"
 import { Enum_Expectation_Type } from "@/models/graphql"
 import Link from "next/link"
 
+export const revalidate = 3600
+
 export default function Home() {
   return (
     <>

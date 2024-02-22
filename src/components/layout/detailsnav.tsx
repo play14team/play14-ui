@@ -86,16 +86,29 @@ const DetailsNavigator = (props: {
 }
 
 function getImage(image?: UploadFile) {
-  return (
-    <Image
-      src={image ? image.url : "default-player.png"}
-      alt={image ? image.name : "default player image"}
-      sizes="100vw"
-      fill
-      style={{ objectFit: "cover" }}
-      unoptimized
-    />
-  )
+  if (image)
+    return (
+      <Image
+        src={image.url}
+        alt={image.name}
+        sizes="100vw"
+        fill
+        style={{ objectFit: "cover" }}
+        unoptimized
+      />
+    )
+  else
+    return (
+      <Image
+        src={"/default-player.png"}
+        alt={"default player image"}
+        sizes="100vw"
+        width={500}
+        height={500}
+        style={{ objectFit: "cover" }}
+        unoptimized
+      />
+    )
 }
 
 export default DetailsNavigator
