@@ -47,6 +47,10 @@ const Navbar = () => {
                   height={60}
                   width={180}
                   unoptimized
+                  priority
+                  style={{
+                    height: "auto",
+                  }}
                 />
               </Link>
 
