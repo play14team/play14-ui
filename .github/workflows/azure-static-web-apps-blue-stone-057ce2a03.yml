@@ -47,7 +47,7 @@ jobs:
           NODE_VERSION: 18
           STRAPI_API_URL: https://community.play14.org
           STRAPI_API_SECRET: ${{ secrets.STRAPI_API_SECRET }}
-          NEXT_SHARP_PATH: ${{ github.workspace }}/node_modules/sharp
+          NEXT_SHARP_PATH: node_modules/sharp
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
