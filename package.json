@@ -19,7 +19,7 @@
     "@apollo/experimental-nextjs-app-support": "^0.8.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
     "clsx": "^2.1.0",
-    "country-locale-map": "^1.9.0",
+    "country-locale-map": "^1.9.2",
     "graphql": "^16.8.1",
     "html-react-parser": "^5.1.7",
     "ics": "^3.7.2",
