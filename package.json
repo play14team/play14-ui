@@ -31,7 +31,7 @@
     "next-safe-action": "^6.1.0",
     "react": "^18",
     "react-audio-player": "^0.17.0",
-    "react-big-calendar": "^1.10.0",
+    "react-big-calendar": "^1.11.0",
     "react-collapsed": "^4.1.2",
     "react-country-flag": "^3.1.0",
     "react-dom": "^18",
