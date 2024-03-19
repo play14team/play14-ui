@@ -21,7 +21,7 @@
     "clsx": "^2.1.0",
     "country-locale-map": "^1.9.0",
     "graphql": "^16.8.1",
-    "html-react-parser": "^5.1.7",
+    "html-react-parser": "^5.1.8",
     "ics": "^3.7.2",
     "lodash": "^4.17.21",
     "mapbox-gl": "^3.1.2",
