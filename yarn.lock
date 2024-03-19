@@ -5571,10 +5571,10 @@ react-audio-player@^0.17.0:
   dependencies:
     prop-types "^15.7.2"
 
-react-big-calendar@^1.10.0:
-  version "1.10.3"
-  resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-1.10.3.tgz#9f965016dcc1a2902c405e6852b2280ccd3a4cc0"
-  integrity sha512-LmIWlFfGUn8yt4RxcVkGNmjM3GcWynr1bfDwKrrz4KKj517+DH3OGmQzErURN6Zb0OB88HF4oH2dvDHpBQJgIw==
+react-big-calendar@^1.11.0:
+  version "1.11.2"
+  resolved "https://registry.yarnpkg.com/react-big-calendar/-/react-big-calendar-1.11.2.tgz#d2f9f9b10804c6f980282b6a9a7bb73ed6d07531"
+  integrity sha512-OxuNUgMc2jA+SDL4nwJSwKcbtzuNa9wfLGAnDITDyAONUao29Vca6y9l+Pl581/+3/VjDJec1vJCz06MSB+PzQ==
   dependencies:
     "@babel/runtime" "^7.20.7"
     clsx "^1.2.1"
