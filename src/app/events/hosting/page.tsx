@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   title: "Events | Hosting",
 }
 
-export default async function Hosting() {
+export default async function HostingPage() {
   const response = await query({ query: HostingDocument })
   const hosting = attributesAs<Hosting>(response.hosting)
 

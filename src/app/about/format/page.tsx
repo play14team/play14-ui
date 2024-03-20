@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   title: "About | Our format",
 }
 
-export default async function Format() {
+export default async function FormatPage() {
   const response = await query({ query: FormatDocument })
   const { openspace, bumblebee, butterfly, lawOfTwoFeet, schedule } =
     attributesAs<Format>(response.format)
