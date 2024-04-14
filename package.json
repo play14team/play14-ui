@@ -15,7 +15,7 @@
     "prestart": "yarn codegen"
   },
   "dependencies": {
-    "@apollo/client": "^3.9.7",
+    "@apollo/client": "^3.9.9",
     "@apollo/experimental-nextjs-app-support": "^0.8.0",
     "@mapbox/mapbox-gl-geocoder": "^5.0.2",
     "clsx": "^2.1.0",
