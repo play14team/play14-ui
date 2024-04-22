@@ -5,6 +5,8 @@ import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
 import { EventEntity } from "@/models/graphql"
 
+export const revalidate = 3600
+
 export async function generateStaticParams() {
   const response = await getEventSlugs()
   const events = dataAsArrayOf<EventEntity>(response.events)

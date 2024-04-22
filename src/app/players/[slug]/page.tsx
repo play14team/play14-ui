@@ -8,6 +8,8 @@ import {
   getPlayerSlugs,
 } from "../../../components/players/get.action"
 
+export const revalidate = 3600
+
 export async function generateStaticParams() {
   const response = await getPlayerSlugs()
   const players = dataAsArrayOf<PlayerEntity>(response.players)

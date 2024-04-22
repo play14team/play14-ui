@@ -5,6 +5,8 @@ import { SlugParamsProps } from "@/libs/slug-params"
 import { GameEntity } from "@/models/graphql"
 import { getGame, getGameSlugs } from "../../../components/games/get.action"
 
+export const revalidate = 3600
+
 export async function generateStaticParams() {
   const response = await getGameSlugs()
   const games = dataAsArrayOf<GameEntity>(response.games)
