@@ -1,6 +1,6 @@
 query Search($input: String!) {
   search(query: $input) {
-    events {
+    events(filters: { publishedAt: { notNull: true } }) {
       data {
         id
         attributes {
@@ -16,14 +16,14 @@ query Search($input: String!) {
         }
       }
     }
-    games {
+    games(filters: { publishedAt: { notNull: true } }) {
       data {
         attributes {
           ...GameItem
         }
       }
     }
-    articles {
+    articles(filters: { publishedAt: { notNull: true } }) {
       data {
         attributes {
           ...ArticleItem
