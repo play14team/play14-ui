@@ -13,8 +13,8 @@ export default function PrivacyPolicy() {
             At #play14, we respect your privacy and are committed to protecting
             your personal information. This Privacy Policy outlines how we
             collect, use, and disclose information about you when you visit our
-            website (the "Site") and participate in our events, and how we
-            comply with the GDPR.
+            website (the &quot;Site&quot;) and participate in our events, and
+            how we comply with the GDPR.
           </p>
         </div>
         <div className="pt-5">

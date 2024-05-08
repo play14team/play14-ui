@@ -10,12 +10,13 @@ export default function TermsOfService() {
     <Page name="Terms of Service">
       <div className="container">
         <p className="pt-70">
-          Welcome to #play14 (the "Conference" or "we"), an unconference
-          organized in different cities around the world. By accessing and using
-          our website located at https://play14.org (the "Site") and related
-          services (collectively, the "Services"), you (the "User" or "you")
-          agree to be bound by these Terms of Service (the "Terms"). If you do
-          not agree to these Terms, please do not use the Services.
+          Welcome to #play14 (the &quot;Conference&quot; or &quot;we&quot;), an
+          unconference organized in different cities around the world. By
+          accessing and using our website located at https://play14.org (the
+          &quot;Site&quot;) and related services (collectively, the
+          &quot;Services&quot;), you (the &quot;User&quot; or &quot;you&quot;)
+          agree to be bound by these Terms of Service (the &quot;Terms&quot;).
+          If you do not agree to these Terms, please do not use the Services.
         </p>
         <div className="pt-5">
           <h2>1. Eligibility</h2>
@@ -38,10 +39,10 @@ export default function TermsOfService() {
           <h2>3. Ticketing System</h2>
           <p>
             To attend an event, you will be requested to buy a ticket through a
-            ticketing system (the "Ticketing System"). Each event organizing
-            team may setup their own Ticketing System, depending on the country
-            or region where the event is organized. The currency, ticket prices
-            and fees will be adapted accordingly.
+            ticketing system (the &quot;Ticketing System&quot;). Each event
+            organizing team may setup their own Ticketing System, depending on
+            the country or region where the event is organized. The currency,
+            ticket prices and fees will be adapted accordingly.
           </p>
         </div>
         <div className="pt-5">
@@ -59,9 +60,9 @@ export default function TermsOfService() {
           <p>
             The Services may allow you to upload, submit, or otherwise make
             available certain content, such as images, videos, and text
-            (collectively, "User Content"). By uploading, submitting, or making
-            available any User Content, you grant us a worldwide, non -
-            exclusive, royalty - free, transferable, sublicensable license to
+            (collectively, &quot;User Content&quot;). By uploading, submitting,
+            or making available any User Content, you grant us a worldwide, non
+            - exclusive, royalty - free, transferable, sublicensable license to
             use, reproduce, distribute, prepare derivative works of, display,
             and perform the User Content in connection with the Services and our
             business, including for promotional purposes. You represent and
@@ -118,15 +119,15 @@ export default function TermsOfService() {
         <div className="pt-5">
           <h2>8. Disclaimers</h2>
           <p>
-            The Services are provided "as is" and "as available," without any
-            warranties of any kind, express or implied. We disclaim all
-            warranties, express or implied, including but not limited to,
-            warranties of title, non - infringement, merchantability, and
-            fitness for a particular purpose. We do not warrant that the
-            Services will be uninterrupted, error - free, or secure, or that any
-            defects will be corrected. We are not liable for any loss or damage
-            arising from your use of the Services or your reliance on any
-            information provided through the Services.
+            The Services are provided &quot;as is&quot; and &quot;as
+            available&quot;, without any warranties of any kind, express or
+            implied. We disclaim all warranties, express or implied, including
+            but not limited to, warranties of title, non - infringement,
+            merchantability, and fitness for a particular purpose. We do not
+            warrant that the Services will be uninterrupted, error - free, or
+            secure, or that any defects will be corrected. We are not liable for
+            any loss or damage arising from your use of the Services or your
+            reliance on any information provided through the Services.
           </p>
         </div>
 
