@@ -4,7 +4,7 @@ export default function PrivacyPolicy() {
   return (
     <Page name="Privacy Policy">
       <div className="centered">
-        <p>Last update on May 8th, 2025</p>
+        <p>Last update on May 8th, 2024</p>
       </div>
       <div className="container">
         <div className="pt-5">
