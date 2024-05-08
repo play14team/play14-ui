@@ -1,20 +1,18 @@
 import EventDetails from "@/components/events/details"
-import { getEvent, getEventSlugs } from "@/components/events/get.action"
+import { getEvent } from "@/components/events/get.action"
 import Page from "@/components/layout/page"
-import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import { EventEntity } from "@/models/graphql"
 
 export const revalidate = 3600
 
-export async function generateStaticParams() {
-  const response = await getEventSlugs()
-  const events = dataAsArrayOf<EventEntity>(response.events)
+// export async function generateStaticParams() {
+//   const response = await getEventSlugs()
+//   const events = dataAsArrayOf<EventEntity>(response.events)
 
-  return events.map((event) => ({
-    slug: event.attributes?.slug!,
-  }))
-}
+//   return events.map((event) => ({
+//     slug: event.attributes?.slug!,
+//   }))
+// }
 
 export async function generateMetadata(props: SlugParamsProps) {
   const event = await getEvent(props)

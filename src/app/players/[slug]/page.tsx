@@ -1,29 +1,24 @@
 import Page from "@/components/layout/page"
 import PlayerDetails from "@/components/players/details"
-import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import { PlayerEntity } from "@/models/graphql"
-import {
-  getPlayer,
-  getPlayerSlugs,
-} from "../../../components/players/get.action"
+import { getPlayer } from "../../../components/players/get.action"
 
 export const revalidate = 3600
 
-export async function generateStaticParams() {
-  const response = await getPlayerSlugs()
-  const players = dataAsArrayOf<PlayerEntity>(response.players)
+// export async function generateStaticParams() {
+//   const response = await getPlayerSlugs()
+//   const players = dataAsArrayOf<PlayerEntity>(response.players)
 
-  return players.map((player) => ({
-    slug: player.attributes?.slug!,
-  }))
-}
+//   return players.map((player) => ({
+//     slug: player.attributes?.slug!,
+//   }))
+// }
 
 export async function generateMetadata(props: SlugParamsProps) {
   const player = await getPlayer(props)
 
   return {
-    title: `Players - ${player.name}`,
+    title: `Players | ${player.name}`,
     description: player.bio?.substring(0, 200),
     openGraph: {
       title: player.name,

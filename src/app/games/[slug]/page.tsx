@@ -21,7 +21,7 @@ export async function generateMetadata(props: SlugParamsProps) {
   const images = game.images.data.map((i) => i.attributes?.url!) as string[]
 
   return {
-    title: `Games - ${game.name}`,
+    title: `Games | ${game.name}`,
     description: game.summary,
     openGraph: {
       title: game.name,
