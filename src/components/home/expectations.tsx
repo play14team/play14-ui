@@ -10,7 +10,7 @@ export default async function Expectations({
 }) {
   const response = await getExpectations({ type })
   const expectations = dataAsArrayOf<ExpectationEntity>(
-    response.data?.expectations,
+    response?.data?.expectations,
   )
 
   return (

@@ -7,7 +7,7 @@ import { getUpcomingEvents } from "./get-upcoming-events.action"
 const UpcomingEvents = async () => {
   const today = moment().format()
   const response = await getUpcomingEvents({ today })
-  const events = dataAsArrayOf<EventEntity>(response.data?.events)
+  const events = dataAsArrayOf<EventEntity>(response?.data?.events)
 
   return (
     <div className="pt-100">

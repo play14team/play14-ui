@@ -9,9 +9,11 @@ const schema = z.object({
   type: z.nativeEnum(Enum_Expectation_Type),
 })
 
-export const getExpectations = action(schema, async ({ type }) => {
-  return await query({
-    query: ExpectationsDocument,
-    variables: { type: type },
+export const getExpectations = action
+  .schema(schema)
+  .action(async ({ parsedInput: { type } }) => {
+    return await query({
+      query: ExpectationsDocument,
+      variables: { type: type },
+    })
   })
-})

@@ -9,9 +9,11 @@ const schema = z.object({
   today: z.string(),
 })
 
-export const getUpcomingEvents = action(schema, async ({ today }) => {
-  return await query({
-    query: UpcomingEventsDocument,
-    variables: { today: today },
+export const getUpcomingEvents = action
+  .schema(schema)
+  .action(async ({ parsedInput: { today } }) => {
+    return await query({
+      query: UpcomingEventsDocument,
+      variables: { today: today },
+    })
   })
-})
