@@ -1,15 +1,14 @@
 import "server-only"
 
-import { Pagination } from "@/models/graphql"
+import { ApolloLink, HttpLink, TypedDocumentNode } from "@apollo/client"
 import {
   ApolloClient,
-  ApolloLink,
-  HttpLink,
   InMemoryCache,
-  TypedDocumentNode,
-} from "@apollo/client"
+  registerApolloClient,
+} from "@apollo/experimental-nextjs-app-support"
+
+import { Pagination } from "@/models/graphql"
 import { setContext } from "@apollo/client/link/context"
-import { registerApolloClient } from "@apollo/experimental-nextjs-app-support/rsc"
 
 const STRAPI_GRAPHQL_ENDPOINT = process.env.STRAPI_API_URL + "/graphql"
 
