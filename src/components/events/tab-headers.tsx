@@ -13,7 +13,11 @@ export default function TabHeaders({
   return (
     <ul className="nav nav-tabs" id="myTab" role="tablist">
       {/* Overview */}
-      <li className="current" onClick={(e) => openTabSection(e, "overviewTab")}>
+      <li
+        className="current"
+        onClick={(e) => openTabSection(e, "overviewTab")}
+        aria-hidden="true"
+      >
         Overview
       </li>
 
@@ -21,16 +25,21 @@ export default function TabHeaders({
       {event.status == Enum_Event_Status.Open &&
         event.registration &&
         event.registration.widgetCode && (
-          <li onClick={(e) => openTabSection(e, "registrationTab")}>
+          <li
+            onClick={(e) => openTabSection(e, "registrationTab")}
+            aria-hidden="true"
+          >
             Registration
           </li>
         )}
 
       {/* Schedule */}
-      <li onClick={(e) => openTabSection(e, "scheduleTab")}>Schedule</li>
+      <li onClick={(e) => openTabSection(e, "scheduleTab")} aria-hidden="true">
+        Schedule
+      </li>
 
       {/* Players */}
-      <li onClick={(e) => openTabSection(e, "playersTab")}>
+      <li onClick={(e) => openTabSection(e, "playersTab")} aria-hidden="true">
         Players{" "}
         {participantCount && participantCount > 0
           ? `(${participantCount})`
@@ -38,7 +47,7 @@ export default function TabHeaders({
       </li>
 
       {/* Photos */}
-      <li onClick={(e) => openTabSection(e, "photosTab")}>
+      <li onClick={(e) => openTabSection(e, "photosTab")} aria-hidden="true">
         Photos{" "}
         {event.images && event.images.data.length > 0
           ? `(${event.images.data.length})`
