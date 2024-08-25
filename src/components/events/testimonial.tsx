@@ -17,6 +17,13 @@ const TestimonialItem = ({ testimonial }: { testimonial: Testimonial }) => {
         {testimonial.content && (
           <HtmlContent>{testimonial.content}</HtmlContent>
         )}
+        {testimonial.url && (
+          <p>
+            <Link href={testimonial.url} target="_blank">
+              Read more
+            </Link>
+          </p>
+        )}
         {audio && (
           <div className="pt-3">
             <ReactAudioPlayer src={audio.url} controls />

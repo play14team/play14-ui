@@ -115,16 +115,6 @@ const Navbar = () => {
 
                       <li className="nav-item">
                         <Link
-                          href="/events/testimonials"
-                          onClick={() => setCollapsed(true)}
-                          className="nav-link"
-                        >
-                          Testimonials
-                        </Link>
-                      </li>
-
-                      <li className="nav-item">
-                        <Link
                           href="/events/hosting"
                           onClick={() => setCollapsed(true)}
                           className="nav-link"
@@ -142,20 +132,42 @@ const Navbar = () => {
 
                     <ul className="dropdown-menu">
                       <li className="nav-item">
-                        <Link href="/players" className="nav-link">
+                        <Link
+                          href="/players"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
                           Players
                         </Link>
                       </li>
 
                       <li className="nav-item">
-                        <Link href="/games" className="nav-link">
+                        <Link
+                          href="/games"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
                           Games
                         </Link>
                       </li>
 
                       <li className="nav-item">
-                        <Link href="/articles" className="nav-link">
+                        <Link
+                          href="/articles"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
                           Articles
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link
+                          href="/events/testimonials"
+                          onClick={() => setCollapsed(true)}
+                          className="nav-link"
+                        >
+                          Testimonials
                         </Link>
                       </li>
                     </ul>

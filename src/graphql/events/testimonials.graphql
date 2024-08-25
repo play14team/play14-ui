@@ -4,6 +4,7 @@ query Testimonials {
       id
       attributes {
         content
+        url
         audio {
           data {
             attributes {
