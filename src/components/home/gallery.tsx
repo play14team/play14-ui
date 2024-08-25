@@ -9,10 +9,10 @@ const HomeGallery = async () => {
 
   return (
     <div className="pt-100">
-      <h3 className=" pb-4">Photo gallery</h3>
-      <p>
-        However, #play14 is first and foremost a community of people, a family,
-        and an incredible human adventure.
+      <h3 className="pb-3">Photo gallery</h3>
+      <p className="pb-4">
+        #play14 is first and foremost a community of people, a family, and an
+        incredible human adventure.
       </p>
 
       {images && <Gallery images={images} />}

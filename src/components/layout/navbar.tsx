@@ -136,21 +136,29 @@ const Navbar = () => {
                   </li>
 
                   <li className="nav-item">
-                    <Link href="/players" className="nav-link">
-                      Players
+                    <Link href="/events" className="nav-link">
+                      Community <i className="bx bx-chevron-down"></i>
                     </Link>
-                  </li>
 
-                  <li className="nav-item">
-                    <Link href="/games" className="nav-link">
-                      Games
-                    </Link>
-                  </li>
+                    <ul className="dropdown-menu">
+                      <li className="nav-item">
+                        <Link href="/players" className="nav-link">
+                          Players
+                        </Link>
+                      </li>
 
-                  <li className="nav-item">
-                    <Link href="/articles" className="nav-link">
-                      Articles
-                    </Link>
+                      <li className="nav-item">
+                        <Link href="/games" className="nav-link">
+                          Games
+                        </Link>
+                      </li>
+
+                      <li className="nav-item">
+                        <Link href="/articles" className="nav-link">
+                          Articles
+                        </Link>
+                      </li>
+                    </ul>
                   </li>
 
                   <li className="nav-item">

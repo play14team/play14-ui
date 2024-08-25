@@ -17,20 +17,34 @@ export default function Home() {
         <Title />
       </section>
       <section id="summary" className="pt-70">
-        <h3 className="pb-4">What is #play14?</h3>
+        <h3 className="pt-4 pb-3">What is #play14?</h3>
         <p>
-          #play14 is a{" "}
-          <strong>worldwide gathering of like-minded people</strong> who believe
-          that{" "}
-          <strong>
-            playing is the best way to learn, share and be creative!&nbsp;
-          </strong>
+          Welcome to #play14, a global movement that believes in the{" "}
+          <strong>transformative power of play</strong>!
         </p>
         <p>
-          It is a movement started in 2014, it is is a global series of events
-          organized in many cities in all five continents, it is a format of
-          unconference following the principles of open-space, but above all, it
-          is a family, with people who share common values and interests.
+          We are a worldwide gathering of like-minded people who believe that{" "}
+          <strong>
+            playing is the best way to learn, share and get creative!
+          </strong>{" "}
+          We are a movement started in 2014, we are a{" "}
+          <strong>global series of events</strong> organized in different cities
+          on <strong>all five continents</strong>, we are an unconference
+          following <strong>the principles of open-space technology</strong>,
+          but above all we are a family whose members{" "}
+          <strong>share common values and interests</strong>.
+        </p>
+        <h3 className="pt-100 pb-3">Discover the power of play</h3>
+        <p>
+          Play is a better way to learn because it engages both mind and body,
+          making learning an active, immersive experience. Through play,
+          individuals explore, experiment, and discover concepts in a hands-on
+          way, which enhances understanding and retention. It encourages
+          creativity, problem-solving, and collaboration, helping learners
+          develop critical thinking skills. Play also reduces stress and
+          increases motivation, making the learning process enjoyable and
+          effective. By creating a safe space for trial and error, play fosters
+          a deeper, more meaningful connection to the material being learned.
         </p>
         <div className="d-flex justify-content-center">
           <blockquote>
@@ -44,11 +58,35 @@ export default function Home() {
             </strong>
           </blockquote>
         </div>
-        <p className="pt-3">
+        <h3 className="pt-100 pb-3">What attend?</h3>
+        <p>
+          Whether you are a facilitator, educator, or curious mind, our events
+          are designed to spark creativity, foster collaboration, and ignite new
+          ideas. Join us in cities worldwide to connect with like-minded
+          individuals and dive into a world of playful experimentation.
+        </p>
+        <p>
+          <ul>
+            <li>
+              <strong>Global community:</strong> Connect with a diverse network
+              of innovators.
+            </li>
+            <li>
+              <strong>Endless fun:</strong> Engage in hands-on, playful
+              activities.
+            </li>
+            <li>
+              <strong>Inspire & be inspired:</strong> Share and discover new
+              games, tools, and techniques.
+            </li>
+          </ul>
+        </p>
+        <p>
           #play14 is an <Link href="/about/schedule">unconference</Link>, where{" "}
-          <strong>all attendees are also contributors</strong>. All you need to
-          do is show up, and you will be given the opportunity to propose some
-          games, or play the games proposed by the others.
+          <strong>all attendees are also contributors</strong>. Just show up
+          with an open mind, and you’ll have the chance to propose your own
+          games or dive into the games suggested by others. It&apos;s all about
+          participation, creativity, and shared fun!
         </p>
       </section>
 
@@ -57,7 +95,7 @@ export default function Home() {
       </section>
 
       <section id="activities">
-        <h3 className="pb-4">Activities</h3>
+        <h3 className="pb-3">What to expect?</h3>
         <p>
           For two and a half days, people with{" "}
           <Link href="/players">many different profiles and experiences</Link>{" "}
@@ -77,94 +115,98 @@ export default function Home() {
           </blockquote>
         </div>
         <p>
-          If you want to join and wonder what is going to happen, here are some
-          examples of activites we engage in:
+          If you feel like joining but wonder what is going to happen, here are
+          some examples of activites we engage in:
         </p>
-        <ul>
-          <li>
-            A{" "}
-            <Link href="/games/ball-pointLinkgame" target="_blank">
-              serious game
-            </Link>{" "}
-            that you use as a metaphor in order to understand a new concept
-          </li>
-          <li>
-            An{" "}
-            <Link href="/games/eggolution" target="_blank">
-              ice breaker
-            </Link>{" "}
-            game where people learn more about one another
-          </li>
-          <li>
-            A{" "}
-            <Link href="/games/brain-shock" target="_blank">
-              warm up
-            </Link>{" "}
-            or an{" "}
-            <Link href="/games/happy-salmon" target="_blank">
-              energizer
-            </Link>{" "}
-            that you can use to raise the level of awareness and energy
-          </li>
-          <li>A facilitation technique that you can use in your daily work</li>
-          <li>
-            A{" "}
-            <Link href="/games/cupcake-design-factory" target="_blank">
-              team building
-            </Link>{" "}
-            exercise that fosters collaboration and self organization
-          </li>
-          <li>
-            A{" "}
-            <Link href="/games/ball-runner" target="_blank">
-              game design
-            </Link>{" "}
-            session where you invent a new game to teach something new
-          </li>
-          <li>
-            A soul searching, deep-dive introspection session where you learn
-            about yourself
-          </li>
-          <li>
-            A one-on-one coaching session where you will find some answers with
-            the help of a friend
-          </li>
-          <li>
-            A brainstorming session on a question or problem that wakes you up
-            at night
-          </li>
-          <li>
-            A{" "}
-            <Link href="/games/doodling-together" target="_blank">
-              creative session
-            </Link>{" "}
-            where you sketch, doodle, or build something together
-          </li>
-          <li>
-            A fun and energetic time with{" "}
-            <Link href="https://youtu.be/N2quY1ZPF50" target="_blank">
-              dancing
-            </Link>
-            ,{" "}
-            <Link href="https://youtu.be/jpLCTQgHhqs" target="_blank">
-              singing
-            </Link>{" "}
-            or being silly together
-          </li>
-          <li>
-            An{" "}
-            <Link href="https://youtu.be/T7HPg2-xowc" target="_blank">
-              improv theater
-            </Link>{" "}
-            session where you can work on your confidence and ability to speak
-            publicly
-          </li>
-          <li>
-            A more esoteric session on a practice/hobby you want to share like
-            yoga, laughter yoga, Tai Chi, Qigong, meditation, mindfulness,
-            aikido, ...
-          </li>
-        </ul>
+        <p>
+          <ul>
+            <li>
+              A{" "}
+              <Link href="/games/ball-pointLinkgame" target="_blank">
+                serious game
+              </Link>{" "}
+              that you use as a metaphor in order to understand a new concept
+            </li>
+            <li>
+              An{" "}
+              <Link href="/games/eggolution" target="_blank">
+                ice breaker
+              </Link>{" "}
+              game where people learn more about one another
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/brain-shock" target="_blank">
+                warm up
+              </Link>{" "}
+              or an{" "}
+              <Link href="/games/happy-salmon" target="_blank">
+                energizer
+              </Link>{" "}
+              that you can use to raise the level of awareness and energy
+            </li>
+            <li>
+              A facilitation technique that you can use in your daily work
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/cupcake-design-factory" target="_blank">
+                team building
+              </Link>{" "}
+              exercise that fosters collaboration and self organization
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/ball-runner" target="_blank">
+                game design
+              </Link>{" "}
+              session where you invent a new game to teach something new
+            </li>
+            <li>
+              A soul searching, deep-dive introspection session where you learn
+              about yourself
+            </li>
+            <li>
+              A one-on-one coaching session where you will find some answers
+              with the help of a friend
+            </li>
+            <li>
+              A brainstorming session on a question or problem that wakes you up
+              at night
+            </li>
+            <li>
+              A{" "}
+              <Link href="/games/doodling-together" target="_blank">
+                creative session
+              </Link>{" "}
+              where you sketch, doodle, or build something together
+            </li>
+            <li>
+              A fun and energetic time with{" "}
+              <Link href="https://youtu.be/N2quY1ZPF50" target="_blank">
+                dancing
+              </Link>
+              ,{" "}
+              <Link href="https://youtu.be/jpLCTQgHhqs" target="_blank">
+                singing
+              </Link>{" "}
+              or being silly together
+            </li>
+            <li>
+              An{" "}
+              <Link href="https://youtu.be/T7HPg2-xowc" target="_blank">
+                improv theater
+              </Link>{" "}
+              session where you can work on your confidence and ability to speak
+              publicly
+            </li>
+            <li>
+              A more esoteric session on a practice/hobby you want to share like
+              yoga, laughter yoga, Tai Chi, Qigong, meditation, mindfulness,
+              aikido, ...
+            </li>
+          </ul>
+        </p>
 
         <p>
           Join us in order to develop your <strong>facilitation skills</strong>,
@@ -179,7 +221,7 @@ export default function Home() {
       </section>
 
       <section id="manifesto and code of conduct" className="pt-100">
-        <h3 className="pb-4">Our values</h3>
+        <h3 className="pt-100 pb-3">Our values</h3>
         <p>
           A game/activity at #play14 could be pretty much anything as long as it
           respects our{" "}
@@ -196,14 +238,20 @@ export default function Home() {
       </section>
 
       <section id="event map" className="pb-5 pt-70">
+        <h3 className="pt-100 pb-3">Where to find us?</h3>
+        <p className="pb-4">
+          The first event was hosted in Luxembourg, and then we spread through
+          all Europe. Now we are a{" "}
+          <strong>
+            <Link href="/events/map">global event</Link>
+          </strong>
+          .
+        </p>
         <StaticEventMap />
-        <h5 className="centered pt-5">
-          <Link href="/events/map">Go to the live map</Link>
-        </h5>
       </section>
 
       <section id="benefits" className="pt-70">
-        <h3 className="pb-5 pt-70">What to expect</h3>
+        <h3 className="pb-3 pt-70">What&apos;s in it for you?</h3>
         <p>
           Here are some of the things that you can expect when attending a
           #play14 event. However, be ready to &quot;Expect the unexpected!&quot;
