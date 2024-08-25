@@ -1,6 +1,5 @@
 "use client"
 
-import { Point } from "mapbox-gl"
 import "mapbox-gl/dist/mapbox-gl.css"
 import Map, {
   FullscreenControl,
@@ -28,7 +27,7 @@ const MapView = ({
   const token =
     process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ||
     "pk.eyJ1IjoicGxheTE0IiwiYSI6ImNsaHk1dzRlNDB6Z2szbG1kMnJybHFpeWMifQ.gRYXSA5Gjoph0caYvDvHMA"
-  const offset = new Point(0, -35)
+  const offset = [0, -35] as [number, number]
   const zoomLevel = location ? zoom || 15 : 1
 
   return (
