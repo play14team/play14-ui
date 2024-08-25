@@ -1,6 +1,6 @@
 "use client"
 
-import { useIntersection } from "@/hooks/useIntersaction"
+import { useIntersection } from "@/hooks/useIntersection"
 import { GameEntity, Pagination } from "@/models/graphql"
 import { useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
