@@ -1,11 +1,12 @@
 "use client"
 
+import "react-photo-album/rows.css"
 import "yet-another-react-lightbox/plugins/thumbnails.css"
 import "yet-another-react-lightbox/styles.css"
 
 import { useState } from "react"
 
-import PhotoAlbum from "react-photo-album"
+import { RowsPhotoAlbum } from "react-photo-album"
 import Lightbox from "yet-another-react-lightbox"
 import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen"
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow"
@@ -31,9 +32,8 @@ const Gallery = (props: { images: UploadFileEntity[] }) => {
 
   return (
     <>
-      <PhotoAlbum
+      <RowsPhotoAlbum
         photos={photos}
-        layout="rows"
         targetRowHeight={150}
         onClick={({ index }) => setIndex(index)}
       />
