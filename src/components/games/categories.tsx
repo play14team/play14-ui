@@ -1,5 +1,6 @@
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
+import { capitalizeFirstLetter } from "@/libs/utils"
 import { GameEntity, GameNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
@@ -13,13 +14,15 @@ export default async function Categories() {
   return (
     <div className="blog-details-desc pb-70">
       <div className="article-footer">
-        {categories.map((category, index) => (
+        {categories.sort().map((category, index) => (
           <div key={index} className="article-tags">
             <span>
               <i className="bx bx-folder"></i>
             </span>
 
-            <Link href={`/games/categories/${category}`}>{category}</Link>
+            <Link href={`/games/categories/${category}`}>
+              {capitalizeFirstLetter(category)}
+            </Link>
           </div>
         ))}
       </div>

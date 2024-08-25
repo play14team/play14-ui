@@ -1,4 +1,5 @@
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { capitalizeFirstLetter } from "@/libs/utils"
 import { ArticleEntity, ArticleNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
@@ -13,13 +14,15 @@ export default async function Categories() {
   return (
     <div className="blog-details-desc pb-70">
       <div className="article-footer">
-        {categories.map((cat, index) => (
+        {categories.sort().map((cat, index) => (
           <div key={index} className="article-tags">
             <span>
               <i className="bx bx-folder"></i>
             </span>
 
-            <Link href={`/articles/categories/${cat}`}>{cat}</Link>
+            <Link href={`/articles/categories/${cat}`}>
+              {capitalizeFirstLetter(cat)}
+            </Link>
           </div>
         ))}
       </div>

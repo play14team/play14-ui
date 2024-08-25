@@ -7,15 +7,15 @@ export default async function Tags() {
   const response = await query({ query: GameNavDocument })
   const games = dataAsArrayOf<GameEntity>(response.games)
   const tags = deduplicate(
-    games.flatMap(
-      (g) => g.attributes?.tags?.map((t) => t?.value.toLowerCase()),
+    games.flatMap((g) =>
+      g.attributes?.tags?.map((t) => t?.value.trim().toLowerCase()),
     ),
   )
 
   return (
     <div className="blog-details-desc pb-70">
       <div className="article-footer">
-        {tags.map((tag, index) => (
+        {tags.sort().map((tag, index) => (
           <div key={index} className="article-tags">
             <span>
               <i className="bx bx-purchase-tag"></i>

@@ -13,7 +13,7 @@ export default async function Locations() {
   return (
     <div className="blog-details-desc pb-70">
       <div className="article-footer">
-        {locations.map((item, index) => (
+        {locations.sort().map((item, index) => (
           <div key={index} className="article-tags">
             <span>
               <i className="bx bx-map-pin"></i>

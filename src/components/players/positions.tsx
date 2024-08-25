@@ -1,5 +1,6 @@
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
+import { capitalizeFirstLetter } from "@/libs/utils"
 import { PlayerEntity, PlayerNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
@@ -19,7 +20,9 @@ export default async function Positions() {
               <i className="bx bx-user-pin"></i>
             </span>
 
-            <Link href={`/players/positions/${position}`}>{position}</Link>
+            <Link href={`/players/positions/${position}`}>
+              {capitalizeFirstLetter(position)}
+            </Link>
           </div>
         ))}
       </div>

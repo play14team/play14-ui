@@ -8,16 +8,15 @@ export default async function Tags() {
   const articles = dataAsArrayOf<ArticleEntity>(response.articles)
 
   const tags = deduplicate(
-    articles.flatMap(
-      (a) =>
-        a.attributes?.tags?.data.map((t) => t?.attributes?.value.toLowerCase()),
+    articles.flatMap((a) =>
+      a.attributes?.tags?.data.map((t) => t?.attributes?.value.toLowerCase()),
     ),
   )
 
   return (
     <div className="blog-details-desc pb-70">
       <div className="article-footer">
-        {tags.map((tag, index) => (
+        {tags.sort().map((tag, index) => (
           <div key={index} className="article-tags">
             <span>
               <i className="bx bx-purchase-tag"></i>

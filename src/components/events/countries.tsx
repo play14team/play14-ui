@@ -17,7 +17,7 @@ export default async function Countries() {
   return (
     <div className="blog-details-desc pb-70">
       <div className="article-footer">
-        {countryCodes.map((countryCode, index) => {
+        {countryCodes.sort().map((countryCode, index) => {
           return (
             <div key={index} className="article-tags">
               <Link href={`/events/countries/${countryCode.toLowerCase()}`}>
