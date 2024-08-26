@@ -41,10 +41,7 @@ export default function Home() {
           individuals explore, experiment, and discover concepts in a hands-on
           way, which enhances understanding and retention. It encourages
           creativity, problem-solving, and collaboration, helping learners
-          develop critical thinking skills. Play also reduces stress and
-          increases motivation, making the learning process enjoyable and
-          effective. By creating a safe space for trial and error, play fosters
-          a deeper, more meaningful connection to the material being learned.
+          develop critical thinking skills.
         </p>
         <div className="d-flex justify-content-center">
           <blockquote>
@@ -58,6 +55,12 @@ export default function Home() {
             </strong>
           </blockquote>
         </div>
+        <p>
+          Play also reduces stress and increases motivation, making the learning
+          process enjoyable and effective. By creating a safe space for trial
+          and error, play fosters a deeper, more meaningful connection to the
+          material being learned.
+        </p>
         <h3 className="pt-100 pb-3">What attend?</h3>
         <p>
           Whether you are a facilitator, educator, or curious mind, our events
