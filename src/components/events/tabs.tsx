@@ -62,7 +62,7 @@ export default function EventTabs({
 
         {/* Registration */}
         <div id="registrationTab" className="tab-pane tabs_item">
-          <HtmlContent>{event.registration?.widgetCode!}</HtmlContent>
+          <HtmlContent>{event.registration?.widgetCode || ""}</HtmlContent>
         </div>
       </div>
     </>

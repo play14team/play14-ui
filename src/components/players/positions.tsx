@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export default async function Positions() {
   const response = await query({ query: PlayerNavDocument })
-  const players = dataAsArrayOf<PlayerEntity>(response.players)
+  const players = dataAsArrayOf<PlayerEntity>(response.players || { data: [] })
   const positions = deduplicate(
     players.map((i) => i.attributes?.position.toLowerCase()),
   )

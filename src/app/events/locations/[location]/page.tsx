@@ -3,16 +3,15 @@ import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import EventGrid from "../../../../components/events/grid"
 import { EventEntity, EventsDocument } from "../../../../models/graphql"
 
-export default async function EventLocation({
-  params,
-}: {
-  params: { location: string }
+export default async function EventLocation(props: {
+  params: Promise<{ location: string }>
 }) {
+  const params = await props.params
   const response = await query({
     query: EventsDocument,
     variables: { page: 1, pageSize: 1000, location: params.location },
   })
-  const events = dataAsArrayOf<EventEntity>(response.events)
+  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
 
   return (
     <>

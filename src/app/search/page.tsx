@@ -5,10 +5,9 @@ export const metadata: Metadata = {
   title: "Search results",
 }
 
-export default async function SearchPage({
-  searchParams,
-}: {
-  searchParams?: { [input: string]: string | undefined }
+export default async function SearchPage(props: {
+  searchParams?: Promise<{ [input: string]: string | undefined }>
 }) {
+  const searchParams = await props.searchParams
   return <Search input={searchParams?.input} />
 }

@@ -6,11 +6,11 @@ import Country from "../layout/country"
 
 export default async function Countries() {
   const response = await query({ query: EventNavDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events)
+  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
 
   const countryCodes = deduplicate(
     events
-      .map((c) => c.attributes?.location?.data?.attributes?.country!)
+      .map((c) => c.attributes?.location?.data?.attributes?.country || "")
       .filter((c) => c !== ""),
   )
 

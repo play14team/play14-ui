@@ -9,8 +9,8 @@ import EventStatus from "./status"
 
 const EventCard = ({ event }: { event: Event }) => {
   const url = `/events/${encodeURIComponent(event.slug)}`
-  const image = event.defaultImage.data?.attributes!
-  const countryCode = event.location?.data?.attributes?.country!
+  const image = event.defaultImage.data?.attributes || "#"
+  const countryCode = event.location?.data?.attributes?.country || "LU"
   const countryName = clm.getCountryNameByAlpha2(countryCode)
 
   return (
@@ -28,13 +28,13 @@ const EventCard = ({ event }: { event: Event }) => {
           style={{ position: "relative", height: "300px" }}
         >
           <Link href={url} className="d-block">
-            {image && (
+            {typeof image === "object" && image.url && (
               <Image
                 src={image.url}
                 alt={image.name}
                 width={image.width!}
                 height={image.height!}
-                blurDataURL={image.blurhash!}
+                blurDataURL={image.blurhash || ""}
                 placeholder="blur"
                 sizes="100vw"
                 style={{

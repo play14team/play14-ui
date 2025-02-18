@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function EventMapPage() {
   const response = await query({ query: MarkersDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events)
+  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
 
   return (
     <Page name="Events map">

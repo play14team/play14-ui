@@ -14,8 +14,10 @@ export const revalidate = 3600
 
 export default async function Events() {
   const response = await getEvents(1, 18)
-  const events = dataAsArrayOf<EventEntity>(response.events)
-  const pagination = getPagination(response.events)
+  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
+  const pagination = response.events
+    ? getPagination(response.events)
+    : { total: 0, page: 1, pageSize: 18, pageCount: 1 }
 
   return (
     <>

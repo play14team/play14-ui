@@ -5,7 +5,9 @@ import Link from "next/link"
 
 export default async function Tags() {
   const response = await query({ query: ArticleNavDocument })
-  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.articles || { data: [] },
+  )
 
   const tags = deduplicate(
     articles.flatMap((a) =>

@@ -3,7 +3,12 @@ import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
 import { attributesAs, dataAsArrayOf, query } from "@/libs/apollo-client"
-import { History, PlayerEntity, StoryDocument } from "@/models/graphql"
+import {
+  Enum_Componentdefaulthistoryitem_Dateformat,
+  History,
+  PlayerEntity,
+  StoryDocument,
+} from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -12,8 +17,10 @@ export const metadata: Metadata = {
 
 export default async function Story() {
   const response = await query({ query: StoryDocument })
-  const founders = dataAsArrayOf<PlayerEntity>(response?.players)
-  const history = attributesAs<History>(response?.history)
+  const founders = dataAsArrayOf<PlayerEntity>(
+    response?.players || { data: [] },
+  )
+  const history = attributesAs<History>({ data: response.history?.data ?? {} })
 
   return (
     <Page name="Our story">
@@ -42,13 +49,15 @@ export default async function Story() {
                 <HistoryItem
                   key={item?.id}
                   date={item?.date}
-                  dateFormat={item?.dateFormat!}
-                  additionalText={item?.additionalText!}
-                  title={item?.title!}
+                  dateFormat={
+                    item?.dateFormat as Enum_Componentdefaulthistoryitem_Dateformat
+                  }
+                  additionalText={item?.additionalText || ""}
+                  title={item?.title || ""}
                   image={item?.image.data!.attributes!.url}
                   imageAlt={item?.image.data!.attributes!.name}
                 >
-                  <HtmlContent>{item?.description!}</HtmlContent>
+                  <HtmlContent>{item?.description || ""}</HtmlContent>
                 </HistoryItem>
               ))}
           </ol>

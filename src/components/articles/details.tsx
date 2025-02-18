@@ -91,7 +91,7 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                       <div className="author-profile">
                         <div className="author-profile-title">
                           <Image
-                            src={author.avatar?.data?.attributes?.url!}
+                            src={author.avatar?.data?.attributes?.url || "#"}
                             className="shadow-sm"
                             alt={author.name}
                             width={200}

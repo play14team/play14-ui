@@ -17,7 +17,7 @@ export async function getArticles(page: number, pageSize: number) {
 }
 
 export async function getArticle({ params }: SlugParamsProps) {
-  const { slug } = params
+  const { slug } = await params
   const response = await query({
     query: ArticleDocument,
     variables: { slug },

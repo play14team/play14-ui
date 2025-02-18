@@ -5,7 +5,9 @@ import Link from "next/link"
 
 export default async function Categories() {
   const response = await query({ query: ArticleNavDocument })
-  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.articles || { data: [] },
+  )
 
   const categories = [
     ...new Set(articles.map((a) => a.attributes?.category?.toLowerCase())),

@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default async function HostingPage() {
   const response = await query({ query: HostingDocument })
-  const hosting = attributesAs<Hosting>(response.hosting)
+  const hosting = attributesAs<Hosting>({ data: response.hosting?.data ?? {} })
 
   return (
     <Page name="All you need to know about hosting a #play14 event">

@@ -27,7 +27,7 @@ const EventPopup = ({
       style={{ minWidth: "200px" }}
     >
       <Link href={venue.website || "#"} target="_blank">
-        <b>{venue.name}</b>
+        <h6>{venue.name}</h6>
       </Link>
       <br />
       {venue.location?.place_name}

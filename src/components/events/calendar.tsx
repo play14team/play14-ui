@@ -18,7 +18,7 @@ export interface CalendarEvent extends Event {
 export default function EventCalendar({ events }: EventCalendarProps) {
   const router = useRouter()
   const views = [Views.MONTH]
-  const onDoubleClickEvent = (event: any, e: any) => {
+  const onDoubleClickEvent = (event: { slug: string }) => {
     router.push("/events/" + event.slug)
   }
 

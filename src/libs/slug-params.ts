@@ -1,5 +1,5 @@
 export interface SlugParamsProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }

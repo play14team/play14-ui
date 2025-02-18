@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 
 export default async function Testimonials() {
   const response = await query({ query: TestimonialsDocument })
-  const testimonials = dataAsArrayOf<TestimonialEntity>(response.testimonials)
+  const testimonials = dataAsArrayOf<TestimonialEntity>(
+    response.testimonials || { data: [] },
+  )
 
   return (
     <Page name="Testimonials">

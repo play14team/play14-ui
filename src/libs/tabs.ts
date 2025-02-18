@@ -1,14 +1,16 @@
-const openTabSection = (evt: any, tabName: string) => {
-  let i, tablinks
+const openTabSection = (
+  evt: React.MouseEvent<HTMLLIElement, MouseEvent>,
+  tabName: string,
+) => {
   const tabcontent = document.getElementsByClassName("tabs_item")
-  for (i = 0; i < tabcontent.length; i++) {
-    const styledElement = tabcontent[i] as any
+  for (let i = 0; i < tabcontent.length; i++) {
+    const styledElement = tabcontent[i] as HTMLElement
     styledElement.classList.remove("fadeInUp")
     styledElement.style.display = "none"
   }
 
-  tablinks = document.getElementsByTagName("li")
-  for (i = 0; i < tablinks.length; i++) {
+  const tablinks = document.getElementsByTagName("li")
+  for (let i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace("current", "")
   }
 
@@ -18,7 +20,9 @@ const openTabSection = (evt: any, tabName: string) => {
     elt.className += " fadeInUp animated"
   }
 
-  evt.currentTarget.className += "current"
+  if (evt.currentTarget) {
+    ;(evt.currentTarget as HTMLElement).className += "current"
+  }
 }
 
 export default openTabSection

@@ -19,10 +19,10 @@ const SearchBox = () => {
             placeholder="Search for anything"
             onChange={(e) => setInput(e.currentTarget.value)}
             onKeyDown={(e) => {
-              e.key == "Enter" && search()
+              if (e.key === "Enter") search()
             }}
           />
-          <button onClick={(e) => search()}>
+          <button onClick={() => search()}>
             <i className="flaticon-loupe"></i>
           </button>
         </div>

@@ -9,16 +9,16 @@ export const revalidate = 3600
 
 export async function generateStaticParams() {
   const response = await getGameSlugs()
-  const games = dataAsArrayOf<GameEntity>(response.games)
+  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
 
   return games.map((game) => ({
-    slug: game.attributes?.slug!,
+    slug: game.attributes?.slug,
   }))
 }
 
 export async function generateMetadata(props: SlugParamsProps) {
   const game = await getGame(props)
-  const images = game.images.data.map((i) => i.attributes?.url!) as string[]
+  const images = game.images.data.map((i) => i.attributes?.url) as string[]
 
   return {
     title: `Games | ${game.name}`,
@@ -29,7 +29,7 @@ export async function generateMetadata(props: SlugParamsProps) {
       type: "article",
       publishedTime: game.publishedAt,
       authors: game.documentedBy?.data.map((p) => p.attributes?.name),
-      images: [game.defaultImage.data?.attributes?.url!].concat(images),
+      images: [game.defaultImage.data?.attributes?.url].concat(images),
     },
   }
 }

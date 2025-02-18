@@ -9,7 +9,7 @@ import DetailsNavigator, { NavLink } from "../layout/detailsnav"
 
 export default async function GamesNavigator({ current }: { current: string }) {
   const response = await query({ query: GameNavDocument })
-  const games = dataAsArrayOf<GameEntity>(response.games)
+  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
   const index = games.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? games[index - 1] : null
   const next = index < games.length - 1 ? games[index + 1] : null

@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default async function Tags() {
   const response = await query({ query: GameNavDocument })
-  const games = dataAsArrayOf<GameEntity>(response.games)
+  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
   const tags = deduplicate(
     games.flatMap((g) =>
       g.attributes?.tags?.map((t) => t?.value.trim().toLowerCase()),

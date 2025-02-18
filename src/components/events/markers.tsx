@@ -14,9 +14,9 @@ export default function EventMarkers({ events }: { events: EventEntity[] }) {
         if (geoJSON && geoJSON.geometry) {
           const longitude = geoJSON.geometry.coordinates[0]
           const latitude = geoJSON.geometry.coordinates[1]
-          const venueId = event.attributes?.venue?.data?.id!
+          const venueId = event.attributes?.venue?.data?.id || ""
           const predicate = (event: EventEntity) =>
-            venueId == event.attributes?.venue?.data?.id!
+            venueId == event.attributes?.venue?.data?.id || ""
           const markerEvents = events.filter(predicate)
 
           return (

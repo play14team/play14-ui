@@ -19,10 +19,18 @@ export default async function Search({ input }: { input: string | undefined }) {
     variables: { input },
   })
 
-  const events = dataAsArrayOf<EventEntity>(response.search?.events)
-  const players = dataAsArrayOf<PlayerEntity>(response.search?.players)
-  const games = dataAsArrayOf<GameEntity>(response.search?.games)
-  const articles = dataAsArrayOf<ArticleEntity>(response.search?.articles)
+  const events = dataAsArrayOf<EventEntity>(
+    response.search?.events || { data: [] },
+  )
+  const players = dataAsArrayOf<PlayerEntity>(
+    response.search?.players || { data: [] },
+  )
+  const games = dataAsArrayOf<GameEntity>(
+    response.search?.games || { data: [] },
+  )
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.search?.articles || { data: [] },
+  )
 
   return (
     <div className="pt-70">

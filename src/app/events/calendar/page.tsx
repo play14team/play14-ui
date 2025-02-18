@@ -10,7 +10,9 @@ export const metadata: Metadata = {
 
 export default async function Calendar() {
   const response = await query({ query: EventCalendarDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events).map((e) => {
+  const events = dataAsArrayOf<EventEntity>(
+    response.events || { data: [] },
+  ).map((e) => {
     const event = e.attributes
     if (!event) return {}
     return {

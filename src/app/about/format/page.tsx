@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default async function FormatPage() {
   const response = await query({ query: FormatDocument })
   const { openspace, bumblebee, butterfly, lawOfTwoFeet, schedule } =
-    attributesAs<Format>(response.format)
+    attributesAs<Format>({ data: response.format?.data ?? {} })
 
   return (
     <Page name="Our format">

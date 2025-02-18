@@ -9,16 +9,18 @@ export const revalidate = 3600
 
 export async function generateStaticParams() {
   const response = await getArticleSlugs()
-  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.articles || { data: [] },
+  )
 
   return articles.map((article) => ({
-    slug: article.attributes?.slug!,
+    slug: article.attributes?.slug,
   }))
 }
 
 export async function generateMetadata(props: SlugParamsProps) {
   const article = await getArticle(props)
-  const images = article.images?.data.map((i) => i.attributes?.url!) as string[]
+  const images = article.images?.data.map((i) => i.attributes?.url) as string[]
 
   return {
     title: `Articles | ${article.title}`,
@@ -29,7 +31,7 @@ export async function generateMetadata(props: SlugParamsProps) {
       type: "article",
       publishedTime: article.publishedAt,
       authors: article.author?.data?.attributes?.name,
-      images: [article.defaultImage.data?.attributes?.url!].concat(images),
+      images: [article.defaultImage.data?.attributes?.url].concat(images),
     },
   }
 }

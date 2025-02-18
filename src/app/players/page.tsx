@@ -14,8 +14,10 @@ export const revalidate = 3600
 
 export default async function Players() {
   const response = await getPlayers(1, 32)
-  const players = dataAsArrayOf<PlayerEntity>(response.players)
-  const pagination = getPagination(response.players)
+  const players = dataAsArrayOf<PlayerEntity>(response.players || { data: [] })
+  const pagination = response.players
+    ? getPagination(response.players)
+    : { total: 0, page: 1, pageSize: 18, pageCount: 1 }
 
   return (
     <>

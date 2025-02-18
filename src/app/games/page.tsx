@@ -14,8 +14,10 @@ export const revalidate = 3600
 
 export default async function Games() {
   const response = await getGames(1, 18)
-  const games = dataAsArrayOf<GameEntity>(response.games)
-  const pagination = getPagination(response.games)
+  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
+  const pagination = response.games
+    ? getPagination(response.games)
+    : { total: 0, page: 1, pageSize: 18, pageCount: 1 }
 
   return (
     <>

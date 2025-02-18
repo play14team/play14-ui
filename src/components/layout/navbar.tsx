@@ -12,12 +12,16 @@ const Navbar = () => {
   }
 
   React.useEffect(() => {
-    let elementId = document.getElementById("navbar")
+    const elementId = document.getElementById("navbar")
     document.addEventListener("scroll", () => {
       if (window.scrollY > 170) {
-        elementId && elementId.classList.add("is-sticky")
+        if (elementId) {
+          elementId.classList.add("is-sticky")
+        }
       } else {
-        elementId && elementId.classList.remove("is-sticky")
+        if (elementId) {
+          elementId.classList.remove("is-sticky")
+        }
       }
     })
     window.scrollTo(0, 0)

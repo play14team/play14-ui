@@ -3,13 +3,16 @@ import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import GameGrid from "../../../../components/games/grid"
 import { GameEntity, GamesDocument } from "../../../../models/graphql"
 
-export default async function GameTag({ params }: { params: { tag: string } }) {
+export default async function GameTag(props: {
+  params: Promise<{ tag: string }>
+}) {
+  const params = await props.params
   const tag = decodeURI(params.tag)
   const response = await query({
     query: GamesDocument,
     variables: { page: 1, pageSize: 1000, tag: tag },
   })
-  const games = dataAsArrayOf<GameEntity>(response.games)
+  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
 
   return (
     <>

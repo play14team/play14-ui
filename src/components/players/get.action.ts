@@ -17,7 +17,7 @@ export async function getPlayers(page: number, pageSize: number) {
 }
 
 export async function getPlayer({ params }: SlugParamsProps) {
-  const { slug } = params
+  const { slug } = await params
   const response = await query({
     query: PlayerDocument,
     variables: { slug },

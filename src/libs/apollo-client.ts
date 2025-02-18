@@ -61,7 +61,9 @@ export async function query<TQuery, TQueryVariables>({
   return data as TQuery
 }
 
-export function attributesAs<TEntity>(result: any) {
+export function attributesAs<TEntity>(result: {
+  data?: { attributes?: unknown }
+}) {
   const attributes = result?.data?.attributes
   if (!attributes)
     throw new Error("Query response does not return expected attributes")
@@ -72,11 +74,11 @@ export function attributesAs<TEntity>(result: any) {
   return entity
 }
 
-export function dataAsArrayOf<TEntity>(result: any) {
+export function dataAsArrayOf<TEntity>(result: { data?: unknown }) {
   return dataAs<TEntity[]>(result)
 }
 
-export function dataAs<TEntity>(result: any) {
+export function dataAs<TEntity>(result: { data?: unknown }) {
   const data = result?.data
   if (!data) throw new Error("Query response does not return expected data")
 
@@ -86,6 +88,6 @@ export function dataAs<TEntity>(result: any) {
   return entity
 }
 
-export function getPagination(result: any) {
+export function getPagination(result: { meta: { pagination: Pagination } }) {
   return result.meta.pagination as Pagination
 }

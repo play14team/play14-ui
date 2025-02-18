@@ -5,7 +5,7 @@ import Link from "next/link"
 
 export default async function Locations() {
   const response = await query({ query: EventNavDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events)
+  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
   const locations = deduplicate(
     events.map((a) => a.attributes?.location?.data?.attributes?.slug),
   )

@@ -14,8 +14,12 @@ export const revalidate = 3600
 
 export default async function Articles() {
   const response = await getArticles(1, 18)
-  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
-  const pagination = getPagination(response.articles)
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.articles || { data: [] },
+  )
+  const pagination = response.articles
+    ? getPagination(response.articles)
+    : { total: 0, page: 1, pageSize: 18, pageCount: 1 }
 
   return (
     <>
