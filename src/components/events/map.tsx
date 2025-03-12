@@ -10,7 +10,7 @@ import Map, {
   MapRef,
   NavigationControl,
   ScaleControl,
-} from "react-map-gl"
+} from "react-map-gl/mapbox"
 
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
 import "mapbox-gl/dist/mapbox-gl.css"
@@ -32,27 +32,31 @@ export default function EventMap({ events }: { events: EventEntity[] }) {
   }
 
   return (
-    <div className="shadow">
-      <Map
-        initialViewState={{
-          latitude: 25,
-          longitude: 45,
-          zoom: 2,
-        }}
-        style={{ width: "100%", height: "800px" }}
-        mapStyle="mapbox://styles/mapbox/streets-v12"
-        mapboxAccessToken={accessToken}
-        onLoad={handleMapLoad}
-        ref={mapRef}
-      >
-        <FullscreenControl />
-        <NavigationControl />
-        <GeolocateControl />
-        <ScaleControl position="bottom-right" />
-        {/* <GeocoderControl mapboxAccessToken={token} position="top-left" /> */}
+    <>
+      <div className="centered pb-5">
+        <p>Total: {events.length}</p>
+      </div>
+      <div className="shadow">
+        <Map
+          initialViewState={{
+            latitude: 25,
+            longitude: 45,
+            zoom: 2,
+          }}
+          style={{ width: "100%", height: "800px" }}
+          mapStyle="mapbox://styles/mapbox/streets-v12"
+          mapboxAccessToken={accessToken}
+          onLoad={handleMapLoad}
+          ref={mapRef}
+        >
+          <FullscreenControl />
+          <NavigationControl />
+          <GeolocateControl />
+          <ScaleControl unit="metric" />
 
-        <EventMarkers events={events} />
-      </Map>
-    </div>
+          <EventMarkers events={events} />
+        </Map>
+      </div>
+    </>
   )
 }
