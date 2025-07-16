@@ -19,7 +19,7 @@ export default function EventMap({ events }: { events: EventEntity[] }) {
     return (
       <span style={{ color: "red" }}>
         Mapbox access token not found. Please add a
-        STRAPI_ADMIN_MAPBOX_ACCESS_TOKEN environment variable and set it with a
+        NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN environment variable and set it with a
         valid Mapbox api token.
       </span>
     )
