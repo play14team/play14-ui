@@ -74,10 +74,6 @@
   "lint-staged": {
     "**/*": "prettier --write --ignore-unknown"
   },
-  "overrides": {
-    "@types/react": "19.0.4",
-    "@types/react-dom": "19.0.2"
-  },
   "packageManager": "pnpm@10.13.1+sha256.0f9ed48d808996ae007835fb5c4641cf9a300def2eddc9e957d9bbe4768c5f28",
   "pnpm": {
     "onlyBuiltDependencies": [
