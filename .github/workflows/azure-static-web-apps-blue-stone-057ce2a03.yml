@@ -44,7 +44,7 @@ jobs:
           output_location: "" # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
         env:
-          NODE_VERSION: 18
+          NODE_VERSION: 22
           STRAPI_API_URL: https://community.play14.org
           STRAPI_API_SECRET: ${{ secrets.STRAPI_API_SECRET }}
           NEXT_SHARP_PATH: node_modules/sharp
