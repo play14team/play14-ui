@@ -1,18 +1,22 @@
 import Filters from "@/components/games/filters"
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import GameGrid from "../../../../components/games/grid"
-import { GameEntity, GamesDocument } from "../../../../models/graphql"
+import {
+  GameEntity,
+  GameEntityResponseCollection,
+  GamesDocument,
+} from "../../../../models/graphql"
 
 export default async function GameTag(props: {
   params: Promise<{ tag: string }>
 }) {
   const params = await props.params
   const tag = decodeURI(params.tag)
-  const response = await query({
+  const response = (await query({
     query: GamesDocument,
     variables: { page: 1, pageSize: 1000, tag: tag },
-  })
-  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
+  })) as { games?: GameEntityResponseCollection }
+  const games = dataAsArrayOf<GameEntity>(response?.games || { data: [] })
 
   return (
     <>

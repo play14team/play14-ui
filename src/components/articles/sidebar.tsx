@@ -2,10 +2,18 @@ import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { ArticleEntity, ArticleSidebarDocument } from "../../models/graphql"
+import {
+  ArticleEntity,
+  ArticleEntityResponseCollection,
+  ArticleSidebarDocument,
+} from "../../models/graphql"
 
 const ArticleSidebar = async () => {
-  const response = await query({ query: ArticleSidebarDocument })
+  const response = (await query({ query: ArticleSidebarDocument })) as {
+    latest?: ArticleEntityResponseCollection
+    categories?: ArticleEntityResponseCollection
+    tags?: ArticleEntityResponseCollection
+  }
   const latest = dataAsArrayOf<ArticleEntity>(response.latest || { data: [] })
   const categories = dataAsArrayOf<ArticleEntity>(
     response.categories || { data: [] },

@@ -1,3 +1,4 @@
+/* eslint-disable */
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 import mapboxgl from "mapbox-gl"
 import React from "react"
@@ -5,7 +6,6 @@ import { useControl } from "react-map-gl/mapbox"
 
 import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
 
-/* eslint-disable complexity,max-statements */
 interface GeocoderControlProps {
   mapboxAccessToken: string
   position?: "top-left" | "top-right" | "bottom-right" | "bottom-left"

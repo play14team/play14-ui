@@ -6,7 +6,9 @@ import { attributesAs, dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   Enum_Componentdefaulthistoryitem_Dateformat,
   History,
+  HistoryEntityResponse,
   PlayerEntity,
+  PlayerEntityResponseCollection,
   StoryDocument,
 } from "@/models/graphql"
 import { Metadata } from "next"
@@ -16,7 +18,10 @@ export const metadata: Metadata = {
 }
 
 export default async function Story() {
-  const response = await query({ query: StoryDocument })
+  const response = (await query({ query: StoryDocument })) as {
+    players?: PlayerEntityResponseCollection
+    history?: HistoryEntityResponse
+  }
   const founders = dataAsArrayOf<PlayerEntity>(
     response?.players || { data: [] },
   )

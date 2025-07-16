@@ -9,14 +9,12 @@
     "lint": "next lint",
     "format": "prettier src --write",
     "codegen": "graphql-codegen --config codegen.ts",
-    "codegen-watch": "npm run codegen --watch",
-    "predev": "npm run codegen",
-    "prebuild": "npm run codegen",
-    "prestart": "npm run codegen"
+    "codegen-watch": "npm run codegen --watch"
   },
   "dependencies": {
     "@apollo/client": "^3.13.8",
     "@apollo/experimental-nextjs-app-support": "^0.11.11",
+    "@graphql-typed-document-node/core": "^3.2.0",
     "@keyv/sqlite": "^4.0.5",
     "@mapbox/mapbox-gl-geocoder": "^5.0.3",
     "@mapbox/mapbox-sdk": "^0.16.1",
@@ -25,6 +23,7 @@
     "graphql": "^16.11.0",
     "html-react-parser": "^5.2.5",
     "ics": "^3.8.1",
+    "keyv": "^5.3.4",
     "lodash": "^4.17.21",
     "mapbox-gl": "^3.13.0",
     "moment": "^2.30.1",
@@ -46,6 +45,7 @@
     "zod": "^3.25.74"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.3.1",
     "@graphql-codegen/cli": "^5.0.7",
     "@graphql-codegen/client-preset": "^4.8.3",
     "@types/country-data": "^0.0.5",

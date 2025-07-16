@@ -13,9 +13,12 @@ importers:
       "@apollo/experimental-nextjs-app-support":
         specifier: ^0.11.11
         version: 0.11.11(@apollo/client@3.13.8(@types/react@19.0.10)(graphql-ws@6.0.4(graphql@16.11.0)(ws@8.18.0))(graphql@16.11.0)(react-dom@19.0.0(react@19.0.0))(react@19.0.0))(graphql@16.11.0)(next@15.2.2(@babel/core@7.26.9)(react-dom@19.0.0(react@19.0.0))(react@19.0.0)(sass@1.89.2))(react-dom@19.0.0(react@19.0.0))(react@19.0.0)
+      "@graphql-typed-document-node/core":
+        specifier: ^3.2.0
+        version: 3.2.0(graphql@16.11.0)
       "@keyv/sqlite":
         specifier: ^4.0.5
-        version: 4.0.5(keyv@4.5.4)
+        version: 4.0.5(keyv@5.3.4)
       "@mapbox/mapbox-gl-geocoder":
         specifier: ^5.0.3
         version: 5.0.3
@@ -37,6 +40,9 @@ importers:
       ics:
         specifier: ^3.8.1
         version: 3.8.1
+      keyv:
+        specifier: ^5.3.4
+        version: 5.3.4
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -95,6 +101,9 @@ importers:
         specifier: ^3.25.74
         version: 3.25.74
     devDependencies:
+      "@eslint/eslintrc":
+        specifier: ^3.3.1
+        version: 3.3.1
       "@graphql-codegen/cli":
         specifier: ^5.0.7
         version: 5.0.7(@parcel/watcher@2.5.1)(@types/node@22.16.0)(encoding@0.1.13)(graphql@16.11.0)(typescript@5.8.3)
@@ -1123,6 +1132,12 @@ packages:
     resolution:
       {
         integrity: sha512-uw6guiW/gcAGPDhLmd77/6lW8QLeiV5RUTsAX46Db6oLhGaVj4lhnPwb184s1bkc8kdVg/+h988dro8GRDpmYQ==,
+      }
+
+  "@keyv/serialize@1.0.3":
+    resolution:
+      {
+        integrity: sha512-qnEovoOp5Np2JDGonIDL6Ayihw0RhnRh6vxPuHo4RDn1UOzwEo4AeIfpL6UGIrsceWrCMiVPgwRjbHu4vYFc3g==,
       }
 
   "@keyv/sqlite@4.0.5":
@@ -2271,6 +2286,12 @@ packages:
     resolution:
       {
         integrity: sha512-EHcyIPBQ4BSGlvjB16k5KgAJ27CIsHY/2JBmCRReo48y9rQ3MaUzWX3KVlBa4U7MyX02HdVj0K7C3WaB3ju7FQ==,
+      }
+
+  buffer@6.0.3:
+    resolution:
+      {
+        integrity: sha512-FTiCpNxtwiZZHEZbcbTIcZjERVICn9yq/pDFkTl95/AxzD1naBctN7YO68riM/gLSDY7sdrMby8hofADYuuqOA==,
       }
 
   busboy@1.6.0:
@@ -4665,6 +4686,12 @@ packages:
     resolution:
       {
         integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==,
+      }
+
+  keyv@5.3.4:
+    resolution:
+      {
+        integrity: sha512-ypEvQvInNpUe+u+w8BIcPkQvEqXquyyibWE/1NB5T2BTzIpS5cGEV1LZskDzPSTvNAaT4+5FutvzlvnkxOSKlw==,
       }
 
   kind-of@6.0.3:
@@ -7845,7 +7872,7 @@ snapshots:
   "@eslint/eslintrc@3.3.1":
     dependencies:
       ajv: 6.12.6
-      debug: 4.4.0
+      debug: 4.4.1
       espree: 10.4.0
       globals: 14.0.0
       ignore: 5.3.2
@@ -8448,9 +8475,13 @@ snapshots:
       "@jridgewell/resolve-uri": 3.1.2
       "@jridgewell/sourcemap-codec": 1.5.4
 
-  "@keyv/sqlite@4.0.5(keyv@4.5.4)":
+  "@keyv/serialize@1.0.3":
     dependencies:
-      keyv: 4.5.4
+      buffer: 6.0.3
+
+  "@keyv/sqlite@4.0.5(keyv@5.3.4)":
+    dependencies:
+      keyv: 5.3.4
       sqlite3: 5.1.7
     transitivePeerDependencies:
       - bluebird
@@ -8827,7 +8858,7 @@ snapshots:
     dependencies:
       "@typescript-eslint/typescript-estree": 8.26.1(typescript@5.8.3)
       "@typescript-eslint/utils": 8.26.1(eslint@9.30.1(jiti@2.4.2))(typescript@5.8.3)
-      debug: 4.4.0
+      debug: 4.4.1
       eslint: 9.30.1(jiti@2.4.2)
       ts-api-utils: 2.0.1(typescript@5.8.3)
       typescript: 5.8.3
@@ -8840,7 +8871,7 @@ snapshots:
     dependencies:
       "@typescript-eslint/types": 8.26.1
       "@typescript-eslint/visitor-keys": 8.26.1
-      debug: 4.4.0
+      debug: 4.4.1
       fast-glob: 3.3.3
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -9123,6 +9154,11 @@ snapshots:
       node-int64: 0.4.0
 
   buffer@5.7.1:
+    dependencies:
+      base64-js: 1.5.1
+      ieee754: 1.2.1
+
+  buffer@6.0.3:
     dependencies:
       base64-js: 1.5.1
       ieee754: 1.2.1
@@ -10702,6 +10738,10 @@ snapshots:
   keyv@4.5.4:
     dependencies:
       json-buffer: 3.0.1
+
+  keyv@5.3.4:
+    dependencies:
+      "@keyv/serialize": 1.0.3
 
   kind-of@6.0.3: {}
 

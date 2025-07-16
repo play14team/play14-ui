@@ -1,7 +1,11 @@
 import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import { attributesAs, query } from "@/libs/apollo-client"
-import { Hosting, HostingDocument } from "@/models/graphql"
+import {
+  Hosting,
+  HostingDocument,
+  HostingEntityResponse,
+} from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -9,7 +13,9 @@ export const metadata: Metadata = {
 }
 
 export default async function HostingPage() {
-  const response = await query({ query: HostingDocument })
+  const response = (await query({ query: HostingDocument })) as {
+    hosting?: HostingEntityResponse
+  }
   const hosting = attributesAs<Hosting>({ data: response.hosting?.data ?? {} })
 
   return (

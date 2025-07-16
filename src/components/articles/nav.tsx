@@ -2,6 +2,7 @@ import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   Article,
   ArticleEntity,
+  ArticleEntityResponseCollection,
   ArticleNavDocument,
   UploadFile,
 } from "../../models/graphql"
@@ -12,7 +13,9 @@ export default async function ArticlesNavigator({
 }: {
   current: string
 }) {
-  const response = await query({ query: ArticleNavDocument })
+  const response = (await query({ query: ArticleNavDocument })) as {
+    articles?: ArticleEntityResponseCollection
+  }
   const articles = dataAsArrayOf<ArticleEntity>(
     response.articles || { data: [] },
   )

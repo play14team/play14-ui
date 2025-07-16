@@ -2,14 +2,16 @@ import GameDetails from "@/components/games/details"
 import Page from "@/components/layout/page"
 import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import { GameEntity } from "@/models/graphql"
+import { GameEntity, GameEntityResponseCollection } from "@/models/graphql"
 import { getGame, getGameSlugs } from "../../../components/games/get.action"
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const response = await getGameSlugs()
-  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
+  const response = (await getGameSlugs()) as {
+    games?: GameEntityResponseCollection
+  }
+  const games = dataAsArrayOf<GameEntity>(response?.games || { data: [] })
 
   return games.map((game) => ({
     slug: game.attributes?.slug,

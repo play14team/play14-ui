@@ -1,12 +1,18 @@
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import { capitalizeFirstLetter } from "@/libs/utils"
-import { ArticleEntity, ArticleNavDocument } from "@/models/graphql"
+import {
+  ArticleEntity,
+  ArticleEntityResponseCollection,
+  ArticleNavDocument,
+} from "@/models/graphql"
 import Link from "next/link"
 
 export default async function Categories() {
-  const response = await query({ query: ArticleNavDocument })
+  const response = (await query({ query: ArticleNavDocument })) as {
+    articles?: ArticleEntityResponseCollection
+  }
   const articles = dataAsArrayOf<ArticleEntity>(
-    response.articles || { data: [] },
+    response?.articles || { data: [] },
   )
 
   const categories = [
