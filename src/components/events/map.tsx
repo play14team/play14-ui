@@ -1,34 +1,28 @@
 "use client"
 
-import EventMarkers from "@/components/events/markers"
 import { EventEntity } from "@/models/graphql"
-import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
-import { useRef } from "react"
+
 import Map, {
   FullscreenControl,
   GeolocateControl,
-  MapRef,
   NavigationControl,
-  ScaleControl,
 } from "react-map-gl/mapbox"
+import GeocoderControl from "../map/geocoder"
 
-import "@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css"
 import "mapbox-gl/dist/mapbox-gl.css"
+import EventMarkers from "./markers"
 
-const accessToken = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN || ""
+const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
 export default function EventMap({ events }: { events: EventEntity[] }) {
-  const mapRef = useRef<MapRef | null>(null)
-
-  const handleMapLoad = () => {
-    if (mapRef.current) {
-      const map = mapRef.current.getMap()
-      const mapboxGeocoder = new MapboxGeocoder({
-        marker: false,
-        accessToken: accessToken,
-      })
-      map.addControl(mapboxGeocoder, "top-left")
-    }
+  if (!TOKEN) {
+    return (
+      <span style={{ color: "red" }}>
+        Mapbox access token not found. Please add a
+        STRAPI_ADMIN_MAPBOX_ACCESS_TOKEN environment variable and set it with a
+        valid Mapbox api token.
+      </span>
+    )
   }
 
   return (
@@ -45,15 +39,14 @@ export default function EventMap({ events }: { events: EventEntity[] }) {
           }}
           style={{ width: "100%", height: "800px" }}
           mapStyle="mapbox://styles/mapbox/streets-v12"
-          mapboxAccessToken={accessToken}
-          onLoad={handleMapLoad}
-          ref={mapRef}
+          mapboxAccessToken={TOKEN}
+          attributionControl={false}
         >
+          {/* Map Controls */}
           <FullscreenControl />
           <NavigationControl />
           <GeolocateControl />
-          <ScaleControl unit="metric" />
-
+          <GeocoderControl mapboxAccessToken={TOKEN} position="top-left" />
           <EventMarkers events={events} />
         </Map>
       </div>

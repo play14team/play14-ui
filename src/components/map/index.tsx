@@ -6,7 +6,7 @@ import Map, {
   Marker,
   NavigationControl,
   Popup,
-} from "react-map-gl"
+} from "react-map-gl/mapbox"
 
 interface MapViewProps {
   location?: {

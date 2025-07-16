@@ -1,6 +1,6 @@
 import { EventEntity } from "@/models/graphql"
 import { useMemo, useState } from "react"
-import { Marker } from "react-map-gl"
+import { Marker } from "react-map-gl/mapbox"
 import EventPopup, { mapColor } from "./popup"
 
 export default function EventMarkers({ events }: { events: EventEntity[] }) {
