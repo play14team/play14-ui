@@ -6,19 +6,21 @@ import Map, {
   Marker,
   NavigationControl,
   Popup,
-} from "react-map-gl"
+} from "react-map-gl/mapbox"
 
-const MapView = ({
-  location,
-  height,
-  zoom,
-  popup,
-}: {
-  location?: any
+interface MapViewProps {
+  location?: {
+    geometry: {
+      coordinates: [number, number]
+    }
+    place_name: string
+  }
   height?: string
   zoom?: number
   popup?: boolean
-}) => {
+}
+
+const MapView = ({ location, height, zoom, popup }: MapViewProps) => {
   const point = location ? location.geometry : null
   const longitude = point ? point.coordinates[0] : 10
   const latitude = point ? point.coordinates[1] : 40

@@ -11,7 +11,6 @@ import EventTime from "./time"
 
 const EventSidebar = ({
   event,
-  participants,
 }: {
   event: Event
   participants: PlayerEntity[]

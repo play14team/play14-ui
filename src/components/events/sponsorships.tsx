@@ -1,4 +1,4 @@
-import { ComponentEventsSponsorship, Maybe } from "../../models/graphql"
+import { ComponentEventsSponsorship } from "../../models/graphql"
 import EventSponsor from "./sponsor"
 
 const EventSponsorships = (props: {

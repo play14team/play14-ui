@@ -2,15 +2,18 @@
 
 import { useIntersection } from "@/hooks/useIntersection"
 import { GameEntity, Pagination } from "@/models/graphql"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { RefObject, useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
 import { getGames } from "./get.action"
 import GameGrid from "./grid"
 
 export default function LoadMore({ pagination }: { pagination: Pagination }) {
   const [games, setGames] = useState<GameEntity[]>([])
-  const triggerRef = useRef(null)
-  const isVisible = useIntersection(triggerRef, "0px")
+  const triggerRef = useRef<HTMLDivElement>(null)
+  const isVisible = useIntersection(
+    triggerRef as RefObject<HTMLDivElement>,
+    "0px",
+  )
   const callback = useCallback(loadMore, [pagination.page, pagination.pageSize])
 
   useEffect(() => {

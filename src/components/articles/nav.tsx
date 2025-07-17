@@ -2,6 +2,7 @@ import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import {
   Article,
   ArticleEntity,
+  ArticleEntityResponseCollection,
   ArticleNavDocument,
   UploadFile,
 } from "../../models/graphql"
@@ -12,8 +13,12 @@ export default async function ArticlesNavigator({
 }: {
   current: string
 }) {
-  const response = await query({ query: ArticleNavDocument })
-  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
+  const response = (await query({ query: ArticleNavDocument })) as {
+    articles?: ArticleEntityResponseCollection
+  }
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.articles || { data: [] },
+  )
   const index = articles.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? articles[index - 1] : null
   const next = index < articles.length - 1 ? articles[index + 1] : null

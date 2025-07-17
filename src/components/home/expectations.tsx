@@ -10,7 +10,7 @@ export default async function Expectations({
 }) {
   const response = await getExpectations({ type })
   const expectations = dataAsArrayOf<ExpectationEntity>(
-    response?.data?.expectations,
+    response?.data?.expectations || { data: [] },
   )
 
   return (
@@ -25,7 +25,9 @@ export default async function Expectations({
                     <i className={expectation.attributes?.icon}></i>
                   </div>
                   <h3>{expectation.attributes?.title}</h3>
-                  <HtmlContent>{expectation.attributes?.content!}</HtmlContent>
+                  <HtmlContent>
+                    {expectation.attributes?.content || ""}
+                  </HtmlContent>
                 </div>
               </div>
             ))}

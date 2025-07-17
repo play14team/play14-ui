@@ -2,7 +2,7 @@ import Filters from "@/components/players/filters"
 import PlayerGrid from "@/components/players/grid"
 import LoadMore from "@/components/players/load-more"
 import { dataAsArrayOf, getPagination } from "@/libs/apollo-client"
-import { PlayerEntity } from "@/models/graphql"
+import { PlayerEntity, PlayerEntityResponseCollection } from "@/models/graphql"
 import { Metadata } from "next"
 import { getPlayers } from "../../components/players/get.action"
 
@@ -13,9 +13,13 @@ export const metadata: Metadata = {
 export const revalidate = 3600
 
 export default async function Players() {
-  const response = await getPlayers(1, 32)
-  const players = dataAsArrayOf<PlayerEntity>(response.players)
-  const pagination = getPagination(response.players)
+  const response = (await getPlayers(1, 32)) as {
+    players?: PlayerEntityResponseCollection
+  }
+  const players = dataAsArrayOf<PlayerEntity>(response?.players || { data: [] })
+  const pagination = response.players
+    ? getPagination(response.players)
+    : { total: 0, page: 1, pageSize: 18, pageCount: 1 }
 
   return (
     <>

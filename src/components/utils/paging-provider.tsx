@@ -14,9 +14,9 @@ export default function PagingProvider({
 }: PaginationProps) {
   return (
     <>
-      <Paging pagination={pagination} onNextPage={(e) => {}} />
+      <Paging pagination={pagination} onNextPage={() => {}} />
       {children}
-      <Paging pagination={pagination} onNextPage={(e) => {}} />
+      <Paging pagination={pagination} onNextPage={() => {}} />
     </>
   )
 }

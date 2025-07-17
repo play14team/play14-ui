@@ -6,7 +6,7 @@ import Link from "next/link"
 
 export default async function Categories() {
   const response = await query({ query: GameNavDocument })
-  const games = dataAsArrayOf<GameEntity>(response.games)
+  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
   const categories = deduplicate(
     games.map((g) => g.attributes?.category.toLowerCase()),
   )

@@ -2,7 +2,12 @@ import Expectations from "@/components/home/expectations"
 import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import { attributesAs, query } from "@/libs/apollo-client"
-import { Enum_Expectation_Type, Format, FormatDocument } from "@/models/graphql"
+import {
+  Enum_Expectation_Type,
+  Format,
+  FormatDocument,
+  FormatEntityResponse,
+} from "@/models/graphql"
 import { Metadata } from "next"
 import Image from "next/image"
 
@@ -11,9 +16,11 @@ export const metadata: Metadata = {
 }
 
 export default async function FormatPage() {
-  const response = await query({ query: FormatDocument })
+  const response = (await query({ query: FormatDocument })) as {
+    format?: FormatEntityResponse
+  }
   const { openspace, bumblebee, butterfly, lawOfTwoFeet, schedule } =
-    attributesAs<Format>(response.format)
+    attributesAs<Format>({ data: response.format?.data ?? {} })
 
   return (
     <Page name="Our format">

@@ -24,7 +24,7 @@ const Paging = ({ pagination, onNextPage }: PagingProps) => {
           id={`page-${index}`}
           href="#"
           className="page-numbers"
-          onClick={(e) => onNextPage(index)}
+          onClick={() => onNextPage(index)}
         >
           {index}
         </Link>
@@ -55,7 +55,7 @@ const Paging = ({ pagination, onNextPage }: PagingProps) => {
               id="prev"
               href="#"
               className="prev page-numbers"
-              onClick={(e) => {
+              onClick={() => {
                 onNextPage(pagination.page - 1)
               }}
             >
@@ -78,7 +78,7 @@ const Paging = ({ pagination, onNextPage }: PagingProps) => {
               id="next"
               href="#"
               className="next page-numbers"
-              onClick={(e) => {
+              onClick={() => {
                 onNextPage(pagination.page + 1)
               }}
             >

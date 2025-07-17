@@ -20,14 +20,14 @@ const UpcomingEventTimer = ({ date }: TimerProps) => {
   })
 
   const commingSoonTime = () => {
-    let endTimeParse = Date.parse(date.toString()) / 1000
-    let now = new Date()
-    let nowParse = Date.parse(now.toString()) / 1000
-    let timeLeft = endTimeParse - nowParse
-    let days = Math.floor(timeLeft / 86400)
-    let hours = Math.floor((timeLeft - days * 86400) / 3600)
-    let minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60)
-    let seconds = Math.floor(
+    const endTimeParse = Date.parse(date.toString()) / 1000
+    const now = new Date()
+    const nowParse = Date.parse(now.toString()) / 1000
+    const timeLeft = endTimeParse - nowParse
+    const days = Math.floor(timeLeft / 86400)
+    const hours = Math.floor((timeLeft - days * 86400) / 3600)
+    const minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60)
+    const seconds = Math.floor(
       timeLeft - days * 86400 - hours * 3600 - minutes * 60,
     )
 

@@ -2,18 +2,21 @@ import Filters from "@/components/events/filters"
 import Country from "@/components/layout/country"
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import EventGrid from "../../../../components/events/grid"
-import { EventEntity, EventsDocument } from "../../../../models/graphql"
+import {
+  EventEntity,
+  EventEntityResponseCollection,
+  EventsDocument,
+} from "../../../../models/graphql"
 
-export default async function EventCountry({
-  params,
-}: {
-  params: { country: string }
+export default async function EventCountry(props: {
+  params: Promise<{ country: string }>
 }) {
-  const response = await query({
+  const params = await props.params
+  const response = (await query({
     query: EventsDocument,
     variables: { page: 1, pageSize: 1000, country: params.country },
-  })
-  const events = dataAsArrayOf<EventEntity>(response.events)
+  })) as { events?: EventEntityResponseCollection }
+  const events = dataAsArrayOf<EventEntity>(response?.events || { data: [] })
 
   return (
     <>

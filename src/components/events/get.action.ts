@@ -18,7 +18,7 @@ export async function getEvents(page: number, pageSize: number) {
 }
 
 export async function getEvent({ params }: SlugParamsProps) {
-  const { slug } = params
+  const { slug } = await params
   const response = await query({
     query: EventDocument,
     variables: { slug },

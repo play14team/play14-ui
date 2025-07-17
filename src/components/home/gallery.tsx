@@ -4,7 +4,7 @@ import Gallery from "../layout/gallery"
 
 const HomeGallery = async () => {
   const response = await query({ query: HomeDocument })
-  const home = attributesAs<Home>(response.home)
+  const home = attributesAs<Home>({ data: response.home?.data ?? {} })
   const images = home.images.data
 
   return (

@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Popup } from "react-map-gl"
+import { Popup } from "react-map-gl/mapbox"
 import { Enum_Event_Status, EventEntity } from "../../models/graphql"
 import EventDate from "./date"
 
@@ -27,7 +27,7 @@ const EventPopup = ({
       style={{ minWidth: "200px" }}
     >
       <Link href={venue.website || "#"} target="_blank">
-        <b>{venue.name}</b>
+        <h6>{venue.name}</h6>
       </Link>
       <br />
       {venue.location?.place_name}

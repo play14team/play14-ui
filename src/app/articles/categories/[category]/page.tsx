@@ -1,18 +1,23 @@
 import Filters from "@/components/articles/filters"
 import { dataAsArrayOf, query } from "@/libs/apollo-client"
 import ArticleGrid from "../../../../components/articles/grid"
-import { ArticleEntity, ArticlesDocument } from "../../../../models/graphql"
+import {
+  ArticleEntity,
+  ArticleEntityResponseCollection,
+  ArticlesDocument,
+} from "../../../../models/graphql"
 
-export default async function ArticleCategory({
-  params,
-}: {
-  params: { category: string }
+export default async function ArticleCategory(props: {
+  params: Promise<{ category: string }>
 }) {
-  const response = await query({
+  const params = await props.params
+  const response = (await query({
     query: ArticlesDocument,
     variables: { page: 1, pageSize: 1000, category: params.category },
-  })
-  const articles = dataAsArrayOf<ArticleEntity>(response.articles)
+  })) as { articles?: ArticleEntityResponseCollection }
+  const articles = dataAsArrayOf<ArticleEntity>(
+    response.articles || { data: [] },
+  )
 
   return (
     <>

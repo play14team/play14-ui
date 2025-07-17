@@ -13,7 +13,7 @@ export default async function PlayersNavigator({
   current: string
 }) {
   const response = await query({ query: PlayerNavDocument })
-  const players = dataAsArrayOf<PlayerEntity>(response.players)
+  const players = dataAsArrayOf<PlayerEntity>(response.players || { data: [] })
   const index = players.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? players[index - 1] : null
   const next = index < players.length - 1 ? players[index + 1] : null

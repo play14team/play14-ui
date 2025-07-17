@@ -13,7 +13,7 @@ export default async function EventsNavigator({
   current: string
 }) {
   const response = await query({ query: EventNavDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events)
+  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
   const index = events.findIndex((a) => a.attributes?.slug == current)
   const previous = index > 0 ? events[index - 1] : null
   const next = index < events.length - 1 ? events[index + 1] : null
