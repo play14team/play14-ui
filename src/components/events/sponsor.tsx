@@ -19,7 +19,7 @@ const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {
               width={500}
               height={500}
               placeholder="blur"
-              blurDataURL={(logo && logo.blurhash) || undefined}
+              blurDataURL={logo.blurhash || process.env.DEFAULT_BLURHASH}
               style={{ borderRadius: "10px" }}
               unoptimized
             />

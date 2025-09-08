@@ -18,9 +18,9 @@ const GameCard = ({ game }: { game: Game }) => {
               <Image
                 src={image.url}
                 alt={image.name}
-                width={image.width!}
-                height={image.height!}
-                blurDataURL={image.blurhash!}
+                width={image.width || 400}
+                height={image.height || 400}
+                blurDataURL={image.blurhash || process.env.DEFAULT_BLURHASH}
                 placeholder="blur"
                 sizes="100vw"
                 style={{
@@ -67,7 +67,7 @@ const GameCard = ({ game }: { game: Game }) => {
                         priority
                         placeholder="blur"
                         blurDataURL={
-                          (playerImage && playerImage.blurhash) || undefined
+                          playerImage.blurhash || process.env.DEFAULT_BLURHASH
                         }
                         className="rounded-circle"
                         alt={game.name}

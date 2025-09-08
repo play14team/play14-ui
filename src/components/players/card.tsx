@@ -22,7 +22,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 alt={avatar.name}
                 width={400}
                 height={400}
-                blurDataURL={avatar.blurhash!}
+                blurDataURL={avatar.blurhash || process.env.DEFAULT_BLURHASH}
                 placeholder="blur"
                 sizes="100vw"
                 className="shadow"

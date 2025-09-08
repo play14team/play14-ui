@@ -86,7 +86,10 @@ const GameSidebar = (props: { game: Game }) => {
                       height={200}
                       priority
                       placeholder="blur"
-                      blurDataURL={(avatar && avatar.blurhash) || undefined}
+                      blurDataURL={
+                        (avatar && avatar.blurhash) ||
+                        process.env.DEFAULT_BLURHASH
+                      }
                       unoptimized
                     />
                     <h5 className="centered pt-2">{player?.name}</h5>
@@ -114,7 +117,10 @@ const GameSidebar = (props: { game: Game }) => {
                       height={200}
                       priority
                       placeholder="blur"
-                      blurDataURL={(avatar && avatar.blurhash) || undefined}
+                      blurDataURL={
+                        (avatar && avatar.blurhash) ||
+                        process.env.DEFAULT_BLURHASH
+                      }
                       unoptimized
                     />
                     <h5 className="centered pt-2">{player?.name}</h5>

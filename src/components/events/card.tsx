@@ -32,9 +32,9 @@ const EventCard = ({ event }: { event: Event }) => {
               <Image
                 src={image.url}
                 alt={image.name}
-                width={image.width!}
-                height={image.height!}
-                blurDataURL={image.blurhash || ""}
+                width={image.width || 400}
+                height={image.height || 400}
+                blurDataURL={image.blurhash || process.env.DEFAULT_BLURHASH}
                 placeholder="blur"
                 sizes="100vw"
                 style={{
