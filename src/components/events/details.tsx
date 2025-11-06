@@ -7,7 +7,7 @@ import {
   Enum_Event_Status,
   Event,
   EventLocation,
-  PlayerEntity,
+  Player,
   UploadFile,
   Venue,
 } from "../../models/graphql"
@@ -20,13 +20,15 @@ import EventTabs from "./tabs"
 import UpcomingEventTimer from "./timer"
 
 export default function EventDetails({ event }: { event: Event }) {
-  const defaultImage = event.defaultImage.data?.attributes as UploadFile
-  const eventLocation = event.location?.data?.attributes as EventLocation
-  const venue = event.venue?.data?.attributes as Venue
-  const country = clm.getCountryNameByAlpha2(eventLocation.country!)
-  const players = event.players?.data as PlayerEntity[]
-  const hosts = event.hosts?.data as PlayerEntity[]
-  const mentors = event.mentors?.data as PlayerEntity[]
+  const defaultImage = event.defaultImage as UploadFile
+  const eventLocation = event.location as EventLocation
+  const venue = event.venue as Venue
+  const country = eventLocation?.country
+    ? clm.getCountryNameByAlpha2(eventLocation.country)
+    : undefined
+  const players = (event.players || []) as Player[]
+  const hosts = (event.hosts || []) as Player[]
+  const mentors = (event.mentors || []) as Player[]
   const participants = deduplicate(players, hosts, mentors)
 
   return (

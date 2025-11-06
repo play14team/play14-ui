@@ -1,27 +1,23 @@
 query Games($page: Int!, $pageSize: Int!, $category: String, $tag: String) {
-  games(
+  games_connection(
     sort: "name:asc"
     pagination: { page: $page, pageSize: $pageSize }
     filters: { category: { eqi: $category }, tags: { value: { eqi: $tag } } }
   ) {
-    data {
-      id
-      attributes {
-        ...GameItem
-      }
+    nodes {
+      ...GameItem
     }
-    meta {
-      pagination {
-        page
-        pageSize
-        total
-        pageCount
-      }
+    pageInfo {
+      page
+      pageSize
+      total
+      pageCount
     }
   }
 }
 
 fragment GameItem on Game {
+  documentId
   slug
   name
   summary
@@ -29,36 +25,19 @@ fragment GameItem on Game {
   scale
   category
   proposedBy {
-    data {
-      id
-      attributes {
-        name
-        slug
-        avatar {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+    name
+    slug
+    avatar {
+      name
+      url
+      width
+      height
     }
   }
   defaultImage {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
 }

@@ -1,15 +1,13 @@
-import { dataAsArrayOf } from "@/libs/apollo-client"
 import moment from "moment"
-import { EventEntity } from "../../models/graphql"
+import { Event } from "../../models/graphql"
 import EventGrid from "../events/grid"
 import { getUpcomingEvents } from "./get-upcoming-events.action"
 
 const UpcomingEvents = async () => {
   const today = moment().format()
-  const response = await getUpcomingEvents({ today })
-  const events = dataAsArrayOf<EventEntity>(
-    response?.data?.events || { data: [] },
-  )
+  const result = await getUpcomingEvents({ today })
+  // In Strapi 5, events is directly an array
+  const events = (result?.data?.events || []) as Event[]
 
   return (
     <div className="pt-100">

@@ -1,39 +1,21 @@
 query Testimonials {
-  testimonials(pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        content
+  testimonials(pagination: { limit: 5000 }) {
+    documentId
+    content
+    url
+    audio {
+      name
+      url
+    }
+    author {
+      name
+      slug
+      tagline
+      avatar {
+        name
         url
-        audio {
-          data {
-            attributes {
-              name
-              url
-            }
-          }
-        }
-        author {
-          data {
-            attributes {
-              name
-              slug
-              tagline
-              avatar {
-                data {
-                  id
-                  attributes {
-                    name
-                    url
-                    blurhash
-                    width
-                    height
-                  }
-                }
-              }
-            }
-          }
-        }
+        width
+        height
       }
     }
   }

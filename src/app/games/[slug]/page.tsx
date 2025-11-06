@@ -1,26 +1,27 @@
 import GameDetails from "@/components/games/details"
 import Page from "@/components/layout/page"
-import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import { GameEntity, GameEntityResponseCollection } from "@/models/graphql"
+import type { Game } from "@/models/graphql"
 import { getGame, getGameSlugs } from "../../../components/games/get.action"
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
   const response = (await getGameSlugs()) as {
-    games?: GameEntityResponseCollection
+    games?: Game[]
   }
-  const games = dataAsArrayOf<GameEntity>(response?.games || { data: [] })
+  const games = response?.games || []
 
   return games.map((game) => ({
-    slug: game.attributes?.slug,
+    slug: game.slug,
   }))
 }
 
 export async function generateMetadata(props: SlugParamsProps) {
   const game = await getGame(props)
-  const images = game.images.data.map((i) => i.attributes?.url) as string[]
+  const images = (game.images?.filter(Boolean) as any)?.map(
+    (i: any) => i.url,
+  ) as string[]
 
   return {
     title: `Games | ${game.name}`,
@@ -30,8 +31,10 @@ export async function generateMetadata(props: SlugParamsProps) {
       description: game.summary,
       type: "article",
       publishedTime: game.publishedAt,
-      authors: game.documentedBy?.data.map((p) => p.attributes?.name),
-      images: [game.defaultImage.data?.attributes?.url].concat(images),
+      authors: (game.documentedBy?.filter(Boolean) as any)?.map(
+        (p: any) => p.name,
+      ),
+      images: [game.defaultImage?.url].concat(images),
     },
   }
 }

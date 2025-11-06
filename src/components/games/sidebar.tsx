@@ -49,10 +49,8 @@ const GameSidebar = (props: { game: Game }) => {
                 <i className="bx bx-map"></i>
               </div>
               <span>First played</span>
-              <Link
-                href={`/events/${game.firstPlayedAt?.data?.attributes?.slug}`}
-              >
-                {game.firstPlayedAt.data?.attributes?.name}
+              <Link href={`/events/${game.firstPlayedAt?.slug}`}>
+                {game.firstPlayedAt.name}
               </Link>
             </li>
           )}
@@ -72,11 +70,11 @@ const GameSidebar = (props: { game: Game }) => {
               <i className="bx bx-bulb"></i>
             </div>
             <span>Proposed by</span>
-            {game.proposedBy?.data &&
-              game.proposedBy.data.map((p) => {
-                const player = p.attributes
-                const url = `/players/${player?.slug}`
-                const avatar = player?.avatar?.data?.attributes
+            {game.proposedBy &&
+              game.proposedBy.map((p) => {
+                if (!p) return null
+                const url = `/players/${p.slug}`
+                const avatar = p.avatar
                 return (
                   <Link key={p.id} href={url} className="centered pt-3">
                     <Image
@@ -85,14 +83,9 @@ const GameSidebar = (props: { game: Game }) => {
                       width={200}
                       height={200}
                       priority
-                      placeholder="blur"
-                      blurDataURL={
-                        (avatar && avatar.blurhash) ||
-                        process.env.DEFAULT_BLURHASH
-                      }
                       unoptimized
                     />
-                    <h5 className="centered pt-2">{player?.name}</h5>
+                    <h5 className="centered pt-2">{p.name}</h5>
                   </Link>
                 )
               })}
@@ -103,11 +96,11 @@ const GameSidebar = (props: { game: Game }) => {
               <i className="bx bx-edit"></i>
             </div>
             <span>Documented by</span>
-            {game.documentedBy?.data &&
-              game.documentedBy.data.map((p) => {
-                const player = p.attributes
-                const url = `/players/${player?.slug}`
-                const avatar = player?.avatar?.data?.attributes
+            {game.documentedBy &&
+              game.documentedBy.map((p) => {
+                if (!p) return null
+                const url = `/players/${p.slug}`
+                const avatar = p.avatar
                 return (
                   <Link key={p.id} href={url} className="centered pt-3">
                     <Image
@@ -116,14 +109,9 @@ const GameSidebar = (props: { game: Game }) => {
                       width={200}
                       height={200}
                       priority
-                      placeholder="blur"
-                      blurDataURL={
-                        (avatar && avatar.blurhash) ||
-                        process.env.DEFAULT_BLURHASH
-                      }
                       unoptimized
                     />
-                    <h5 className="centered pt-2">{player?.name}</h5>
+                    <h5 className="centered pt-2">{p.name}</h5>
                   </Link>
                 )
               })}
@@ -131,18 +119,18 @@ const GameSidebar = (props: { game: Game }) => {
         </ul>
       </div>
 
-      {game.resources && game.resources.data.length > 0 && (
+      {game.resources && game.resources.length > 0 && (
         <div className="download-file">
           <h3>Resources</h3>
 
           <ul>
-            {game.resources?.data.map((r) => {
-              const resource = r.attributes
-              const icon = `bx bxs-file-${resource?.ext}`
+            {game.resources?.map((r) => {
+              if (!r) return null
+              const icon = `bx bxs-file-${r.ext}`
               return (
                 <li key={r.id}>
-                  <a href={resource?.url} target="_blank" rel="noreferrer">
-                    {resource?.name} <i className={icon}></i>
+                  <a href={r.url} target="_blank" rel="noreferrer">
+                    {r.name} <i className={icon}></i>
                   </a>
                 </li>
               )

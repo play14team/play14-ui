@@ -1,63 +1,42 @@
 query Articles($page: Int!, $pageSize: Int!, $category: String, $tag: String) {
-  articles(
+  articles_connection(
     sort: "publishedAt:desc"
     pagination: { page: $page, pageSize: $pageSize }
     filters: { category: { eqi: $category }, tags: { value: { eqi: $tag } } }
   ) {
-    data {
-      id
-      attributes {
-        ...ArticleItem
-      }
+    nodes {
+      ...ArticleItem
     }
-    meta {
-      pagination {
-        page
-        pageSize
-        total
-        pageCount
-      }
+    pageInfo {
+      page
+      pageSize
+      total
+      pageCount
     }
   }
 }
 
 fragment ArticleItem on Article {
+  documentId
   slug
   title
   summary
   category
   publishedAt
   defaultImage {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
   author {
-    data {
-      id
-      attributes {
-        slug
-        name
-        avatar {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+    slug
+    name
+    avatar {
+      name
+      url
+      width
+      height
     }
   }
 }

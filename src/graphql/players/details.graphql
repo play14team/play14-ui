@@ -1,14 +1,11 @@
 query Player($slug: String!) {
   players(filters: { slug: { eq: $slug } }) {
-    data {
-      attributes {
-        ...PlayerDetails
-      }
-    }
+    ...PlayerDetails
   }
 }
 
 fragment PlayerDetails on Player {
+  documentId
   slug
   name
   position
@@ -18,44 +15,23 @@ fragment PlayerDetails on Player {
   website
   location
   avatar {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
   socialNetworks {
     id
     url
     type
   }
-  attended(sort: "start:desc", pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        ...EventItem
-      }
-    }
+  attended(sort: "start:desc") {
+    ...EventItem
   }
-  hosted(sort: "start:desc", pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        ...EventItem
-      }
-    }
+  hosted(sort: "start:desc") {
+    ...EventItem
   }
-  mentored(sort: "start:desc", pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        ...EventItem
-      }
-    }
+  mentored(sort: "start:desc") {
+    ...EventItem
   }
 }

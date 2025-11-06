@@ -7,7 +7,7 @@ import PlayerSidebar from "./sidebar"
 import PlayerTabs from "./tabs"
 
 const PlayerDetails = ({ player }: { player: Player }) => {
-  const avatar = player.avatar?.data?.attributes as UploadFile
+  const avatar = player.avatar as UploadFile
 
   return (
     <div className="case-studies-details-area pb-100">

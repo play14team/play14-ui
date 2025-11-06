@@ -49,8 +49,8 @@ export default function TabHeaders({
       {/* Photos */}
       <li onClick={(e) => openTabSection(e, "photosTab")} aria-hidden="true">
         Photos{" "}
-        {event.images && event.images.data.length > 0
-          ? `(${event.images.data.length})`
+        {event.images && event.images.length > 0
+          ? `(${event.images.length})`
           : ""}
       </li>
     </ul>

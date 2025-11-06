@@ -1,14 +1,12 @@
-import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
-import { EventEntity, EventNavDocument } from "@/models/graphql"
+import { Event, EventNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
 export default async function Locations() {
   const response = await query({ query: EventNavDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
-  const locations = deduplicate(
-    events.map((a) => a.attributes?.location?.data?.attributes?.slug),
-  )
+  const events = (response.events || []) as Event[]
+  const locations = deduplicate(events.map((a) => a.location?.slug))
 
   return (
     <div className="blog-details-desc pb-70">
@@ -20,11 +18,7 @@ export default async function Locations() {
             </span>
 
             <Link href={`/events/locations/${item}`}>
-              {
-                events.find(
-                  (e) => e.attributes?.location?.data?.attributes?.slug == item,
-                )?.attributes?.location?.data?.attributes?.name
-              }
+              {events.find((e) => e.location?.slug == item)?.location?.name}
             </Link>
           </div>
         ))}

@@ -9,8 +9,8 @@ import ArticlesNavigator from "./nav"
 import ArticleSidebar from "./sidebar"
 
 const ArticleDetails = ({ article }: { article: Article }) => {
-  const image = article.defaultImage?.data?.attributes as UploadFile
-  const author = article.author?.data?.attributes
+  const image = article.defaultImage as UploadFile
+  const author = article.author
   const text = encodeURI("Take a look at this #play14 article")
 
   return (
@@ -28,7 +28,9 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                   height={400}
                   priority
                   placeholder="blur"
-                  blurDataURL={image.blurhash || process.env.DEFAULT_BLURHASH}
+                  blurDataURL={
+                    (image as any).blurhash || process.env.DEFAULT_BLURHASH
+                  }
                   className="shadow"
                   style={{
                     maxWidth: "100%",
@@ -65,12 +67,9 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                       <i className="bx bx-purchase-tag"></i>
                     </span>
 
-                    {article.tags?.data.map((tag) => (
-                      <Link
-                        key={tag.id}
-                        href={`/articles/tags/${tag.attributes?.value}`}
-                      >
-                        {tag.attributes?.value}
+                    {(article.tags?.filter(Boolean) as any)?.map((tag: any) => (
+                      <Link key={tag.id} href={`/articles/tags/${tag.value}`}>
+                        {tag.value}
                       </Link>
                     ))}
                   </div>
@@ -91,7 +90,7 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                       <div className="author-profile">
                         <div className="author-profile-title">
                           <Image
-                            src={author.avatar?.data?.attributes?.url || "#"}
+                            src={author.avatar?.url || "#"}
                             className="shadow-sm"
                             alt={author.name}
                             width={200}
@@ -112,7 +111,9 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                 )}
 
                 <div className="pt-4">
-                  {article.images && <Gallery images={article.images.data} />}
+                  {article.images && (
+                    <Gallery images={article.images.filter(Boolean) as any} />
+                  )}
                 </div>
               </div>
             </div>

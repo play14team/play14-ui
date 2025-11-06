@@ -7,9 +7,9 @@ import { Testimonial } from "../../models/graphql"
 import HtmlContent from "../layout/html-content"
 
 const TestimonialItem = ({ testimonial }: { testimonial: Testimonial }) => {
-  const author = testimonial.author?.data?.attributes
-  const avatar = author?.avatar?.data?.attributes
-  const audio = testimonial.audio?.data?.attributes
+  const author = testimonial.author
+  const avatar = author?.avatar
+  const audio = testimonial.audio
 
   return (
     <div className="col-lg-6 col-md-6">

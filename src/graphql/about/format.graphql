@@ -1,13 +1,9 @@
 query Format {
   format {
-    data {
-      attributes {
-        openspace
-        lawOfTwoFeet
-        butterfly
-        bumblebee
-        schedule
-      }
-    }
+    openspace
+    lawOfTwoFeet
+    butterfly
+    bumblebee
+    schedule
   }
 }

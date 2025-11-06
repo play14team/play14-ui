@@ -33,7 +33,7 @@ const ICalendar = ({ event }: { event: Event }) => {
     status: getStatus(event),
   }
 
-  const geoJSON = event.venue?.data?.attributes?.location
+  const geoJSON = event.venue?.location
   if (geoJSON) {
     const longitude = geoJSON.geometry.coordinates[0]
     const latitude = geoJSON.geometry.coordinates[1]
@@ -44,21 +44,15 @@ const ICalendar = ({ event }: { event: Event }) => {
   }
 
   function getLocation(event: Event) {
-    return event.venue?.data?.attributes
-      ? `${event.venue.data.attributes.name}${
-          event.venue.data.attributes.location ? " - " : ""
-        }${
-          event.venue.data.attributes.location
-            ? event.venue.data.attributes.location.place_name
-            : ""
+    return event.venue
+      ? `${event.venue.name}${event.venue.location ? " - " : ""}${
+          event.venue.location ? event.venue.location.place_name : ""
         }`
       : "No venue yet"
   }
 
   function getUrl(event: Event) {
-    return event.venue?.data?.attributes
-      ? event.venue.data.attributes.website!
-      : ""
+    return event.venue ? event.venue.website! : ""
   }
 
   function getStatus(event: Event) {

@@ -1,14 +1,14 @@
 "use client"
 
 import { useIntersection } from "@/hooks/useIntersection"
-import { Pagination, PlayerEntity } from "@/models/graphql"
+import { Pagination, Player } from "@/models/graphql"
 import { RefObject, useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
 import { getPlayers } from "./get.action"
 import PlayerGrid from "./grid"
 
 export default function LoadMore({ pagination }: { pagination: Pagination }) {
-  const [players, setPlayers] = useState<PlayerEntity[]>([])
+  const [players, setPlayers] = useState<Player[]>([])
   const triggerRef = useRef<HTMLDivElement>(null)
   const isVisible = useIntersection(
     triggerRef as RefObject<HTMLDivElement>,
@@ -24,7 +24,7 @@ export default function LoadMore({ pagination }: { pagination: Pagination }) {
 
   function loadMore() {
     getPlayers(pagination.page + 1, pagination.pageSize).then((res) => {
-      const players = res.players?.data as PlayerEntity[]
+      const players = (res.players_connection?.nodes || []) as Player[]
       setPlayers(players)
     })
   }

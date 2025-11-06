@@ -1,9 +1,5 @@
 query EventSlugs($today: DateTime!) {
-  events(pagination: { limit: 10000 }, filters: { end: { lt: $today } }) {
-    data {
-      attributes {
-        slug
-      }
-    }
+  events(filters: { end: { lt: $today } }, pagination: { limit: 5000 }) {
+    slug
   }
 }

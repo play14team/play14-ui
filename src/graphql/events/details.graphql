@@ -1,14 +1,11 @@
 query Event($slug: String!) {
   events(filters: { slug: { eq: $slug } }) {
-    data {
-      attributes {
-        ...EventDetails
-      }
-    }
+    ...EventDetails
   }
 }
 
 fragment EventDetails on Event {
+  documentId
   slug
   name
   start
@@ -18,53 +15,33 @@ fragment EventDetails on Event {
   description
   contactEmail
   defaultImage {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
-  images(pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+  images {
+    name
+    url
+    width
+    height
   }
   location {
-    data {
-      attributes {
-        name
-        country
-        location
-      }
-    }
+    name
+    country
+    location
   }
   venue {
-    data {
-      attributes {
-        name
-        website
-        location
-        addressDetails
-      }
-    }
+    name
+    website
+    location
+    addressDetails
   }
   timetable {
     id
     day
     description
-    timeslots(pagination: { limit: 10000 }) {
+    timeslots {
       id
       time
       description
@@ -74,59 +51,33 @@ fragment EventDetails on Event {
     link
     widgetCode
   }
-  sponsorships(pagination: { limit: 10000 }) {
+  sponsorships {
     id
     category
     sponsors {
-      data {
+      name
+      url
+      logo {
+        name
+        url
+        width
+        height
+      }
+      socialNetworks {
         id
-        attributes {
-          name
-          url
-          logo {
-            data {
-              id
-              attributes {
-                name
-                url
-                blurhash
-                width
-                height
-              }
-            }
-          }
-          socialNetworks {
-            id
-            type
-            url
-          }
-        }
+        type
+        url
       }
     }
   }
-  hosts(sort: "name", pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        ...PlayerItem
-      }
-    }
+  hosts(sort: "name") {
+    ...PlayerItem
   }
-  mentors(sort: "name", pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        ...PlayerItem
-      }
-    }
+  mentors(sort: "name") {
+    ...PlayerItem
   }
-  players(sort: "name", pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        ...PlayerItem
-      }
-    }
+  players(sort: "name") {
+    ...PlayerItem
   }
   media {
     id

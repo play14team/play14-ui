@@ -1,6 +1,6 @@
 "use client"
 
-import { EventEntity } from "@/models/graphql"
+import { Event } from "@/models/graphql"
 
 import Map, {
   FullscreenControl,
@@ -14,7 +14,7 @@ import EventMarkers from "./markers"
 
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
-export default function EventMap({ events }: { events: EventEntity[] }) {
+export default function EventMap({ events }: { events: Event[] }) {
   if (!TOKEN) {
     return (
       <span style={{ color: "red" }}>

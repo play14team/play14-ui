@@ -1,45 +1,27 @@
 query ArticleSidebar {
-  latest: articles(sort: "publishedAt:desc", pagination: { limit: 3 }) {
-    data {
-      id
-      attributes {
-        slug
-        title
-        publishedAt
-        defaultImage {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
+  latest: articles_connection(
+    sort: "publishedAt:desc"
+    pagination: { limit: 3 }
+  ) {
+    nodes {
+      documentId
+      slug
+      title
+      publishedAt
+      defaultImage {
+        name
+        url
+        width
+        height
       }
     }
   }
   categories: articles {
-    data {
-      attributes {
-        category
-      }
-    }
+    category
   }
   tags: articles {
-    data {
-      attributes {
-        tags {
-          data {
-            id
-            attributes {
-              value
-            }
-          }
-        }
-      }
+    tags {
+      value
     }
   }
 }

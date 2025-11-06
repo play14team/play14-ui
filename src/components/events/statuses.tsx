@@ -1,12 +1,12 @@
-import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
-import { EventEntity, EventNavDocument } from "@/models/graphql"
+import { Event, EventNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
 export default async function Statuses() {
   const response = await query({ query: EventNavDocument })
-  const events = dataAsArrayOf<EventEntity>(response.events || { data: [] })
-  const locations = deduplicate(events.map((a) => a.attributes?.status))
+  const events = (response.events || []) as Event[]
+  const locations = deduplicate(events.map((a) => a.status))
 
   return (
     <div className="blog-details-desc pb-70">

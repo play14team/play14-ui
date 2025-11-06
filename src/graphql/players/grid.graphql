@@ -1,41 +1,31 @@
 query Players($page: Int!, $pageSize: Int!, $position: String) {
-  players(
+  players_connection(
     sort: "name:asc"
     pagination: { page: $page, pageSize: $pageSize }
     filters: { position: { eqi: $position } }
   ) {
-    data {
-      id
-      attributes {
-        ...PlayerItem
-      }
+    nodes {
+      ...PlayerItem
     }
-    meta {
-      pagination {
-        page
-        pageSize
-        total
-        pageCount
-      }
+    pageInfo {
+      page
+      pageSize
+      total
+      pageCount
     }
   }
 }
 
 fragment PlayerItem on Player {
+  documentId
   slug
   name
   position
   avatar {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
   socialNetworks {
     id

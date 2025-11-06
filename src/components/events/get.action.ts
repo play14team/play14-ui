@@ -24,7 +24,7 @@ export async function getEvent({ params }: SlugParamsProps) {
     variables: { slug },
   })
 
-  return response.events?.data[0].attributes as Event
+  return (response.events && response.events[0]) as Event
 }
 
 export async function getEventSlugs() {

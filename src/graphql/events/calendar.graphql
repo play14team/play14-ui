@@ -1,20 +1,12 @@
 query EventCalendar {
-  events(sort: "start:desc", pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        slug
-        name
-        start
-        end
-        status
-        venue {
-          data {
-            attributes {
-              name
-            }
-          }
-        }
-      }
+  events(sort: "start:desc") {
+    slug
+    name
+    start
+    end
+    status
+    venue {
+      name
     }
   }
 }

@@ -1,5 +1,4 @@
-import { dataAsArrayOf } from "@/libs/apollo-client"
-import { Enum_Expectation_Type, ExpectationEntity } from "../../models/graphql"
+import { Enum_Expectation_Type, Expectation } from "../../models/graphql"
 import HtmlContent from "../layout/html-content"
 import { getExpectations } from "./get-expectations.action"
 
@@ -8,10 +7,9 @@ export default async function Expectations({
 }: {
   type: Enum_Expectation_Type
 }) {
-  const response = await getExpectations({ type })
-  const expectations = dataAsArrayOf<ExpectationEntity>(
-    response?.data?.expectations || { data: [] },
-  )
+  const result = await getExpectations({ type })
+  // In Strapi 5, expectations is directly an array
+  const expectations = (result?.data?.expectations || []) as Expectation[]
 
   return (
     <section className="solutions-area pb-70">
@@ -19,15 +17,13 @@ export default async function Expectations({
         <div className="row">
           {expectations &&
             expectations.map((expectation) => (
-              <div key={expectation.id} className="col-lg-6 col-sm-6">
+              <div key={expectation.documentId} className="col-lg-6 col-sm-6">
                 <div className="single-solutions-box">
                   <div className="icon orange">
-                    <i className={expectation.attributes?.icon}></i>
+                    <i className={expectation.icon}></i>
                   </div>
-                  <h3>{expectation.attributes?.title}</h3>
-                  <HtmlContent>
-                    {expectation.attributes?.content || ""}
-                  </HtmlContent>
+                  <h3>{expectation.title}</h3>
+                  <HtmlContent>{expectation.content || ""}</HtmlContent>
                 </div>
               </div>
             ))}

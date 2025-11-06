@@ -6,9 +6,9 @@ import { Article } from "../../models/graphql"
 
 const ArticleCard = ({ article }: { article: Article }) => {
   const url = `/articles/${encodeURIComponent(article.slug!)}`
-  const image = article.defaultImage.data?.attributes
-  const author = article.author?.data?.attributes
-  const avatar = author && author.avatar?.data?.attributes
+  const image = article.defaultImage
+  const author = article.author
+  const avatar = author?.avatar
 
   return (
     <article
@@ -25,7 +25,9 @@ const ArticleCard = ({ article }: { article: Article }) => {
                 alt={image.name}
                 width={image.width || 400}
                 height={image.height || 400}
-                blurDataURL={image.blurhash ?? process.env.DEFAULT_BLURHASH}
+                blurDataURL={
+                  (image as any).blurhash ?? process.env.DEFAULT_BLURHASH
+                }
                 placeholder="blur"
                 sizes="100vw"
                 style={{

@@ -4,9 +4,9 @@ import HtmlContent from "../layout/html-content"
 import TabHeaders from "./tab-headers"
 
 export default function PlayerTabs({ player }: { player: Player }) {
-  const attended = player.attended?.data
-  const hosted = player.hosted?.data
-  const mentored = player.mentored?.data
+  const attended = player.attended
+  const hosted = player.hosted
+  const mentored = player.mentored
 
   return (
     <div className="courses-details-desc">
@@ -27,21 +27,21 @@ export default function PlayerTabs({ player }: { player: Player }) {
         {/* tab2 */}
         <div id="tab2" className="tab-pane tabs_item">
           {(attended && attended.length > 0 && (
-            <EventGrid events={attended} />
+            <EventGrid events={attended.filter(Boolean) as any} />
           )) || <p>This player has not attended any event yet</p>}
         </div>
 
         {/* tab3 */}
         <div id="tab3" className="tab-pane tabs_item">
-          {(hosted && hosted.length > 0 && <EventGrid events={hosted} />) || (
-            <p>This player has not hosted any event yet</p>
-          )}
+          {(hosted && hosted.length > 0 && (
+            <EventGrid events={hosted.filter(Boolean) as any} />
+          )) || <p>This player has not hosted any event yet</p>}
         </div>
 
         {/* tab4 */}
         <div id="tab4" className="tab-pane tabs_item">
           {(mentored && mentored.length > 0 && (
-            <EventGrid events={mentored} />
+            <EventGrid events={mentored.filter(Boolean) as any} />
           )) || <p>This player has not mentored any event yet</p>}
         </div>
       </div>
