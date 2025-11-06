@@ -38,28 +38,41 @@ export type Scalars = {
   JSON: { input: any; output: any }
   /** A time string with format HH:mm:ss.SSS */
   Time: { input: any; output: any }
-  /** The `Upload` scalar type represents a file upload. */
-  Upload: { input: any; output: any }
 }
 
 export type Article = {
   __typename?: "Article"
-  author?: Maybe<PlayerEntityResponse>
+  /** @deprecated Use root level fields instead */
+  attributes: Article
+  author?: Maybe<Player>
   cannonical?: Maybe<Scalars["String"]["output"]>
   category?: Maybe<Enum_Article_Category>
   content?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  defaultImage: UploadFileEntityResponse
-  images: UploadFileRelationResponseCollection
+  /** @deprecated Use root level fields instead */
+  data: Article
+  defaultImage: UploadFile
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  images: Array<Maybe<UploadFile>>
+  images_connection: UploadFileRelationResponseCollection
   publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   slug: Scalars["String"]["output"]
   summary?: Maybe<Scalars["String"]["output"]>
-  tags?: Maybe<TagRelationResponseCollection>
+  tags: Array<Maybe<Tag>>
+  tags_connection?: Maybe<TagRelationResponseCollection>
   title: Scalars["String"]["output"]
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
 }
 
 export type ArticleImagesArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type ArticleImages_ConnectionArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -71,21 +84,20 @@ export type ArticleTagsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type ArticleEntity = {
-  __typename?: "ArticleEntity"
-  attributes?: Maybe<Article>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type ArticleEntityResponse = {
-  __typename?: "ArticleEntityResponse"
-  data?: Maybe<ArticleEntity>
+export type ArticleTags_ConnectionArgs = {
+  filters?: InputMaybe<TagFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type ArticleEntityResponseCollection = {
   __typename?: "ArticleEntityResponseCollection"
-  data: Array<ArticleEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Article>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Article>
+  pageInfo: Pagination
 }
 
 export type ArticleFiltersInput = {
@@ -95,7 +107,7 @@ export type ArticleFiltersInput = {
   category?: InputMaybe<StringFilterInput>
   content?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   not?: InputMaybe<ArticleFiltersInput>
   or?: InputMaybe<Array<InputMaybe<ArticleFiltersInput>>>
   publishedAt?: InputMaybe<DateTimeFilterInput>
@@ -122,7 +134,9 @@ export type ArticleInput = {
 
 export type ArticleRelationResponseCollection = {
   __typename?: "ArticleRelationResponseCollection"
-  data: Array<ArticleEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Article>
+  nodes: Array<Article>
 }
 
 export type BooleanFilterInput = {
@@ -152,6 +166,10 @@ export type BooleanFilterInput = {
 
 export type ComponentContactSocialNetwork = {
   __typename?: "ComponentContactSocialNetwork"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentContactSocialNetwork
+  /** @deprecated Use root level fields instead */
+  data: ComponentContactSocialNetwork
   id: Scalars["ID"]["output"]
   type?: Maybe<Enum_Componentcontactsocialnetwork_Type>
   url?: Maybe<Scalars["String"]["output"]>
@@ -174,11 +192,15 @@ export type ComponentContactSocialNetworkInput = {
 export type ComponentDefaultHistoryItem = {
   __typename?: "ComponentDefaultHistoryItem"
   additionalText?: Maybe<Scalars["String"]["output"]>
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentDefaultHistoryItem
+  /** @deprecated Use root level fields instead */
+  data: ComponentDefaultHistoryItem
   date: Scalars["Date"]["output"]
   dateFormat?: Maybe<Enum_Componentdefaulthistoryitem_Dateformat>
   description: Scalars["String"]["output"]
   id: Scalars["ID"]["output"]
-  image: UploadFileEntityResponse
+  image: UploadFile
   title: Scalars["String"]["output"]
 }
 
@@ -205,6 +227,10 @@ export type ComponentDefaultHistoryItemInput = {
 
 export type ComponentEventsMedia = {
   __typename?: "ComponentEventsMedia"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentEventsMedia
+  /** @deprecated Use root level fields instead */
+  data: ComponentEventsMedia
   id: Scalars["ID"]["output"]
   type: Enum_Componenteventsmedia_Type
   url: Scalars["String"]["output"]
@@ -226,12 +252,23 @@ export type ComponentEventsMediaInput = {
 
 export type ComponentEventsSponsorship = {
   __typename?: "ComponentEventsSponsorship"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentEventsSponsorship
   category: Scalars["String"]["output"]
+  /** @deprecated Use root level fields instead */
+  data: ComponentEventsSponsorship
   id: Scalars["ID"]["output"]
-  sponsors?: Maybe<SponsorRelationResponseCollection>
+  sponsors: Array<Maybe<Sponsor>>
+  sponsors_connection?: Maybe<SponsorRelationResponseCollection>
 }
 
 export type ComponentEventsSponsorshipSponsorsArgs = {
+  filters?: InputMaybe<SponsorFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type ComponentEventsSponsorshipSponsors_ConnectionArgs = {
   filters?: InputMaybe<SponsorFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -253,6 +290,10 @@ export type ComponentEventsSponsorshipInput = {
 
 export type ComponentEventsTimeSlots = {
   __typename?: "ComponentEventsTimeSlots"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentEventsTimeSlots
+  /** @deprecated Use root level fields instead */
+  data: ComponentEventsTimeSlots
   description: Scalars["String"]["output"]
   id: Scalars["ID"]["output"]
   time: Scalars["Time"]["output"]
@@ -274,6 +315,10 @@ export type ComponentEventsTimeSlotsInput = {
 
 export type ComponentEventsTimetable = {
   __typename?: "ComponentEventsTimetable"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentEventsTimetable
+  /** @deprecated Use root level fields instead */
+  data: ComponentEventsTimetable
   day: Enum_Componenteventstimetable_Day
   description: Scalars["String"]["output"]
   id: Scalars["ID"]["output"]
@@ -304,7 +349,11 @@ export type ComponentEventsTimetableInput = {
 
 export type ComponentGamesRatings = {
   __typename?: "ComponentGamesRatings"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentGamesRatings
   connection?: Maybe<Scalars["Int"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: ComponentGamesRatings
   energy?: Maybe<Scalars["Int"]["output"]>
   id: Scalars["ID"]["output"]
   silliness?: Maybe<Scalars["Int"]["output"]>
@@ -329,7 +378,11 @@ export type ComponentGamesRatingsInput = {
 export type ComponentLocationAddress = {
   __typename?: "ComponentLocationAddress"
   area?: Maybe<Scalars["String"]["output"]>
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentLocationAddress
   city: Scalars["String"]["output"]
+  /** @deprecated Use root level fields instead */
+  data: ComponentLocationAddress
   id: Scalars["ID"]["output"]
   postalCode?: Maybe<Scalars["String"]["output"]>
   street: Scalars["String"]["output"]
@@ -337,6 +390,10 @@ export type ComponentLocationAddress = {
 
 export type ComponentRegistrationRegistration = {
   __typename?: "ComponentRegistrationRegistration"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentRegistrationRegistration
+  /** @deprecated Use root level fields instead */
+  data: ComponentRegistrationRegistration
   id: Scalars["ID"]["output"]
   link?: Maybe<Scalars["String"]["output"]>
   widgetCode?: Maybe<Scalars["String"]["output"]>
@@ -362,6 +419,10 @@ export type ComponentRegistrationRegistrationInput = {
 
 export type ComponentReportingFinance = {
   __typename?: "ComponentReportingFinance"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentReportingFinance
+  /** @deprecated Use root level fields instead */
+  data: ComponentReportingFinance
   destination: Scalars["String"]["output"]
   expenses: Scalars["Float"]["output"]
   id: Scalars["ID"]["output"]
@@ -392,6 +453,10 @@ export type ComponentReportingFinanceInput = {
 
 export type ComponentSharedDictionary = {
   __typename?: "ComponentSharedDictionary"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentSharedDictionary
+  /** @deprecated Use root level fields instead */
+  data: ComponentSharedDictionary
   id: Scalars["ID"]["output"]
   key: Scalars["String"]["output"]
   value: Scalars["String"]["output"]
@@ -413,6 +478,10 @@ export type ComponentSharedDictionaryInput = {
 
 export type ComponentSharedList = {
   __typename?: "ComponentSharedList"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentSharedList
+  /** @deprecated Use root level fields instead */
+  data: ComponentSharedList
   id: Scalars["ID"]["output"]
   value: Scalars["String"]["output"]
 }
@@ -431,9 +500,13 @@ export type ComponentSharedListInput = {
 
 export type ComponentSharedMetaSocial = {
   __typename?: "ComponentSharedMetaSocial"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentSharedMetaSocial
+  /** @deprecated Use root level fields instead */
+  data: ComponentSharedMetaSocial
   description: Scalars["String"]["output"]
   id: Scalars["ID"]["output"]
-  image?: Maybe<UploadFileEntityResponse>
+  image?: Maybe<UploadFile>
   socialNetwork: Enum_Componentsharedmetasocial_Socialnetwork
   title: Scalars["String"]["output"]
 }
@@ -449,11 +522,15 @@ export type ComponentSharedMetaSocialFiltersInput = {
 
 export type ComponentSharedSeo = {
   __typename?: "ComponentSharedSeo"
+  /** @deprecated Use root level fields instead */
+  attributes: ComponentSharedSeo
   canonicalURL?: Maybe<Scalars["String"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: ComponentSharedSeo
   id: Scalars["ID"]["output"]
   keywords?: Maybe<Scalars["String"]["output"]>
   metaDescription: Scalars["String"]["output"]
-  metaImage: UploadFileEntityResponse
+  metaImage: UploadFile
   metaRobots?: Maybe<Scalars["String"]["output"]>
   metaSocial?: Maybe<Array<Maybe<ComponentSharedMetaSocial>>>
   metaTitle: Scalars["String"]["output"]
@@ -515,6 +592,11 @@ export type DateTimeFilterInput = {
   null?: InputMaybe<Scalars["Boolean"]["input"]>
   or?: InputMaybe<Array<InputMaybe<Scalars["DateTime"]["input"]>>>
   startsWith?: InputMaybe<Scalars["DateTime"]["input"]>
+}
+
+export type DeleteMutationResponse = {
+  __typename?: "DeleteMutationResponse"
+  documentId: Scalars["ID"]["output"]
 }
 
 export enum Enum_Article_Category {
@@ -600,21 +682,33 @@ export enum Enum_Player_Position {
 
 export type Event = {
   __typename?: "Event"
+  /** @deprecated Use root level fields instead */
+  attributes: Event
   contactEmail?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  defaultImage: UploadFileEntityResponse
+  /** @deprecated Use root level fields instead */
+  data: Event
+  defaultImage: UploadFile
   description?: Maybe<Scalars["String"]["output"]>
+  documentId: Scalars["ID"]["output"]
   end: Scalars["DateTime"]["output"]
   finance?: Maybe<ComponentReportingFinance>
-  hosts?: Maybe<PlayerRelationResponseCollection>
-  images?: Maybe<UploadFileRelationResponseCollection>
+  hosts: Array<Maybe<Player>>
+  hosts_connection?: Maybe<PlayerRelationResponseCollection>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  images: Array<Maybe<UploadFile>>
+  images_connection?: Maybe<UploadFileRelationResponseCollection>
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<EventRelationResponseCollection>
-  location?: Maybe<EventLocationEntityResponse>
+  localizations: Array<Maybe<Event>>
+  localizations_connection?: Maybe<EventRelationResponseCollection>
+  location?: Maybe<EventLocation>
   media?: Maybe<Array<Maybe<ComponentEventsMedia>>>
-  mentors?: Maybe<PlayerRelationResponseCollection>
+  mentors: Array<Maybe<Player>>
+  mentors_connection?: Maybe<PlayerRelationResponseCollection>
   name: Scalars["String"]["output"]
-  players?: Maybe<PlayerRelationResponseCollection>
+  players: Array<Maybe<Player>>
+  players_connection?: Maybe<PlayerRelationResponseCollection>
   publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   registration?: Maybe<ComponentRegistrationRegistration>
   slug: Scalars["String"]["output"]
@@ -625,10 +719,16 @@ export type Event = {
   timetable?: Maybe<Array<Maybe<ComponentEventsTimetable>>>
   timezone?: Maybe<Scalars["String"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-  venue?: Maybe<VenueEntityResponse>
+  venue?: Maybe<Venue>
 }
 
 export type EventHostsArgs = {
+  filters?: InputMaybe<PlayerFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type EventHosts_ConnectionArgs = {
   filters?: InputMaybe<PlayerFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -640,10 +740,21 @@ export type EventImagesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
+export type EventImages_ConnectionArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
 export type EventLocalizationsArgs = {
   filters?: InputMaybe<EventFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type EventLocalizations_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
@@ -659,7 +770,19 @@ export type EventMentorsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
+export type EventMentors_ConnectionArgs = {
+  filters?: InputMaybe<PlayerFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
 export type EventPlayersArgs = {
+  filters?: InputMaybe<PlayerFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type EventPlayers_ConnectionArgs = {
   filters?: InputMaybe<PlayerFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -677,21 +800,14 @@ export type EventTimetableArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type EventEntity = {
-  __typename?: "EventEntity"
-  attributes?: Maybe<Event>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type EventEntityResponse = {
-  __typename?: "EventEntityResponse"
-  data?: Maybe<EventEntity>
-}
-
 export type EventEntityResponseCollection = {
   __typename?: "EventEntityResponseCollection"
-  data: Array<EventEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Event>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Event>
+  pageInfo: Pagination
 }
 
 export type EventFiltersInput = {
@@ -699,10 +815,10 @@ export type EventFiltersInput = {
   contactEmail?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
   description?: InputMaybe<StringFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   end?: InputMaybe<DateTimeFilterInput>
   finance?: InputMaybe<ComponentReportingFinanceFiltersInput>
   hosts?: InputMaybe<PlayerFiltersInput>
-  id?: InputMaybe<IdFilterInput>
   locale?: InputMaybe<StringFilterInput>
   localizations?: InputMaybe<EventFiltersInput>
   location?: InputMaybe<EventLocationFiltersInput>
@@ -752,11 +868,20 @@ export type EventInput = {
 
 export type EventLocation = {
   __typename?: "EventLocation"
+  /** @deprecated Use root level fields instead */
+  attributes: EventLocation
   country?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  events?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use root level fields instead */
+  data: EventLocation
+  documentId: Scalars["ID"]["output"]
+  events: Array<Maybe<Event>>
+  events_connection?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   location?: Maybe<Scalars["JSON"]["output"]>
   name: Scalars["String"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   slug?: Maybe<Scalars["String"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
 }
@@ -764,37 +889,36 @@ export type EventLocation = {
 export type EventLocationEventsArgs = {
   filters?: InputMaybe<EventFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type EventLocationEntity = {
-  __typename?: "EventLocationEntity"
-  attributes?: Maybe<EventLocation>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type EventLocationEntityResponse = {
-  __typename?: "EventLocationEntityResponse"
-  data?: Maybe<EventLocationEntity>
+export type EventLocationEvents_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type EventLocationEntityResponseCollection = {
   __typename?: "EventLocationEntityResponseCollection"
-  data: Array<EventLocationEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<EventLocation>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<EventLocation>
+  pageInfo: Pagination
 }
 
 export type EventLocationFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<EventLocationFiltersInput>>>
   country?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   events?: InputMaybe<EventFiltersInput>
-  id?: InputMaybe<IdFilterInput>
   location?: InputMaybe<JsonFilterInput>
   name?: InputMaybe<StringFilterInput>
   not?: InputMaybe<EventLocationFiltersInput>
   or?: InputMaybe<Array<InputMaybe<EventLocationFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   slug?: InputMaybe<StringFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
 }
@@ -804,21 +928,33 @@ export type EventLocationInput = {
   events?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
   location?: InputMaybe<Scalars["JSON"]["input"]>
   name?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   slug?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type EventRelationResponseCollection = {
   __typename?: "EventRelationResponseCollection"
-  data: Array<EventEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Event>
+  nodes: Array<Event>
 }
 
 export type Expectation = {
   __typename?: "Expectation"
+  /** @deprecated Use root level fields instead */
+  attributes: Expectation
   content: Scalars["String"]["output"]
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: Expectation
+  documentId: Scalars["ID"]["output"]
   icon: Scalars["String"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<ExpectationRelationResponseCollection>
+  localizations: Array<Maybe<Expectation>>
+  localizations_connection?: Maybe<ExpectationRelationResponseCollection>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   title: Scalars["String"]["output"]
   type: Enum_Expectation_Type
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
@@ -830,33 +966,33 @@ export type ExpectationLocalizationsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type ExpectationEntity = {
-  __typename?: "ExpectationEntity"
-  attributes?: Maybe<Expectation>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type ExpectationEntityResponse = {
-  __typename?: "ExpectationEntityResponse"
-  data?: Maybe<ExpectationEntity>
+export type ExpectationLocalizations_ConnectionArgs = {
+  filters?: InputMaybe<ExpectationFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type ExpectationEntityResponseCollection = {
   __typename?: "ExpectationEntityResponseCollection"
-  data: Array<ExpectationEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Expectation>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Expectation>
+  pageInfo: Pagination
 }
 
 export type ExpectationFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<ExpectationFiltersInput>>>
   content?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   icon?: InputMaybe<StringFilterInput>
-  id?: InputMaybe<IdFilterInput>
   locale?: InputMaybe<StringFilterInput>
   localizations?: InputMaybe<ExpectationFiltersInput>
   not?: InputMaybe<ExpectationFiltersInput>
   or?: InputMaybe<Array<InputMaybe<ExpectationFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   title?: InputMaybe<StringFilterInput>
   type?: InputMaybe<StringFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
@@ -865,13 +1001,16 @@ export type ExpectationFiltersInput = {
 export type ExpectationInput = {
   content?: InputMaybe<Scalars["String"]["input"]>
   icon?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   title?: InputMaybe<Scalars["String"]["input"]>
   type?: InputMaybe<Enum_Expectation_Type>
 }
 
 export type ExpectationRelationResponseCollection = {
   __typename?: "ExpectationRelationResponseCollection"
-  data: Array<ExpectationEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Expectation>
+  nodes: Array<Expectation>
 }
 
 export type FileInfoInput = {
@@ -907,26 +1046,24 @@ export type FloatFilterInput = {
 
 export type Format = {
   __typename?: "Format"
+  /** @deprecated Use root level fields instead */
+  attributes: Format
   bumblebee?: Maybe<Scalars["String"]["output"]>
   butterfly?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: Format
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   lawOfTwoFeet?: Maybe<Scalars["String"]["output"]>
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<FormatRelationResponseCollection>
+  localizations: Array<Maybe<Format>>
+  localizations_connection?: Maybe<FormatRelationResponseCollection>
   openspace?: Maybe<Scalars["String"]["output"]>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   schedule?: Maybe<Scalars["String"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-}
-
-export type FormatEntity = {
-  __typename?: "FormatEntity"
-  attributes?: Maybe<Format>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type FormatEntityResponse = {
-  __typename?: "FormatEntityResponse"
-  data?: Maybe<FormatEntity>
 }
 
 export type FormatInput = {
@@ -934,33 +1071,48 @@ export type FormatInput = {
   butterfly?: InputMaybe<Scalars["String"]["input"]>
   lawOfTwoFeet?: InputMaybe<Scalars["String"]["input"]>
   openspace?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   schedule?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type FormatRelationResponseCollection = {
   __typename?: "FormatRelationResponseCollection"
-  data: Array<FormatEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Format>
+  nodes: Array<Format>
 }
 
 export type Game = {
   __typename?: "Game"
+  /** @deprecated Use root level fields instead */
+  attributes: Game
   category: Enum_Game_Category
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
   credits?: Maybe<Scalars["String"]["output"]>
-  defaultImage: UploadFileEntityResponse
+  /** @deprecated Use root level fields instead */
+  data: Game
+  defaultImage: UploadFile
   description: Scalars["String"]["output"]
-  documentedBy?: Maybe<PlayerRelationResponseCollection>
-  firstPlayedAt?: Maybe<EventEntityResponse>
-  images: UploadFileRelationResponseCollection
+  documentId: Scalars["ID"]["output"]
+  documentedBy: Array<Maybe<Player>>
+  documentedBy_connection?: Maybe<PlayerRelationResponseCollection>
+  firstPlayedAt?: Maybe<Event>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  images: Array<Maybe<UploadFile>>
+  images_connection: UploadFileRelationResponseCollection
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<GameRelationResponseCollection>
+  localizations: Array<Maybe<Game>>
+  localizations_connection?: Maybe<GameRelationResponseCollection>
   materials?: Maybe<Array<Maybe<ComponentSharedList>>>
   name: Scalars["String"]["output"]
   preparationSteps?: Maybe<Array<Maybe<ComponentSharedList>>>
-  proposedBy?: Maybe<PlayerRelationResponseCollection>
+  proposedBy: Array<Maybe<Player>>
+  proposedBy_connection?: Maybe<PlayerRelationResponseCollection>
   publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   ratings?: Maybe<ComponentGamesRatings>
-  resources?: Maybe<UploadFileRelationResponseCollection>
+  resources: Array<Maybe<UploadFile>>
+  resources_connection?: Maybe<UploadFileRelationResponseCollection>
   safety?: Maybe<Array<Maybe<ComponentSharedDictionary>>>
   scale?: Maybe<Scalars["String"]["output"]>
   slug: Scalars["String"]["output"]
@@ -976,7 +1128,19 @@ export type GameDocumentedByArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
+export type GameDocumentedBy_ConnectionArgs = {
+  filters?: InputMaybe<PlayerFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
 export type GameImagesArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type GameImages_ConnectionArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -985,7 +1149,12 @@ export type GameImagesArgs = {
 export type GameLocalizationsArgs = {
   filters?: InputMaybe<GameFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type GameLocalizations_ConnectionArgs = {
+  filters?: InputMaybe<GameFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
@@ -1007,7 +1176,19 @@ export type GameProposedByArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
+export type GameProposedBy_ConnectionArgs = {
+  filters?: InputMaybe<PlayerFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
 export type GameResourcesArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type GameResources_ConnectionArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -1025,21 +1206,14 @@ export type GameTagsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type GameEntity = {
-  __typename?: "GameEntity"
-  attributes?: Maybe<Game>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type GameEntityResponse = {
-  __typename?: "GameEntityResponse"
-  data?: Maybe<GameEntity>
-}
-
 export type GameEntityResponseCollection = {
   __typename?: "GameEntityResponseCollection"
-  data: Array<GameEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Game>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Game>
+  pageInfo: Pagination
 }
 
 export type GameFiltersInput = {
@@ -1048,9 +1222,9 @@ export type GameFiltersInput = {
   createdAt?: InputMaybe<DateTimeFilterInput>
   credits?: InputMaybe<StringFilterInput>
   description?: InputMaybe<StringFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   documentedBy?: InputMaybe<PlayerFiltersInput>
   firstPlayedAt?: InputMaybe<EventFiltersInput>
-  id?: InputMaybe<IdFilterInput>
   locale?: InputMaybe<StringFilterInput>
   localizations?: InputMaybe<GameFiltersInput>
   materials?: InputMaybe<ComponentSharedListFiltersInput>
@@ -1095,7 +1269,9 @@ export type GameInput = {
 
 export type GameRelationResponseCollection = {
   __typename?: "GameRelationResponseCollection"
-  data: Array<GameEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Game>
+  nodes: Array<Game>
 }
 
 export type GenericMorph =
@@ -1124,11 +1300,12 @@ export type GenericMorph =
   | Hosting
   | I18NLocale
   | Player
+  | ReviewWorkflowsWorkflow
+  | ReviewWorkflowsWorkflowStage
   | Sponsor
   | Tag
   | Testimonial
   | UploadFile
-  | UploadFolder
   | UsersPermissionsPermission
   | UsersPermissionsRole
   | UsersPermissionsUser
@@ -1136,13 +1313,22 @@ export type GenericMorph =
 
 export type History = {
   __typename?: "History"
+  /** @deprecated Use root level fields instead */
+  attributes: History
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: History
+  documentId: Scalars["ID"]["output"]
   founders?: Maybe<Scalars["String"]["output"]>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   intro?: Maybe<Scalars["String"]["output"]>
   items?: Maybe<Array<Maybe<ComponentDefaultHistoryItem>>>
   keyMoments?: Maybe<Scalars["String"]["output"]>
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<HistoryRelationResponseCollection>
+  localizations: Array<Maybe<History>>
+  localizations_connection?: Maybe<HistoryRelationResponseCollection>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
 }
 
@@ -1152,35 +1338,37 @@ export type HistoryItemsArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type HistoryEntity = {
-  __typename?: "HistoryEntity"
-  attributes?: Maybe<History>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type HistoryEntityResponse = {
-  __typename?: "HistoryEntityResponse"
-  data?: Maybe<HistoryEntity>
-}
-
 export type HistoryInput = {
   founders?: InputMaybe<Scalars["String"]["input"]>
   intro?: InputMaybe<Scalars["String"]["input"]>
   items?: InputMaybe<Array<InputMaybe<ComponentDefaultHistoryItemInput>>>
   keyMoments?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
 }
 
 export type HistoryRelationResponseCollection = {
   __typename?: "HistoryRelationResponseCollection"
-  data: Array<HistoryEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<History>
+  nodes: Array<History>
 }
 
 export type Home = {
   __typename?: "Home"
+  /** @deprecated Use root level fields instead */
+  attributes: Home
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  images: UploadFileRelationResponseCollection
+  /** @deprecated Use root level fields instead */
+  data: Home
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  images: Array<Maybe<UploadFile>>
+  images_connection: UploadFileRelationResponseCollection
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<HomeRelationResponseCollection>
+  localizations: Array<Maybe<Home>>
+  localizations_connection?: Maybe<HomeRelationResponseCollection>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
 }
 
@@ -1190,88 +1378,89 @@ export type HomeImagesArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type HomeEntity = {
-  __typename?: "HomeEntity"
-  attributes?: Maybe<Home>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type HomeEntityResponse = {
-  __typename?: "HomeEntityResponse"
-  data?: Maybe<HomeEntity>
+export type HomeImages_ConnectionArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type HomeInput = {
   images?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
 }
 
 export type HomeRelationResponseCollection = {
   __typename?: "HomeRelationResponseCollection"
-  data: Array<HomeEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Home>
+  nodes: Array<Home>
 }
 
 export type Hosting = {
   __typename?: "Hosting"
+  /** @deprecated Use root level fields instead */
+  attributes: Hosting
   content?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: Hosting
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   locale?: Maybe<Scalars["String"]["output"]>
-  localizations?: Maybe<HostingRelationResponseCollection>
+  localizations: Array<Maybe<Hosting>>
+  localizations_connection?: Maybe<HostingRelationResponseCollection>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-}
-
-export type HostingEntity = {
-  __typename?: "HostingEntity"
-  attributes?: Maybe<Hosting>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type HostingEntityResponse = {
-  __typename?: "HostingEntityResponse"
-  data?: Maybe<HostingEntity>
 }
 
 export type HostingInput = {
   content?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
 }
 
 export type HostingRelationResponseCollection = {
   __typename?: "HostingRelationResponseCollection"
-  data: Array<HostingEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Hosting>
+  nodes: Array<Hosting>
 }
 
 export type I18NLocale = {
   __typename?: "I18NLocale"
+  /** @deprecated Use root level fields instead */
+  attributes: I18NLocale
   code?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: I18NLocale
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   name?: Maybe<Scalars["String"]["output"]>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-}
-
-export type I18NLocaleEntity = {
-  __typename?: "I18NLocaleEntity"
-  attributes?: Maybe<I18NLocale>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type I18NLocaleEntityResponse = {
-  __typename?: "I18NLocaleEntityResponse"
-  data?: Maybe<I18NLocaleEntity>
 }
 
 export type I18NLocaleEntityResponseCollection = {
   __typename?: "I18NLocaleEntityResponseCollection"
-  data: Array<I18NLocaleEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<I18NLocale>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<I18NLocale>
+  pageInfo: Pagination
 }
 
 export type I18NLocaleFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>
   code?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   name?: InputMaybe<StringFilterInput>
   not?: InputMaybe<I18NLocaleFiltersInput>
   or?: InputMaybe<Array<InputMaybe<I18NLocaleFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
 }
 
@@ -1354,82 +1543,73 @@ export type Mutation = {
   __typename?: "Mutation"
   /** Change user password. Confirm with the current password. */
   changePassword?: Maybe<UsersPermissionsLoginPayload>
-  createArticle?: Maybe<ArticleEntityResponse>
-  createEvent?: Maybe<EventEntityResponse>
-  createEventLocalization?: Maybe<EventEntityResponse>
-  createEventLocation?: Maybe<EventLocationEntityResponse>
-  createExpectation?: Maybe<ExpectationEntityResponse>
-  createExpectationLocalization?: Maybe<ExpectationEntityResponse>
-  createFormatLocalization?: Maybe<FormatEntityResponse>
-  createGame?: Maybe<GameEntityResponse>
-  createGameLocalization?: Maybe<GameEntityResponse>
-  createHistoryLocalization?: Maybe<HistoryEntityResponse>
-  createHomeLocalization?: Maybe<HomeEntityResponse>
-  createHostingLocalization?: Maybe<HostingEntityResponse>
-  createPlayer?: Maybe<PlayerEntityResponse>
-  createSponsor?: Maybe<SponsorEntityResponse>
-  createTag?: Maybe<TagEntityResponse>
-  createTestimonial?: Maybe<TestimonialEntityResponse>
-  createUploadFile?: Maybe<UploadFileEntityResponse>
-  createUploadFolder?: Maybe<UploadFolderEntityResponse>
+  createArticle?: Maybe<Article>
+  createEvent?: Maybe<Event>
+  createEventLocation?: Maybe<EventLocation>
+  createExpectation?: Maybe<Expectation>
+  createGame?: Maybe<Game>
+  createPlayer?: Maybe<Player>
+  createReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>
+  createReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>
+  createSponsor?: Maybe<Sponsor>
+  createTag?: Maybe<Tag>
+  createTestimonial?: Maybe<Testimonial>
   /** Create a new role */
   createUsersPermissionsRole?: Maybe<UsersPermissionsCreateRolePayload>
   /** Create a new user */
   createUsersPermissionsUser: UsersPermissionsUserEntityResponse
-  createVenue?: Maybe<VenueEntityResponse>
-  deleteArticle?: Maybe<ArticleEntityResponse>
-  deleteEvent?: Maybe<EventEntityResponse>
-  deleteEventLocation?: Maybe<EventLocationEntityResponse>
-  deleteExpectation?: Maybe<ExpectationEntityResponse>
-  deleteFormat?: Maybe<FormatEntityResponse>
-  deleteGame?: Maybe<GameEntityResponse>
-  deleteHistory?: Maybe<HistoryEntityResponse>
-  deleteHome?: Maybe<HomeEntityResponse>
-  deleteHosting?: Maybe<HostingEntityResponse>
-  deletePlayer?: Maybe<PlayerEntityResponse>
-  deleteSponsor?: Maybe<SponsorEntityResponse>
-  deleteTag?: Maybe<TagEntityResponse>
-  deleteTestimonial?: Maybe<TestimonialEntityResponse>
-  deleteUploadFile?: Maybe<UploadFileEntityResponse>
-  deleteUploadFolder?: Maybe<UploadFolderEntityResponse>
+  createVenue?: Maybe<Venue>
+  deleteArticle?: Maybe<DeleteMutationResponse>
+  deleteEvent?: Maybe<DeleteMutationResponse>
+  deleteEventLocation?: Maybe<DeleteMutationResponse>
+  deleteExpectation?: Maybe<DeleteMutationResponse>
+  deleteFormat?: Maybe<DeleteMutationResponse>
+  deleteGame?: Maybe<DeleteMutationResponse>
+  deleteHistory?: Maybe<DeleteMutationResponse>
+  deleteHome?: Maybe<DeleteMutationResponse>
+  deleteHosting?: Maybe<DeleteMutationResponse>
+  deletePlayer?: Maybe<DeleteMutationResponse>
+  deleteReviewWorkflowsWorkflow?: Maybe<DeleteMutationResponse>
+  deleteReviewWorkflowsWorkflowStage?: Maybe<DeleteMutationResponse>
+  deleteSponsor?: Maybe<DeleteMutationResponse>
+  deleteTag?: Maybe<DeleteMutationResponse>
+  deleteTestimonial?: Maybe<DeleteMutationResponse>
+  deleteUploadFile?: Maybe<UploadFile>
   /** Delete an existing role */
   deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>
   /** Delete an existing user */
   deleteUsersPermissionsUser: UsersPermissionsUserEntityResponse
-  deleteVenue?: Maybe<VenueEntityResponse>
+  deleteVenue?: Maybe<DeleteMutationResponse>
   /** Confirm an email users email address */
   emailConfirmation?: Maybe<UsersPermissionsLoginPayload>
   /** Request a reset password token */
   forgotPassword?: Maybe<UsersPermissionsPasswordPayload>
   login: UsersPermissionsLoginPayload
-  multipleUpload: Array<Maybe<UploadFileEntityResponse>>
   /** Register a user */
   register: UsersPermissionsLoginPayload
-  removeFile?: Maybe<UploadFileEntityResponse>
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   resetPassword?: Maybe<UsersPermissionsLoginPayload>
-  updateArticle?: Maybe<ArticleEntityResponse>
-  updateEvent?: Maybe<EventEntityResponse>
-  updateEventLocation?: Maybe<EventLocationEntityResponse>
-  updateExpectation?: Maybe<ExpectationEntityResponse>
-  updateFileInfo: UploadFileEntityResponse
-  updateFormat?: Maybe<FormatEntityResponse>
-  updateGame?: Maybe<GameEntityResponse>
-  updateHistory?: Maybe<HistoryEntityResponse>
-  updateHome?: Maybe<HomeEntityResponse>
-  updateHosting?: Maybe<HostingEntityResponse>
-  updatePlayer?: Maybe<PlayerEntityResponse>
-  updateSponsor?: Maybe<SponsorEntityResponse>
-  updateTag?: Maybe<TagEntityResponse>
-  updateTestimonial?: Maybe<TestimonialEntityResponse>
-  updateUploadFile?: Maybe<UploadFileEntityResponse>
-  updateUploadFolder?: Maybe<UploadFolderEntityResponse>
+  updateArticle?: Maybe<Article>
+  updateEvent?: Maybe<Event>
+  updateEventLocation?: Maybe<EventLocation>
+  updateExpectation?: Maybe<Expectation>
+  updateFormat?: Maybe<Format>
+  updateGame?: Maybe<Game>
+  updateHistory?: Maybe<History>
+  updateHome?: Maybe<Home>
+  updateHosting?: Maybe<Hosting>
+  updatePlayer?: Maybe<Player>
+  updateReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>
+  updateReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>
+  updateSponsor?: Maybe<Sponsor>
+  updateTag?: Maybe<Tag>
+  updateTestimonial?: Maybe<Testimonial>
+  updateUploadFile: UploadFile
   /** Update an existing role */
   updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>
   /** Update an existing user */
   updateUsersPermissionsUser: UsersPermissionsUserEntityResponse
-  updateVenue?: Maybe<VenueEntityResponse>
-  upload: UploadFileEntityResponse
+  updateVenue?: Maybe<Venue>
 }
 
 export type MutationChangePasswordArgs = {
@@ -1440,91 +1620,60 @@ export type MutationChangePasswordArgs = {
 
 export type MutationCreateArticleArgs = {
   data: ArticleInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateEventArgs = {
   data: EventInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateEventLocalizationArgs = {
-  data?: InputMaybe<EventInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateEventLocationArgs = {
   data: EventLocationInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateExpectationArgs = {
   data: ExpectationInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateExpectationLocalizationArgs = {
-  data?: InputMaybe<ExpectationInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateFormatLocalizationArgs = {
-  data?: InputMaybe<FormatInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateGameArgs = {
   data: GameInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateGameLocalizationArgs = {
-  data?: InputMaybe<GameInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateHistoryLocalizationArgs = {
-  data?: InputMaybe<HistoryInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateHomeLocalizationArgs = {
-  data?: InputMaybe<HomeInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationCreateHostingLocalizationArgs = {
-  data?: InputMaybe<HostingInput>
-  id?: InputMaybe<Scalars["ID"]["input"]>
-  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreatePlayerArgs = {
   data: PlayerInput
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type MutationCreateReviewWorkflowsWorkflowArgs = {
+  data: ReviewWorkflowsWorkflowInput
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type MutationCreateReviewWorkflowsWorkflowStageArgs = {
+  data: ReviewWorkflowsWorkflowStageInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateSponsorArgs = {
   data: SponsorInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateTagArgs = {
   data: TagInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateTestimonialArgs = {
   data: TestimonialInput
-}
-
-export type MutationCreateUploadFileArgs = {
-  data: UploadFileInput
-}
-
-export type MutationCreateUploadFolderArgs = {
-  data: UploadFolderInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationCreateUsersPermissionsRoleArgs = {
@@ -1537,23 +1686,24 @@ export type MutationCreateUsersPermissionsUserArgs = {
 
 export type MutationCreateVenueArgs = {
   data: VenueInput
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationDeleteArticleArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteEventArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
 }
 
 export type MutationDeleteEventLocationArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteExpectationArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
 }
 
@@ -1562,7 +1712,7 @@ export type MutationDeleteFormatArgs = {
 }
 
 export type MutationDeleteGameArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
 }
 
@@ -1579,26 +1729,30 @@ export type MutationDeleteHostingArgs = {
 }
 
 export type MutationDeletePlayerArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+}
+
+export type MutationDeleteReviewWorkflowsWorkflowArgs = {
+  documentId: Scalars["ID"]["input"]
+}
+
+export type MutationDeleteReviewWorkflowsWorkflowStageArgs = {
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteSponsorArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteTagArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteTestimonialArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationDeleteUploadFileArgs = {
-  id: Scalars["ID"]["input"]
-}
-
-export type MutationDeleteUploadFolderArgs = {
   id: Scalars["ID"]["input"]
 }
 
@@ -1611,7 +1765,7 @@ export type MutationDeleteUsersPermissionsUserArgs = {
 }
 
 export type MutationDeleteVenueArgs = {
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
 }
 
 export type MutationEmailConfirmationArgs = {
@@ -1626,19 +1780,8 @@ export type MutationLoginArgs = {
   input: UsersPermissionsLoginInput
 }
 
-export type MutationMultipleUploadArgs = {
-  field?: InputMaybe<Scalars["String"]["input"]>
-  files: Array<InputMaybe<Scalars["Upload"]["input"]>>
-  ref?: InputMaybe<Scalars["String"]["input"]>
-  refId?: InputMaybe<Scalars["ID"]["input"]>
-}
-
 export type MutationRegisterArgs = {
   input: UsersPermissionsRegisterInput
-}
-
-export type MutationRemoveFileArgs = {
-  id: Scalars["ID"]["input"]
 }
 
 export type MutationResetPasswordArgs = {
@@ -1649,85 +1792,100 @@ export type MutationResetPasswordArgs = {
 
 export type MutationUpdateArticleArgs = {
   data: ArticleInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateEventArgs = {
   data: EventInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateEventLocationArgs = {
   data: EventLocationInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateExpectationArgs = {
   data: ExpectationInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
-}
-
-export type MutationUpdateFileInfoArgs = {
-  id: Scalars["ID"]["input"]
-  info?: InputMaybe<FileInfoInput>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateFormatArgs = {
   data: FormatInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateGameArgs = {
   data: GameInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateHistoryArgs = {
   data: HistoryInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateHomeArgs = {
   data: HomeInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateHostingArgs = {
   data: HostingInput
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdatePlayerArgs = {
   data: PlayerInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type MutationUpdateReviewWorkflowsWorkflowArgs = {
+  data: ReviewWorkflowsWorkflowInput
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type MutationUpdateReviewWorkflowsWorkflowStageArgs = {
+  data: ReviewWorkflowsWorkflowStageInput
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateSponsorArgs = {
   data: SponsorInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateTagArgs = {
   data: TagInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateTestimonialArgs = {
   data: TestimonialInput
-  id: Scalars["ID"]["input"]
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type MutationUpdateUploadFileArgs = {
-  data: UploadFileInput
   id: Scalars["ID"]["input"]
-}
-
-export type MutationUpdateUploadFolderArgs = {
-  data: UploadFolderInput
-  id: Scalars["ID"]["input"]
+  info?: InputMaybe<FileInfoInput>
 }
 
 export type MutationUpdateUsersPermissionsRoleArgs = {
@@ -1742,15 +1900,8 @@ export type MutationUpdateUsersPermissionsUserArgs = {
 
 export type MutationUpdateVenueArgs = {
   data: VenueInput
-  id: Scalars["ID"]["input"]
-}
-
-export type MutationUploadArgs = {
-  field?: InputMaybe<Scalars["String"]["input"]>
-  file: Scalars["Upload"]["input"]
-  info?: InputMaybe<FileInfoInput>
-  ref?: InputMaybe<Scalars["String"]["input"]>
-  refId?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type Pagination = {
@@ -1770,58 +1921,96 @@ export type PaginationArg = {
 
 export type Player = {
   __typename?: "Player"
-  attended?: Maybe<EventRelationResponseCollection>
-  avatar?: Maybe<UploadFileEntityResponse>
+  attended: Array<Maybe<Event>>
+  attended_connection?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use root level fields instead */
+  attributes: Player
+  avatar?: Maybe<UploadFile>
   bio?: Maybe<Scalars["String"]["output"]>
   company?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  documented?: Maybe<GameRelationResponseCollection>
-  hosted?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use root level fields instead */
+  data: Player
+  documentId: Scalars["ID"]["output"]
+  documented: Array<Maybe<Game>>
+  documented_connection?: Maybe<GameRelationResponseCollection>
+  hosted: Array<Maybe<Event>>
+  hosted_connection?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   location?: Maybe<Scalars["JSON"]["output"]>
-  mentored?: Maybe<EventRelationResponseCollection>
+  mentored: Array<Maybe<Event>>
+  mentored_connection?: Maybe<EventRelationResponseCollection>
   name: Scalars["String"]["output"]
   position: Enum_Player_Position
-  proposed?: Maybe<GameRelationResponseCollection>
+  proposed: Array<Maybe<Game>>
+  proposed_connection?: Maybe<GameRelationResponseCollection>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   slug: Scalars["String"]["output"]
   socialNetworks?: Maybe<Array<Maybe<ComponentContactSocialNetwork>>>
   tagline?: Maybe<Scalars["String"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-  user?: Maybe<UsersPermissionsUserEntityResponse>
+  user?: Maybe<UsersPermissionsUser>
   website?: Maybe<Scalars["String"]["output"]>
 }
 
 export type PlayerAttendedArgs = {
   filters?: InputMaybe<EventFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type PlayerAttended_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type PlayerDocumentedArgs = {
   filters?: InputMaybe<GameFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type PlayerDocumented_ConnectionArgs = {
+  filters?: InputMaybe<GameFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type PlayerHostedArgs = {
   filters?: InputMaybe<EventFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type PlayerHosted_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type PlayerMentoredArgs = {
   filters?: InputMaybe<EventFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type PlayerMentored_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type PlayerProposedArgs = {
   filters?: InputMaybe<GameFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type PlayerProposed_ConnectionArgs = {
+  filters?: InputMaybe<GameFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
@@ -1831,21 +2020,14 @@ export type PlayerSocialNetworksArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type PlayerEntity = {
-  __typename?: "PlayerEntity"
-  attributes?: Maybe<Player>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type PlayerEntityResponse = {
-  __typename?: "PlayerEntityResponse"
-  data?: Maybe<PlayerEntity>
-}
-
 export type PlayerEntityResponseCollection = {
   __typename?: "PlayerEntityResponseCollection"
-  data: Array<PlayerEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Player>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Player>
+  pageInfo: Pagination
 }
 
 export type PlayerFiltersInput = {
@@ -1854,9 +2036,9 @@ export type PlayerFiltersInput = {
   bio?: InputMaybe<StringFilterInput>
   company?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   documented?: InputMaybe<GameFiltersInput>
   hosted?: InputMaybe<EventFiltersInput>
-  id?: InputMaybe<IdFilterInput>
   location?: InputMaybe<JsonFilterInput>
   mentored?: InputMaybe<EventFiltersInput>
   name?: InputMaybe<StringFilterInput>
@@ -1864,6 +2046,7 @@ export type PlayerFiltersInput = {
   or?: InputMaybe<Array<InputMaybe<PlayerFiltersInput>>>
   position?: InputMaybe<StringFilterInput>
   proposed?: InputMaybe<GameFiltersInput>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   slug?: InputMaybe<StringFilterInput>
   socialNetworks?: InputMaybe<ComponentContactSocialNetworkFiltersInput>
   tagline?: InputMaybe<StringFilterInput>
@@ -1884,6 +2067,7 @@ export type PlayerInput = {
   name?: InputMaybe<Scalars["String"]["input"]>
   position?: InputMaybe<Enum_Player_Position>
   proposed?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   slug?: InputMaybe<Scalars["String"]["input"]>
   socialNetworks?: InputMaybe<
     Array<InputMaybe<ComponentContactSocialNetworkInput>>
@@ -1895,91 +2079,138 @@ export type PlayerInput = {
 
 export type PlayerRelationResponseCollection = {
   __typename?: "PlayerRelationResponseCollection"
-  data: Array<PlayerEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Player>
+  nodes: Array<Player>
 }
 
-export enum PublicationState {
-  Live = "LIVE",
-  Preview = "PREVIEW",
+export enum PublicationStatus {
+  Draft = "DRAFT",
+  Published = "PUBLISHED",
 }
 
 export type Query = {
   __typename?: "Query"
-  article?: Maybe<ArticleEntityResponse>
-  articles?: Maybe<ArticleEntityResponseCollection>
-  event?: Maybe<EventEntityResponse>
-  eventLocation?: Maybe<EventLocationEntityResponse>
-  eventLocations?: Maybe<EventLocationEntityResponseCollection>
-  events?: Maybe<EventEntityResponseCollection>
-  expectation?: Maybe<ExpectationEntityResponse>
-  expectations?: Maybe<ExpectationEntityResponseCollection>
-  format?: Maybe<FormatEntityResponse>
-  game?: Maybe<GameEntityResponse>
-  games?: Maybe<GameEntityResponseCollection>
-  history?: Maybe<HistoryEntityResponse>
-  home?: Maybe<HomeEntityResponse>
-  hosting?: Maybe<HostingEntityResponse>
-  i18NLocale?: Maybe<I18NLocaleEntityResponse>
-  i18NLocales?: Maybe<I18NLocaleEntityResponseCollection>
+  article?: Maybe<Article>
+  articles: Array<Maybe<Article>>
+  articles_connection?: Maybe<ArticleEntityResponseCollection>
+  event?: Maybe<Event>
+  eventLocation?: Maybe<EventLocation>
+  eventLocations: Array<Maybe<EventLocation>>
+  eventLocations_connection?: Maybe<EventLocationEntityResponseCollection>
+  events: Array<Maybe<Event>>
+  events_connection?: Maybe<EventEntityResponseCollection>
+  expectation?: Maybe<Expectation>
+  expectations: Array<Maybe<Expectation>>
+  expectations_connection?: Maybe<ExpectationEntityResponseCollection>
+  format?: Maybe<Format>
+  game?: Maybe<Game>
+  games: Array<Maybe<Game>>
+  games_connection?: Maybe<GameEntityResponseCollection>
+  history?: Maybe<History>
+  home?: Maybe<Home>
+  hosting?: Maybe<Hosting>
+  i18NLocale?: Maybe<I18NLocale>
+  i18NLocales: Array<Maybe<I18NLocale>>
+  i18NLocales_connection?: Maybe<I18NLocaleEntityResponseCollection>
   me?: Maybe<UsersPermissionsMe>
-  player?: Maybe<PlayerEntityResponse>
-  players?: Maybe<PlayerEntityResponseCollection>
+  player?: Maybe<Player>
+  players: Array<Maybe<Player>>
+  players_connection?: Maybe<PlayerEntityResponseCollection>
+  reviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>
+  reviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>
+  reviewWorkflowsWorkflowStages: Array<Maybe<ReviewWorkflowsWorkflowStage>>
+  reviewWorkflowsWorkflowStages_connection?: Maybe<ReviewWorkflowsWorkflowStageEntityResponseCollection>
+  reviewWorkflowsWorkflows: Array<Maybe<ReviewWorkflowsWorkflow>>
+  reviewWorkflowsWorkflows_connection?: Maybe<ReviewWorkflowsWorkflowEntityResponseCollection>
   search?: Maybe<SearchResponse>
-  sponsor?: Maybe<SponsorEntityResponse>
-  sponsors?: Maybe<SponsorEntityResponseCollection>
-  tag?: Maybe<TagEntityResponse>
-  tags?: Maybe<TagEntityResponseCollection>
-  testimonial?: Maybe<TestimonialEntityResponse>
-  testimonials?: Maybe<TestimonialEntityResponseCollection>
-  uploadFile?: Maybe<UploadFileEntityResponse>
-  uploadFiles?: Maybe<UploadFileEntityResponseCollection>
-  uploadFolder?: Maybe<UploadFolderEntityResponse>
-  uploadFolders?: Maybe<UploadFolderEntityResponseCollection>
-  usersPermissionsRole?: Maybe<UsersPermissionsRoleEntityResponse>
-  usersPermissionsRoles?: Maybe<UsersPermissionsRoleEntityResponseCollection>
-  usersPermissionsUser?: Maybe<UsersPermissionsUserEntityResponse>
-  usersPermissionsUsers?: Maybe<UsersPermissionsUserEntityResponseCollection>
-  venue?: Maybe<VenueEntityResponse>
-  venues?: Maybe<VenueEntityResponseCollection>
+  sponsor?: Maybe<Sponsor>
+  sponsors: Array<Maybe<Sponsor>>
+  sponsors_connection?: Maybe<SponsorEntityResponseCollection>
+  tag?: Maybe<Tag>
+  tags: Array<Maybe<Tag>>
+  tags_connection?: Maybe<TagEntityResponseCollection>
+  testimonial?: Maybe<Testimonial>
+  testimonials: Array<Maybe<Testimonial>>
+  testimonials_connection?: Maybe<TestimonialEntityResponseCollection>
+  uploadFile?: Maybe<UploadFile>
+  uploadFiles: Array<Maybe<UploadFile>>
+  uploadFiles_connection?: Maybe<UploadFileEntityResponseCollection>
+  usersPermissionsRole?: Maybe<UsersPermissionsRole>
+  usersPermissionsRoles: Array<Maybe<UsersPermissionsRole>>
+  usersPermissionsRoles_connection?: Maybe<UsersPermissionsRoleEntityResponseCollection>
+  usersPermissionsUser?: Maybe<UsersPermissionsUser>
+  usersPermissionsUsers: Array<Maybe<UsersPermissionsUser>>
+  usersPermissionsUsers_connection?: Maybe<UsersPermissionsUserEntityResponseCollection>
+  venue?: Maybe<Venue>
+  venues: Array<Maybe<Venue>>
+  venues_connection?: Maybe<VenueEntityResponseCollection>
 }
 
 export type QueryArticleArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryArticlesArgs = {
   filters?: InputMaybe<ArticleFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryArticles_ConnectionArgs = {
+  filters?: InputMaybe<ArticleFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryEventArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryEventLocationArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryEventLocationsArgs = {
   filters?: InputMaybe<EventLocationFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryEventLocations_ConnectionArgs = {
+  filters?: InputMaybe<EventLocationFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryEventsArgs = {
   filters?: InputMaybe<EventFiltersInput>
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryEvents_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryExpectationArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryExpectationsArgs = {
@@ -1987,55 +2218,133 @@ export type QueryExpectationsArgs = {
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryExpectations_ConnectionArgs = {
+  filters?: InputMaybe<ExpectationFiltersInput>
+  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryFormatArgs = {
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryGameArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryGamesArgs = {
   filters?: InputMaybe<GameFiltersInput>
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryGames_ConnectionArgs = {
+  filters?: InputMaybe<GameFiltersInput>
+  locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryHistoryArgs = {
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryHomeArgs = {
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryHostingArgs = {
   locale?: InputMaybe<Scalars["I18NLocaleCode"]["input"]>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryI18NLocaleArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryI18NLocalesArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryI18NLocales_ConnectionArgs = {
+  filters?: InputMaybe<I18NLocaleFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryPlayerArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryPlayersArgs = {
   filters?: InputMaybe<PlayerFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryPlayers_ConnectionArgs = {
+  filters?: InputMaybe<PlayerFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryReviewWorkflowsWorkflowArgs = {
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryReviewWorkflowsWorkflowStageArgs = {
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryReviewWorkflowsWorkflowStagesArgs = {
+  filters?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryReviewWorkflowsWorkflowStages_ConnectionArgs = {
+  filters?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryReviewWorkflowsWorkflowsArgs = {
+  filters?: InputMaybe<ReviewWorkflowsWorkflowFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryReviewWorkflowsWorkflows_ConnectionArgs = {
+  filters?: InputMaybe<ReviewWorkflowsWorkflowFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QuerySearchArgs = {
@@ -2044,88 +2353,258 @@ export type QuerySearchArgs = {
 }
 
 export type QuerySponsorArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QuerySponsorsArgs = {
   filters?: InputMaybe<SponsorFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QuerySponsors_ConnectionArgs = {
+  filters?: InputMaybe<SponsorFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryTagArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryTagsArgs = {
   filters?: InputMaybe<TagFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryTags_ConnectionArgs = {
+  filters?: InputMaybe<TagFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryTestimonialArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryTestimonialsArgs = {
   filters?: InputMaybe<TestimonialFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryTestimonials_ConnectionArgs = {
+  filters?: InputMaybe<TestimonialFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryUploadFileArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryUploadFilesArgs = {
   filters?: InputMaybe<UploadFileFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
-export type QueryUploadFolderArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
-}
-
-export type QueryUploadFoldersArgs = {
-  filters?: InputMaybe<UploadFolderFiltersInput>
+export type QueryUploadFiles_ConnectionArgs = {
+  filters?: InputMaybe<UploadFileFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryUsersPermissionsRoleArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryUsersPermissionsRolesArgs = {
   filters?: InputMaybe<UsersPermissionsRoleFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryUsersPermissionsRoles_ConnectionArgs = {
+  filters?: InputMaybe<UsersPermissionsRoleFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryUsersPermissionsUserArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryUsersPermissionsUsersArgs = {
   filters?: InputMaybe<UsersPermissionsUserFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryUsersPermissionsUsers_ConnectionArgs = {
+  filters?: InputMaybe<UsersPermissionsUserFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryVenueArgs = {
-  id?: InputMaybe<Scalars["ID"]["input"]>
+  documentId: Scalars["ID"]["input"]
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type QueryVenuesArgs = {
   filters?: InputMaybe<VenueFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
+}
+
+export type QueryVenues_ConnectionArgs = {
+  filters?: InputMaybe<VenueFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+  status?: InputMaybe<PublicationStatus>
 }
 
 export type ResponseCollectionMeta = {
   __typename?: "ResponseCollectionMeta"
   pagination: Pagination
+}
+
+export type ReviewWorkflowsWorkflow = {
+  __typename?: "ReviewWorkflowsWorkflow"
+  /** @deprecated Use root level fields instead */
+  attributes: ReviewWorkflowsWorkflow
+  contentTypes: Scalars["JSON"]["output"]
+  createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: ReviewWorkflowsWorkflow
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  name: Scalars["String"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
+  stageRequiredToPublish?: Maybe<ReviewWorkflowsWorkflowStage>
+  stages: Array<Maybe<ReviewWorkflowsWorkflowStage>>
+  stages_connection?: Maybe<ReviewWorkflowsWorkflowStageRelationResponseCollection>
+  updatedAt?: Maybe<Scalars["DateTime"]["output"]>
+}
+
+export type ReviewWorkflowsWorkflowStagesArgs = {
+  filters?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type ReviewWorkflowsWorkflowStages_ConnectionArgs = {
+  filters?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type ReviewWorkflowsWorkflowEntityResponseCollection = {
+  __typename?: "ReviewWorkflowsWorkflowEntityResponseCollection"
+  /** @deprecated Use `nodes` field instead */
+  data: Array<ReviewWorkflowsWorkflow>
+  /** @deprecated Use the `pageInfo` field instead */
+  meta: ResponseCollectionMeta
+  nodes: Array<ReviewWorkflowsWorkflow>
+  pageInfo: Pagination
+}
+
+export type ReviewWorkflowsWorkflowFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ReviewWorkflowsWorkflowFiltersInput>>>
+  contentTypes?: InputMaybe<JsonFilterInput>
+  createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
+  name?: InputMaybe<StringFilterInput>
+  not?: InputMaybe<ReviewWorkflowsWorkflowFiltersInput>
+  or?: InputMaybe<Array<InputMaybe<ReviewWorkflowsWorkflowFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
+  stageRequiredToPublish?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  stages?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  updatedAt?: InputMaybe<DateTimeFilterInput>
+}
+
+export type ReviewWorkflowsWorkflowInput = {
+  contentTypes?: InputMaybe<Scalars["JSON"]["input"]>
+  name?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
+  stageRequiredToPublish?: InputMaybe<Scalars["ID"]["input"]>
+  stages?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
+}
+
+export type ReviewWorkflowsWorkflowStage = {
+  __typename?: "ReviewWorkflowsWorkflowStage"
+  /** @deprecated Use root level fields instead */
+  attributes: ReviewWorkflowsWorkflowStage
+  color?: Maybe<Scalars["String"]["output"]>
+  createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: ReviewWorkflowsWorkflowStage
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  name?: Maybe<Scalars["String"]["output"]>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
+  updatedAt?: Maybe<Scalars["DateTime"]["output"]>
+  workflow?: Maybe<ReviewWorkflowsWorkflow>
+}
+
+export type ReviewWorkflowsWorkflowStageEntityResponseCollection = {
+  __typename?: "ReviewWorkflowsWorkflowStageEntityResponseCollection"
+  /** @deprecated Use `nodes` field instead */
+  data: Array<ReviewWorkflowsWorkflowStage>
+  /** @deprecated Use the `pageInfo` field instead */
+  meta: ResponseCollectionMeta
+  nodes: Array<ReviewWorkflowsWorkflowStage>
+  pageInfo: Pagination
+}
+
+export type ReviewWorkflowsWorkflowStageFiltersInput = {
+  and?: InputMaybe<Array<InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>>>
+  color?: InputMaybe<StringFilterInput>
+  createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
+  name?: InputMaybe<StringFilterInput>
+  not?: InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>
+  or?: InputMaybe<Array<InputMaybe<ReviewWorkflowsWorkflowStageFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
+  updatedAt?: InputMaybe<DateTimeFilterInput>
+  workflow?: InputMaybe<ReviewWorkflowsWorkflowFiltersInput>
+}
+
+export type ReviewWorkflowsWorkflowStageInput = {
+  color?: InputMaybe<Scalars["String"]["input"]>
+  name?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
+  workflow?: InputMaybe<Scalars["ID"]["input"]>
+}
+
+export type ReviewWorkflowsWorkflowStageRelationResponseCollection = {
+  __typename?: "ReviewWorkflowsWorkflowStageRelationResponseCollection"
+  /** @deprecated Use `nodes` field instead */
+  data: Array<ReviewWorkflowsWorkflowStage>
+  nodes: Array<ReviewWorkflowsWorkflowStage>
 }
 
 export type SearchResponse = {
@@ -2162,9 +2641,17 @@ export type SearchResponsePlayersArgs = {
 
 export type Sponsor = {
   __typename?: "Sponsor"
+  /** @deprecated Use root level fields instead */
+  attributes: Sponsor
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  logo?: Maybe<UploadFileEntityResponse>
+  /** @deprecated Use root level fields instead */
+  data: Sponsor
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  logo?: Maybe<UploadFile>
   name: Scalars["String"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   socialNetworks?: Maybe<Array<Maybe<ComponentContactSocialNetwork>>>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
   url?: Maybe<Scalars["String"]["output"]>
@@ -2176,30 +2663,24 @@ export type SponsorSocialNetworksArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type SponsorEntity = {
-  __typename?: "SponsorEntity"
-  attributes?: Maybe<Sponsor>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type SponsorEntityResponse = {
-  __typename?: "SponsorEntityResponse"
-  data?: Maybe<SponsorEntity>
-}
-
 export type SponsorEntityResponseCollection = {
   __typename?: "SponsorEntityResponseCollection"
-  data: Array<SponsorEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Sponsor>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Sponsor>
+  pageInfo: Pagination
 }
 
 export type SponsorFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<SponsorFiltersInput>>>
   createdAt?: InputMaybe<DateTimeFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   name?: InputMaybe<StringFilterInput>
   not?: InputMaybe<SponsorFiltersInput>
   or?: InputMaybe<Array<InputMaybe<SponsorFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   socialNetworks?: InputMaybe<ComponentContactSocialNetworkFiltersInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
   url?: InputMaybe<StringFilterInput>
@@ -2208,6 +2689,7 @@ export type SponsorFiltersInput = {
 export type SponsorInput = {
   logo?: InputMaybe<Scalars["ID"]["input"]>
   name?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   socialNetworks?: InputMaybe<
     Array<InputMaybe<ComponentContactSocialNetworkInput>>
   >
@@ -2216,7 +2698,9 @@ export type SponsorInput = {
 
 export type SponsorRelationResponseCollection = {
   __typename?: "SponsorRelationResponseCollection"
-  data: Array<SponsorEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Sponsor>
+  nodes: Array<Sponsor>
 }
 
 export type StringFilterInput = {
@@ -2246,8 +2730,17 @@ export type StringFilterInput = {
 
 export type Tag = {
   __typename?: "Tag"
-  articles?: Maybe<ArticleRelationResponseCollection>
+  articles: Array<Maybe<Article>>
+  articles_connection?: Maybe<ArticleRelationResponseCollection>
+  /** @deprecated Use root level fields instead */
+  attributes: Tag
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: Tag
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
   value: Scalars["String"]["output"]
 }
@@ -2255,73 +2748,76 @@ export type Tag = {
 export type TagArticlesArgs = {
   filters?: InputMaybe<ArticleFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type TagEntity = {
-  __typename?: "TagEntity"
-  attributes?: Maybe<Tag>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type TagEntityResponse = {
-  __typename?: "TagEntityResponse"
-  data?: Maybe<TagEntity>
+export type TagArticles_ConnectionArgs = {
+  filters?: InputMaybe<ArticleFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type TagEntityResponseCollection = {
   __typename?: "TagEntityResponseCollection"
-  data: Array<TagEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Tag>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Tag>
+  pageInfo: Pagination
 }
 
 export type TagFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<TagFiltersInput>>>
   articles?: InputMaybe<ArticleFiltersInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   not?: InputMaybe<TagFiltersInput>
   or?: InputMaybe<Array<InputMaybe<TagFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
   value?: InputMaybe<StringFilterInput>
 }
 
 export type TagInput = {
   articles?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   value?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type TagRelationResponseCollection = {
   __typename?: "TagRelationResponseCollection"
-  data: Array<TagEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Tag>
+  nodes: Array<Tag>
 }
 
 export type Testimonial = {
   __typename?: "Testimonial"
-  audio?: Maybe<UploadFileEntityResponse>
-  author?: Maybe<PlayerEntityResponse>
+  /** @deprecated Use root level fields instead */
+  attributes: Testimonial
+  audio?: Maybe<UploadFile>
+  author?: Maybe<Player>
   content: Scalars["String"]["output"]
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: Testimonial
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
   url?: Maybe<Scalars["String"]["output"]>
 }
 
-export type TestimonialEntity = {
-  __typename?: "TestimonialEntity"
-  attributes?: Maybe<Testimonial>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type TestimonialEntityResponse = {
-  __typename?: "TestimonialEntityResponse"
-  data?: Maybe<TestimonialEntity>
-}
-
 export type TestimonialEntityResponseCollection = {
   __typename?: "TestimonialEntityResponseCollection"
-  data: Array<TestimonialEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Testimonial>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Testimonial>
+  pageInfo: Pagination
 }
 
 export type TestimonialFiltersInput = {
@@ -2329,9 +2825,10 @@ export type TestimonialFiltersInput = {
   author?: InputMaybe<PlayerFiltersInput>
   content?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   not?: InputMaybe<TestimonialFiltersInput>
   or?: InputMaybe<Array<InputMaybe<TestimonialFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
   url?: InputMaybe<StringFilterInput>
 }
@@ -2340,6 +2837,7 @@ export type TestimonialInput = {
   audio?: InputMaybe<Scalars["ID"]["input"]>
   author?: InputMaybe<Scalars["ID"]["input"]>
   content?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   url?: InputMaybe<Scalars["String"]["input"]>
 }
 
@@ -2371,18 +2869,25 @@ export type TimeFilterInput = {
 export type UploadFile = {
   __typename?: "UploadFile"
   alternativeText?: Maybe<Scalars["String"]["output"]>
-  blurhash?: Maybe<Scalars["String"]["output"]>
+  /** @deprecated Use root level fields instead */
+  attributes: UploadFile
   caption?: Maybe<Scalars["String"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: UploadFile
+  documentId: Scalars["ID"]["output"]
   ext?: Maybe<Scalars["String"]["output"]>
   formats?: Maybe<Scalars["JSON"]["output"]>
   hash: Scalars["String"]["output"]
   height?: Maybe<Scalars["Int"]["output"]>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   mime: Scalars["String"]["output"]
   name: Scalars["String"]["output"]
   previewUrl?: Maybe<Scalars["String"]["output"]>
   provider: Scalars["String"]["output"]
   provider_metadata?: Maybe<Scalars["JSON"]["output"]>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   related?: Maybe<Array<Maybe<GenericMorph>>>
   size: Scalars["Float"]["output"]
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
@@ -2390,36 +2895,26 @@ export type UploadFile = {
   width?: Maybe<Scalars["Int"]["output"]>
 }
 
-export type UploadFileEntity = {
-  __typename?: "UploadFileEntity"
-  attributes?: Maybe<UploadFile>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type UploadFileEntityResponse = {
-  __typename?: "UploadFileEntityResponse"
-  data?: Maybe<UploadFileEntity>
-}
-
 export type UploadFileEntityResponseCollection = {
   __typename?: "UploadFileEntityResponseCollection"
-  data: Array<UploadFileEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<UploadFile>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<UploadFile>
+  pageInfo: Pagination
 }
 
 export type UploadFileFiltersInput = {
   alternativeText?: InputMaybe<StringFilterInput>
   and?: InputMaybe<Array<InputMaybe<UploadFileFiltersInput>>>
-  blurhash?: InputMaybe<StringFilterInput>
   caption?: InputMaybe<StringFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   ext?: InputMaybe<StringFilterInput>
-  folder?: InputMaybe<UploadFolderFiltersInput>
-  folderPath?: InputMaybe<StringFilterInput>
   formats?: InputMaybe<JsonFilterInput>
   hash?: InputMaybe<StringFilterInput>
   height?: InputMaybe<IntFilterInput>
-  id?: InputMaybe<IdFilterInput>
   mime?: InputMaybe<StringFilterInput>
   name?: InputMaybe<StringFilterInput>
   not?: InputMaybe<UploadFileFiltersInput>
@@ -2427,105 +2922,18 @@ export type UploadFileFiltersInput = {
   previewUrl?: InputMaybe<StringFilterInput>
   provider?: InputMaybe<StringFilterInput>
   provider_metadata?: InputMaybe<JsonFilterInput>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   size?: InputMaybe<FloatFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
   url?: InputMaybe<StringFilterInput>
   width?: InputMaybe<IntFilterInput>
 }
 
-export type UploadFileInput = {
-  alternativeText?: InputMaybe<Scalars["String"]["input"]>
-  blurhash?: InputMaybe<Scalars["String"]["input"]>
-  caption?: InputMaybe<Scalars["String"]["input"]>
-  ext?: InputMaybe<Scalars["String"]["input"]>
-  folder?: InputMaybe<Scalars["ID"]["input"]>
-  folderPath?: InputMaybe<Scalars["String"]["input"]>
-  formats?: InputMaybe<Scalars["JSON"]["input"]>
-  hash?: InputMaybe<Scalars["String"]["input"]>
-  height?: InputMaybe<Scalars["Int"]["input"]>
-  mime?: InputMaybe<Scalars["String"]["input"]>
-  name?: InputMaybe<Scalars["String"]["input"]>
-  previewUrl?: InputMaybe<Scalars["String"]["input"]>
-  provider?: InputMaybe<Scalars["String"]["input"]>
-  provider_metadata?: InputMaybe<Scalars["JSON"]["input"]>
-  size?: InputMaybe<Scalars["Float"]["input"]>
-  url?: InputMaybe<Scalars["String"]["input"]>
-  width?: InputMaybe<Scalars["Int"]["input"]>
-}
-
 export type UploadFileRelationResponseCollection = {
   __typename?: "UploadFileRelationResponseCollection"
-  data: Array<UploadFileEntity>
-}
-
-export type UploadFolder = {
-  __typename?: "UploadFolder"
-  children?: Maybe<UploadFolderRelationResponseCollection>
-  createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  files?: Maybe<UploadFileRelationResponseCollection>
-  name: Scalars["String"]["output"]
-  parent?: Maybe<UploadFolderEntityResponse>
-  path: Scalars["String"]["output"]
-  pathId: Scalars["Int"]["output"]
-  updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-}
-
-export type UploadFolderChildrenArgs = {
-  filters?: InputMaybe<UploadFolderFiltersInput>
-  pagination?: InputMaybe<PaginationArg>
-  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
-}
-
-export type UploadFolderFilesArgs = {
-  filters?: InputMaybe<UploadFileFiltersInput>
-  pagination?: InputMaybe<PaginationArg>
-  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
-}
-
-export type UploadFolderEntity = {
-  __typename?: "UploadFolderEntity"
-  attributes?: Maybe<UploadFolder>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type UploadFolderEntityResponse = {
-  __typename?: "UploadFolderEntityResponse"
-  data?: Maybe<UploadFolderEntity>
-}
-
-export type UploadFolderEntityResponseCollection = {
-  __typename?: "UploadFolderEntityResponseCollection"
-  data: Array<UploadFolderEntity>
-  meta: ResponseCollectionMeta
-}
-
-export type UploadFolderFiltersInput = {
-  and?: InputMaybe<Array<InputMaybe<UploadFolderFiltersInput>>>
-  children?: InputMaybe<UploadFolderFiltersInput>
-  createdAt?: InputMaybe<DateTimeFilterInput>
-  files?: InputMaybe<UploadFileFiltersInput>
-  id?: InputMaybe<IdFilterInput>
-  name?: InputMaybe<StringFilterInput>
-  not?: InputMaybe<UploadFolderFiltersInput>
-  or?: InputMaybe<Array<InputMaybe<UploadFolderFiltersInput>>>
-  parent?: InputMaybe<UploadFolderFiltersInput>
-  path?: InputMaybe<StringFilterInput>
-  pathId?: InputMaybe<IntFilterInput>
-  updatedAt?: InputMaybe<DateTimeFilterInput>
-}
-
-export type UploadFolderInput = {
-  children?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
-  files?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
-  name?: InputMaybe<Scalars["String"]["input"]>
-  parent?: InputMaybe<Scalars["ID"]["input"]>
-  path?: InputMaybe<Scalars["String"]["input"]>
-  pathId?: InputMaybe<Scalars["Int"]["input"]>
-}
-
-export type UploadFolderRelationResponseCollection = {
-  __typename?: "UploadFolderRelationResponseCollection"
-  data: Array<UploadFolderEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<UploadFile>
+  nodes: Array<UploadFile>
 }
 
 export type UsersPermissionsCreateRolePayload = {
@@ -2554,6 +2962,7 @@ export type UsersPermissionsMe = {
   __typename?: "UsersPermissionsMe"
   blocked?: Maybe<Scalars["Boolean"]["output"]>
   confirmed?: Maybe<Scalars["Boolean"]["output"]>
+  documentId: Scalars["ID"]["output"]
   email?: Maybe<Scalars["String"]["output"]>
   id: Scalars["ID"]["output"]
   role?: Maybe<UsersPermissionsMeRole>
@@ -2576,31 +2985,36 @@ export type UsersPermissionsPasswordPayload = {
 export type UsersPermissionsPermission = {
   __typename?: "UsersPermissionsPermission"
   action: Scalars["String"]["output"]
+  /** @deprecated Use root level fields instead */
+  attributes: UsersPermissionsPermission
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  role?: Maybe<UsersPermissionsRoleEntityResponse>
+  /** @deprecated Use root level fields instead */
+  data: UsersPermissionsPermission
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
+  role?: Maybe<UsersPermissionsRole>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-}
-
-export type UsersPermissionsPermissionEntity = {
-  __typename?: "UsersPermissionsPermissionEntity"
-  attributes?: Maybe<UsersPermissionsPermission>
-  id?: Maybe<Scalars["ID"]["output"]>
 }
 
 export type UsersPermissionsPermissionFiltersInput = {
   action?: InputMaybe<StringFilterInput>
   and?: InputMaybe<Array<InputMaybe<UsersPermissionsPermissionFiltersInput>>>
   createdAt?: InputMaybe<DateTimeFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   not?: InputMaybe<UsersPermissionsPermissionFiltersInput>
   or?: InputMaybe<Array<InputMaybe<UsersPermissionsPermissionFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   role?: InputMaybe<UsersPermissionsRoleFiltersInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
 }
 
 export type UsersPermissionsPermissionRelationResponseCollection = {
   __typename?: "UsersPermissionsPermissionRelationResponseCollection"
-  data: Array<UsersPermissionsPermissionEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<UsersPermissionsPermission>
+  nodes: Array<UsersPermissionsPermission>
 }
 
 export type UsersPermissionsRegisterInput = {
@@ -2611,16 +3025,32 @@ export type UsersPermissionsRegisterInput = {
 
 export type UsersPermissionsRole = {
   __typename?: "UsersPermissionsRole"
+  /** @deprecated Use root level fields instead */
+  attributes: UsersPermissionsRole
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: UsersPermissionsRole
   description?: Maybe<Scalars["String"]["output"]>
+  documentId: Scalars["ID"]["output"]
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   name: Scalars["String"]["output"]
-  permissions?: Maybe<UsersPermissionsPermissionRelationResponseCollection>
+  permissions: Array<Maybe<UsersPermissionsPermission>>
+  permissions_connection?: Maybe<UsersPermissionsPermissionRelationResponseCollection>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   type?: Maybe<Scalars["String"]["output"]>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
-  users?: Maybe<UsersPermissionsUserRelationResponseCollection>
+  users: Array<Maybe<UsersPermissionsUser>>
+  users_connection?: Maybe<UsersPermissionsUserRelationResponseCollection>
 }
 
 export type UsersPermissionsRolePermissionsArgs = {
+  filters?: InputMaybe<UsersPermissionsPermissionFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type UsersPermissionsRolePermissions_ConnectionArgs = {
   filters?: InputMaybe<UsersPermissionsPermissionFiltersInput>
   pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
@@ -2632,32 +3062,32 @@ export type UsersPermissionsRoleUsersArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type UsersPermissionsRoleEntity = {
-  __typename?: "UsersPermissionsRoleEntity"
-  attributes?: Maybe<UsersPermissionsRole>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type UsersPermissionsRoleEntityResponse = {
-  __typename?: "UsersPermissionsRoleEntityResponse"
-  data?: Maybe<UsersPermissionsRoleEntity>
+export type UsersPermissionsRoleUsers_ConnectionArgs = {
+  filters?: InputMaybe<UsersPermissionsUserFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
 export type UsersPermissionsRoleEntityResponseCollection = {
   __typename?: "UsersPermissionsRoleEntityResponseCollection"
-  data: Array<UsersPermissionsRoleEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<UsersPermissionsRole>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<UsersPermissionsRole>
+  pageInfo: Pagination
 }
 
 export type UsersPermissionsRoleFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<UsersPermissionsRoleFiltersInput>>>
   createdAt?: InputMaybe<DateTimeFilterInput>
   description?: InputMaybe<StringFilterInput>
-  id?: InputMaybe<IdFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   name?: InputMaybe<StringFilterInput>
   not?: InputMaybe<UsersPermissionsRoleFiltersInput>
   or?: InputMaybe<Array<InputMaybe<UsersPermissionsRoleFiltersInput>>>
   permissions?: InputMaybe<UsersPermissionsPermissionFiltersInput>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   type?: InputMaybe<StringFilterInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
   users?: InputMaybe<UsersPermissionsUserFiltersInput>
@@ -2667,6 +3097,7 @@ export type UsersPermissionsRoleInput = {
   description?: InputMaybe<Scalars["String"]["input"]>
   name?: InputMaybe<Scalars["String"]["input"]>
   permissions?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   type?: InputMaybe<Scalars["String"]["input"]>
   users?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
 }
@@ -2678,48 +3109,52 @@ export type UsersPermissionsUpdateRolePayload = {
 
 export type UsersPermissionsUser = {
   __typename?: "UsersPermissionsUser"
+  /** @deprecated Use root level fields instead */
+  attributes: UsersPermissionsUser
   blocked?: Maybe<Scalars["Boolean"]["output"]>
   confirmed?: Maybe<Scalars["Boolean"]["output"]>
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
+  /** @deprecated Use root level fields instead */
+  data: UsersPermissionsUser
+  documentId: Scalars["ID"]["output"]
   email: Scalars["String"]["output"]
-  player?: Maybe<PlayerEntityResponse>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
+  player?: Maybe<Player>
   provider?: Maybe<Scalars["String"]["output"]>
-  role?: Maybe<UsersPermissionsRoleEntityResponse>
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
+  role?: Maybe<UsersPermissionsRole>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
   username: Scalars["String"]["output"]
 }
 
-export type UsersPermissionsUserEntity = {
-  __typename?: "UsersPermissionsUserEntity"
-  attributes?: Maybe<UsersPermissionsUser>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
 export type UsersPermissionsUserEntityResponse = {
   __typename?: "UsersPermissionsUserEntityResponse"
-  data?: Maybe<UsersPermissionsUserEntity>
+  data?: Maybe<UsersPermissionsUser>
 }
 
 export type UsersPermissionsUserEntityResponseCollection = {
   __typename?: "UsersPermissionsUserEntityResponseCollection"
-  data: Array<UsersPermissionsUserEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<UsersPermissionsUser>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<UsersPermissionsUser>
+  pageInfo: Pagination
 }
 
 export type UsersPermissionsUserFiltersInput = {
   and?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>
   blocked?: InputMaybe<BooleanFilterInput>
-  confirmationToken?: InputMaybe<StringFilterInput>
   confirmed?: InputMaybe<BooleanFilterInput>
   createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   email?: InputMaybe<StringFilterInput>
-  id?: InputMaybe<IdFilterInput>
   not?: InputMaybe<UsersPermissionsUserFiltersInput>
   or?: InputMaybe<Array<InputMaybe<UsersPermissionsUserFiltersInput>>>
-  password?: InputMaybe<StringFilterInput>
   player?: InputMaybe<PlayerFiltersInput>
   provider?: InputMaybe<StringFilterInput>
-  resetPasswordToken?: InputMaybe<StringFilterInput>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   role?: InputMaybe<UsersPermissionsRoleFiltersInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
   username?: InputMaybe<StringFilterInput>
@@ -2727,30 +3162,40 @@ export type UsersPermissionsUserFiltersInput = {
 
 export type UsersPermissionsUserInput = {
   blocked?: InputMaybe<Scalars["Boolean"]["input"]>
-  confirmationToken?: InputMaybe<Scalars["String"]["input"]>
   confirmed?: InputMaybe<Scalars["Boolean"]["input"]>
   email?: InputMaybe<Scalars["String"]["input"]>
   password?: InputMaybe<Scalars["String"]["input"]>
   player?: InputMaybe<Scalars["ID"]["input"]>
   provider?: InputMaybe<Scalars["String"]["input"]>
-  resetPasswordToken?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   role?: InputMaybe<Scalars["ID"]["input"]>
   username?: InputMaybe<Scalars["String"]["input"]>
 }
 
 export type UsersPermissionsUserRelationResponseCollection = {
   __typename?: "UsersPermissionsUserRelationResponseCollection"
-  data: Array<UsersPermissionsUserEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<UsersPermissionsUser>
+  nodes: Array<UsersPermissionsUser>
 }
 
 export type Venue = {
   __typename?: "Venue"
   addressDetails?: Maybe<Scalars["String"]["output"]>
+  /** @deprecated Use root level fields instead */
+  attributes: Venue
   createdAt?: Maybe<Scalars["DateTime"]["output"]>
-  events?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use root level fields instead */
+  data: Venue
+  documentId: Scalars["ID"]["output"]
+  events: Array<Maybe<Event>>
+  events_connection?: Maybe<EventRelationResponseCollection>
+  /** @deprecated Use `documentId` instead */
+  id: Scalars["ID"]["output"]
   location?: Maybe<Scalars["JSON"]["output"]>
-  logo?: Maybe<UploadFileEntityResponse>
+  logo?: Maybe<UploadFile>
   name: Scalars["String"]["output"]
+  publishedAt?: Maybe<Scalars["DateTime"]["output"]>
   shortName?: Maybe<Scalars["String"]["output"]>
   socialNetworks?: Maybe<Array<Maybe<ComponentContactSocialNetwork>>>
   updatedAt?: Maybe<Scalars["DateTime"]["output"]>
@@ -2760,7 +3205,12 @@ export type Venue = {
 export type VenueEventsArgs = {
   filters?: InputMaybe<EventFiltersInput>
   pagination?: InputMaybe<PaginationArg>
-  publicationState?: InputMaybe<PublicationState>
+  sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
+}
+
+export type VenueEvents_ConnectionArgs = {
+  filters?: InputMaybe<EventFiltersInput>
+  pagination?: InputMaybe<PaginationArg>
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
@@ -2770,33 +3220,27 @@ export type VenueSocialNetworksArgs = {
   sort?: InputMaybe<Array<InputMaybe<Scalars["String"]["input"]>>>
 }
 
-export type VenueEntity = {
-  __typename?: "VenueEntity"
-  attributes?: Maybe<Venue>
-  id?: Maybe<Scalars["ID"]["output"]>
-}
-
-export type VenueEntityResponse = {
-  __typename?: "VenueEntityResponse"
-  data?: Maybe<VenueEntity>
-}
-
 export type VenueEntityResponseCollection = {
   __typename?: "VenueEntityResponseCollection"
-  data: Array<VenueEntity>
+  /** @deprecated Use `nodes` field instead */
+  data: Array<Venue>
+  /** @deprecated Use the `pageInfo` field instead */
   meta: ResponseCollectionMeta
+  nodes: Array<Venue>
+  pageInfo: Pagination
 }
 
 export type VenueFiltersInput = {
   addressDetails?: InputMaybe<StringFilterInput>
   and?: InputMaybe<Array<InputMaybe<VenueFiltersInput>>>
   createdAt?: InputMaybe<DateTimeFilterInput>
+  documentId?: InputMaybe<IdFilterInput>
   events?: InputMaybe<EventFiltersInput>
-  id?: InputMaybe<IdFilterInput>
   location?: InputMaybe<JsonFilterInput>
   name?: InputMaybe<StringFilterInput>
   not?: InputMaybe<VenueFiltersInput>
   or?: InputMaybe<Array<InputMaybe<VenueFiltersInput>>>
+  publishedAt?: InputMaybe<DateTimeFilterInput>
   shortName?: InputMaybe<StringFilterInput>
   socialNetworks?: InputMaybe<ComponentContactSocialNetworkFiltersInput>
   updatedAt?: InputMaybe<DateTimeFilterInput>
@@ -2809,6 +3253,7 @@ export type VenueInput = {
   location?: InputMaybe<Scalars["JSON"]["input"]>
   logo?: InputMaybe<Scalars["ID"]["input"]>
   name?: InputMaybe<Scalars["String"]["input"]>
+  publishedAt?: InputMaybe<Scalars["DateTime"]["input"]>
   shortName?: InputMaybe<Scalars["String"]["input"]>
   socialNetworks?: InputMaybe<
     Array<InputMaybe<ComponentContactSocialNetworkInput>>
@@ -2821,18 +3266,12 @@ export type FormatQueryVariables = Exact<{ [key: string]: never }>
 export type FormatQuery = {
   __typename?: "Query"
   format?: {
-    __typename?: "FormatEntityResponse"
-    data?: {
-      __typename?: "FormatEntity"
-      attributes?: {
-        __typename?: "Format"
-        openspace?: string | null
-        lawOfTwoFeet?: string | null
-        butterfly?: string | null
-        bumblebee?: string | null
-        schedule?: string | null
-      } | null
-    } | null
+    __typename?: "Format"
+    openspace?: string | null
+    lawOfTwoFeet?: string | null
+    butterfly?: string | null
+    bumblebee?: string | null
+    schedule?: string | null
   } | null
 }
 
@@ -2841,50 +3280,27 @@ export type StoryQueryVariables = Exact<{ [key: string]: never }>
 export type StoryQuery = {
   __typename?: "Query"
   history?: {
-    __typename?: "HistoryEntityResponse"
-    data?: {
-      __typename?: "HistoryEntity"
-      attributes?: {
-        __typename?: "History"
-        founders?: string | null
-        keyMoments?: string | null
-        intro?: string | null
-        items?: Array<{
-          __typename?: "ComponentDefaultHistoryItem"
-          id: string
-          date: any
-          dateFormat?: Enum_Componentdefaulthistoryitem_Dateformat | null
-          additionalText?: string | null
-          title: string
-          description: string
-          image: {
-            __typename?: "UploadFileEntityResponse"
-            data?: {
-              __typename?: "UploadFileEntity"
-              id?: string | null
-              attributes?: {
-                __typename?: "UploadFile"
-                name: string
-                url: string
-              } | null
-            } | null
-          }
-        } | null> | null
-      } | null
-    } | null
+    __typename?: "History"
+    founders?: string | null
+    keyMoments?: string | null
+    intro?: string | null
+    items?: Array<{
+      __typename?: "ComponentDefaultHistoryItem"
+      id: string
+      date: any
+      dateFormat?: Enum_Componentdefaulthistoryitem_Dateformat | null
+      additionalText?: string | null
+      title: string
+      description: string
+      image: { __typename?: "UploadFile"; name: string; url: string }
+    } | null> | null
   } | null
-  players?: {
-    __typename?: "PlayerEntityResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Player" } & {
-            " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
-          })
-        | null
-    }>
-  } | null
+  players: Array<
+    | ({ __typename?: "Player" } & {
+        " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
+      })
+    | null
+  >
 }
 
 export type ArticleQueryVariables = Exact<{
@@ -2893,23 +3309,17 @@ export type ArticleQueryVariables = Exact<{
 
 export type ArticleQuery = {
   __typename?: "Query"
-  articles?: {
-    __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      attributes?:
-        | ({ __typename?: "Article" } & {
-            " $fragmentRefs"?: {
-              ArticleDetailsFragment: ArticleDetailsFragment
-            }
-          })
-        | null
-    }>
-  } | null
+  articles: Array<
+    | ({ __typename?: "Article" } & {
+        " $fragmentRefs"?: { ArticleDetailsFragment: ArticleDetailsFragment }
+      })
+    | null
+  >
 }
 
 export type ArticleDetailsFragment = {
   __typename?: "Article"
+  documentId: string
   slug: string
   title: string
   category?: Enum_Article_Category | null
@@ -2918,71 +3328,33 @@ export type ArticleDetailsFragment = {
   updatedAt?: any | null
   cannonical?: string | null
   content?: string | null
-  tags?: {
-    __typename?: "TagRelationResponseCollection"
-    data: Array<{
-      __typename?: "TagEntity"
-      id?: string | null
-      attributes?: { __typename?: "Tag"; value: string } | null
-    }>
-  } | null
+  tags: Array<{ __typename?: "Tag"; value: string } | null>
   defaultImage: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   }
-  images: {
-    __typename?: "UploadFileRelationResponseCollection"
-    data: Array<{
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    }>
-  }
+  images: Array<{
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
+  } | null>
   author?: {
-    __typename?: "PlayerEntityResponse"
-    data?: {
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Player"
-        name: string
-        slug: string
-        position: Enum_Player_Position
-        tagline?: string | null
-        avatar?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        } | null
-      } | null
+    __typename?: "Player"
+    name: string
+    slug: string
+    position: Enum_Player_Position
+    tagline?: string | null
+    avatar?: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
     } | null
   } | null
 } & { " $fragmentName"?: "ArticleDetailsFragment" }
@@ -2996,77 +3368,48 @@ export type ArticlesQueryVariables = Exact<{
 
 export type ArticlesQuery = {
   __typename?: "Query"
-  articles?: {
+  articles_connection?: {
     __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Article" } & {
-            " $fragmentRefs"?: { ArticleItemFragment: ArticleItemFragment }
-          })
-        | null
-    }>
-    meta: {
-      __typename?: "ResponseCollectionMeta"
-      pagination: {
-        __typename?: "Pagination"
-        page: number
-        pageSize: number
-        total: number
-        pageCount: number
+    nodes: Array<
+      { __typename?: "Article" } & {
+        " $fragmentRefs"?: { ArticleItemFragment: ArticleItemFragment }
       }
+    >
+    pageInfo: {
+      __typename?: "Pagination"
+      page: number
+      pageSize: number
+      total: number
+      pageCount: number
     }
   } | null
 }
 
 export type ArticleItemFragment = {
   __typename?: "Article"
+  documentId: string
   slug: string
   title: string
   summary?: string | null
   category?: Enum_Article_Category | null
   publishedAt?: any | null
   defaultImage: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   }
   author?: {
-    __typename?: "PlayerEntityResponse"
-    data?: {
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Player"
-        slug: string
-        name: string
-        avatar?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        } | null
-      } | null
+    __typename?: "Player"
+    slug: string
+    name: string
+    avatar?: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
     } | null
   } | null
 } & { " $fragmentName"?: "ArticleItemFragment" }
@@ -3075,41 +3418,21 @@ export type ArticleNavQueryVariables = Exact<{ [key: string]: never }>
 
 export type ArticleNavQuery = {
   __typename?: "Query"
-  articles?: {
-    __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      attributes?: {
-        __typename?: "Article"
-        slug: string
-        title: string
-        category?: Enum_Article_Category | null
-        publishedAt?: any | null
-        tags?: {
-          __typename?: "TagRelationResponseCollection"
-          data: Array<{
-            __typename?: "TagEntity"
-            attributes?: { __typename?: "Tag"; value: string } | null
-          }>
-        } | null
-        defaultImage: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        }
-      } | null
-    }>
-  } | null
+  articles: Array<{
+    __typename?: "Article"
+    slug: string
+    title: string
+    category?: Enum_Article_Category | null
+    publishedAt?: any | null
+    tags: Array<{ __typename?: "Tag"; value: string } | null>
+    defaultImage: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
+    }
+  } | null>
 }
 
 export type ArticleSidebarQueryVariables = Exact<{ [key: string]: never }>
@@ -3118,99 +3441,51 @@ export type ArticleSidebarQuery = {
   __typename?: "Query"
   latest?: {
     __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Article"
-        slug: string
-        title: string
-        publishedAt?: any | null
-        defaultImage: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        }
-      } | null
+    nodes: Array<{
+      __typename?: "Article"
+      documentId: string
+      slug: string
+      title: string
+      publishedAt?: any | null
+      defaultImage: {
+        __typename?: "UploadFile"
+        name: string
+        url: string
+        width?: number | null
+        height?: number | null
+      }
     }>
   } | null
-  categories?: {
-    __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      attributes?: {
-        __typename?: "Article"
-        category?: Enum_Article_Category | null
-      } | null
-    }>
-  } | null
-  tags?: {
-    __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      attributes?: {
-        __typename?: "Article"
-        tags?: {
-          __typename?: "TagRelationResponseCollection"
-          data: Array<{
-            __typename?: "TagEntity"
-            id?: string | null
-            attributes?: { __typename?: "Tag"; value: string } | null
-          }>
-        } | null
-      } | null
-    }>
-  } | null
+  categories: Array<{
+    __typename?: "Article"
+    category?: Enum_Article_Category | null
+  } | null>
+  tags: Array<{
+    __typename?: "Article"
+    tags: Array<{ __typename?: "Tag"; value: string } | null>
+  } | null>
 }
 
 export type ArticleSlugsQueryVariables = Exact<{ [key: string]: never }>
 
 export type ArticleSlugsQuery = {
   __typename?: "Query"
-  articles?: {
-    __typename?: "ArticleEntityResponseCollection"
-    data: Array<{
-      __typename?: "ArticleEntity"
-      attributes?: { __typename?: "Article"; slug: string } | null
-    }>
-  } | null
+  articles: Array<{ __typename?: "Article"; slug: string } | null>
 }
 
 export type EventCalendarQueryVariables = Exact<{ [key: string]: never }>
 
 export type EventCalendarQuery = {
   __typename?: "Query"
-  events?: {
-    __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      attributes?: {
-        __typename?: "Event"
-        slug: string
-        name: string
-        start: any
-        end: any
-        status: Enum_Event_Status
-        venue?: {
-          __typename?: "VenueEntityResponse"
-          data?: {
-            __typename?: "VenueEntity"
-            attributes?: { __typename?: "Venue"; name: string } | null
-          } | null
-        } | null
-      } | null
-    }>
-  } | null
+  events: Array<{
+    __typename?: "Event"
+    slug: string
+    name: string
+    start: any
+    end: any
+    status: Enum_Event_Status
+    venue?: { __typename?: "Venue"; name: string } | null
+  } | null>
 }
 
 export type EventQueryVariables = Exact<{
@@ -3219,21 +3494,17 @@ export type EventQueryVariables = Exact<{
 
 export type EventQuery = {
   __typename?: "Query"
-  events?: {
-    __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      attributes?:
-        | ({ __typename?: "Event" } & {
-            " $fragmentRefs"?: { EventDetailsFragment: EventDetailsFragment }
-          })
-        | null
-    }>
-  } | null
+  events: Array<
+    | ({ __typename?: "Event" } & {
+        " $fragmentRefs"?: { EventDetailsFragment: EventDetailsFragment }
+      })
+    | null
+  >
 }
 
 export type EventDetailsFragment = {
   __typename?: "Event"
+  documentId: string
   slug: string
   name: string
   start: any
@@ -3243,59 +3514,31 @@ export type EventDetailsFragment = {
   description?: string | null
   contactEmail?: string | null
   defaultImage: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   }
-  images?: {
-    __typename?: "UploadFileRelationResponseCollection"
-    data: Array<{
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    }>
-  } | null
+  images: Array<{
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
+  } | null>
   location?: {
-    __typename?: "EventLocationEntityResponse"
-    data?: {
-      __typename?: "EventLocationEntity"
-      attributes?: {
-        __typename?: "EventLocation"
-        name: string
-        country?: string | null
-        location?: any | null
-      } | null
-    } | null
+    __typename?: "EventLocation"
+    name: string
+    country?: string | null
+    location?: any | null
   } | null
   venue?: {
-    __typename?: "VenueEntityResponse"
-    data?: {
-      __typename?: "VenueEntity"
-      attributes?: {
-        __typename?: "Venue"
-        name: string
-        website?: string | null
-        location?: any | null
-        addressDetails?: string | null
-      } | null
-    } | null
+    __typename?: "Venue"
+    name: string
+    website?: string | null
+    location?: any | null
+    addressDetails?: string | null
   } | null
   timetable?: Array<{
     __typename?: "ComponentEventsTimetable"
@@ -3318,76 +3561,43 @@ export type EventDetailsFragment = {
     __typename?: "ComponentEventsSponsorship"
     id: string
     category: string
-    sponsors?: {
-      __typename?: "SponsorRelationResponseCollection"
-      data: Array<{
-        __typename?: "SponsorEntity"
-        id?: string | null
-        attributes?: {
-          __typename?: "Sponsor"
-          name: string
-          url?: string | null
-          logo?: {
-            __typename?: "UploadFileEntityResponse"
-            data?: {
-              __typename?: "UploadFileEntity"
-              id?: string | null
-              attributes?: {
-                __typename?: "UploadFile"
-                name: string
-                url: string
-                blurhash?: string | null
-                width?: number | null
-                height?: number | null
-              } | null
-            } | null
-          } | null
-          socialNetworks?: Array<{
-            __typename?: "ComponentContactSocialNetwork"
-            id: string
-            type?: Enum_Componentcontactsocialnetwork_Type | null
-            url?: string | null
-          } | null> | null
-        } | null
-      }>
-    } | null
+    sponsors: Array<{
+      __typename?: "Sponsor"
+      name: string
+      url?: string | null
+      logo?: {
+        __typename?: "UploadFile"
+        name: string
+        url: string
+        width?: number | null
+        height?: number | null
+      } | null
+      socialNetworks?: Array<{
+        __typename?: "ComponentContactSocialNetwork"
+        id: string
+        type?: Enum_Componentcontactsocialnetwork_Type | null
+        url?: string | null
+      } | null> | null
+    } | null>
   } | null> | null
-  hosts?: {
-    __typename?: "PlayerRelationResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Player" } & {
-            " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
-          })
-        | null
-    }>
-  } | null
-  mentors?: {
-    __typename?: "PlayerRelationResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Player" } & {
-            " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
-          })
-        | null
-    }>
-  } | null
-  players?: {
-    __typename?: "PlayerRelationResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Player" } & {
-            " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
-          })
-        | null
-    }>
-  } | null
+  hosts: Array<
+    | ({ __typename?: "Player" } & {
+        " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
+      })
+    | null
+  >
+  mentors: Array<
+    | ({ __typename?: "Player" } & {
+        " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
+      })
+    | null
+  >
+  players: Array<
+    | ({ __typename?: "Player" } & {
+        " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
+      })
+    | null
+  >
   media?: Array<{
     __typename?: "ComponentEventsMedia"
     id: string
@@ -3406,26 +3616,19 @@ export type EventsQueryVariables = Exact<{
 
 export type EventsQuery = {
   __typename?: "Query"
-  events?: {
+  events_connection?: {
     __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Event" } & {
-            " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
-          })
-        | null
-    }>
-    meta: {
-      __typename?: "ResponseCollectionMeta"
-      pagination: {
-        __typename?: "Pagination"
-        page: number
-        pageSize: number
-        total: number
-        pageCount: number
+    nodes: Array<
+      { __typename?: "Event" } & {
+        " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
       }
+    >
+    pageInfo: {
+      __typename?: "Pagination"
+      page: number
+      pageSize: number
+      total: number
+      pageCount: number
     }
   } | null
 }
@@ -3436,22 +3639,17 @@ export type UpcomingEventsQueryVariables = Exact<{
 
 export type UpcomingEventsQuery = {
   __typename?: "Query"
-  events?: {
-    __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Event" } & {
-            " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
-          })
-        | null
-    }>
-  } | null
+  events: Array<
+    | ({ __typename?: "Event" } & {
+        " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
+      })
+    | null
+  >
 }
 
 export type EventItemFragment = {
   __typename?: "Event"
+  documentId: string
   slug: string
   name: string
   start: any
@@ -3459,30 +3657,16 @@ export type EventItemFragment = {
   timezone?: string | null
   status: Enum_Event_Status
   defaultImage: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   }
   location?: {
-    __typename?: "EventLocationEntityResponse"
-    data?: {
-      __typename?: "EventLocationEntity"
-      attributes?: {
-        __typename?: "EventLocation"
-        name: string
-        country?: string | null
-      } | null
-    } | null
+    __typename?: "EventLocation"
+    name: string
+    country?: string | null
   } | null
 } & { " $fragmentName"?: "EventItemFragment" }
 
@@ -3490,98 +3674,59 @@ export type HostingQueryVariables = Exact<{ [key: string]: never }>
 
 export type HostingQuery = {
   __typename?: "Query"
-  hosting?: {
-    __typename?: "HostingEntityResponse"
-    data?: {
-      __typename?: "HostingEntity"
-      attributes?: { __typename?: "Hosting"; content?: string | null } | null
-    } | null
-  } | null
+  hosting?: { __typename?: "Hosting"; content?: string | null } | null
 }
 
 export type MarkersQueryVariables = Exact<{ [key: string]: never }>
 
 export type MarkersQuery = {
   __typename?: "Query"
-  events?: {
-    __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Event"
-        slug: string
-        name: string
-        start: any
-        end: any
-        timezone?: string | null
-        status: Enum_Event_Status
-        registration?: {
-          __typename?: "ComponentRegistrationRegistration"
-          link?: string | null
-        } | null
-        venue?: {
-          __typename?: "VenueEntityResponse"
-          data?: {
-            __typename?: "VenueEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "Venue"
-              name: string
-              website?: string | null
-              location?: any | null
-            } | null
-          } | null
-        } | null
-      } | null
-    }>
-  } | null
+  events: Array<{
+    __typename?: "Event"
+    documentId: string
+    slug: string
+    name: string
+    start: any
+    end: any
+    timezone?: string | null
+    status: Enum_Event_Status
+    registration?: {
+      __typename?: "ComponentRegistrationRegistration"
+      link?: string | null
+    } | null
+    venue?: {
+      __typename?: "Venue"
+      name: string
+      website?: string | null
+      location?: any | null
+    } | null
+  } | null>
 }
 
 export type EventNavQueryVariables = Exact<{ [key: string]: never }>
 
 export type EventNavQuery = {
   __typename?: "Query"
-  events?: {
-    __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      attributes?: {
-        __typename?: "Event"
-        slug: string
-        name: string
-        start: any
-        status: Enum_Event_Status
-        location?: {
-          __typename?: "EventLocationEntityResponse"
-          data?: {
-            __typename?: "EventLocationEntity"
-            attributes?: {
-              __typename?: "EventLocation"
-              slug?: string | null
-              name: string
-              country?: string | null
-            } | null
-          } | null
-        } | null
-        defaultImage: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        }
-      } | null
-    }>
-  } | null
+  events: Array<{
+    __typename?: "Event"
+    slug: string
+    name: string
+    start: any
+    status: Enum_Event_Status
+    location?: {
+      __typename?: "EventLocation"
+      slug?: string | null
+      name: string
+      country?: string | null
+    } | null
+    defaultImage: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
+    }
+  } | null>
 }
 
 export type EventSlugsQueryVariables = Exact<{
@@ -3590,69 +3735,33 @@ export type EventSlugsQueryVariables = Exact<{
 
 export type EventSlugsQuery = {
   __typename?: "Query"
-  events?: {
-    __typename?: "EventEntityResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      attributes?: { __typename?: "Event"; slug: string } | null
-    }>
-  } | null
+  events: Array<{ __typename?: "Event"; slug: string } | null>
 }
 
 export type TestimonialsQueryVariables = Exact<{ [key: string]: never }>
 
 export type TestimonialsQuery = {
   __typename?: "Query"
-  testimonials?: {
-    __typename?: "TestimonialEntityResponseCollection"
-    data: Array<{
-      __typename?: "TestimonialEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Testimonial"
-        content: string
-        url?: string | null
-        audio?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-            } | null
-          } | null
-        } | null
-        author?: {
-          __typename?: "PlayerEntityResponse"
-          data?: {
-            __typename?: "PlayerEntity"
-            attributes?: {
-              __typename?: "Player"
-              name: string
-              slug: string
-              tagline?: string | null
-              avatar?: {
-                __typename?: "UploadFileEntityResponse"
-                data?: {
-                  __typename?: "UploadFileEntity"
-                  id?: string | null
-                  attributes?: {
-                    __typename?: "UploadFile"
-                    name: string
-                    url: string
-                    blurhash?: string | null
-                    width?: number | null
-                    height?: number | null
-                  } | null
-                } | null
-              } | null
-            } | null
-          } | null
-        } | null
+  testimonials: Array<{
+    __typename?: "Testimonial"
+    documentId: string
+    content: string
+    url?: string | null
+    audio?: { __typename?: "UploadFile"; name: string; url: string } | null
+    author?: {
+      __typename?: "Player"
+      name: string
+      slug: string
+      tagline?: string | null
+      avatar?: {
+        __typename?: "UploadFile"
+        name: string
+        url: string
+        width?: number | null
+        height?: number | null
       } | null
-    }>
-  } | null
+    } | null
+  } | null>
 }
 
 export type GameQueryVariables = Exact<{
@@ -3661,21 +3770,17 @@ export type GameQueryVariables = Exact<{
 
 export type GameQuery = {
   __typename?: "Query"
-  games?: {
-    __typename?: "GameEntityResponseCollection"
-    data: Array<{
-      __typename?: "GameEntity"
-      attributes?:
-        | ({ __typename?: "Game" } & {
-            " $fragmentRefs"?: { GameDetailsFragment: GameDetailsFragment }
-          })
-        | null
-    }>
-  } | null
+  games: Array<
+    | ({ __typename?: "Game" } & {
+        " $fragmentRefs"?: { GameDetailsFragment: GameDetailsFragment }
+      })
+    | null
+  >
 }
 
 export type GameDetailsFragment = {
   __typename?: "Game"
+  documentId: string
   slug: string
   name: string
   category: Enum_Game_Category
@@ -3707,108 +3812,49 @@ export type GameDetailsFragment = {
     value: string
   } | null> | null
   defaultImage: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   }
-  images: {
-    __typename?: "UploadFileRelationResponseCollection"
-    data: Array<{
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    }>
-  }
-  resources?: {
-    __typename?: "UploadFileRelationResponseCollection"
-    data: Array<{
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-      } | null
-    }>
-  } | null
-  firstPlayedAt?: {
-    __typename?: "EventEntityResponse"
-    data?: {
-      __typename?: "EventEntity"
-      attributes?: { __typename?: "Event"; name: string; slug: string } | null
+  images: Array<{
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
+  } | null>
+  resources: Array<{
+    __typename?: "UploadFile"
+    name: string
+    url: string
+  } | null>
+  firstPlayedAt?: { __typename?: "Event"; name: string; slug: string } | null
+  documentedBy: Array<{
+    __typename?: "Player"
+    name: string
+    slug: string
+    avatar?: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
     } | null
-  } | null
-  documentedBy?: {
-    __typename?: "PlayerRelationResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Player"
-        name: string
-        slug: string
-        avatar?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        } | null
-      } | null
-    }>
-  } | null
-  proposedBy?: {
-    __typename?: "PlayerRelationResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Player"
-        name: string
-        slug: string
-        avatar?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        } | null
-      } | null
-    }>
-  } | null
+  } | null>
+  proposedBy: Array<{
+    __typename?: "Player"
+    name: string
+    slug: string
+    avatar?: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
+    } | null
+  } | null>
   ratings?: {
     __typename?: "ComponentGamesRatings"
     energy?: number | null
@@ -3826,79 +3872,50 @@ export type GamesQueryVariables = Exact<{
 
 export type GamesQuery = {
   __typename?: "Query"
-  games?: {
+  games_connection?: {
     __typename?: "GameEntityResponseCollection"
-    data: Array<{
-      __typename?: "GameEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Game" } & {
-            " $fragmentRefs"?: { GameItemFragment: GameItemFragment }
-          })
-        | null
-    }>
-    meta: {
-      __typename?: "ResponseCollectionMeta"
-      pagination: {
-        __typename?: "Pagination"
-        page: number
-        pageSize: number
-        total: number
-        pageCount: number
+    nodes: Array<
+      { __typename?: "Game" } & {
+        " $fragmentRefs"?: { GameItemFragment: GameItemFragment }
       }
+    >
+    pageInfo: {
+      __typename?: "Pagination"
+      page: number
+      pageSize: number
+      total: number
+      pageCount: number
     }
   } | null
 }
 
 export type GameItemFragment = {
   __typename?: "Game"
+  documentId: string
   slug: string
   name: string
   summary?: string | null
   timebox?: string | null
   scale?: string | null
   category: Enum_Game_Category
-  proposedBy?: {
-    __typename?: "PlayerRelationResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Player"
-        name: string
-        slug: string
-        avatar?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        } | null
-      } | null
-    }>
-  } | null
-  defaultImage: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
+  proposedBy: Array<{
+    __typename?: "Player"
+    name: string
+    slug: string
+    avatar?: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
     } | null
+  } | null>
+  defaultImage: {
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   }
 } & { " $fragmentName"?: "GameItemFragment" }
 
@@ -3906,51 +3923,31 @@ export type GameNavQueryVariables = Exact<{ [key: string]: never }>
 
 export type GameNavQuery = {
   __typename?: "Query"
-  games?: {
-    __typename?: "GameEntityResponseCollection"
-    data: Array<{
-      __typename?: "GameEntity"
-      attributes?: {
-        __typename?: "Game"
-        slug: string
-        name: string
-        category: Enum_Game_Category
-        publishedAt?: any | null
-        tags?: Array<{
-          __typename?: "ComponentSharedList"
-          value: string
-        } | null> | null
-        defaultImage: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        }
-      } | null
-    }>
-  } | null
+  games: Array<{
+    __typename?: "Game"
+    slug: string
+    name: string
+    category: Enum_Game_Category
+    publishedAt?: any | null
+    tags?: Array<{
+      __typename?: "ComponentSharedList"
+      value: string
+    } | null> | null
+    defaultImage: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
+    }
+  } | null>
 }
 
 export type GameSlugsQueryVariables = Exact<{ [key: string]: never }>
 
 export type GameSlugsQuery = {
   __typename?: "Query"
-  games?: {
-    __typename?: "GameEntityResponseCollection"
-    data: Array<{
-      __typename?: "GameEntity"
-      attributes?: { __typename?: "Game"; slug: string } | null
-    }>
-  } | null
+  games: Array<{ __typename?: "Game"; slug: string } | null>
 }
 
 export type ExpectationsQueryVariables = Exact<{
@@ -3959,20 +3956,13 @@ export type ExpectationsQueryVariables = Exact<{
 
 export type ExpectationsQuery = {
   __typename?: "Query"
-  expectations?: {
-    __typename?: "ExpectationEntityResponseCollection"
-    data: Array<{
-      __typename?: "ExpectationEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "Expectation"
-        title: string
-        type: Enum_Expectation_Type
-        icon: string
-        content: string
-      } | null
-    }>
-  } | null
+  expectations: Array<{
+    __typename?: "Expectation"
+    title: string
+    type: Enum_Expectation_Type
+    icon: string
+    content: string
+  } | null>
 }
 
 export type HomeQueryVariables = Exact<{ [key: string]: never }>
@@ -3980,30 +3970,18 @@ export type HomeQueryVariables = Exact<{ [key: string]: never }>
 export type HomeQuery = {
   __typename?: "Query"
   home?: {
-    __typename?: "HomeEntityResponse"
-    data?: {
-      __typename?: "HomeEntity"
-      attributes?: {
-        __typename?: "Home"
-        images: {
-          __typename?: "UploadFileRelationResponseCollection"
-          data: Array<{
-            __typename?: "UploadFileEntity"
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              width?: number | null
-              height?: number | null
-              hash: string
-              mime: string
-              provider: string
-              size: number
-            } | null
-          }>
-        }
-      } | null
-    } | null
+    __typename?: "Home"
+    images: Array<{
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
+      hash: string
+      mime: string
+      provider: string
+      size: number
+    } | null>
   } | null
 }
 
@@ -4013,21 +3991,17 @@ export type PlayerQueryVariables = Exact<{
 
 export type PlayerQuery = {
   __typename?: "Query"
-  players?: {
-    __typename?: "PlayerEntityResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      attributes?:
-        | ({ __typename?: "Player" } & {
-            " $fragmentRefs"?: { PlayerDetailsFragment: PlayerDetailsFragment }
-          })
-        | null
-    }>
-  } | null
+  players: Array<
+    | ({ __typename?: "Player" } & {
+        " $fragmentRefs"?: { PlayerDetailsFragment: PlayerDetailsFragment }
+      })
+    | null
+  >
 }
 
 export type PlayerDetailsFragment = {
   __typename?: "Player"
+  documentId: string
   slug: string
   name: string
   position: Enum_Player_Position
@@ -4037,19 +4011,11 @@ export type PlayerDetailsFragment = {
   website?: string | null
   location?: any | null
   avatar?: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   } | null
   socialNetworks?: Array<{
     __typename?: "ComponentContactSocialNetwork"
@@ -4057,42 +4023,24 @@ export type PlayerDetailsFragment = {
     url?: string | null
     type?: Enum_Componentcontactsocialnetwork_Type | null
   } | null> | null
-  attended?: {
-    __typename?: "EventRelationResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Event" } & {
-            " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
-          })
-        | null
-    }>
-  } | null
-  hosted?: {
-    __typename?: "EventRelationResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Event" } & {
-            " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
-          })
-        | null
-    }>
-  } | null
-  mentored?: {
-    __typename?: "EventRelationResponseCollection"
-    data: Array<{
-      __typename?: "EventEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Event" } & {
-            " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
-          })
-        | null
-    }>
-  } | null
+  attended: Array<
+    | ({ __typename?: "Event" } & {
+        " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
+      })
+    | null
+  >
+  hosted: Array<
+    | ({ __typename?: "Event" } & {
+        " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
+      })
+    | null
+  >
+  mentored: Array<
+    | ({ __typename?: "Event" } & {
+        " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
+      })
+    | null
+  >
 } & { " $fragmentName"?: "PlayerDetailsFragment" }
 
 export type PlayersQueryVariables = Exact<{
@@ -4103,49 +4051,35 @@ export type PlayersQueryVariables = Exact<{
 
 export type PlayersQuery = {
   __typename?: "Query"
-  players?: {
+  players_connection?: {
     __typename?: "PlayerEntityResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      id?: string | null
-      attributes?:
-        | ({ __typename?: "Player" } & {
-            " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
-          })
-        | null
-    }>
-    meta: {
-      __typename?: "ResponseCollectionMeta"
-      pagination: {
-        __typename?: "Pagination"
-        page: number
-        pageSize: number
-        total: number
-        pageCount: number
+    nodes: Array<
+      { __typename?: "Player" } & {
+        " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
       }
+    >
+    pageInfo: {
+      __typename?: "Pagination"
+      page: number
+      pageSize: number
+      total: number
+      pageCount: number
     }
   } | null
 }
 
 export type PlayerItemFragment = {
   __typename?: "Player"
+  documentId: string
   slug: string
   name: string
   position: Enum_Player_Position
   avatar?: {
-    __typename?: "UploadFileEntityResponse"
-    data?: {
-      __typename?: "UploadFileEntity"
-      id?: string | null
-      attributes?: {
-        __typename?: "UploadFile"
-        name: string
-        url: string
-        blurhash?: string | null
-        width?: number | null
-        height?: number | null
-      } | null
-    } | null
+    __typename?: "UploadFile"
+    name: string
+    url: string
+    width?: number | null
+    height?: number | null
   } | null
   socialNetworks?: Array<{
     __typename?: "ComponentContactSocialNetwork"
@@ -4159,47 +4093,27 @@ export type PlayerNavQueryVariables = Exact<{ [key: string]: never }>
 
 export type PlayerNavQuery = {
   __typename?: "Query"
-  players?: {
-    __typename?: "PlayerEntityResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      attributes?: {
-        __typename?: "Player"
-        slug: string
-        name: string
-        position: Enum_Player_Position
-        updatedAt?: any | null
-        avatar?: {
-          __typename?: "UploadFileEntityResponse"
-          data?: {
-            __typename?: "UploadFileEntity"
-            id?: string | null
-            attributes?: {
-              __typename?: "UploadFile"
-              name: string
-              url: string
-              blurhash?: string | null
-              width?: number | null
-              height?: number | null
-            } | null
-          } | null
-        } | null
-      } | null
-    }>
-  } | null
+  players: Array<{
+    __typename?: "Player"
+    slug: string
+    name: string
+    position: Enum_Player_Position
+    updatedAt?: any | null
+    avatar?: {
+      __typename?: "UploadFile"
+      name: string
+      url: string
+      width?: number | null
+      height?: number | null
+    } | null
+  } | null>
 }
 
 export type PlayerSlugsQueryVariables = Exact<{ [key: string]: never }>
 
 export type PlayerSlugsQuery = {
   __typename?: "Query"
-  players?: {
-    __typename?: "PlayerEntityResponseCollection"
-    data: Array<{
-      __typename?: "PlayerEntity"
-      attributes?: { __typename?: "Player"; slug: string } | null
-    }>
-  } | null
+  players: Array<{ __typename?: "Player"; slug: string } | null>
 }
 
 export type SearchQueryVariables = Exact<{
@@ -4212,48 +4126,110 @@ export type SearchQuery = {
     __typename?: "SearchResponse"
     events?: {
       __typename?: "EventEntityResponseCollection"
-      data: Array<{
-        __typename?: "EventEntity"
-        id?: string | null
-        attributes?:
-          | ({ __typename?: "Event" } & {
-              " $fragmentRefs"?: { EventItemFragment: EventItemFragment }
-            })
-          | null
-      }>
-    } | null
-    players?: {
-      __typename?: "PlayerEntityResponseCollection"
-      data: Array<{
-        __typename?: "PlayerEntity"
-        id?: string | null
-        attributes?:
-          | ({ __typename?: "Player" } & {
-              " $fragmentRefs"?: { PlayerItemFragment: PlayerItemFragment }
-            })
-          | null
-      }>
-    } | null
-    games?: {
-      __typename?: "GameEntityResponseCollection"
-      data: Array<{
-        __typename?: "GameEntity"
-        attributes?:
-          | ({ __typename?: "Game" } & {
-              " $fragmentRefs"?: { GameItemFragment: GameItemFragment }
-            })
-          | null
+      nodes: Array<{
+        __typename?: "Event"
+        documentId: string
+        slug: string
+        name: string
+        start: any
+        end: any
+        timezone?: string | null
+        status: Enum_Event_Status
+        publishedAt?: any | null
+        defaultImage: {
+          __typename?: "UploadFile"
+          name: string
+          url: string
+          width?: number | null
+          height?: number | null
+        }
+        location?: {
+          __typename?: "EventLocation"
+          name: string
+          country?: string | null
+        } | null
       }>
     } | null
     articles?: {
       __typename?: "ArticleEntityResponseCollection"
-      data: Array<{
-        __typename?: "ArticleEntity"
-        attributes?:
-          | ({ __typename?: "Article" } & {
-              " $fragmentRefs"?: { ArticleItemFragment: ArticleItemFragment }
-            })
-          | null
+      nodes: Array<{
+        __typename?: "Article"
+        documentId: string
+        slug: string
+        title: string
+        summary?: string | null
+        category?: Enum_Article_Category | null
+        publishedAt?: any | null
+        defaultImage: {
+          __typename?: "UploadFile"
+          name: string
+          url: string
+          width?: number | null
+          height?: number | null
+        }
+        author?: {
+          __typename?: "Player"
+          slug: string
+          name: string
+          avatar?: {
+            __typename?: "UploadFile"
+            name: string
+            url: string
+            width?: number | null
+            height?: number | null
+          } | null
+        } | null
+      }>
+    } | null
+    games?: {
+      __typename?: "GameEntityResponseCollection"
+      nodes: Array<{
+        __typename?: "Game"
+        documentId: string
+        slug: string
+        name: string
+        summary?: string | null
+        timebox?: string | null
+        scale?: string | null
+        category: Enum_Game_Category
+        publishedAt?: any | null
+        proposedBy: Array<{
+          __typename?: "Player"
+          name: string
+          slug: string
+          avatar?: {
+            __typename?: "UploadFile"
+            name: string
+            url: string
+            width?: number | null
+            height?: number | null
+          } | null
+        } | null>
+        defaultImage: {
+          __typename?: "UploadFile"
+          name: string
+          url: string
+          width?: number | null
+          height?: number | null
+        }
+      }>
+    } | null
+    players?: {
+      __typename?: "PlayerEntityResponseCollection"
+      nodes: Array<{
+        __typename?: "Player"
+        documentId: string
+        slug: string
+        name: string
+        position: Enum_Player_Position
+        publishedAt?: any | null
+        avatar?: {
+          __typename?: "UploadFile"
+          name: string
+          url: string
+          width?: number | null
+          height?: number | null
+        } | null
       }>
     } | null
   } | null
@@ -4272,6 +4248,7 @@ export const ArticleDetailsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "title" } },
           { kind: "Field", name: { kind: "Name", value: "category" } },
@@ -4282,48 +4259,10 @@ export const ArticleDetailsFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tags" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "value" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "value" } },
               ],
             },
           },
@@ -4333,109 +4272,23 @@ export const ArticleDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "images" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -4445,106 +4298,22 @@ export const ArticleDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "position" } },
+                { kind: "Field", name: { kind: "Name", value: "tagline" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "position" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "tagline" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -4571,6 +4340,7 @@ export const ArticleItemFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "title" } },
           { kind: "Field", name: { kind: "Name", value: "summary" } },
@@ -4582,45 +4352,10 @@ export const ArticleItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -4630,98 +4365,20 @@ export const ArticleItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -4747,6 +4404,7 @@ export const PlayerItemFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -4756,45 +4414,10 @@ export const PlayerItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -4828,6 +4451,7 @@ export const EventDetailsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -4842,109 +4466,23 @@ export const EventDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "images" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -4954,36 +4492,9 @@ export const EventDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "location" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
+                { kind: "Field", name: { kind: "Name", value: "location" } },
               ],
             },
           },
@@ -4993,39 +4504,12 @@ export const EventDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "website" } },
+                { kind: "Field", name: { kind: "Name", value: "location" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "website" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "location" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "addressDetails" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  name: { kind: "Name", value: "addressDetails" },
                 },
               ],
             },
@@ -5042,22 +4526,6 @@ export const EventDetailsFragmentDoc = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "timeslots" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "limit" },
-                            value: { kind: "IntValue", value: "10000" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
@@ -5087,22 +4555,6 @@ export const EventDetailsFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "sponsorships" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -5114,9 +4566,36 @@ export const EventDetailsFragmentDoc = {
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "data" },
+                        name: { kind: "Name", value: "logo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "width" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "height" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "socialNetworks" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
@@ -5126,116 +4605,11 @@ export const EventDetailsFragmentDoc = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "attributes" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "name" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "url" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "logo" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "data" },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "id",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "attributes",
-                                                },
-                                                selectionSet: {
-                                                  kind: "SelectionSet",
-                                                  selections: [
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "name",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "url",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "blurhash",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "width",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "height",
-                                                      },
-                                                    },
-                                                  ],
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "socialNetworks",
-                                    },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
                             },
                           ],
                         },
@@ -5255,46 +4629,13 @@ export const EventDetailsFragmentDoc = {
                 name: { kind: "Name", value: "sort" },
                 value: { kind: "StringValue", value: "name", block: false },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -5308,46 +4649,13 @@ export const EventDetailsFragmentDoc = {
                 name: { kind: "Name", value: "sort" },
                 value: { kind: "StringValue", value: "name", block: false },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -5361,46 +4669,13 @@ export const EventDetailsFragmentDoc = {
                 name: { kind: "Name", value: "sort" },
                 value: { kind: "StringValue", value: "name", block: false },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -5430,6 +4705,7 @@ export const EventDetailsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -5439,45 +4715,10 @@ export const EventDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -5511,6 +4752,7 @@ export const GameDetailsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "category" } },
@@ -5523,22 +4765,6 @@ export const GameDetailsFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tags" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -5550,22 +4776,6 @@ export const GameDetailsFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "materials" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -5577,22 +4787,6 @@ export const GameDetailsFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "preparationSteps" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -5604,22 +4798,6 @@ export const GameDetailsFragmentDoc = {
           {
             kind: "Field",
             name: { kind: "Name", value: "safety" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -5635,161 +4813,34 @@ export const GameDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "images" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "resources" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
               ],
             },
           },
@@ -5799,32 +4850,8 @@ export const GameDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
               ],
             },
           },
@@ -5834,98 +4861,20 @@ export const GameDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -5939,98 +4888,20 @@ export const GameDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -6068,6 +4939,7 @@ export const GameItemFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "summary" } },
@@ -6080,98 +4952,20 @@ export const GameItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -6185,45 +4979,10 @@ export const GameItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -6245,6 +5004,7 @@ export const EventItemFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -6257,45 +5017,10 @@ export const EventItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -6305,32 +5030,8 @@ export const EventItemFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
               ],
             },
           },
@@ -6352,6 +5053,7 @@ export const PlayerDetailsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -6366,45 +5068,10 @@ export const PlayerDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -6433,46 +5100,13 @@ export const PlayerDetailsFragmentDoc = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -6490,46 +5124,13 @@ export const PlayerDetailsFragmentDoc = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -6547,46 +5148,13 @@ export const PlayerDetailsFragmentDoc = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -6604,6 +5172,7 @@ export const PlayerDetailsFragmentDoc = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -6616,45 +5185,10 @@ export const PlayerDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -6664,32 +5198,8 @@ export const PlayerDetailsFragmentDoc = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
               ],
             },
           },
@@ -6714,44 +5224,14 @@ export const FormatDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "openspace" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "openspace" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "lawOfTwoFeet" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "butterfly" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "bumblebee" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "schedule" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  name: { kind: "Name", value: "lawOfTwoFeet" },
                 },
+                { kind: "Field", name: { kind: "Name", value: "butterfly" } },
+                { kind: "Field", name: { kind: "Name", value: "bumblebee" } },
+                { kind: "Field", name: { kind: "Name", value: "schedule" } },
               ],
             },
           },
@@ -6776,138 +5256,43 @@ export const StoryDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "founders" } },
+                { kind: "Field", name: { kind: "Name", value: "keyMoments" } },
+                { kind: "Field", name: { kind: "Name", value: "intro" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "items" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "date" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
+                        name: { kind: "Name", value: "dateFormat" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "additionalText" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "title" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "description" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "image" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "founders" },
+                              name: { kind: "Name", value: "name" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "keyMoments" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "intro" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "items" },
-                              arguments: [
-                                {
-                                  kind: "Argument",
-                                  name: { kind: "Name", value: "pagination" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "limit" },
-                                        value: {
-                                          kind: "IntValue",
-                                          value: "10000",
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              ],
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "id" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "date" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "dateFormat" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "additionalText",
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "title" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "description",
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "image" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "data" },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "id",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "attributes",
-                                                },
-                                                selectionSet: {
-                                                  kind: "SelectionSet",
-                                                  selections: [
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "name",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "url",
-                                                      },
-                                                    },
-                                                  ],
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
+                              name: { kind: "Name", value: "url" },
                             },
                           ],
                         },
@@ -6959,27 +5344,8 @@ export const StoryDocument = {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -6997,6 +5363,7 @@ export const StoryDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -7006,45 +5373,10 @@ export const StoryDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -7123,26 +5455,8 @@ export const ArticleDocument = {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "ArticleDetails" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "ArticleDetails" },
                 },
               ],
             },
@@ -7160,6 +5474,7 @@ export const ArticleDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "title" } },
           { kind: "Field", name: { kind: "Name", value: "category" } },
@@ -7170,48 +5485,10 @@ export const ArticleDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tags" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "value" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "value" } },
               ],
             },
           },
@@ -7221,109 +5498,23 @@ export const ArticleDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "images" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -7333,106 +5524,22 @@ export const ArticleDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "position" } },
+                { kind: "Field", name: { kind: "Name", value: "tagline" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "position" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "tagline" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -7492,7 +5599,7 @@ export const ArticlesDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "articles" },
+            name: { kind: "Name", value: "articles_connection" },
             arguments: [
               {
                 kind: "Argument",
@@ -7586,57 +5693,32 @@ export const ArticlesDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "nodes" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "ArticleItem" },
-                            },
-                          ],
-                        },
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "ArticleItem" },
                       },
                     ],
                   },
                 },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "meta" },
+                  name: { kind: "Name", value: "pageInfo" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "page" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "pagination" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "page" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageSize" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "total" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageCount" },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "pageSize" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "total" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageCount" },
                       },
                     ],
                   },
@@ -7657,6 +5739,7 @@ export const ArticlesDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "title" } },
           { kind: "Field", name: { kind: "Name", value: "summary" } },
@@ -7668,45 +5751,10 @@ export const ArticlesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -7716,98 +5764,20 @@ export const ArticlesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -7852,7 +5822,7 @@ export const ArticleNavDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -7861,142 +5831,32 @@ export const ArticleNavDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "title" } },
+                { kind: "Field", name: { kind: "Name", value: "category" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "tags" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "value" } },
+                    ],
+                  },
+                },
+                { kind: "Field", name: { kind: "Name", value: "publishedAt" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "defaultImage" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "title" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "category" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "tags" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "value",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "publishedAt" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "defaultImage" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -8022,7 +5882,7 @@ export const ArticleSidebarDocument = {
           {
             kind: "Field",
             alias: { kind: "Name", value: "latest" },
-            name: { kind: "Name", value: "articles" },
+            name: { kind: "Name", value: "articles_connection" },
             arguments: [
               {
                 kind: "Argument",
@@ -8053,97 +5913,41 @@ export const ArticleSidebarDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "nodes" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
+                        name: { kind: "Name", value: "documentId" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "slug" } },
+                      { kind: "Field", name: { kind: "Name", value: "title" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "publishedAt" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "defaultImage" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "slug" },
+                              name: { kind: "Name", value: "name" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "title" },
+                              name: { kind: "Name", value: "url" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "publishedAt" },
+                              name: { kind: "Name", value: "width" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "defaultImage" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
+                              name: { kind: "Name", value: "height" },
                             },
                           ],
                         },
@@ -8161,28 +5965,7 @@ export const ArticleSidebarDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "category" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "category" } },
               ],
             },
           },
@@ -8195,60 +5978,11 @@ export const ArticleSidebarDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "tags" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "tags" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "value",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
+                      { kind: "Field", name: { kind: "Name", value: "value" } },
                     ],
                   },
                 },
@@ -8283,7 +6017,7 @@ export const ArticleSlugsDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -8292,28 +6026,7 @@ export const ArticleSlugsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
               ],
             },
           },
@@ -8345,96 +6058,22 @@ export const EventCalendarDocument = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "start" } },
+                { kind: "Field", name: { kind: "Name", value: "end" } },
+                { kind: "Field", name: { kind: "Name", value: "status" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "venue" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "start" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "end" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "status" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "venue" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
                     ],
                   },
                 },
@@ -8504,26 +6143,8 @@ export const EventDocument = {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventDetails" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventDetails" },
                 },
               ],
             },
@@ -8541,6 +6162,7 @@ export const EventDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -8550,45 +6172,10 @@ export const EventDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -8617,6 +6204,7 @@ export const EventDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -8631,109 +6219,23 @@ export const EventDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "images" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -8743,36 +6245,9 @@ export const EventDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "location" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
+                { kind: "Field", name: { kind: "Name", value: "location" } },
               ],
             },
           },
@@ -8782,39 +6257,12 @@ export const EventDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "website" } },
+                { kind: "Field", name: { kind: "Name", value: "location" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "website" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "location" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "addressDetails" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  name: { kind: "Name", value: "addressDetails" },
                 },
               ],
             },
@@ -8831,22 +6279,6 @@ export const EventDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "timeslots" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "pagination" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "limit" },
-                            value: { kind: "IntValue", value: "10000" },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
@@ -8876,22 +6308,6 @@ export const EventDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "sponsorships" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -8903,9 +6319,36 @@ export const EventDocument = {
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "data" },
+                        name: { kind: "Name", value: "logo" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "width" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "height" },
+                            },
+                          ],
+                        },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "socialNetworks" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
@@ -8915,116 +6358,11 @@ export const EventDocument = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "attributes" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "name" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "url" },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "logo" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "data" },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "id",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "attributes",
-                                                },
-                                                selectionSet: {
-                                                  kind: "SelectionSet",
-                                                  selections: [
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "name",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "url",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "blurhash",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "width",
-                                                      },
-                                                    },
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "height",
-                                                      },
-                                                    },
-                                                  ],
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                  {
-                                    kind: "Field",
-                                    name: {
-                                      kind: "Name",
-                                      value: "socialNetworks",
-                                    },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "type" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "url" },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
+                              name: { kind: "Name", value: "type" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "url" },
                             },
                           ],
                         },
@@ -9044,46 +6382,13 @@ export const EventDocument = {
                 name: { kind: "Name", value: "sort" },
                 value: { kind: "StringValue", value: "name", block: false },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -9097,46 +6402,13 @@ export const EventDocument = {
                 name: { kind: "Name", value: "sort" },
                 value: { kind: "StringValue", value: "name", block: false },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -9150,46 +6422,13 @@ export const EventDocument = {
                 name: { kind: "Name", value: "sort" },
                 value: { kind: "StringValue", value: "name", block: false },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerItem" },
                 },
               ],
             },
@@ -9268,7 +6507,7 @@ export const EventsDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "events" },
+            name: { kind: "Name", value: "events_connection" },
             arguments: [
               {
                 kind: "Argument",
@@ -9379,57 +6618,32 @@ export const EventsDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "nodes" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "EventItem" },
                       },
                     ],
                   },
                 },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "meta" },
+                  name: { kind: "Name", value: "pageInfo" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "page" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "pagination" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "page" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageSize" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "total" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageCount" },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "pageSize" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "total" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageCount" },
                       },
                     ],
                   },
@@ -9450,6 +6664,7 @@ export const EventsDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -9462,45 +6677,10 @@ export const EventsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -9510,32 +6690,8 @@ export const EventsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
               ],
             },
           },
@@ -9614,27 +6770,8 @@ export const UpcomingEventsDocument = {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -9652,6 +6789,7 @@ export const UpcomingEventsDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -9664,45 +6802,10 @@ export const UpcomingEventsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -9712,32 +6815,8 @@ export const UpcomingEventsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
               ],
             },
           },
@@ -9762,28 +6841,7 @@ export const HostingDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "content" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
               ],
             },
           },
@@ -9813,20 +6871,6 @@ export const MarkersDocument = {
                   kind: "StringValue",
                   value: "start:asc",
                   block: false,
-                },
-              },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
                 },
               },
               {
@@ -9879,117 +6923,55 @@ export const MarkersDocument = {
                   ],
                 },
               },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "pagination" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "limit" },
+                      value: { kind: "IntValue", value: "5000" },
+                    },
+                  ],
+                },
+              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "documentId" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "start" } },
+                { kind: "Field", name: { kind: "Name", value: "end" } },
+                { kind: "Field", name: { kind: "Name", value: "timezone" } },
+                { kind: "Field", name: { kind: "Name", value: "status" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "registration" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "link" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "venue" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "start" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "end" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "timezone" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "status" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "registration" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "link" },
-                                  },
-                                ],
-                              },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "venue" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "website",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "location",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "website" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "location" },
                       },
                     ],
                   },
@@ -10034,7 +7016,7 @@ export const EventNavDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -10043,156 +7025,37 @@ export const EventNavDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "start" } },
+                { kind: "Field", name: { kind: "Name", value: "status" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "location" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "slug" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "start" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "status" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "location" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "slug",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "country",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "defaultImage" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "country" },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "defaultImage" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -10237,20 +7100,6 @@ export const EventSlugsDocument = {
             arguments: [
               {
                 kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-              {
-                kind: "Argument",
                 name: { kind: "Name", value: "filters" },
                 value: {
                   kind: "ObjectValue",
@@ -10275,32 +7124,25 @@ export const EventSlugsDocument = {
                   ],
                 },
               },
+              {
+                kind: "Argument",
+                name: { kind: "Name", value: "pagination" },
+                value: {
+                  kind: "ObjectValue",
+                  fields: [
+                    {
+                      kind: "ObjectField",
+                      name: { kind: "Name", value: "limit" },
+                      value: { kind: "IntValue", value: "5000" },
+                    },
+                  ],
+                },
+              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
               ],
             },
           },
@@ -10332,7 +7174,7 @@ export const TestimonialsDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -10341,22 +7183,41 @@ export const TestimonialsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "documentId" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "audio" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "author" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "slug" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
+                        name: { kind: "Name", value: "tagline" },
+                      },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "avatar" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "content" },
+                              name: { kind: "Name", value: "name" },
                             },
                             {
                               kind: "Field",
@@ -10364,182 +7225,11 @@ export const TestimonialsDocument = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "audio" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
+                              name: { kind: "Name", value: "width" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "author" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "slug",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "tagline",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "avatar",
-                                                },
-                                                selectionSet: {
-                                                  kind: "SelectionSet",
-                                                  selections: [
-                                                    {
-                                                      kind: "Field",
-                                                      name: {
-                                                        kind: "Name",
-                                                        value: "data",
-                                                      },
-                                                      selectionSet: {
-                                                        kind: "SelectionSet",
-                                                        selections: [
-                                                          {
-                                                            kind: "Field",
-                                                            name: {
-                                                              kind: "Name",
-                                                              value: "id",
-                                                            },
-                                                          },
-                                                          {
-                                                            kind: "Field",
-                                                            name: {
-                                                              kind: "Name",
-                                                              value:
-                                                                "attributes",
-                                                            },
-                                                            selectionSet: {
-                                                              kind: "SelectionSet",
-                                                              selections: [
-                                                                {
-                                                                  kind: "Field",
-                                                                  name: {
-                                                                    kind: "Name",
-                                                                    value:
-                                                                      "name",
-                                                                  },
-                                                                },
-                                                                {
-                                                                  kind: "Field",
-                                                                  name: {
-                                                                    kind: "Name",
-                                                                    value:
-                                                                      "url",
-                                                                  },
-                                                                },
-                                                                {
-                                                                  kind: "Field",
-                                                                  name: {
-                                                                    kind: "Name",
-                                                                    value:
-                                                                      "blurhash",
-                                                                  },
-                                                                },
-                                                                {
-                                                                  kind: "Field",
-                                                                  name: {
-                                                                    kind: "Name",
-                                                                    value:
-                                                                      "width",
-                                                                  },
-                                                                },
-                                                                {
-                                                                  kind: "Field",
-                                                                  name: {
-                                                                    kind: "Name",
-                                                                    value:
-                                                                      "height",
-                                                                  },
-                                                                },
-                                                              ],
-                                                            },
-                                                          },
-                                                        ],
-                                                      },
-                                                    },
-                                                  ],
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
+                              name: { kind: "Name", value: "height" },
                             },
                           ],
                         },
@@ -10613,26 +7303,8 @@ export const GameDocument = {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "GameDetails" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "GameDetails" },
                 },
               ],
             },
@@ -10650,6 +7322,7 @@ export const GameDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "category" } },
@@ -10662,22 +7335,6 @@ export const GameDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "tags" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -10689,22 +7346,6 @@ export const GameDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "materials" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -10716,22 +7357,6 @@ export const GameDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "preparationSteps" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -10743,22 +7368,6 @@ export const GameDocument = {
           {
             kind: "Field",
             name: { kind: "Name", value: "safety" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
@@ -10774,161 +7383,34 @@ export const GameDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "images" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
           {
             kind: "Field",
             name: { kind: "Name", value: "resources" },
-            arguments: [
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
-            ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
               ],
             },
           },
@@ -10938,32 +7420,8 @@ export const GameDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
               ],
             },
           },
@@ -10973,98 +7431,20 @@ export const GameDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -11078,98 +7458,20 @@ export const GameDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -11240,7 +7542,7 @@ export const GamesDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "games" },
+            name: { kind: "Name", value: "games_connection" },
             arguments: [
               {
                 kind: "Argument",
@@ -11330,57 +7632,32 @@ export const GamesDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "nodes" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "GameItem" },
-                            },
-                          ],
-                        },
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "GameItem" },
                       },
                     ],
                   },
                 },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "meta" },
+                  name: { kind: "Name", value: "pageInfo" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "page" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "pagination" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "page" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageSize" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "total" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageCount" },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "pageSize" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "total" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageCount" },
                       },
                     ],
                   },
@@ -11401,6 +7678,7 @@ export const GamesDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "summary" } },
@@ -11413,98 +7691,20 @@ export const GamesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -11518,45 +7718,10 @@ export const GamesDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -11593,7 +7758,7 @@ export const GameNavDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -11602,118 +7767,32 @@ export const GameNavDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "category" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "tags" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "value" } },
+                    ],
+                  },
+                },
+                { kind: "Field", name: { kind: "Name", value: "publishedAt" } },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "defaultImage" },
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "category" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "tags" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "value" },
-                                  },
-                                ],
-                              },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "publishedAt" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "defaultImage" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -11749,7 +7828,7 @@ export const GameSlugsDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -11758,28 +7837,7 @@ export const GameSlugsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
               ],
             },
           },
@@ -11845,41 +7903,10 @@ export const ExpectationsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "title" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "type" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "icon" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "content" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "title" } },
+                { kind: "Field", name: { kind: "Name", value: "type" } },
+                { kind: "Field", name: { kind: "Name", value: "icon" } },
+                { kind: "Field", name: { kind: "Name", value: "content" } },
               ],
             },
           },
@@ -11906,124 +7933,24 @@ export const HomeDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "images" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "images" },
-                              arguments: [
-                                {
-                                  kind: "Argument",
-                                  name: { kind: "Name", value: "pagination" },
-                                  value: {
-                                    kind: "ObjectValue",
-                                    fields: [
-                                      {
-                                        kind: "ObjectField",
-                                        name: { kind: "Name", value: "limit" },
-                                        value: {
-                                          kind: "IntValue",
-                                          value: "10000",
-                                        },
-                                      },
-                                    ],
-                                  },
-                                },
-                              ],
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "hash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "mime",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "provider",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "size",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
+                      { kind: "Field", name: { kind: "Name", value: "hash" } },
+                      { kind: "Field", name: { kind: "Name", value: "mime" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "provider" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "size" } },
                     ],
                   },
                 },
@@ -12093,26 +8020,8 @@ export const PlayerDocument = {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerDetails" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "PlayerDetails" },
                 },
               ],
             },
@@ -12130,6 +8039,7 @@ export const PlayerDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "start" } },
@@ -12142,45 +8052,10 @@ export const PlayerDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -12190,32 +8065,8 @@ export const PlayerDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "country" } },
               ],
             },
           },
@@ -12232,6 +8083,7 @@ export const PlayerDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -12246,45 +8098,10 @@ export const PlayerDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -12313,46 +8130,13 @@ export const PlayerDocument = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -12370,46 +8154,13 @@ export const PlayerDocument = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -12427,46 +8178,13 @@ export const PlayerDocument = {
                   block: false,
                 },
               },
-              {
-                kind: "Argument",
-                name: { kind: "Name", value: "pagination" },
-                value: {
-                  kind: "ObjectValue",
-                  fields: [
-                    {
-                      kind: "ObjectField",
-                      name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
-                    },
-                  ],
-                },
-              },
             ],
             selectionSet: {
               kind: "SelectionSet",
               selections: [
                 {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "EventItem" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
+                  kind: "FragmentSpread",
+                  name: { kind: "Name", value: "EventItem" },
                 },
               ],
             },
@@ -12517,7 +8235,7 @@ export const PlayersDocument = {
         selections: [
           {
             kind: "Field",
-            name: { kind: "Name", value: "players" },
+            name: { kind: "Name", value: "players_connection" },
             arguments: [
               {
                 kind: "Argument",
@@ -12581,57 +8299,32 @@ export const PlayersDocument = {
               selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "nodes" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "FragmentSpread",
-                              name: { kind: "Name", value: "PlayerItem" },
-                            },
-                          ],
-                        },
+                        kind: "FragmentSpread",
+                        name: { kind: "Name", value: "PlayerItem" },
                       },
                     ],
                   },
                 },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "meta" },
+                  name: { kind: "Name", value: "pageInfo" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "page" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "pagination" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "page" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageSize" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "total" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "pageCount" },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "pageSize" },
+                      },
+                      { kind: "Field", name: { kind: "Name", value: "total" } },
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "pageCount" },
                       },
                     ],
                   },
@@ -12652,6 +8345,7 @@ export const PlayersDocument = {
       selectionSet: {
         kind: "SelectionSet",
         selections: [
+          { kind: "Field", name: { kind: "Name", value: "documentId" } },
           { kind: "Field", name: { kind: "Name", value: "slug" } },
           { kind: "Field", name: { kind: "Name", value: "name" } },
           { kind: "Field", name: { kind: "Name", value: "position" } },
@@ -12661,45 +8355,10 @@ export const PlayersDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "url" } },
+                { kind: "Field", name: { kind: "Name", value: "width" } },
+                { kind: "Field", name: { kind: "Name", value: "height" } },
               ],
             },
           },
@@ -12748,7 +8407,7 @@ export const PlayerNavDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -12757,105 +8416,22 @@ export const PlayerNavDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
+                { kind: "Field", name: { kind: "Name", value: "name" } },
+                { kind: "Field", name: { kind: "Name", value: "position" } },
+                { kind: "Field", name: { kind: "Name", value: "updatedAt" } },
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                  name: { kind: "Name", value: "avatar" },
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
+                      { kind: "Field", name: { kind: "Name", value: "name" } },
+                      { kind: "Field", name: { kind: "Name", value: "url" } },
+                      { kind: "Field", name: { kind: "Name", value: "width" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "position" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "updatedAt" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
+                        name: { kind: "Name", value: "height" },
                       },
                     ],
                   },
@@ -12891,7 +8467,7 @@ export const PlayerSlugsDocument = {
                     {
                       kind: "ObjectField",
                       name: { kind: "Name", value: "limit" },
-                      value: { kind: "IntValue", value: "10000" },
+                      value: { kind: "IntValue", value: "5000" },
                     },
                   ],
                 },
@@ -12900,28 +8476,7 @@ export const PlayerSlugsDocument = {
             selectionSet: {
               kind: "SelectionSet",
               selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "slug" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
+                { kind: "Field", name: { kind: "Name", value: "slug" } },
               ],
             },
           },
@@ -13005,114 +8560,80 @@ export const SearchDocument = {
                     selections: [
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "data" },
+                        name: { kind: "Name", value: "nodes" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "id" },
+                              name: { kind: "Name", value: "documentId" },
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "attributes" },
+                              name: { kind: "Name", value: "slug" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "start" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "end" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "timezone" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "status" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publishedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "defaultImage" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
-                                    kind: "FragmentSpread",
-                                    name: { kind: "Name", value: "EventItem" },
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "width" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "height" },
                                   },
                                 ],
                               },
                             },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "players" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "data" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "id" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "attributes" },
+                              name: { kind: "Name", value: "location" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
-                                    kind: "FragmentSpread",
-                                    name: { kind: "Name", value: "PlayerItem" },
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
                                   },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "games" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "publishedAt" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "notNull" },
-                                  value: { kind: "BooleanValue", value: true },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "data" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "attributes" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
                                   {
-                                    kind: "FragmentSpread",
-                                    name: { kind: "Name", value: "GameItem" },
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "country" },
                                   },
                                 ],
                               },
@@ -13156,254 +8677,13 @@ export const SearchDocument = {
                     selections: [
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "data" },
+                        name: { kind: "Name", value: "nodes" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "attributes" },
-                              selectionSet: {
-                                kind: "SelectionSet",
-                                selections: [
-                                  {
-                                    kind: "FragmentSpread",
-                                    name: {
-                                      kind: "Name",
-                                      value: "ArticleItem",
-                                    },
-                                  },
-                                ],
-                              },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "EventItem" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "Event" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "slug" } },
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "start" } },
-          { kind: "Field", name: { kind: "Name", value: "end" } },
-          { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "defaultImage" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "location" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "country" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "PlayerItem" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "Player" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "slug" } },
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "position" } },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "avatar" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "socialNetworks" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                { kind: "Field", name: { kind: "Name", value: "id" } },
-                { kind: "Field", name: { kind: "Name", value: "url" } },
-                { kind: "Field", name: { kind: "Name", value: "type" } },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "GameItem" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "Game" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "slug" } },
-          { kind: "Field", name: { kind: "Name", value: "name" } },
-          { kind: "Field", name: { kind: "Name", value: "summary" } },
-          { kind: "Field", name: { kind: "Name", value: "timebox" } },
-          { kind: "Field", name: { kind: "Name", value: "scale" } },
-          { kind: "Field", name: { kind: "Name", value: "category" } },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "proposedBy" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
+                              name: { kind: "Name", value: "documentId" },
                             },
                             {
                               kind: "Field",
@@ -13411,65 +8691,85 @@ export const SearchDocument = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "avatar" },
+                              name: { kind: "Name", value: "title" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "summary" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "category" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publishedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "defaultImage" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "data" },
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "width" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "height" },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "author" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "slug" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "avatar" },
                                     selectionSet: {
                                       kind: "SelectionSet",
                                       selections: [
                                         {
                                           kind: "Field",
-                                          name: { kind: "Name", value: "id" },
+                                          name: { kind: "Name", value: "name" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "url" },
                                         },
                                         {
                                           kind: "Field",
                                           name: {
                                             kind: "Name",
-                                            value: "attributes",
+                                            value: "width",
                                           },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "height",
                                           },
                                         },
                                       ],
@@ -13484,142 +8784,47 @@ export const SearchDocument = {
                     ],
                   },
                 },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "defaultImage" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
                 {
                   kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "name" },
+                  name: { kind: "Name", value: "games" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "ObjectValue",
+                        fields: [
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "publishedAt" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "notNull" },
+                                  value: { kind: "BooleanValue", value: true },
+                                },
+                              ],
                             },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
+                          },
+                        ],
                       },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-        ],
-      },
-    },
-    {
-      kind: "FragmentDefinition",
-      name: { kind: "Name", value: "ArticleItem" },
-      typeCondition: {
-        kind: "NamedType",
-        name: { kind: "Name", value: "Article" },
-      },
-      selectionSet: {
-        kind: "SelectionSet",
-        selections: [
-          { kind: "Field", name: { kind: "Name", value: "slug" } },
-          { kind: "Field", name: { kind: "Name", value: "title" } },
-          { kind: "Field", name: { kind: "Name", value: "summary" } },
-          { kind: "Field", name: { kind: "Name", value: "category" } },
-          { kind: "Field", name: { kind: "Name", value: "publishedAt" } },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "defaultImage" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
+                    },
+                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
                       {
                         kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
+                        name: { kind: "Name", value: "nodes" },
                         selectionSet: {
                           kind: "SelectionSet",
                           selections: [
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "name" },
+                              name: { kind: "Name", value: "documentId" },
                             },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "url" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "blurhash" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "width" },
-                            },
-                            {
-                              kind: "Field",
-                              name: { kind: "Name", value: "height" },
-                            },
-                          ],
-                        },
-                      },
-                    ],
-                  },
-                },
-              ],
-            },
-          },
-          {
-            kind: "Field",
-            name: { kind: "Name", value: "author" },
-            selectionSet: {
-              kind: "SelectionSet",
-              selections: [
-                {
-                  kind: "Field",
-                  name: { kind: "Name", value: "data" },
-                  selectionSet: {
-                    kind: "SelectionSet",
-                    selections: [
-                      { kind: "Field", name: { kind: "Name", value: "id" } },
-                      {
-                        kind: "Field",
-                        name: { kind: "Name", value: "attributes" },
-                        selectionSet: {
-                          kind: "SelectionSet",
-                          selections: [
                             {
                               kind: "Field",
                               name: { kind: "Name", value: "slug" },
@@ -13630,69 +8835,181 @@ export const SearchDocument = {
                             },
                             {
                               kind: "Field",
+                              name: { kind: "Name", value: "summary" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "timebox" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "scale" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "category" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publishedAt" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "proposedBy" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "slug" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "avatar" },
+                                    selectionSet: {
+                                      kind: "SelectionSet",
+                                      selections: [
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "name" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: { kind: "Name", value: "url" },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "width",
+                                          },
+                                        },
+                                        {
+                                          kind: "Field",
+                                          name: {
+                                            kind: "Name",
+                                            value: "height",
+                                          },
+                                        },
+                                      ],
+                                    },
+                                  },
+                                ],
+                              },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "defaultImage" },
+                              selectionSet: {
+                                kind: "SelectionSet",
+                                selections: [
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "width" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "height" },
+                                  },
+                                ],
+                              },
+                            },
+                          ],
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  kind: "Field",
+                  name: { kind: "Name", value: "players" },
+                  arguments: [
+                    {
+                      kind: "Argument",
+                      name: { kind: "Name", value: "filters" },
+                      value: {
+                        kind: "ObjectValue",
+                        fields: [
+                          {
+                            kind: "ObjectField",
+                            name: { kind: "Name", value: "publishedAt" },
+                            value: {
+                              kind: "ObjectValue",
+                              fields: [
+                                {
+                                  kind: "ObjectField",
+                                  name: { kind: "Name", value: "notNull" },
+                                  value: { kind: "BooleanValue", value: true },
+                                },
+                              ],
+                            },
+                          },
+                        ],
+                      },
+                    },
+                  ],
+                  selectionSet: {
+                    kind: "SelectionSet",
+                    selections: [
+                      {
+                        kind: "Field",
+                        name: { kind: "Name", value: "nodes" },
+                        selectionSet: {
+                          kind: "SelectionSet",
+                          selections: [
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "documentId" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "slug" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "name" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "position" },
+                            },
+                            {
+                              kind: "Field",
+                              name: { kind: "Name", value: "publishedAt" },
+                            },
+                            {
+                              kind: "Field",
                               name: { kind: "Name", value: "avatar" },
                               selectionSet: {
                                 kind: "SelectionSet",
                                 selections: [
                                   {
                                     kind: "Field",
-                                    name: { kind: "Name", value: "data" },
-                                    selectionSet: {
-                                      kind: "SelectionSet",
-                                      selections: [
-                                        {
-                                          kind: "Field",
-                                          name: { kind: "Name", value: "id" },
-                                        },
-                                        {
-                                          kind: "Field",
-                                          name: {
-                                            kind: "Name",
-                                            value: "attributes",
-                                          },
-                                          selectionSet: {
-                                            kind: "SelectionSet",
-                                            selections: [
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "name",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "url",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "blurhash",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "width",
-                                                },
-                                              },
-                                              {
-                                                kind: "Field",
-                                                name: {
-                                                  kind: "Name",
-                                                  value: "height",
-                                                },
-                                              },
-                                            ],
-                                          },
-                                        },
-                                      ],
-                                    },
+                                    name: { kind: "Name", value: "name" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "url" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "width" },
+                                  },
+                                  {
+                                    kind: "Field",
+                                    name: { kind: "Name", value: "height" },
                                   },
                                 ],
                               },

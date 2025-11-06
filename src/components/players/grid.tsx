@@ -1,4 +1,4 @@
-import { PlayerEntity } from "../../models/graphql"
+import { Player } from "../../models/graphql"
 import PlayerCard from "./card"
 
 const PlayerGrid = ({
@@ -6,7 +6,7 @@ const PlayerGrid = ({
   players,
 }: {
   title?: string
-  players: PlayerEntity[]
+  players: Player[]
 }) => {
   return (
     <section className="scientist-area">
@@ -19,7 +19,7 @@ const PlayerGrid = ({
         <div className="row">
           {players &&
             players.map((player) => (
-              <PlayerCard key={player.id} player={player.attributes!} />
+              <PlayerCard key={player.documentId} player={player} />
             ))}
         </div>
       </div>

@@ -1,32 +1,93 @@
 query Search($input: String!) {
   search(query: $input) {
     events(filters: { publishedAt: { notNull: true } }) {
-      data {
-        id
-        attributes {
-          ...EventItem
+      nodes {
+        documentId
+        slug
+        name
+        start
+        end
+        timezone
+        status
+        publishedAt
+        defaultImage {
+          name
+          url
+          width
+          height
         }
-      }
-    }
-    players {
-      data {
-        id
-        attributes {
-          ...PlayerItem
-        }
-      }
-    }
-    games(filters: { publishedAt: { notNull: true } }) {
-      data {
-        attributes {
-          ...GameItem
+        location {
+          name
+          country
         }
       }
     }
     articles(filters: { publishedAt: { notNull: true } }) {
-      data {
-        attributes {
-          ...ArticleItem
+      nodes {
+        documentId
+        slug
+        title
+        summary
+        category
+        publishedAt
+        defaultImage {
+          name
+          url
+          width
+          height
+        }
+        author {
+          slug
+          name
+          avatar {
+            name
+            url
+            width
+            height
+          }
+        }
+      }
+    }
+    games(filters: { publishedAt: { notNull: true } }) {
+      nodes {
+        documentId
+        slug
+        name
+        summary
+        timebox
+        scale
+        category
+        publishedAt
+        proposedBy {
+          name
+          slug
+          avatar {
+            name
+            url
+            width
+            height
+          }
+        }
+        defaultImage {
+          name
+          url
+          width
+          height
+        }
+      }
+    }
+    players(filters: { publishedAt: { notNull: true } }) {
+      nodes {
+        documentId
+        slug
+        name
+        position
+        publishedAt
+        avatar {
+          name
+          url
+          width
+          height
         }
       }
     }

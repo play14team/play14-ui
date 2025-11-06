@@ -1,9 +1,5 @@
 query ArticleSlugs {
-  articles(pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        slug
-      }
-    }
+  articles(pagination: { limit: 5000 }) {
+    slug
   }
 }

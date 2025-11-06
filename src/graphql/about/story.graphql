@@ -1,36 +1,22 @@
 query Story {
   history {
-    data {
-      attributes {
-        founders
-        keyMoments
-        intro
-        items(pagination: { limit: 10000 }) {
-          id
-          date
-          dateFormat
-          additionalText
-          title
-          description
-          image {
-            data {
-              id
-              attributes {
-                name
-                url
-              }
-            }
-          }
-        }
+    founders
+    keyMoments
+    intro
+    items {
+      id
+      date
+      dateFormat
+      additionalText
+      title
+      description
+      image {
+        name
+        url
       }
     }
   }
   players(sort: "name:asc", filters: { position: { eq: "Founder" } }) {
-    data {
-      id
-      attributes {
-        ...PlayerItem
-      }
-    }
+    ...PlayerItem
   }
 }

@@ -10,7 +10,7 @@ import GameSidebar from "./sidebar"
 
 const GameDetails = (props: { game: Game }) => {
   const { game } = props
-  const image = game.defaultImage?.data?.attributes as UploadFile
+  const image = game.defaultImage as UploadFile
 
   return (
     <div className="services-details-area pb-100">
@@ -27,8 +27,6 @@ const GameDetails = (props: { game: Game }) => {
                     width={1000}
                     height={1000}
                     priority
-                    placeholder="blur"
-                    blurDataURL={image.blurhash || process.env.DEFAULT_BLURHASH}
                     className="shadow"
                     style={{
                       maxWidth: "100%",
@@ -134,10 +132,10 @@ const GameDetails = (props: { game: Game }) => {
                 <HtmlContent>{game.description}</HtmlContent>
               </div>
 
-              {game.images && game.images.data.length > 1 && (
+              {game.images && game.images.length > 1 && (
                 <div className="row pt-70">
                   <h2>Images</h2>
-                  <Gallery images={game.images.data} />
+                  <Gallery images={game.images.filter(Boolean) as any} />
                 </div>
               )}
             </div>

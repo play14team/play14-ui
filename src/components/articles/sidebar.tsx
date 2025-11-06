@@ -1,41 +1,32 @@
-import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { query } from "@/libs/apollo-client"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import {
-  ArticleEntity,
-  ArticleEntityResponseCollection,
-  ArticleSidebarDocument,
-} from "../../models/graphql"
+import { Article, ArticleSidebarDocument } from "../../models/graphql"
 
 const ArticleSidebar = async () => {
-  const response = (await query({ query: ArticleSidebarDocument })) as {
-    latest?: ArticleEntityResponseCollection
-    categories?: ArticleEntityResponseCollection
-    tags?: ArticleEntityResponseCollection
-  }
-  const latest = dataAsArrayOf<ArticleEntity>(response.latest || { data: [] })
-  const categories = dataAsArrayOf<ArticleEntity>(
-    response.categories || { data: [] },
-  )
+  const response = await query({ query: ArticleSidebarDocument })
+
+  const latest = ((response.latest as any)?.nodes || []) as Article[]
+  const categories = (response.categories || []) as Article[]
+
   const categoryCount = categories.reduce(
     (groups, item) => {
-      if (item.attributes && item.attributes.category) {
-        groups[item.attributes.category] =
-          (groups[item.attributes.category] || 0) + 1
+      if (item.category) {
+        groups[item.category] = (groups[item.category] || 0) + 1
       }
       return groups
     },
     {} as { [key: string]: number },
   )
 
-  const tags = dataAsArrayOf<ArticleEntity>(response.tags || { data: [] })
+  const tags = (response.tags || []) as Article[]
   const tagsCount = tags.reduce(
     (groups, item) => {
-      const tags = item.attributes?.tags?.data
-      tags?.map((tag) => {
-        if (tag.attributes) {
-          groups[tag.attributes.value] = groups[tag.attributes.value] + 1 || 1
+      const articleTags = item.tags
+      articleTags?.forEach((tag) => {
+        if (tag && tag.value) {
+          groups[tag.value] = groups[tag.value] + 1 || 1
         }
       })
       return groups
@@ -50,11 +41,8 @@ const ArticleSidebar = async () => {
 
         {latest &&
           latest.map((article) => (
-            <article key={article.id} className="item">
-              <Link
-                href={`/articles/${article.attributes?.slug}`}
-                className="thumb"
-              >
+            <article key={article.documentId} className="item">
+              <Link href={`/articles/${article.slug}`} className="thumb">
                 <div
                   style={{
                     position: "relative",
@@ -63,14 +51,8 @@ const ArticleSidebar = async () => {
                   }}
                 >
                   <Image
-                    src={
-                      article.attributes?.defaultImage?.data?.attributes?.url ||
-                      "#"
-                    }
-                    alt={
-                      article.attributes?.defaultImage?.data?.attributes
-                        ?.name || ""
-                    }
+                    src={article.defaultImage?.url || "#"}
+                    alt={article.defaultImage?.name || ""}
                     sizes="100vw"
                     fill
                     style={{ objectFit: "cover" }}
@@ -80,12 +62,12 @@ const ArticleSidebar = async () => {
               </Link>
               <div className="info">
                 <span>
-                  {moment(article.attributes?.publishedAt).format(
-                    "MMM Do, YYYY",
-                  )}{" "}
+                  {moment(article.publishedAt).format("MMM Do, YYYY")}{" "}
                 </span>
                 <h4 className="title usmall">
-                  <Link href="/blog-details">{article.attributes?.title}</Link>
+                  <Link href={`/articles/${article.slug}`}>
+                    {article.title}
+                  </Link>
                 </h4>
               </div>
 

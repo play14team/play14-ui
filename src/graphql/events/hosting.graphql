@@ -1,9 +1,5 @@
 query Hosting {
   hosting {
-    data {
-      attributes {
-        content
-      }
-    }
+    content
   }
 }

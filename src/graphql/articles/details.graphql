@@ -1,14 +1,11 @@
 query Article($slug: String!) {
   articles(filters: { slug: { eq: $slug } }) {
-    data {
-      attributes {
-        ...ArticleDetails
-      }
-    }
+    ...ArticleDetails
   }
 }
 
 fragment ArticleDetails on Article {
+  documentId
   slug
   title
   category
@@ -16,59 +13,31 @@ fragment ArticleDetails on Article {
   publishedAt
   updatedAt
   cannonical
-  tags(pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        value
-      }
-    }
+  tags {
+    value
   }
   defaultImage {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
-  images(pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+  images {
+    name
+    url
+    width
+    height
   }
   author {
-    data {
-      id
-      attributes {
-        name
-        slug
-        position
-        tagline
-        avatar {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+    name
+    slug
+    position
+    tagline
+    avatar {
+      name
+      url
+      width
+      height
     }
   }
   content

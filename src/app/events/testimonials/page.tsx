@@ -1,11 +1,7 @@
 import TestimonialItem from "@/components/events/testimonial"
 import Page from "@/components/layout/page"
-import { dataAsArrayOf, query } from "@/libs/apollo-client"
-import {
-  TestimonialEntity,
-  TestimonialEntityResponseCollection,
-  TestimonialsDocument,
-} from "@/models/graphql"
+import { query } from "@/libs/apollo-client"
+import { Testimonial, TestimonialsDocument } from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -14,11 +10,9 @@ export const metadata: Metadata = {
 
 export default async function Testimonials() {
   const response = (await query({ query: TestimonialsDocument })) as {
-    testimonials?: TestimonialEntityResponseCollection
+    testimonials?: Testimonial[]
   }
-  const testimonials = dataAsArrayOf<TestimonialEntity>(
-    response?.testimonials || { data: [] },
-  )
+  const testimonials = response?.testimonials || []
 
   return (
     <Page name="Testimonials">
@@ -27,8 +21,8 @@ export default async function Testimonials() {
           <div className="row">
             {testimonials.map((testimonial) => (
               <TestimonialItem
-                key={testimonial.id}
-                testimonial={testimonial.attributes!}
+                key={testimonial.documentId}
+                testimonial={testimonial}
               />
             ))}
           </div>

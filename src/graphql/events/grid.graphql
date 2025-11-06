@@ -5,7 +5,7 @@ query Events(
   $location: String
   $country: String
 ) {
-  events(
+  events_connection(
     sort: "start:desc"
     pagination: { page: $page, pageSize: $pageSize }
     filters: {
@@ -13,35 +13,26 @@ query Events(
       location: { slug: { eqi: $location }, country: { eqi: $country } }
     }
   ) {
-    data {
-      id
-      attributes {
-        ...EventItem
-      }
+    nodes {
+      ...EventItem
     }
-    meta {
-      pagination {
-        page
-        pageSize
-        total
-        pageCount
-      }
+    pageInfo {
+      page
+      pageSize
+      total
+      pageCount
     }
   }
 }
 
 query UpcomingEvents($today: DateTime!) {
   events(sort: "start:asc", filters: { end: { gte: $today } }) {
-    data {
-      id
-      attributes {
-        ...EventItem
-      }
-    }
+    ...EventItem
   }
 }
 
 fragment EventItem on Event {
+  documentId
   slug
   name
   start
@@ -49,23 +40,13 @@ fragment EventItem on Event {
   timezone
   status
   defaultImage {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
   location {
-    data {
-      attributes {
-        name
-        country
-      }
-    }
+    name
+    country
   }
 }

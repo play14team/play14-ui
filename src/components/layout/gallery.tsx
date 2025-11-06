@@ -12,9 +12,15 @@ import Fullscreen from "yet-another-react-lightbox/plugins/fullscreen"
 import Slideshow from "yet-another-react-lightbox/plugins/slideshow"
 import Thumbnails from "yet-another-react-lightbox/plugins/thumbnails"
 import Zoom from "yet-another-react-lightbox/plugins/zoom"
-import { UploadFileEntity } from "../../models/graphql"
 
-const Gallery = (props: { images: UploadFileEntity[] }) => {
+type ImageType = {
+  url: string
+  width?: number | null
+  height?: number | null
+  name: string
+}
+
+const Gallery = (props: { images: ImageType[] }) => {
   const [index, setIndex] = useState(-1)
   const { images } = props
 
@@ -24,9 +30,9 @@ const Gallery = (props: { images: UploadFileEntity[] }) => {
 
   const photos = images.map((img) => {
     return {
-      src: img.attributes?.url || "",
-      width: img.attributes?.width || 500,
-      height: img.attributes?.height || 500,
+      src: img.url || "",
+      width: img.width || 500,
+      height: img.height || 500,
     }
   })
 

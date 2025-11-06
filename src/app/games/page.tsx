@@ -1,8 +1,7 @@
 import Filters from "@/components/games/filters"
 import GameGrid from "@/components/games/grid"
 import LoadMore from "@/components/games/load-more"
-import { dataAsArrayOf, getPagination } from "@/libs/apollo-client"
-import { GameEntity, GameEntityResponseCollection } from "@/models/graphql"
+import { Game } from "@/models/graphql"
 import { Metadata } from "next"
 import { getGames } from "../../components/games/get.action"
 
@@ -14,12 +13,23 @@ export const revalidate = 3600
 
 export default async function Games() {
   const response = (await getGames(1, 18)) as {
-    games?: GameEntityResponseCollection
+    games_connection?: {
+      nodes: Game[]
+      pageInfo: {
+        page: number
+        pageSize: number
+        total: number
+        pageCount: number
+      }
+    }
   }
-  const games = dataAsArrayOf<GameEntity>(response?.games || { data: [] })
-  const pagination = response.games
-    ? getPagination(response.games)
-    : { total: 0, page: 1, pageSize: 18, pageCount: 1 }
+  const games = (response?.games_connection?.nodes || []) as Game[]
+  const pagination = response?.games_connection?.pageInfo || {
+    total: 0,
+    page: 1,
+    pageSize: 18,
+    pageCount: 1,
+  }
 
   return (
     <>

@@ -2,14 +2,8 @@ import ArticleGrid from "@/components/articles/grid"
 import EventGrid from "@/components/events/grid"
 import GameGrid from "@/components/games/grid"
 import PlayerGrid from "@/components/players/grid"
-import { dataAsArrayOf, query } from "@/libs/apollo-client"
-import {
-  ArticleEntity,
-  EventEntity,
-  GameEntity,
-  PlayerEntity,
-  SearchDocument,
-} from "@/models/graphql"
+import { query } from "@/libs/apollo-client"
+import { Article, Event, Game, Player, SearchDocument } from "@/models/graphql"
 
 export default async function Search({ input }: { input: string | undefined }) {
   if (!input) return
@@ -19,18 +13,11 @@ export default async function Search({ input }: { input: string | undefined }) {
     variables: { input },
   })
 
-  const events = dataAsArrayOf<EventEntity>(
-    response.search?.events || { data: [] },
-  )
-  const players = dataAsArrayOf<PlayerEntity>(
-    response.search?.players || { data: [] },
-  )
-  const games = dataAsArrayOf<GameEntity>(
-    response.search?.games || { data: [] },
-  )
-  const articles = dataAsArrayOf<ArticleEntity>(
-    response.search?.articles || { data: [] },
-  )
+  // Search plugin uses connection query structure with nodes
+  const events = (response.search?.events?.nodes || []) as Event[]
+  const players = (response.search?.players?.nodes || []) as Player[]
+  const articles = (response.search?.articles?.nodes || []) as Article[]
+  const games = (response.search?.games?.nodes || []) as Game[]
 
   return (
     <div className="pt-70">

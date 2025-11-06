@@ -6,8 +6,8 @@ import { Game } from "../../models/graphql"
 
 const GameCard = ({ game }: { game: Game }) => {
   const url = `/games/${encodeURIComponent(game.slug)}`
-  const image = game.defaultImage.data?.attributes
-  const proposedby = game.proposedBy?.data
+  const image = game.defaultImage
+  const proposedby = game.proposedBy
 
   return (
     <article id={game.name} key={game.name} className="col-lg-4 col-md-6">
@@ -20,8 +20,6 @@ const GameCard = ({ game }: { game: Game }) => {
                 alt={image.name}
                 width={image.width || 400}
                 height={image.height || 400}
-                blurDataURL={image.blurhash || process.env.DEFAULT_BLURHASH}
-                placeholder="blur"
                 sizes="100vw"
                 style={{
                   objectFit: "cover",
@@ -54,10 +52,10 @@ const GameCard = ({ game }: { game: Game }) => {
         <div className="courses-content">
           {proposedby &&
             proposedby.map((player) => {
-              const playerImage = player.attributes?.avatar?.data?.attributes
+              if (!player) return null
+              const playerImage = player.avatar
               return (
-                player &&
-                player.attributes && (
+                player && (
                   <div className="course-author d-flex align-items-center">
                     {playerImage && (
                       <Image
@@ -65,17 +63,13 @@ const GameCard = ({ game }: { game: Game }) => {
                         width={75}
                         height={75}
                         priority
-                        placeholder="blur"
-                        blurDataURL={
-                          playerImage.blurhash || process.env.DEFAULT_BLURHASH
-                        }
                         className="rounded-circle"
                         alt={game.name}
                         unoptimized
                       />
                     )}
-                    <Link href={`/players/${player.attributes.slug}`}>
-                      <span>&nbsp;{player.attributes.name}</span>
+                    <Link href={`/players/${player.slug}`}>
+                      <span>&nbsp;{player.name}</span>
                     </Link>
                   </div>
                 )

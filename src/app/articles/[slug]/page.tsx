@@ -1,31 +1,27 @@
 import ArticleDetails from "@/components/articles/details"
 import { getArticle, getArticleSlugs } from "@/components/articles/get.action"
 import Page from "@/components/layout/page"
-import { dataAsArrayOf } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
-import {
-  ArticleEntity,
-  ArticleEntityResponseCollection,
-} from "@/models/graphql"
+import type { Article } from "@/models/graphql"
 
 export const revalidate = 3600
 
 export async function generateStaticParams() {
   const response = (await getArticleSlugs()) as {
-    articles?: ArticleEntityResponseCollection
+    articles?: Article[]
   }
-  const articles = dataAsArrayOf<ArticleEntity>(
-    response.articles || { data: [] },
-  )
+  const articles = response.articles || []
 
   return articles.map((article) => ({
-    slug: article.attributes?.slug,
+    slug: article.slug,
   }))
 }
 
 export async function generateMetadata(props: SlugParamsProps) {
   const article = await getArticle(props)
-  const images = article.images?.data.map((i) => i.attributes?.url) as string[]
+  const images = (article.images?.filter(Boolean) as any)?.map(
+    (i: any) => i.url,
+  ) as string[]
 
   return {
     title: `Articles | ${article.title}`,
@@ -35,8 +31,8 @@ export async function generateMetadata(props: SlugParamsProps) {
       description: article.content?.substring(0, 200),
       type: "article",
       publishedTime: article.publishedAt,
-      authors: article.author?.data?.attributes?.name,
-      images: [article.defaultImage.data?.attributes?.url].concat(images),
+      authors: article.author?.name,
+      images: [article.defaultImage?.url].concat(images),
     },
   }
 }

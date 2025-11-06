@@ -6,7 +6,7 @@ import SocialNetworks from "../layout/socialnetworks"
 const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {
   const { sponsor, category } = props
   const url = sponsor.url || "#"
-  const logo = sponsor.logo?.data?.attributes as UploadFile
+  const logo = sponsor.logo as UploadFile
 
   return (
     <div className="col-lg-3 col-sm-6 col-md-6">
@@ -18,8 +18,6 @@ const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {
               alt={logo.name}
               width={500}
               height={500}
-              placeholder="blur"
-              blurDataURL={logo.blurhash || process.env.DEFAULT_BLURHASH}
               style={{ borderRadius: "10px" }}
               unoptimized
             />

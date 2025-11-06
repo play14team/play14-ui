@@ -1,33 +1,19 @@
 query EventNav {
-  events(sort: "start:desc", pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        slug
-        name
-        start
-        status
-        location {
-          data {
-            attributes {
-              slug
-              name
-              country
-            }
-          }
-        }
-        defaultImage {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+  events(sort: "start:desc", pagination: { limit: 5000 }) {
+    slug
+    name
+    start
+    status
+    location {
+      slug
+      name
+      country
+    }
+    defaultImage {
+      name
+      url
+      width
+      height
     }
   }
 }

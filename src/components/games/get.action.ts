@@ -23,7 +23,7 @@ export async function getGame({ params }: SlugParamsProps) {
     variables: { slug },
   })
 
-  return response.games?.data[0].attributes as Game
+  return (response.games || [])[0] as Game
 }
 
 export async function getGameSlugs() {

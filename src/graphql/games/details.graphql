@@ -1,14 +1,11 @@
 query Game($slug: String!) {
   games(filters: { slug: { eq: $slug } }) {
-    data {
-      attributes {
-        ...GameDetails
-      }
-    }
+    ...GameDetails
   }
 }
 
 fragment GameDetails on Game {
+  documentId
   slug
   name
   category
@@ -18,104 +15,61 @@ fragment GameDetails on Game {
   credits
   description
   publishedAt
-  tags(pagination: { limit: 10000 }) {
+  tags {
     id
     value
   }
-  materials(pagination: { limit: 10000 }) {
+  materials {
     id
     value
   }
-  preparationSteps(pagination: { limit: 10000 }) {
+  preparationSteps {
     id
     value
   }
-  safety(pagination: { limit: 10000 }) {
+  safety {
     id
     key
     value
   }
   defaultImage {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+    name
+    url
+    width
+    height
   }
-  images(pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        name
-        url
-        blurhash
-        width
-        height
-      }
-    }
+  images {
+    name
+    url
+    width
+    height
   }
-  resources(pagination: { limit: 10000 }) {
-    data {
-      id
-      attributes {
-        name
-        url
-      }
-    }
+  resources {
+    name
+    url
   }
   firstPlayedAt {
-    data {
-      attributes {
-        name
-        slug
-      }
-    }
+    name
+    slug
   }
   documentedBy {
-    data {
-      id
-      attributes {
-        name
-        slug
-        avatar {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+    name
+    slug
+    avatar {
+      name
+      url
+      width
+      height
     }
   }
   proposedBy {
-    data {
-      id
-      attributes {
-        name
-        slug
-        avatar {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+    name
+    slug
+    avatar {
+      name
+      url
+      width
+      height
     }
   }
   ratings {

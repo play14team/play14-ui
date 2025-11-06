@@ -5,7 +5,7 @@ import SocialNetworks from "../layout/socialnetworks"
 
 const PlayerCard = ({ player }: { player: Player }) => {
   const url = player.slug ? `/players/${player.slug}` : "#"
-  const avatar = player.avatar?.data?.attributes as UploadFile
+  const avatar = player.avatar as UploadFile
 
   return (
     <article
@@ -22,8 +22,6 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 alt={avatar.name}
                 width={400}
                 height={400}
-                blurDataURL={avatar.blurhash || process.env.DEFAULT_BLURHASH}
-                placeholder="blur"
                 sizes="100vw"
                 className="shadow"
                 style={{

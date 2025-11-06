@@ -17,10 +17,12 @@ export const revalidate = 3600
 
 export async function generateMetadata(props: SlugParamsProps) {
   const event = await getEvent(props)
-  const images = event.images?.data.map((i) => i.attributes?.url) as string[]
+  const images = (event.images?.filter(Boolean) as any)?.map(
+    (i: any) => i.url,
+  ) as string[]
   let description = formatDate(event.start, event.end, event.timezone!, true)
-  if (event.venue && event.venue?.data?.attributes?.location) {
-    description += ` | ${event.venue?.data?.attributes?.name} | ${event.venue?.data?.attributes?.location?.place_name}`
+  if (event.venue && event.venue?.location) {
+    description += ` | ${event.venue?.name} | ${event.venue?.location?.place_name}`
   }
 
   return {
@@ -31,8 +33,8 @@ export async function generateMetadata(props: SlugParamsProps) {
       description: description,
       type: "article",
       publishedTime: event.publishedAt,
-      authors: event.hosts?.data.map((h) => h.attributes?.name),
-      images: [event.defaultImage.data?.attributes?.url].concat(images),
+      authors: (event.hosts?.filter(Boolean) as any)?.map((h: any) => h.name),
+      images: [event.defaultImage?.url].concat(images),
     },
   }
 }

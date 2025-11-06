@@ -1,15 +1,13 @@
-import { dataAsArrayOf, query } from "@/libs/apollo-client"
+import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
 import { capitalizeFirstLetter } from "@/libs/utils"
-import { GameEntity, GameNavDocument } from "@/models/graphql"
+import { Game, GameNavDocument } from "@/models/graphql"
 import Link from "next/link"
 
 export default async function Categories() {
   const response = await query({ query: GameNavDocument })
-  const games = dataAsArrayOf<GameEntity>(response.games || { data: [] })
-  const categories = deduplicate(
-    games.map((g) => g.attributes?.category.toLowerCase()),
-  )
+  const games = (response.games || []) as Game[]
+  const categories = deduplicate(games.map((g) => g.category.toLowerCase()))
 
   return (
     <div className="blog-details-desc pb-70">

@@ -24,7 +24,7 @@ export async function generateMetadata(props: SlugParamsProps) {
       title: player.name,
       description: player.bio?.substring(0, 200),
       type: "article",
-      images: player.avatar?.data?.attributes?.url,
+      images: player.avatar?.url,
     },
   }
 }

@@ -3,7 +3,7 @@ import {
   ComponentEventsTimetable,
   Event,
   Maybe,
-  PlayerEntity,
+  Player,
 } from "@/models/graphql"
 import Gallery from "../layout/gallery"
 import HtmlContent from "../layout/html-content"
@@ -18,12 +18,12 @@ export default function EventTabs({
   participants,
 }: {
   event: Event
-  participants: PlayerEntity[]
+  participants: Player[]
 }) {
   const timetable = event.timetable as Array<Maybe<ComponentEventsTimetable>>
-  const players = event.players?.data as PlayerEntity[]
-  const hosts = event.hosts?.data as PlayerEntity[]
-  const mentors = event.mentors?.data as PlayerEntity[]
+  const players = (event.players || []) as Player[]
+  const hosts = (event.hosts || []) as Player[]
+  const mentors = (event.mentors || []) as Player[]
 
   return (
     <>
@@ -57,7 +57,9 @@ export default function EventTabs({
 
         {/* Photos */}
         <div id="photosTab" className="tab-pane tabs_item">
-          {event.images && <Gallery images={event.images.data} />}
+          {event.images && (
+            <Gallery images={event.images.filter(Boolean) as any} />
+          )}
         </div>
 
         {/* Registration */}

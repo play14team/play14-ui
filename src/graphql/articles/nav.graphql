@@ -1,31 +1,17 @@
 query ArticleNav {
-  articles(sort: "publishedAt:desc", pagination: { limit: 10000 }) {
-    data {
-      attributes {
-        slug
-        title
-        category
-        tags {
-          data {
-            attributes {
-              value
-            }
-          }
-        }
-        publishedAt
-        defaultImage {
-          data {
-            id
-            attributes {
-              name
-              url
-              blurhash
-              width
-              height
-            }
-          }
-        }
-      }
+  articles(sort: "publishedAt:desc", pagination: { limit: 5000 }) {
+    slug
+    title
+    category
+    tags {
+      value
+    }
+    publishedAt
+    defaultImage {
+      name
+      url
+      width
+      height
     }
   }
 }
