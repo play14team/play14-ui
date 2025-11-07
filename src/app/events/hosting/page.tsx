@@ -18,7 +18,7 @@ export default async function HostingPage() {
     <Page name="All you need to know about hosting a #play14 event">
       <div className="pt-100 pb-70">
         <div className="container">
-          <HtmlContent>{hosting?.content!}</HtmlContent>
+          <HtmlContent>{hosting?.content || ""}</HtmlContent>
         </div>
       </div>
     </Page>

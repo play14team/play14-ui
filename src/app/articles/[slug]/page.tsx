@@ -19,9 +19,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: SlugParamsProps) {
   const article = await getArticle(props)
-  const images = (article.images?.filter(Boolean) as any)?.map(
-    (i: any) => i.url,
-  ) as string[]
+  const images = article.images
+    ?.filter(Boolean)
+    ?.map((i) => (i as { url: string }).url) as string[]
 
   return {
     title: `Articles | ${article.title}`,

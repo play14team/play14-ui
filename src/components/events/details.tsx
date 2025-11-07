@@ -165,7 +165,7 @@ export default function EventDetails({ event }: { event: Event }) {
             </div>
           </div>
           <div className="col-lg-4 col-md-12">
-            <EventSidebar event={event} participants={participants} />
+            <EventSidebar event={event} />
           </div>
         </div>
 

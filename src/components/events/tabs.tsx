@@ -58,7 +58,14 @@ export default function EventTabs({
         {/* Photos */}
         <div id="photosTab" className="tab-pane tabs_item">
           {event.images && (
-            <Gallery images={event.images.filter(Boolean) as any} />
+            <Gallery
+              images={
+                event.images.filter(Boolean) as Array<{
+                  url: string
+                  name?: string | null
+                }>
+              }
+            />
           )}
         </div>
 

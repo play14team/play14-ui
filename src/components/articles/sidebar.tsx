@@ -7,7 +7,8 @@ import { Article, ArticleSidebarDocument } from "../../models/graphql"
 const ArticleSidebar = async () => {
   const response = await query({ query: ArticleSidebarDocument })
 
-  const latest = ((response.latest as any)?.nodes || []) as Article[]
+  const latest = ((response.latest as { nodes?: unknown[] })?.nodes ||
+    []) as Article[]
   const categories = (response.categories || []) as Article[]
 
   const categoryCount = categories.reduce(

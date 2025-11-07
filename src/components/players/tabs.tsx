@@ -1,4 +1,4 @@
-import { Player } from "@/models/graphql"
+import { Event as EventType, Player } from "@/models/graphql"
 import EventGrid from "../events/grid"
 import HtmlContent from "../layout/html-content"
 import TabHeaders from "./tab-headers"
@@ -27,21 +27,21 @@ export default function PlayerTabs({ player }: { player: Player }) {
         {/* tab2 */}
         <div id="tab2" className="tab-pane tabs_item">
           {(attended && attended.length > 0 && (
-            <EventGrid events={attended.filter(Boolean) as any} />
+            <EventGrid events={attended.filter(Boolean) as EventType[]} />
           )) || <p>This player has not attended any event yet</p>}
         </div>
 
         {/* tab3 */}
         <div id="tab3" className="tab-pane tabs_item">
           {(hosted && hosted.length > 0 && (
-            <EventGrid events={hosted.filter(Boolean) as any} />
+            <EventGrid events={hosted.filter(Boolean) as EventType[]} />
           )) || <p>This player has not hosted any event yet</p>}
         </div>
 
         {/* tab4 */}
         <div id="tab4" className="tab-pane tabs_item">
           {(mentored && mentored.length > 0 && (
-            <EventGrid events={mentored.filter(Boolean) as any} />
+            <EventGrid events={mentored.filter(Boolean) as EventType[]} />
           )) || <p>This player has not mentored any event yet</p>}
         </div>
       </div>

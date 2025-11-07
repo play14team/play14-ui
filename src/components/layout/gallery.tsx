@@ -17,7 +17,7 @@ type ImageType = {
   url: string
   width?: number | null
   height?: number | null
-  name: string
+  name?: string | null
 }
 
 const Gallery = (props: { images: ImageType[] }) => {
