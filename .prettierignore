@@ -1,3 +1,7 @@
-node_modeules
+node_modules
 .next
 .husky
+.codacy
+.github
+.vscode
+.next
