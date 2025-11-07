@@ -76,7 +76,6 @@ export async function query<TQuery, TQueryVariables>({
       "==================== GraphQL Query Error ====================",
     )
     console.error("Message:", err.message)
-    console.error("Message:", err.message)
     console.error("Variables:", JSON.stringify(variables, null, 2))
 
     if (err.networkError) {
