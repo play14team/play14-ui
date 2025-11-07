@@ -13,10 +13,6 @@ import ApolloDevTools from "./apollo-dev-tools"
 
 const STRAPI_GRAPHQL_ENDPOINT = process.env.STRAPI_API_URL + "/graphql"
 
-// Feature flag to control response format during migration
-// Must match the server-side configuration
-const USE_V5_FORMAT = process.env.NEXT_PUBLIC_STRAPI_USE_V5_FORMAT === "true"
-
 function makeClient() {
   const httpLink = new HttpLink({
     uri: STRAPI_GRAPHQL_ENDPOINT,
@@ -58,9 +54,6 @@ function getAuthenticatedLink(httpLink: HttpLink) {
       headers: {
         ...headers,
         authorization: token ? `Bearer ${token}` : "",
-        // Add Strapi v4 compatibility header when not using v5 format
-        // This allows gradual migration from Strapi 4 to Strapi 5
-        ...(!USE_V5_FORMAT && { "Strapi-Response-Format": "v4" }),
       },
     }
   })
