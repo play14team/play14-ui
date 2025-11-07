@@ -4,7 +4,7 @@ import Image from "next/image"
 import Link from "next/link"
 import ReactCountryFlag from "react-country-flag"
 import {
-  Enum_Event_Status,
+  Enum_Event_Eventstatus,
   Event,
   EventLocation,
   Player,
@@ -183,10 +183,10 @@ export default function EventDetails({ event }: { event: Event }) {
   }
 
   function isAnnounced() {
-    return event.status === Enum_Event_Status.Announced
+    return event.eventStatus === Enum_Event_Eventstatus.Announced
   }
 
   function isOpen() {
-    return event.status === Enum_Event_Status.Open
+    return event.eventStatus === Enum_Event_Eventstatus.Open
   }
 }

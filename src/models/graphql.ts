@@ -652,7 +652,7 @@ export enum Enum_Componentsharedmetasocial_Socialnetwork {
   Twitter = "Twitter",
 }
 
-export enum Enum_Event_Status {
+export enum Enum_Event_Eventstatus {
   Announced = "Announced",
   Cancelled = "Cancelled",
   Open = "Open",
@@ -692,6 +692,7 @@ export type Event = {
   description?: Maybe<Scalars["String"]["output"]>
   documentId: Scalars["ID"]["output"]
   end: Scalars["DateTime"]["output"]
+  eventStatus: Enum_Event_Eventstatus
   finance?: Maybe<ComponentReportingFinance>
   hosts: Array<Maybe<Player>>
   hosts_connection?: Maybe<PlayerRelationResponseCollection>
@@ -714,7 +715,6 @@ export type Event = {
   slug: Scalars["String"]["output"]
   sponsorships?: Maybe<Array<Maybe<ComponentEventsSponsorship>>>
   start: Scalars["DateTime"]["output"]
-  status: Enum_Event_Status
   tagline?: Maybe<Scalars["String"]["output"]>
   timetable?: Maybe<Array<Maybe<ComponentEventsTimetable>>>
   timezone?: Maybe<Scalars["String"]["output"]>
@@ -817,6 +817,7 @@ export type EventFiltersInput = {
   description?: InputMaybe<StringFilterInput>
   documentId?: InputMaybe<IdFilterInput>
   end?: InputMaybe<DateTimeFilterInput>
+  eventStatus?: InputMaybe<StringFilterInput>
   finance?: InputMaybe<ComponentReportingFinanceFiltersInput>
   hosts?: InputMaybe<PlayerFiltersInput>
   locale?: InputMaybe<StringFilterInput>
@@ -833,7 +834,6 @@ export type EventFiltersInput = {
   slug?: InputMaybe<StringFilterInput>
   sponsorships?: InputMaybe<ComponentEventsSponsorshipFiltersInput>
   start?: InputMaybe<DateTimeFilterInput>
-  status?: InputMaybe<StringFilterInput>
   tagline?: InputMaybe<StringFilterInput>
   timetable?: InputMaybe<ComponentEventsTimetableFiltersInput>
   timezone?: InputMaybe<StringFilterInput>
@@ -846,6 +846,7 @@ export type EventInput = {
   defaultImage?: InputMaybe<Scalars["ID"]["input"]>
   description?: InputMaybe<Scalars["String"]["input"]>
   end?: InputMaybe<Scalars["DateTime"]["input"]>
+  eventStatus?: InputMaybe<Enum_Event_Eventstatus>
   finance?: InputMaybe<ComponentReportingFinanceInput>
   hosts?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
   images?: InputMaybe<Array<InputMaybe<Scalars["ID"]["input"]>>>
@@ -859,7 +860,6 @@ export type EventInput = {
   slug?: InputMaybe<Scalars["String"]["input"]>
   sponsorships?: InputMaybe<Array<InputMaybe<ComponentEventsSponsorshipInput>>>
   start?: InputMaybe<Scalars["DateTime"]["input"]>
-  status?: InputMaybe<Enum_Event_Status>
   tagline?: InputMaybe<Scalars["String"]["input"]>
   timetable?: InputMaybe<Array<InputMaybe<ComponentEventsTimetableInput>>>
   timezone?: InputMaybe<Scalars["String"]["input"]>
@@ -3483,7 +3483,7 @@ export type EventCalendarQuery = {
     name: string
     start: any
     end: any
-    status: Enum_Event_Status
+    eventStatus: Enum_Event_Eventstatus
     venue?: { __typename?: "Venue"; name: string } | null
   } | null>
 }
@@ -3510,7 +3510,7 @@ export type EventDetailsFragment = {
   start: any
   end: any
   timezone?: string | null
-  status: Enum_Event_Status
+  eventStatus: Enum_Event_Eventstatus
   description?: string | null
   contactEmail?: string | null
   defaultImage: {
@@ -3655,7 +3655,7 @@ export type EventItemFragment = {
   start: any
   end: any
   timezone?: string | null
-  status: Enum_Event_Status
+  eventStatus: Enum_Event_Eventstatus
   defaultImage: {
     __typename?: "UploadFile"
     name: string
@@ -3689,7 +3689,7 @@ export type MarkersQuery = {
     start: any
     end: any
     timezone?: string | null
-    status: Enum_Event_Status
+    eventStatus: Enum_Event_Eventstatus
     registration?: {
       __typename?: "ComponentRegistrationRegistration"
       link?: string | null
@@ -3712,7 +3712,7 @@ export type EventNavQuery = {
     slug: string
     name: string
     start: any
-    status: Enum_Event_Status
+    eventStatus: Enum_Event_Eventstatus
     location?: {
       __typename?: "EventLocation"
       slug?: string | null
@@ -4134,7 +4134,7 @@ export type SearchQuery = {
         start: any
         end: any
         timezone?: string | null
-        status: Enum_Event_Status
+        eventStatus: Enum_Event_Eventstatus
         publishedAt?: any | null
         defaultImage: {
           __typename?: "UploadFile"
@@ -4457,7 +4457,7 @@ export const EventDetailsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "contactEmail" } },
           {
@@ -5010,7 +5010,7 @@ export const EventItemFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "defaultImage" },
@@ -5178,7 +5178,7 @@ export const PlayerDetailsFragmentDoc = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "defaultImage" },
@@ -6066,7 +6066,7 @@ export const EventCalendarDocument = {
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "start" } },
                 { kind: "Field", name: { kind: "Name", value: "end" } },
-                { kind: "Field", name: { kind: "Name", value: "status" } },
+                { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "venue" },
@@ -6210,7 +6210,7 @@ export const EventDocument = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           { kind: "Field", name: { kind: "Name", value: "description" } },
           { kind: "Field", name: { kind: "Name", value: "contactEmail" } },
           {
@@ -6551,7 +6551,7 @@ export const EventsDocument = {
                   fields: [
                     {
                       kind: "ObjectField",
-                      name: { kind: "Name", value: "status" },
+                      name: { kind: "Name", value: "eventStatus" },
                       value: {
                         kind: "ObjectValue",
                         fields: [
@@ -6670,7 +6670,7 @@ export const EventsDocument = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "defaultImage" },
@@ -6795,7 +6795,7 @@ export const UpcomingEventsDocument = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "defaultImage" },
@@ -6881,7 +6881,7 @@ export const MarkersDocument = {
                   fields: [
                     {
                       kind: "ObjectField",
-                      name: { kind: "Name", value: "status" },
+                      name: { kind: "Name", value: "eventStatus" },
                       value: {
                         kind: "ObjectValue",
                         fields: [
@@ -6947,7 +6947,7 @@ export const MarkersDocument = {
                 { kind: "Field", name: { kind: "Name", value: "start" } },
                 { kind: "Field", name: { kind: "Name", value: "end" } },
                 { kind: "Field", name: { kind: "Name", value: "timezone" } },
-                { kind: "Field", name: { kind: "Name", value: "status" } },
+                { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "registration" },
@@ -7028,7 +7028,7 @@ export const EventNavDocument = {
                 { kind: "Field", name: { kind: "Name", value: "slug" } },
                 { kind: "Field", name: { kind: "Name", value: "name" } },
                 { kind: "Field", name: { kind: "Name", value: "start" } },
-                { kind: "Field", name: { kind: "Name", value: "status" } },
+                { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "location" },
@@ -8045,7 +8045,7 @@ export const PlayerDocument = {
           { kind: "Field", name: { kind: "Name", value: "start" } },
           { kind: "Field", name: { kind: "Name", value: "end" } },
           { kind: "Field", name: { kind: "Name", value: "timezone" } },
-          { kind: "Field", name: { kind: "Name", value: "status" } },
+          { kind: "Field", name: { kind: "Name", value: "eventStatus" } },
           {
             kind: "Field",
             name: { kind: "Name", value: "defaultImage" },
@@ -8530,31 +8530,6 @@ export const SearchDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "events" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "publishedAt" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "notNull" },
-                                  value: { kind: "BooleanValue", value: true },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
@@ -8590,7 +8565,7 @@ export const SearchDocument = {
                             },
                             {
                               kind: "Field",
-                              name: { kind: "Name", value: "status" },
+                              name: { kind: "Name", value: "eventStatus" },
                             },
                             {
                               kind: "Field",
@@ -8647,31 +8622,6 @@ export const SearchDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "articles" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "publishedAt" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "notNull" },
-                                  value: { kind: "BooleanValue", value: true },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
@@ -8787,31 +8737,6 @@ export const SearchDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "games" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "publishedAt" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "notNull" },
-                                  value: { kind: "BooleanValue", value: true },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [
@@ -8935,31 +8860,6 @@ export const SearchDocument = {
                 {
                   kind: "Field",
                   name: { kind: "Name", value: "players" },
-                  arguments: [
-                    {
-                      kind: "Argument",
-                      name: { kind: "Name", value: "filters" },
-                      value: {
-                        kind: "ObjectValue",
-                        fields: [
-                          {
-                            kind: "ObjectField",
-                            name: { kind: "Name", value: "publishedAt" },
-                            value: {
-                              kind: "ObjectValue",
-                              fields: [
-                                {
-                                  kind: "ObjectField",
-                                  name: { kind: "Name", value: "notNull" },
-                                  value: { kind: "BooleanValue", value: true },
-                                },
-                              ],
-                            },
-                          },
-                        ],
-                      },
-                    },
-                  ],
                   selectionSet: {
                     kind: "SelectionSet",
                     selections: [

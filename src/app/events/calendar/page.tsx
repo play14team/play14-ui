@@ -17,7 +17,7 @@ export default async function Calendar() {
     return {
       title: (
         <div>
-          <b>{event.name}</b> - {event.status}
+          <b>{event.name}</b> - {event.eventStatus}
           <br />
           {event.venue?.name}
         </div>

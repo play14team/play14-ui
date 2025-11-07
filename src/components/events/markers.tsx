@@ -24,7 +24,7 @@ export default function EventMarkers({ events }: { events: Event[] }) {
               key={`marker-${index}`}
               longitude={longitude}
               latitude={latitude}
-              color={mapColor(event.status)}
+              color={mapColor(event.eventStatus)}
               style={{ cursor: "pointer" }}
               onClick={(e) => {
                 e.originalEvent.stopPropagation()

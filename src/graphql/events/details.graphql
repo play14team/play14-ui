@@ -11,7 +11,7 @@ fragment EventDetails on Event {
   start
   end
   timezone
-  status
+  eventStatus
   description
   contactEmail
   defaultImage {

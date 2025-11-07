@@ -6,7 +6,7 @@ import Link from "next/link"
 export default async function Statuses() {
   const response = await query({ query: EventNavDocument })
   const events = (response.events || []) as Event[]
-  const locations = deduplicate(events.map((a) => a.status))
+  const locations = deduplicate(events.map((a) => a.eventStatus))
 
   return (
     <div className="blog-details-desc pb-70">

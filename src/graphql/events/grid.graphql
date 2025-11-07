@@ -9,7 +9,7 @@ query Events(
     sort: "start:desc"
     pagination: { page: $page, pageSize: $pageSize }
     filters: {
-      status: { eqi: $status }
+      eventStatus: { eqi: $status }
       location: { slug: { eqi: $location }, country: { eqi: $country } }
     }
   ) {
@@ -38,7 +38,7 @@ fragment EventItem on Event {
   start
   end
   timezone
-  status
+  eventStatus
   defaultImage {
     name
     url

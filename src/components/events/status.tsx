@@ -1,4 +1,4 @@
-import { Enum_Event_Status } from "../../models/graphql"
+import { Enum_Event_Eventstatus } from "../../models/graphql"
 
 const icons = {
   Announced: "calendar-plus",
@@ -7,7 +7,7 @@ const icons = {
   Over: "calendar-check",
 }
 
-const EventStatus = (props: { status: Enum_Event_Status }) => {
+const EventStatus = (props: { status: Enum_Event_Eventstatus }) => {
   const { status } = props
 
   return (

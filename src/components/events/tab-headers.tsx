@@ -1,7 +1,7 @@
 "use client"
 
 import openTabSection from "@/libs/tabs"
-import { Enum_Event_Status, Event } from "@/models/graphql"
+import { Enum_Event_Eventstatus, Event } from "@/models/graphql"
 
 export default function TabHeaders({
   event,
@@ -22,7 +22,7 @@ export default function TabHeaders({
       </li>
 
       {/* Registration */}
-      {event.status == Enum_Event_Status.Open &&
+      {event.eventStatus == Enum_Event_Eventstatus.Open &&
         event.registration &&
         event.registration.widgetCode && (
           <li
