@@ -10,9 +10,13 @@ const EventPopup = ({
   events: Event[]
   onClose: () => void
 }) => {
-  if (!events || events.length == 0) return
+  if (!events || events.length === 0) return null
 
-  const venue = events[0].venue!
+  const venue = events[0].venue
+  if (!venue?.location?.geometry?.coordinates) {
+    return null
+  }
+
   const longitude = venue.location.geometry.coordinates[0]
   const latitude = venue.location.geometry.coordinates[1]
   const offset: [number, number] = [0, -35]
