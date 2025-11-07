@@ -3,7 +3,7 @@ query EventNav {
     slug
     name
     start
-    status
+    eventStatus
     location {
       slug
       name

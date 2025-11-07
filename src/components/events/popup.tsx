@@ -1,6 +1,6 @@
 import Link from "next/link"
 import { Popup } from "react-map-gl/mapbox"
-import { Enum_Event_Status, Event } from "../../models/graphql"
+import { Enum_Event_Eventstatus, Event } from "../../models/graphql"
 import EventDate from "./date"
 
 const EventPopup = ({
@@ -38,7 +38,7 @@ const EventPopup = ({
         const start = event.start
         const end = event.end
         const timezone = event.timezone
-        const status = event.status
+        const status = event.eventStatus
 
         const color = mapColor(status)
         const style = { color: color }
@@ -51,11 +51,12 @@ const EventPopup = ({
                   {name}
                 </Link>
               </b>
-              {status == Enum_Event_Status.Open && event.registration?.link && (
-                <Link href={event.registration.link} target="_blank">
-                  <b>Register now</b>
-                </Link>
-              )}
+              {status == Enum_Event_Eventstatus.Open &&
+                event.registration?.link && (
+                  <Link href={event.registration.link} target="_blank">
+                    <b>Register now</b>
+                  </Link>
+                )}
             </div>
             <div className="d-flex justify-content-between pb-2">
               <span>
@@ -70,15 +71,15 @@ const EventPopup = ({
   )
 }
 
-export const mapColor = (status: Enum_Event_Status | undefined) => {
+export const mapColor = (status: Enum_Event_Eventstatus | undefined) => {
   switch (status) {
-    case Enum_Event_Status.Announced:
+    case Enum_Event_Eventstatus.Announced:
       return "#ffc900"
-    case Enum_Event_Status.Open:
+    case Enum_Event_Eventstatus.Open:
       return "#92c900"
-    case Enum_Event_Status.Over:
+    case Enum_Event_Eventstatus.Over:
       return "#0098dd"
-    case Enum_Event_Status.Cancelled:
+    case Enum_Event_Eventstatus.Cancelled:
       return "#393939"
     default:
       return "#ff5200"

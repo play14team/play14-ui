@@ -1,6 +1,6 @@
 "use client"
 
-import { Enum_Event_Status, Event } from "@/models/graphql"
+import { Enum_Event_Eventstatus, Event } from "@/models/graphql"
 import { EventAttributes, createEvent } from "ics"
 import Link from "next/link"
 
@@ -56,9 +56,9 @@ const ICalendar = ({ event }: { event: Event }) => {
   }
 
   function getStatus(event: Event) {
-    return event.status == Enum_Event_Status.Cancelled
+    return event.eventStatus == Enum_Event_Eventstatus.Cancelled
       ? "CANCELLED"
-      : event.status == Enum_Event_Status.Announced
+      : event.eventStatus == Enum_Event_Eventstatus.Announced
         ? "TENTATIVE"
         : "CONFIRMED"
   }

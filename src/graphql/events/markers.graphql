@@ -1,7 +1,10 @@
 query Markers {
   events(
     sort: "start:asc"
-    filters: { status: { ne: "Cancelled" }, venue: { location: { ne: {} } } }
+    filters: {
+      eventStatus: { ne: "Cancelled" }
+      venue: { location: { ne: {} } }
+    }
     pagination: { limit: 5000 }
   ) {
     documentId
@@ -10,7 +13,7 @@ query Markers {
     start
     end
     timezone
-    status
+    eventStatus
     registration {
       link
     }

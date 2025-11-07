@@ -1,6 +1,6 @@
 query Search($input: String!) {
   search(query: $input) {
-    events(filters: { publishedAt: { notNull: true } }) {
+    events {
       nodes {
         documentId
         slug
@@ -8,7 +8,7 @@ query Search($input: String!) {
         start
         end
         timezone
-        status
+        eventStatus
         publishedAt
         defaultImage {
           name
@@ -22,7 +22,7 @@ query Search($input: String!) {
         }
       }
     }
-    articles(filters: { publishedAt: { notNull: true } }) {
+    articles {
       nodes {
         documentId
         slug
@@ -48,7 +48,7 @@ query Search($input: String!) {
         }
       }
     }
-    games(filters: { publishedAt: { notNull: true } }) {
+    games {
       nodes {
         documentId
         slug
@@ -76,7 +76,7 @@ query Search($input: String!) {
         }
       }
     }
-    players(filters: { publishedAt: { notNull: true } }) {
+    players {
       nodes {
         documentId
         slug

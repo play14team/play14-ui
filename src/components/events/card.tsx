@@ -99,7 +99,7 @@ const EventCard = ({ event }: { event: Event }) => {
             </li>
             <li>
               <span className="location">
-                <EventStatus status={event.status} />
+                <EventStatus status={event.eventStatus} />
               </span>
             </li>
           </ul>

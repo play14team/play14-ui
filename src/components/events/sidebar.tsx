@@ -1,7 +1,7 @@
 import Link from "next/link"
 import {
   Enum_Componenteventsmedia_Type,
-  Enum_Event_Status,
+  Enum_Event_Eventstatus,
   Event,
   Player,
 } from "../../models/graphql"
@@ -22,7 +22,7 @@ const EventSidebar = ({
   return (
     <aside className="events-details-info">
       <h4 className="orange pb-3" style={{ textAlign: "center" }}>
-        <EventStatus status={event.status} />
+        <EventStatus status={event.eventStatus} />
       </h4>
       <ul className="info">
         <li>
@@ -112,7 +112,7 @@ const EventSidebar = ({
         </li> */}
       </ul>
 
-      {event.status == Enum_Event_Status.Open &&
+      {event.eventStatus == Enum_Event_Eventstatus.Open &&
         event.registration &&
         event.registration.link && (
           <div className="btn-box">
@@ -130,8 +130,8 @@ const EventSidebar = ({
           </div>
         )}
 
-      {(event.status == Enum_Event_Status.Open ||
-        event.status == Enum_Event_Status.Announced) && (
+      {(event.eventStatus == Enum_Event_Eventstatus.Open ||
+        event.eventStatus == Enum_Event_Eventstatus.Announced) && (
         <div className="events-share">
           <div className="share-info">
             <span>

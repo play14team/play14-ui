@@ -4,7 +4,7 @@ query EventCalendar {
     name
     start
     end
-    status
+    eventStatus
     venue {
       name
     }
