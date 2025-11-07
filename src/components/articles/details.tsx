@@ -29,7 +29,8 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                   priority
                   placeholder="blur"
                   blurDataURL={
-                    (image as any).blurhash || process.env.DEFAULT_BLURHASH
+                    (image as { blurhash?: string }).blurhash ||
+                    process.env.DEFAULT_BLURHASH
                   }
                   className="shadow"
                   style={{
@@ -67,11 +68,14 @@ const ArticleDetails = ({ article }: { article: Article }) => {
                       <i className="bx bx-purchase-tag"></i>
                     </span>
 
-                    {(article.tags?.filter(Boolean) as any)?.map((tag: any) => (
-                      <Link key={tag.id} href={`/articles/tags/${tag.value}`}>
-                        {tag.value}
-                      </Link>
-                    ))}
+                    {article.tags?.filter(Boolean)?.map((tag) => {
+                      const t = tag as { id: string; value: string }
+                      return (
+                        <Link key={t.id} href={`/articles/tags/${t.value}`}>
+                          {t.value}
+                        </Link>
+                      )
+                    })}
                   </div>
 
                   <div className="article-share">
@@ -112,7 +116,14 @@ const ArticleDetails = ({ article }: { article: Article }) => {
 
                 <div className="pt-4">
                   {article.images && (
-                    <Gallery images={article.images.filter(Boolean) as any} />
+                    <Gallery
+                      images={
+                        article.images.filter(Boolean) as Array<{
+                          url: string
+                          name?: string | null
+                        }>
+                      }
+                    />
                   )}
                 </div>
               </div>

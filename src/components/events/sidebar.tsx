@@ -3,19 +3,12 @@ import {
   Enum_Componenteventsmedia_Type,
   Enum_Event_Eventstatus,
   Event,
-  Player,
 } from "../../models/graphql"
 import SocialLinks from "../layout/social-links"
 import EventStatus from "./status"
 import EventTime from "./time"
 
-const EventSidebar = ({
-  event,
-  participants,
-}: {
-  event: Event
-  participants: Player[]
-}) => {
+const EventSidebar = ({ event }: { event: Event }) => {
   const eventName = encodeURI(event.name!)
   const text = encodeURI("Take a look at #play14 ") + eventName
 

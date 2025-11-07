@@ -66,26 +66,32 @@ export async function query<TQuery, TQueryVariables>({
     })
 
     return data as TQuery
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const err = error as {
+      message: string
+      networkError?: { statusCode: number; result: unknown }
+      graphQLErrors?: Array<unknown>
+    }
     console.error(
       "==================== GraphQL Query Error ====================",
     )
-    console.error("Message:", error.message)
+    console.error("Message:", err.message)
+    console.error("Message:", err.message)
     console.error("Variables:", JSON.stringify(variables, null, 2))
 
-    if (error.networkError) {
+    if (err.networkError) {
       console.error("Network Error Details:")
-      console.error("  Status Code:", error.networkError.statusCode)
+      console.error("  Status Code:", err.networkError.statusCode)
       console.error(
         "  Result:",
-        JSON.stringify(error.networkError.result, null, 2),
+        JSON.stringify(err.networkError.result, null, 2),
       )
     }
 
-    if (error.graphQLErrors && error.graphQLErrors.length > 0) {
+    if (err.graphQLErrors && err.graphQLErrors.length > 0) {
       console.error("GraphQL Errors:")
-      error.graphQLErrors.forEach((err: any, index: number) => {
-        console.error(`  Error ${index + 1}:`, JSON.stringify(err, null, 2))
+      err.graphQLErrors.forEach((gqlErr: unknown, index: number) => {
+        console.error(`  Error ${index + 1}:`, JSON.stringify(gqlErr, null, 2))
       })
     }
     console.error(
@@ -134,6 +140,8 @@ export function getPagination(result: {
  * Helper to get document ID (Strapi 5)
  * documentId is the primary identifier (string)
  */
-export function getDocumentId(item: any): string | null {
+export function getDocumentId(
+  item: { documentId?: string; id?: string | number } | null | undefined,
+): string | null {
   return item?.documentId || item?.id?.toString() || null
 }

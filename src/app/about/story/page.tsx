@@ -55,8 +55,8 @@ export default async function Story() {
                   }
                   additionalText={item?.additionalText || ""}
                   title={item?.title || ""}
-                  image={item?.image?.url!}
-                  imageAlt={item?.image?.name!}
+                  image={item?.image?.url || ""}
+                  imageAlt={item?.image?.name || ""}
                 >
                   <HtmlContent>{item?.description || ""}</HtmlContent>
                 </HistoryItem>

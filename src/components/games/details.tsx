@@ -135,7 +135,14 @@ const GameDetails = (props: { game: Game }) => {
               {game.images && game.images.length > 1 && (
                 <div className="row pt-70">
                   <h2>Images</h2>
-                  <Gallery images={game.images.filter(Boolean) as any} />
+                  <Gallery
+                    images={
+                      game.images.filter(Boolean) as Array<{
+                        url: string
+                        name?: string | null
+                      }>
+                    }
+                  />
                 </div>
               )}
             </div>

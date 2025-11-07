@@ -19,9 +19,9 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: SlugParamsProps) {
   const game = await getGame(props)
-  const images = (game.images?.filter(Boolean) as any)?.map(
-    (i: any) => i.url,
-  ) as string[]
+  const images = game.images
+    ?.filter(Boolean)
+    ?.map((i) => (i as { url: string }).url) as string[]
 
   return {
     title: `Games | ${game.name}`,
@@ -31,9 +31,9 @@ export async function generateMetadata(props: SlugParamsProps) {
       description: game.summary,
       type: "article",
       publishedTime: game.publishedAt,
-      authors: (game.documentedBy?.filter(Boolean) as any)?.map(
-        (p: any) => p.name,
-      ),
+      authors: game.documentedBy
+        ?.filter(Boolean)
+        ?.map((p) => (p as { name: string }).name),
       images: [game.defaultImage?.url].concat(images),
     },
   }
