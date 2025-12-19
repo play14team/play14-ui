@@ -1,15 +1,13 @@
-import { query } from "@/libs/apollo-client"
-import { Event, EventNavDocument, UploadFile } from "../../models/graphql"
+import { Event, UploadFile } from "@/models/strapi"
 import DetailsNavigator, { NavLink } from "../layout/detailsnav"
+import { getEventNav } from "./get.action"
 
 export default async function EventsNavigator({
   current,
 }: {
   current: string
 }) {
-  const response = await query({ query: EventNavDocument })
-  // In Strapi 5, events is directly an array
-  const events = (response.events || []) as Event[]
+  const events = (await getEventNav()) as Event[]
   const index = events.findIndex((a) => a.slug == current)
   const previous = index > 0 ? events[index - 1] : null
   const next = index < events.length - 1 ? events[index + 1] : null

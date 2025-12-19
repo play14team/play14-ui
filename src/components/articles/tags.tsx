@@ -1,11 +1,9 @@
-import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
-import { Article, ArticleNavDocument } from "@/models/graphql"
 import Link from "next/link"
+import { getArticleNav } from "./get.action"
 
 export default async function Tags() {
-  const response = await query({ query: ArticleNavDocument })
-  const articles = (response.articles || []) as Article[]
+  const articles = await getArticleNav()
 
   const tags = deduplicate(
     articles.flatMap((a) => a.tags?.map((t) => t?.value.toLowerCase())),

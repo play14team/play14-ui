@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Player, UploadFile } from "../../models/graphql"
+import { Player, UploadFile } from "@/models/strapi"
 import SocialNetworks from "../layout/socialnetworks"
 
 const PlayerCard = ({ player }: { player: Player }) => {

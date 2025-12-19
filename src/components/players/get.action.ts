@@ -1,33 +1,127 @@
 "use server"
 
-import { query } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
+import { restQuery, normalizeConnection } from "@/libs/strapi-client"
 import {
-  Player,
-  PlayerDocument,
-  PlayerSlugsDocument,
-  PlayersDocument,
-} from "@/models/graphql"
+  playerItemPopulate,
+  playerDetailsPopulate,
+  playerNavPopulate,
+} from "@/libs/strapi-populate"
 
-export async function getPlayers(page: number, pageSize: number) {
-  return await query({
-    query: PlayersDocument,
-    variables: { page, pageSize },
-  })
+// Types - will be replaced by OpenAPI generated types when available
+interface UploadFile {
+  name: string
+  url: string
+  width?: number
+  height?: number
 }
 
+interface SocialNetwork {
+  id: string
+  url: string
+  type: string
+}
+
+interface EventItem {
+  documentId: string
+  slug: string
+  name: string
+  start: string
+  end: string
+  timezone?: string
+  eventStatus: string
+  defaultImage?: UploadFile
+  location?: {
+    name: string
+    country: string
+  }
+}
+
+interface Player {
+  documentId: string
+  slug: string
+  name: string
+  position?: string
+  company?: string
+  tagline?: string
+  bio?: string
+  website?: string
+  location?: string
+  avatar?: UploadFile
+  socialNetworks?: SocialNetwork[]
+  attended?: EventItem[]
+  hosted?: EventItem[]
+  mentored?: EventItem[]
+}
+
+/**
+ * Get paginated players list
+ * REST equivalent of: players/grid.graphql
+ */
+export async function getPlayers(
+  page: number,
+  pageSize: number,
+  position?: string,
+) {
+  const filters: Record<string, unknown> = {}
+  if (position) {
+    filters.position = { $eqi: position }
+  }
+
+  const response = await restQuery<Player[]>("players", {
+    sort: ["name:asc"],
+    pagination: { page, pageSize },
+    filters,
+    populate: playerItemPopulate,
+  })
+
+  // Normalize to match GraphQL _connection structure
+  return {
+    players_connection: normalizeConnection(response),
+  }
+}
+
+/**
+ * Get single player by slug
+ * REST equivalent of: players/details.graphql
+ */
 export async function getPlayer({ params }: SlugParamsProps) {
   const { slug } = await params
-  const response = await query({
-    query: PlayerDocument,
-    variables: { slug },
+  const response = await restQuery<Player[]>("players", {
+    filters: {
+      slug: { $eq: slug },
+    },
+    populate: playerDetailsPopulate,
   })
 
-  return (response.players || [])[0] as Player
+  return response.data?.[0] || null
 }
 
+/**
+ * Get all player slugs for static generation
+ * REST equivalent of: players/slugs.graphql
+ */
 export async function getPlayerSlugs() {
-  return await query({
-    query: PlayerSlugsDocument,
+  const response = await restQuery<Array<{ slug: string }>>("players", {
+    fields: ["slug"],
+    pagination: { page: 1, pageSize: 5000 },
   })
+
+  return {
+    players: response.data || [],
+  }
+}
+
+/**
+ * Get all players for navigation
+ * REST equivalent of: players/nav.graphql
+ */
+export async function getPlayerNav() {
+  const response = await restQuery<Player[]>("players", {
+    sort: ["name:asc"],
+    pagination: { page: 1, pageSize: 5000 },
+    populate: playerNavPopulate,
+  })
+
+  return response.data || []
 }

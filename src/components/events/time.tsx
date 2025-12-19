@@ -1,6 +1,12 @@
 import moment from "moment-timezone"
 
-const EventTime = ({ time, timezone }: { time: Date; timezone: string }) => {
+const EventTime = ({
+  time,
+  timezone,
+}: {
+  time: Date | string
+  timezone: string
+}) => {
   const mommentInTime = moment(time)
   const format = "ddd, MMM Do - HH:mm"
 

@@ -1,11 +1,9 @@
-import { query } from "@/libs/apollo-client"
 import { capitalizeFirstLetter } from "@/libs/utils"
-import { Article, ArticleNavDocument } from "@/models/graphql"
 import Link from "next/link"
+import { getArticleNav } from "./get.action"
 
 export default async function Categories() {
-  const response = await query({ query: ArticleNavDocument })
-  const articles = (response?.articles || []) as Article[]
+  const articles = await getArticleNav()
 
   const categories = [
     ...new Set(articles.map((a) => a.category?.toLowerCase())),

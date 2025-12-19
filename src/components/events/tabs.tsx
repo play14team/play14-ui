@@ -4,7 +4,7 @@ import {
   Event,
   Maybe,
   Player,
-} from "@/models/graphql"
+} from "@/models/strapi"
 import Gallery from "../layout/gallery"
 import HtmlContent from "../layout/html-content"
 import PlayerGrid from "../players/grid"

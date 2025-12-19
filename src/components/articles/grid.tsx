@@ -1,4 +1,4 @@
-import { Article } from "../../models/graphql"
+import { Article } from "@/models/strapi"
 import ArticleCard from "./card"
 
 const ArticleGrid = ({ articles }: { articles: Article[] }) => {

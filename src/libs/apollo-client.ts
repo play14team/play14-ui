@@ -5,16 +5,36 @@ import {
   ApolloClient,
   InMemoryCache,
   registerApolloClient,
-} from "@apollo/experimental-nextjs-app-support"
+} from "@apollo/client-integration-nextjs"
 
 import { Pagination } from "@/models/graphql"
 import { setContext } from "@apollo/client/link/context"
 
 const STRAPI_GRAPHQL_ENDPOINT = process.env.STRAPI_API_URL + "/graphql"
 
+// Configure fetch with timeout to prevent hanging connections
+const fetchWithTimeout = async (
+  uri: RequestInfo | URL,
+  options: RequestInit = {},
+) => {
+  const timeout = 30000 // 30 seconds
+  const controller = new AbortController()
+  const timeoutId = setTimeout(() => controller.abort(), timeout)
+
+  try {
+    return await fetch(uri, {
+      ...options,
+      signal: controller.signal,
+    })
+  } finally {
+    clearTimeout(timeoutId)
+  }
+}
+
 const { getClient } = registerApolloClient(() => {
   const httpLink = new HttpLink({
     uri: STRAPI_GRAPHQL_ENDPOINT,
+    fetch: fetchWithTimeout,
     // you can disable result caching here if you want to
     // (this does not work if you are rendering your page with `export const dynamic = "force-static"`)
     // fetchOptions: { cache: "no-store" },
@@ -32,11 +52,6 @@ function getAuthenticatedLink(link: ApolloLink) {
   const authLink = setContext((_, { headers }) => {
     // get the authentication token from env variable if it exists
     const token = process.env.STRAPI_API_SECRET
-
-    console.log("Apollo Client making request:", {
-      endpoint: STRAPI_GRAPHQL_ENDPOINT,
-      hasToken: !!token,
-    })
 
     // return the headers to the context so httpLink can read them
     return {
@@ -71,19 +86,45 @@ export async function query<TQuery, TQueryVariables>({
       message: string
       networkError?: { statusCode: number; result: unknown }
       graphQLErrors?: Array<unknown>
+      cause?: Error & { code?: string }
     }
+
     console.error(
       "==================== GraphQL Query Error ====================",
     )
+    console.error("Endpoint:", STRAPI_GRAPHQL_ENDPOINT)
     console.error("Message:", err.message)
     console.error("Variables:", JSON.stringify(variables, null, 2))
 
+    // Enhanced network error diagnostics
     if (err.networkError) {
       console.error("Network Error Details:")
       console.error("  Status Code:", err.networkError.statusCode)
       console.error(
         "  Result:",
         JSON.stringify(err.networkError.result, null, 2),
+      )
+    }
+
+    // Check for connection errors
+    if (
+      err.message.includes("fetch failed") ||
+      err.cause?.code === "ECONNRESET"
+    ) {
+      console.error("\nConnection Error Detected:")
+      console.error(
+        "  The server at",
+        STRAPI_GRAPHQL_ENDPOINT,
+        "is not reachable.",
+      )
+      console.error("  Possible causes:")
+      console.error("    - Strapi server is not running")
+      console.error("    - Wrong STRAPI_API_URL in .env.local")
+      console.error("    - Network connectivity issues")
+      console.error("\n  To fix:")
+      console.error("    1. Check if Strapi is running: http://localhost:1337")
+      console.error(
+        "    2. Or switch to production: STRAPI_API_URL=https://community.play14.org",
       )
     }
 

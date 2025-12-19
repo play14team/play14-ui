@@ -1,4 +1,5 @@
-export function camelPad(str: string) {
+export function camelPad(str: string | undefined) {
+  if (!str) return ""
   return (
     str
       // Look for long acronyms and filter out the last letter

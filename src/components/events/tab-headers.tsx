@@ -1,7 +1,7 @@
 "use client"
 
 import openTabSection from "@/libs/tabs"
-import { Enum_Event_Eventstatus, Event } from "@/models/graphql"
+import { Enum_Event_Eventstatus, Event } from "@/models/strapi"
 
 export default function TabHeaders({
   event,

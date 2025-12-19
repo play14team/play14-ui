@@ -1,14 +1,13 @@
+import { getStory } from "@/components/about/get.action"
 import HistoryItem from "@/components/about/historyitem"
 import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
 import PlayerGrid from "@/components/players/grid"
-import { query } from "@/libs/apollo-client"
 import {
   Enum_Componentdefaulthistoryitem_Dateformat,
   History,
   Player,
-  StoryDocument,
-} from "@/models/graphql"
+} from "@/models/strapi"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -16,12 +15,9 @@ export const metadata: Metadata = {
 }
 
 export default async function Story() {
-  const response = (await query({ query: StoryDocument })) as {
-    players?: Player[]
-    history?: History
-  }
-  const founders = response?.players || []
-  const history = response.history
+  const response = await getStory()
+  const founders = (response?.founders || []) as Player[]
+  const history = response.history as History | undefined
 
   return (
     <Page name="Our story">

@@ -1,4 +1,4 @@
-import { Event as EventType, Player } from "@/models/graphql"
+import { Event as EventType, Player } from "@/models/strapi"
 import EventGrid from "../events/grid"
 import HtmlContent from "../layout/html-content"
 import TabHeaders from "./tab-headers"

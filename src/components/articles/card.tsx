@@ -2,7 +2,7 @@ import defaultArticle from "@/styles/images/gallery/gallery5.jpg"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { Article } from "../../models/graphql"
+import { Article } from "@/models/strapi"
 
 const ArticleCard = ({ article }: { article: Article }) => {
   const url = `/articles/${encodeURIComponent(article.slug!)}`

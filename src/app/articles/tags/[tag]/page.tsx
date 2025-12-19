@@ -1,18 +1,13 @@
 import Filters from "@/components/articles/filters"
-import { query } from "@/libs/apollo-client"
+import { getArticles } from "@/components/articles/get.action"
 import ArticleGrid from "../../../../components/articles/grid"
-import { Article, ArticlesDocument } from "../../../../models/graphql"
 
 export default async function ArticleTag(props: {
   params: Promise<{ tag: string }>
 }) {
   const params = await props.params
-  const response = (await query({
-    query: ArticlesDocument,
-    variables: { page: 1, pageSize: 1000, tag: params.tag },
-  })) as { articles?: Article[] }
-
-  const articles = response.articles || []
+  const response = await getArticles(1, 1000, undefined, params.tag)
+  const articles = response.articles_connection.nodes
 
   return (
     <>

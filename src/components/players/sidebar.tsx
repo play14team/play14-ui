@@ -1,8 +1,22 @@
 import Link from "next/link"
-import { Player } from "../../models/graphql"
+import { GeoLocation, Player } from "@/models/strapi"
+
+// Helper to get location display name from string or GeoLocation
+function getLocationName(
+  location: string | GeoLocation | undefined,
+): string | null {
+  if (!location) return null
+  if (typeof location === "string") return location
+  // GeoLocation object - extract place_name
+  if ("place_name" in location && location.place_name) {
+    return location.place_name
+  }
+  return null
+}
 
 const PlayerSidebar = (props: { player: Player }) => {
   const { player } = props
+  const locationName = getLocationName(player.location)
 
   return (
     <aside className="case-studies-sidebar-sticky">
@@ -48,13 +62,13 @@ const PlayerSidebar = (props: { player: Player }) => {
             </li>
           )}
 
-          {player.location && (
+          {locationName && (
             <li>
               <div className="icon">
                 <i className="bx bx-map"></i>
               </div>
               <span>Location</span>
-              {player.location.place_name}
+              {locationName}
             </li>
           )}
         </ul>

@@ -1,11 +1,9 @@
-import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
-import { Game, GameNavDocument } from "@/models/graphql"
 import Link from "next/link"
+import { getGameNav } from "./get.action"
 
 export default async function Tags() {
-  const response = await query({ query: GameNavDocument })
-  const games = (response.games || []) as Game[]
+  const games = await getGameNav()
   const tags = deduplicate(
     games.flatMap((g) => g.tags?.map((t) => t?.value.trim().toLowerCase())),
   )

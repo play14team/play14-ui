@@ -8,23 +8,48 @@ import Map, {
   Popup,
 } from "react-map-gl/mapbox"
 
-interface MapViewProps {
-  location?: {
-    geometry: {
-      coordinates: [number, number]
-    }
-    place_name: string
+interface MapboxLocation {
+  geometry: {
+    coordinates: [number, number]
   }
+  place_name: string
+}
+
+interface SimpleLocation {
+  lat?: number
+  lng?: number
+  place_name?: string
+}
+
+type LocationType = MapboxLocation | SimpleLocation
+
+interface MapViewProps {
+  location?: LocationType
   height?: string
   zoom?: number
   popup?: boolean
 }
 
+function isMapboxLocation(loc: LocationType): loc is MapboxLocation {
+  return "geometry" in loc && loc.geometry !== undefined
+}
+
 const MapView = ({ location, height, zoom, popup }: MapViewProps) => {
-  const point = location ? location.geometry : null
-  const longitude = point ? point.coordinates[0] : 10
-  const latitude = point ? point.coordinates[1] : 40
-  const address = location ? location.place_name : null
+  let longitude = 10
+  let latitude = 40
+  let address: string | null = null
+
+  if (location) {
+    if (isMapboxLocation(location)) {
+      longitude = location.geometry.coordinates[0]
+      latitude = location.geometry.coordinates[1]
+      address = location.place_name
+    } else if (location.lng !== undefined && location.lat !== undefined) {
+      longitude = location.lng
+      latitude = location.lat
+      address = location.place_name || null
+    }
+  }
 
   const token =
     process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN ||

@@ -1,18 +1,14 @@
 import Filters from "@/components/games/filters"
-import { query } from "@/libs/apollo-client"
+import { getGames } from "@/components/games/get.action"
 import { camelPad } from "@/libs/camelPad"
 import GameGrid from "../../../../components/games/grid"
-import { Game, GamesDocument } from "../../../../models/graphql"
 
 export default async function GameCategory(props: {
   params: Promise<{ category: string }>
 }) {
   const params = await props.params
-  const response = (await query({
-    query: GamesDocument,
-    variables: { page: 1, pageSize: 1000, category: params.category },
-  })) as { games?: Game[] }
-  const games = response?.games || []
+  const response = await getGames(1, 1000, params.category)
+  const games = response.games_connection.nodes
 
   const cat =
     games.length > 0

@@ -1,15 +1,13 @@
-import { Enum_Expectation_Type, Expectation } from "../../models/graphql"
+import { Enum_Expectation_Type, Expectation } from "@/models/strapi"
 import HtmlContent from "../layout/html-content"
-import { getExpectations } from "./get-expectations.action"
+import { getExpectations } from "./get.action"
 
 export default async function Expectations({
   type,
 }: {
   type: Enum_Expectation_Type
 }) {
-  const result = await getExpectations({ type })
-  // In Strapi 5, expectations is directly an array
-  const expectations = (result?.data?.expectations || []) as Expectation[]
+  const expectations = (await getExpectations(type)) as Expectation[]
 
   return (
     <section className="solutions-area pb-70">

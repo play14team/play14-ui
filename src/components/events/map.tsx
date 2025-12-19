@@ -1,6 +1,6 @@
 "use client"
 
-import { Event } from "@/models/graphql"
+import { Event } from "@/models/strapi"
 
 import Map, {
   FullscreenControl,

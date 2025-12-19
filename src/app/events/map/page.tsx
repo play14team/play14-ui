@@ -1,7 +1,7 @@
+import { getEventMarkers } from "@/components/events/get.action"
 import EventMap from "@/components/events/map"
 import Page from "@/components/layout/page"
-import { query } from "@/libs/apollo-client"
-import { Event, MarkersDocument } from "@/models/graphql"
+import { Event } from "@/models/strapi"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -9,10 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function EventMapPage() {
-  const response = (await query({ query: MarkersDocument })) as {
-    events?: Event[]
-  }
-  const events = response?.events || []
+  const events = (await getEventMarkers()) as Event[]
 
   return (
     <Page name="Events map">

@@ -10,7 +10,7 @@ import {
   Player,
   UploadFile,
   Venue,
-} from "../../models/graphql"
+} from "@/models/strapi"
 import Map from "../map"
 import EventDate from "./date"
 import ICalendar from "./ical"

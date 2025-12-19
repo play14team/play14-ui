@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Game } from "../../models/graphql"
+import { Game } from "@/models/strapi"
 import Ratings from "../layout/ratings"
 
 const GameSidebar = (props: { game: Game }) => {
@@ -65,57 +65,51 @@ const GameSidebar = (props: { game: Game }) => {
             </li>
           )}
 
-          <li>
-            <div className="icon">
-              <i className="bx bx-bulb"></i>
-            </div>
-            <span>Proposed by</span>
-            {game.proposedBy &&
-              game.proposedBy.map((p) => {
-                if (!p) return null
-                const url = `/players/${p.slug}`
-                const avatar = p.avatar
-                return (
-                  <Link key={p.id} href={url} className="centered pt-3">
-                    <Image
-                      src={avatar?.url || "#"}
-                      alt={avatar?.name || "avatar"}
-                      width={200}
-                      height={200}
-                      priority
-                      unoptimized
-                    />
-                    <h5 className="centered pt-2">{p.name}</h5>
-                  </Link>
-                )
-              })}
-          </li>
+          {game.proposedBy && (
+            <li>
+              <div className="icon">
+                <i className="bx bx-bulb"></i>
+              </div>
+              <span>Proposed by</span>
+              <Link
+                href={`/players/${game.proposedBy.slug}`}
+                className="centered pt-3"
+              >
+                <Image
+                  src={game.proposedBy.avatar?.url || "#"}
+                  alt={game.proposedBy.avatar?.name || "avatar"}
+                  width={200}
+                  height={200}
+                  priority
+                  unoptimized
+                />
+                <h5 className="centered pt-2">{game.proposedBy.name}</h5>
+              </Link>
+            </li>
+          )}
 
-          <li>
-            <div className="icon">
-              <i className="bx bx-edit"></i>
-            </div>
-            <span>Documented by</span>
-            {game.documentedBy &&
-              game.documentedBy.map((p) => {
-                if (!p) return null
-                const url = `/players/${p.slug}`
-                const avatar = p.avatar
-                return (
-                  <Link key={p.id} href={url} className="centered pt-3">
-                    <Image
-                      src={avatar?.url || "#"}
-                      alt={avatar?.name || "avatar"}
-                      width={200}
-                      height={200}
-                      priority
-                      unoptimized
-                    />
-                    <h5 className="centered pt-2">{p.name}</h5>
-                  </Link>
-                )
-              })}
-          </li>
+          {game.documentedBy && (
+            <li>
+              <div className="icon">
+                <i className="bx bx-edit"></i>
+              </div>
+              <span>Documented by</span>
+              <Link
+                href={`/players/${game.documentedBy.slug}`}
+                className="centered pt-3"
+              >
+                <Image
+                  src={game.documentedBy.avatar?.url || "#"}
+                  alt={game.documentedBy.avatar?.name || "avatar"}
+                  width={200}
+                  height={200}
+                  priority
+                  unoptimized
+                />
+                <h5 className="centered pt-2">{game.documentedBy.name}</h5>
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
 

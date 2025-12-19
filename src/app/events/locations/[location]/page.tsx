@@ -1,17 +1,13 @@
 import Filters from "@/components/events/filters"
-import { query } from "@/libs/apollo-client"
+import { getEvents } from "@/components/events/get.action"
 import EventGrid from "../../../../components/events/grid"
-import { Event, EventsDocument } from "../../../../models/graphql"
 
 export default async function EventLocation(props: {
   params: Promise<{ location: string }>
 }) {
   const params = await props.params
-  const response = (await query({
-    query: EventsDocument,
-    variables: { page: 1, pageSize: 1000, location: params.location },
-  })) as { events?: Event[] }
-  const events = response?.events || []
+  const response = await getEvents(1, 1000, undefined, params.location)
+  const events = response.events_connection.nodes
 
   return (
     <>

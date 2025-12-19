@@ -1,6 +1,6 @@
 "use client"
 
-import { Enum_Event_Eventstatus, Event } from "@/models/graphql"
+import { Enum_Event_Eventstatus, Event } from "@/models/strapi"
 import { EventAttributes, createEvent } from "ics"
 import Link from "next/link"
 
@@ -35,9 +35,19 @@ const ICalendar = ({ event }: { event: Event }) => {
 
   const geoJSON = event.venue?.location
   if (geoJSON) {
-    const longitude = geoJSON.geometry.coordinates[0]
-    const latitude = geoJSON.geometry.coordinates[1]
-    evt.geo = { lat: latitude, lon: longitude }
+    // Handle both Mapbox format (geometry.coordinates) and simple format (lat/lng)
+    let longitude: number | undefined
+    let latitude: number | undefined
+    if ("geometry" in geoJSON && geoJSON.geometry?.coordinates) {
+      longitude = geoJSON.geometry.coordinates[0]
+      latitude = geoJSON.geometry.coordinates[1]
+    } else if ("lng" in geoJSON && "lat" in geoJSON) {
+      longitude = geoJSON.lng
+      latitude = geoJSON.lat
+    }
+    if (latitude !== undefined && longitude !== undefined) {
+      evt.geo = { lat: latitude, lon: longitude }
+    }
   }
   if (event.contactEmail) {
     evt.organizer = { name: `#play14 ${event.name}`, email: event.contactEmail }

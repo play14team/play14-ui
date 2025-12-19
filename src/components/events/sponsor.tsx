@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Sponsor, UploadFile } from "../../models/graphql"
+import { Sponsor, UploadFile } from "@/models/strapi"
 import SocialNetworks from "../layout/socialnetworks"
 
 const EventSponsor = (props: { sponsor: Sponsor; category: string }) => {

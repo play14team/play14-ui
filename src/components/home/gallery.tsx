@@ -1,10 +1,8 @@
-import { query } from "@/libs/apollo-client"
-import { HomeDocument } from "../../models/graphql"
+import { getHome } from "./get.action"
 import Gallery from "../layout/gallery"
 
 const HomeGallery = async () => {
-  const response = await query({ query: HomeDocument })
-  const home = response.home
+  const home = await getHome()
   const images = home?.images?.filter((img) => img != null)
 
   return (

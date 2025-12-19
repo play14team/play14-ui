@@ -2,7 +2,7 @@ import { camelPad } from "@/libs/camelPad"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { Game, UploadFile } from "../../models/graphql"
+import { Game, UploadFile } from "@/models/strapi"
 import Gallery from "../layout/gallery"
 import HtmlContent from "../layout/html-content"
 import GamesNavigator from "./nav"
@@ -42,15 +42,17 @@ const GameDetails = (props: { game: Game }) => {
                 <div className="article-content">
                   <div className="entry-meta">
                     <ul>
-                      <li>
-                        <i className="bx bx-folder-open"></i>
-                        <span>Category</span>
-                        <Link
-                          href={`/games/categories/${game.category.toLowerCase()}`}
-                        >
-                          {camelPad(game.category)}
-                        </Link>
-                      </li>
+                      {game.category && (
+                        <li>
+                          <i className="bx bx-folder-open"></i>
+                          <span>Category</span>
+                          <Link
+                            href={`/games/categories/${game.category.toLowerCase()}`}
+                          >
+                            {camelPad(game.category)}
+                          </Link>
+                        </li>
+                      )}
                       <li>
                         <i className="bx bx-calendar"></i>
                         <span>Published</span>

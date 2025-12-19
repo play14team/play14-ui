@@ -2,7 +2,7 @@ import { camelPad } from "@/libs/camelPad"
 import defaultGame from "@/styles/images/gallery/gallery5.jpg"
 import Image from "next/image"
 import Link from "next/link"
-import { Game } from "../../models/graphql"
+import { Game } from "@/models/strapi"
 
 const GameCard = ({ game }: { game: Game }) => {
   const url = `/games/${encodeURIComponent(game.slug)}`
@@ -50,31 +50,24 @@ const GameCard = ({ game }: { game: Game }) => {
           </div>
         </div>
         <div className="courses-content">
-          {proposedby &&
-            proposedby.map((player) => {
-              if (!player) return null
-              const playerImage = player.avatar
-              return (
-                player && (
-                  <div className="course-author d-flex align-items-center">
-                    {playerImage && (
-                      <Image
-                        src={playerImage.url || "#"}
-                        width={75}
-                        height={75}
-                        priority
-                        className="rounded-circle"
-                        alt={game.name}
-                        unoptimized
-                      />
-                    )}
-                    <Link href={`/players/${player.slug}`}>
-                      <span>&nbsp;{player.name}</span>
-                    </Link>
-                  </div>
-                )
-              )
-            })}
+          {proposedby && (
+            <div className="course-author d-flex align-items-center">
+              {proposedby.avatar && (
+                <Image
+                  src={proposedby.avatar.url || "#"}
+                  width={75}
+                  height={75}
+                  priority
+                  className="rounded-circle"
+                  alt={game.name}
+                  unoptimized
+                />
+              )}
+              <Link href={`/players/${proposedby.slug}`}>
+                <span>&nbsp;{proposedby.name}</span>
+              </Link>
+            </div>
+          )}
 
           <h3>
             <Link href={url}>{game.name}</Link>

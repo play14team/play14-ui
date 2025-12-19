@@ -1,7 +1,31 @@
 import Link from "next/link"
 import { Popup } from "react-map-gl/mapbox"
-import { Enum_Event_Eventstatus, Event } from "../../models/graphql"
+import { Enum_Event_Eventstatus, Event, GeoLocation } from "@/models/strapi"
 import EventDate from "./date"
+
+// Helper to extract coordinates from either location format
+function getCoordinates(
+  location: GeoLocation | undefined,
+): [number, number] | null {
+  if (!location) return null
+
+  // Handle Mapbox format (geometry.coordinates)
+  if ("geometry" in location && location.geometry?.coordinates) {
+    return [location.geometry.coordinates[0], location.geometry.coordinates[1]]
+  }
+
+  // Handle simple format (lat/lng)
+  if (
+    "lng" in location &&
+    "lat" in location &&
+    location.lng !== undefined &&
+    location.lat !== undefined
+  ) {
+    return [location.lng, location.lat]
+  }
+
+  return null
+}
 
 const EventPopup = ({
   events,
@@ -13,12 +37,15 @@ const EventPopup = ({
   if (!events || events.length === 0) return null
 
   const venue = events[0].venue
-  if (!venue?.location?.geometry?.coordinates) {
+  if (!venue) {
+    return null
+  }
+  const coords = getCoordinates(venue.location)
+  if (!coords) {
     return null
   }
 
-  const longitude = venue.location.geometry.coordinates[0]
-  const latitude = venue.location.geometry.coordinates[1]
+  const [longitude, latitude] = coords
   const offset: [number, number] = [0, -35]
 
   return (
@@ -57,7 +84,11 @@ const EventPopup = ({
               </b>
               {status == Enum_Event_Eventstatus.Open &&
                 event.registration?.link && (
-                  <Link href={event.registration.link} target="_blank">
+                  <Link
+                    href={event.registration.link}
+                    target="_blank"
+                    style={{ color: "#ff5200" }}
+                  >
                     <b>Register now</b>
                   </Link>
                 )}
@@ -75,18 +106,24 @@ const EventPopup = ({
   )
 }
 
-export const mapColor = (status: Enum_Event_Eventstatus | undefined) => {
+export const mapColor = (
+  status: Enum_Event_Eventstatus | string | undefined,
+) => {
   switch (status) {
     case Enum_Event_Eventstatus.Announced:
-      return "#ffc900"
+    case "Announced":
+      return "#ffc900" // Yellow
     case Enum_Event_Eventstatus.Open:
-      return "#92c900"
+    case "Open":
+      return "#ff5200" // Orange
     case Enum_Event_Eventstatus.Over:
-      return "#0098dd"
+    case "Over":
+      return "#92c900" // Green
     case Enum_Event_Eventstatus.Cancelled:
-      return "#393939"
+    case "Cancelled":
+      return "#393939" // Dark gray (not displayed)
     default:
-      return "#ff5200"
+      return "#0098dd" // Blue (fallback)
   }
 }
 

@@ -1,7 +1,7 @@
+import { getTestimonials } from "@/components/events/get.action"
 import TestimonialItem from "@/components/events/testimonial"
 import Page from "@/components/layout/page"
-import { query } from "@/libs/apollo-client"
-import { Testimonial, TestimonialsDocument } from "@/models/graphql"
+import { Testimonial } from "@/models/strapi"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -9,10 +9,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Testimonials() {
-  const response = (await query({ query: TestimonialsDocument })) as {
-    testimonials?: Testimonial[]
-  }
-  const testimonials = response?.testimonials || []
+  const testimonials = (await getTestimonials()) as Testimonial[]
 
   return (
     <Page name="Testimonials">

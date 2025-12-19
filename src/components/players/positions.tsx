@@ -1,13 +1,13 @@
-import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
 import { capitalizeFirstLetter } from "@/libs/utils"
-import { Player, PlayerNavDocument } from "@/models/graphql"
 import Link from "next/link"
+import { getPlayerNav } from "./get.action"
 
 export default async function Positions() {
-  const response = await query({ query: PlayerNavDocument })
-  const players = (response.players || []) as Player[]
-  const positions = deduplicate(players.map((i) => i.position.toLowerCase()))
+  const players = await getPlayerNav()
+  const positions = deduplicate(
+    players.filter((i) => i.position).map((i) => i.position!.toLowerCase()),
+  )
 
   return (
     <div className="blog-details-desc pb-70">

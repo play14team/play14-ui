@@ -1,4 +1,4 @@
-import { Event } from "../../models/graphql"
+import { Event } from "@/models/strapi"
 import EventCard from "./card"
 
 const EventGrid = ({ events }: { events: Event[] }) => {

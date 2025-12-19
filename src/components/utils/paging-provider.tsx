@@ -1,6 +1,6 @@
 "use client"
 
-import { Pagination } from "@/models/graphql"
+import { Pagination } from "@/models/strapi"
 import { PropsWithChildren } from "react"
 import Paging from "../layout/paging"
 

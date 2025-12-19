@@ -1,17 +1,13 @@
 "use client" // Error components must be Client Components
 
-import { Metadata } from "next"
+import ErrorMessage from "@/components/layout/error-message"
 import { useEffect } from "react"
-
-export const metadata: Metadata = {
-  title: "Error",
-}
 
 export default function Error({
   error,
   reset,
 }: {
-  error: Error & { digest?: string }
+  error: Error & { digest?: string; cause?: Error & { code?: string } }
   reset: () => void
 }) {
   useEffect(() => {
@@ -19,18 +15,38 @@ export default function Error({
     console.error(error)
   }, [error])
 
+  // Detect connection errors
+  const isConnectionError =
+    error.message.includes("fetch failed") ||
+    error.cause?.code === "ECONNRESET" ||
+    error.message.includes("ECONNREFUSED") ||
+    error.message.includes("ECONNABORTED")
+
   return (
     <div className="pt-70">
-      <h2>Something went wrong!</h2>
-      <p style={{ color: "red" }}>{error.message}</p>
-      <button
-        onClick={
-          // Attempt to recover by trying to re-render the segment
-          () => reset()
+      <ErrorMessage
+        title={
+          isConnectionError
+            ? "Unable to connect to server"
+            : "Something went wrong"
         }
-      >
-        Try again
-      </button>
+        message={
+          isConnectionError
+            ? "The content server is currently unavailable. This usually means your Strapi backend is not running or not reachable."
+            : error.message || "An unexpected error occurred."
+        }
+        details={
+          process.env.NODE_ENV === "development"
+            ? `${error.message}\n${error.stack || ""}`
+            : undefined
+        }
+        showReload={true}
+      />
+      <div className="container mt-3">
+        <button className="btn btn-primary" onClick={() => reset()}>
+          Try again
+        </button>
+      </div>
     </div>
   )
 }

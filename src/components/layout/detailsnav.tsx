@@ -1,13 +1,13 @@
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { UploadFile } from "../../models/graphql"
+import { UploadFile } from "@/models/strapi"
 
 export interface NavLink {
   slug: string
   name: string
   image: UploadFile
-  date?: Date
+  date?: Date | string
 }
 
 const DetailsNavigator = (props: {

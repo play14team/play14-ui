@@ -1,7 +1,7 @@
 import GameDetails from "@/components/games/details"
 import Page from "@/components/layout/page"
 import { SlugParamsProps } from "@/libs/slug-params"
-import type { Game } from "@/models/graphql"
+import type { Game } from "@/models/strapi"
 import { getGame, getGameSlugs } from "../../../components/games/get.action"
 
 export const revalidate = 3600
@@ -31,9 +31,7 @@ export async function generateMetadata(props: SlugParamsProps) {
       description: game.summary,
       type: "article",
       publishedTime: game.publishedAt,
-      authors: game.documentedBy
-        ?.filter(Boolean)
-        ?.map((p) => (p as { name: string }).name),
+      authors: game.documentedBy?.name ? [game.documentedBy.name] : undefined,
       images: [game.defaultImage?.url].concat(images),
     },
   }

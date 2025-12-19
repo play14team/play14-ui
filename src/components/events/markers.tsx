@@ -1,7 +1,31 @@
-import { Event } from "@/models/graphql"
+import { Event, GeoLocation } from "@/models/strapi"
 import { useMemo, useState } from "react"
 import { Marker } from "react-map-gl/mapbox"
 import EventPopup, { mapColor } from "./popup"
+
+// Helper to extract coordinates from either location format
+function getCoordinates(
+  location: GeoLocation | undefined,
+): [number, number] | null {
+  if (!location) return null
+
+  // Handle Mapbox format (geometry.coordinates)
+  if ("geometry" in location && location.geometry?.coordinates) {
+    return [location.geometry.coordinates[0], location.geometry.coordinates[1]]
+  }
+
+  // Handle simple format (lat/lng)
+  if (
+    "lng" in location &&
+    "lat" in location &&
+    location.lng !== undefined &&
+    location.lat !== undefined
+  ) {
+    return [location.lng, location.lat]
+  }
+
+  return null
+}
 
 export default function EventMarkers({ events }: { events: Event[] }) {
   const [popupInfo, setPopupInfo] = useState<Event[]>([])
@@ -10,22 +34,21 @@ export default function EventMarkers({ events }: { events: Event[] }) {
     () =>
       events
         .map((event, index) => {
-          const geoJSON = event.venue?.location
+          const coords = getCoordinates(event.venue?.location)
 
-          if (geoJSON && geoJSON.geometry && geoJSON.geometry.coordinates) {
-            const longitude = geoJSON.geometry.coordinates[0]
-            const latitude = geoJSON.geometry.coordinates[1]
+          if (coords) {
+            const [longitude, latitude] = coords
             const venueId = event.venue?.documentId
 
             // Filter events at the same venue by matching coordinates and venue ID
             const predicate = (e: Event) => {
-              if (!e.venue?.location?.geometry?.coordinates) return false
+              const eCoords = getCoordinates(e.venue?.location)
+              if (!eCoords) return false
 
-              const eLng = e.venue.location.geometry.coordinates[0]
-              const eLat = e.venue.location.geometry.coordinates[1]
+              const [eLng, eLat] = eCoords
 
               // Match by venue documentId if available, otherwise match by exact coordinates
-              if (venueId && e.venue.documentId) {
+              if (venueId && e.venue?.documentId) {
                 return venueId === e.venue.documentId
               }
 

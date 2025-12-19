@@ -1,7 +1,6 @@
+import { getHosting } from "@/components/events/get.action"
 import HtmlContent from "@/components/layout/html-content"
 import Page from "@/components/layout/page"
-import { query } from "@/libs/apollo-client"
-import { Hosting, HostingDocument } from "@/models/graphql"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {
@@ -9,10 +8,7 @@ export const metadata: Metadata = {
 }
 
 export default async function HostingPage() {
-  const response = (await query({ query: HostingDocument })) as {
-    hosting?: Hosting
-  }
-  const hosting = response.hosting
+  const hosting = await getHosting()
 
   return (
     <Page name="All you need to know about hosting a #play14 event">
