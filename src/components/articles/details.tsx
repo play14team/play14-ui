@@ -1,7 +1,7 @@
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { Article, UploadFile } from "../../models/graphql"
+import { Article, UploadFile } from "@/models/strapi"
 import Gallery from "../layout/gallery"
 import HtmlContent from "../layout/html-content"
 import SocialLinks from "../layout/social-links"

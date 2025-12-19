@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { ComponentContactSocialNetwork, Maybe } from "../../models/graphql"
+import { SocialNetwork, Maybe } from "@/models/strapi"
 
 function mapIcon(type: string) {
   if (type === "Email") return "bx bx-envelope"
@@ -8,7 +8,7 @@ function mapIcon(type: string) {
 }
 
 const SocialNetworks = (props: {
-  socialNetworks: Array<Maybe<ComponentContactSocialNetwork>>
+  socialNetworks: Array<Maybe<SocialNetwork>>
 }) => {
   const { socialNetworks } = props
   return (

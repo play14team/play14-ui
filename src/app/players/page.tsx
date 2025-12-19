@@ -1,7 +1,7 @@
 import Filters from "@/components/players/filters"
 import PlayerGrid from "@/components/players/grid"
 import LoadMore from "@/components/players/load-more"
-import { Player } from "@/models/graphql"
+import { Player } from "@/models/strapi"
 import { Metadata } from "next"
 import { getPlayers } from "../../components/players/get.action"
 

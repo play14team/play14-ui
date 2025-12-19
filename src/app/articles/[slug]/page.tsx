@@ -2,7 +2,7 @@ import ArticleDetails from "@/components/articles/details"
 import { getArticle, getArticleSlugs } from "@/components/articles/get.action"
 import Page from "@/components/layout/page"
 import { SlugParamsProps } from "@/libs/slug-params"
-import type { Article } from "@/models/graphql"
+import type { Article } from "@/models/strapi"
 
 export const revalidate = 3600
 

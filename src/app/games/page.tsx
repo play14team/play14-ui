@@ -1,7 +1,7 @@
 import Filters from "@/components/games/filters"
 import GameGrid from "@/components/games/grid"
 import LoadMore from "@/components/games/load-more"
-import { Game } from "@/models/graphql"
+import { Game } from "@/models/strapi"
 import { Metadata } from "next"
 import { getGames } from "../../components/games/get.action"
 

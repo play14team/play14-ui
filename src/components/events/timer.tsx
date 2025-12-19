@@ -3,7 +3,7 @@
 import React from "react"
 
 interface TimerProps {
-  date: Date
+  date: Date | string
 }
 
 const UpcomingEventTimer = ({ date }: TimerProps) => {

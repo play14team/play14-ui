@@ -1,9 +1,9 @@
 import { formatDate } from "@/libs/dates"
-import { Maybe } from "@/models/graphql"
+import { Maybe } from "@/models/strapi"
 
 interface EventDatesProps {
-  start: Date
-  end: Date
+  start: Date | string
+  end: Date | string
   timezone: Maybe<string> | undefined
   displayYear?: boolean
 }

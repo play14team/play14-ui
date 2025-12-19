@@ -1,14 +1,13 @@
-import { query } from "@/libs/apollo-client"
-import { Article, ArticleNavDocument, UploadFile } from "../../models/graphql"
+import { Article, UploadFile } from "@/models/strapi"
 import DetailsNavigator, { NavLink } from "../layout/detailsnav"
+import { getArticleNav } from "./get.action"
 
 export default async function ArticlesNavigator({
   current,
 }: {
   current: string
 }) {
-  const response = await query({ query: ArticleNavDocument })
-  const articles = (response.articles || []) as Article[]
+  const articles = (await getArticleNav()) as Article[]
   const index = articles.findIndex((a) => a.slug == current)
   const previous = index > 0 ? articles[index - 1] : null
   const next = index < articles.length - 1 ? articles[index + 1] : null

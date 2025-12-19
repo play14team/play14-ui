@@ -2,7 +2,7 @@ import Filters from "@/components/events/filters"
 import { getEvents } from "@/components/events/get.action"
 import EventGrid from "@/components/events/grid"
 import LoadMore from "@/components/events/load-more"
-import { Event } from "@/models/graphql"
+import { Event } from "@/models/strapi"
 import { Metadata } from "next"
 
 export const metadata: Metadata = {

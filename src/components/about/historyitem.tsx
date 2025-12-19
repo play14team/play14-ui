@@ -1,9 +1,9 @@
 import moment from "moment"
 import Image from "next/image"
-import { Enum_Componentdefaulthistoryitem_Dateformat } from "../../models/graphql"
+import { Enum_Componentdefaulthistoryitem_Dateformat } from "@/models/strapi"
 
 interface HistoryProps {
-  date: Date
+  date: Date | string
   dateFormat: Enum_Componentdefaulthistoryitem_Dateformat
   additionalText: string
   title: string

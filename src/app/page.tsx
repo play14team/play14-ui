@@ -5,7 +5,7 @@ import UpcomingEvents from "@/components/home/upcoming"
 import CodeOfConduct from "@/components/layout/codeofconduct"
 import Manifesto from "@/components/layout/manifesto"
 import Title from "@/components/layout/title"
-import { Enum_Expectation_Type } from "@/models/graphql"
+import { Enum_Expectation_Type } from "@/models/strapi"
 import Link from "next/link"
 
 export const revalidate = 3600

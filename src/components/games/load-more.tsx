@@ -1,7 +1,7 @@
 "use client"
 
 import { useIntersection } from "@/hooks/useIntersection"
-import { Game, Pagination } from "@/models/graphql"
+import { Game, Pagination } from "@/models/strapi"
 import { RefObject, useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
 import { getGames } from "./get.action"

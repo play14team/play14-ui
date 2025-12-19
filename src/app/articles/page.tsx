@@ -1,7 +1,7 @@
 import Filters from "@/components/articles/filters"
 import ArticleGrid from "@/components/articles/grid"
 import LoadMore from "@/components/articles/load-more"
-import { Article } from "@/models/graphql"
+import { Article } from "@/models/strapi"
 import { Metadata } from "next"
 import { getArticles } from "../../components/articles/get.action"
 

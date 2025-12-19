@@ -1,12 +1,11 @@
-import { query } from "@/libs/apollo-client"
 import { deduplicate } from "@/libs/arrays"
-import { Event, EventNavDocument } from "@/models/graphql"
+import { Event } from "@/models/strapi"
 import Link from "next/link"
 import Country from "../layout/country"
+import { getEventNav } from "./get.action"
 
 export default async function Countries() {
-  const response = await query({ query: EventNavDocument })
-  const events = (response.events || []) as Event[]
+  const events = (await getEventNav()) as Event[]
 
   const countryCodes = deduplicate(
     events.map((c) => c.location?.country || "").filter((c) => c !== ""),

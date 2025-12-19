@@ -1,7 +1,7 @@
 "use client"
 
 import { useIntersection } from "@/hooks/useIntersection"
-import { Pagination, Player } from "@/models/graphql"
+import { Pagination, Player } from "@/models/strapi"
 import { RefObject, useCallback, useEffect, useRef, useState } from "react"
 import Loader from "../layout/loader"
 import { getPlayers } from "./get.action"

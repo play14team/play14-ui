@@ -3,7 +3,7 @@ import clm from "country-locale-map"
 import Image from "next/image"
 import Link from "next/link"
 import ReactCountryFlag from "react-country-flag"
-import { Event } from "../../models/graphql"
+import { Event } from "@/models/strapi"
 import EventDate from "./date"
 import EventStatus from "./status"
 

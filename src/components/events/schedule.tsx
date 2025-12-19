@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { ComponentEventsTimetable, Maybe } from "../../models/graphql"
+import { ComponentEventsTimetable, Maybe } from "@/models/strapi"
 
 const EventSchedule = ({
   timetable,

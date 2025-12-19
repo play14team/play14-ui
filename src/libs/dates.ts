@@ -1,9 +1,9 @@
-import { Maybe } from "@/models/graphql"
+import { Maybe } from "@/models/strapi"
 import moment from "moment-timezone"
 
 export function formatDate(
-  start: Date,
-  end: Date,
+  start: Date | string,
+  end: Date | string,
   timezone: Maybe<string> | undefined,
   displayYear?: boolean,
 ) {

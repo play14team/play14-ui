@@ -1,17 +1,13 @@
 import Filters from "@/components/players/filters"
-import { query } from "@/libs/apollo-client"
+import { getPlayers } from "@/components/players/get.action"
 import PlayerGrid from "../../../../components/players/grid"
-import { Player, PlayersDocument } from "../../../../models/graphql"
 
 export default async function PlayerPosition(props: {
   params: Promise<{ position: string }>
 }) {
   const params = await props.params
-  const response = (await query({
-    query: PlayersDocument,
-    variables: { page: 1, pageSize: 1000, position: params.position },
-  })) as { players?: Player[] }
-  const players = response?.players || []
+  const response = await getPlayers(1, 1000, params.position)
+  const players = response.players_connection.nodes
 
   return (
     <>

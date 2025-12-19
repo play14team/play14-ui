@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pnpm run build:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(pnpm run format:*)",
+      "WebFetch(domain:docs.strapi.io)",
+      "mcp__filesystem__list_directory",
+      "mcp__filesystem__directory_tree",
+      "mcp__filesystem__read_text_file",
+      "WebSearch",
+      "Bash(pnpm run lint:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -1,4 +1,4 @@
-import { Game } from "../../models/graphql"
+import { Game } from "@/models/strapi"
 import GameCard from "./card"
 
 const GameGrid = ({ games }: { games: Game[] }) => {

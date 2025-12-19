@@ -1,18 +1,19 @@
-import { Enum_Event_Eventstatus } from "../../models/graphql"
+import { Enum_Event_Eventstatus } from "@/models/strapi"
 
-const icons = {
+const icons: Record<string, string> = {
   Announced: "calendar-plus",
-  Cancelled: "calendar-x",
   Open: "calendar-edit",
   Over: "calendar-check",
+  Cancelled: "calendar-x",
 }
 
-const EventStatus = (props: { status: Enum_Event_Eventstatus }) => {
+const EventStatus = (props: { status: Enum_Event_Eventstatus | string }) => {
   const { status } = props
+  const icon = icons[status] || "calendar"
 
   return (
     <>
-      <i className={`bx bx-${icons[status]}`}></i> {status}
+      <i className={`bx bx-${icon}`}></i> {status}
     </>
   )
 }

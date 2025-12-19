@@ -3,7 +3,7 @@ import {
   Enum_Componenteventsmedia_Type,
   Enum_Event_Eventstatus,
   Event,
-} from "../../models/graphql"
+} from "@/models/strapi"
 import SocialLinks from "../layout/social-links"
 import EventStatus from "./status"
 import EventTime from "./time"

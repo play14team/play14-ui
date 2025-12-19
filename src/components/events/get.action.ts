@@ -1,36 +1,246 @@
 "use server"
 
-import { query } from "@/libs/apollo-client"
 import { SlugParamsProps } from "@/libs/slug-params"
+import { restQuery, normalizeConnection } from "@/libs/strapi-client"
 import {
-  Event,
-  EventDocument,
-  EventSlugsDocument,
-  EventsDocument,
-} from "@/models/graphql"
+  eventItemPopulate,
+  eventDetailsPopulate,
+  eventNavPopulate,
+  eventMarkersPopulate,
+  eventCalendarPopulate,
+  testimonialsPopulate,
+} from "@/libs/strapi-populate"
 import moment from "moment"
 
-export async function getEvents(page: number, pageSize: number) {
-  return await query({
-    query: EventsDocument,
-    variables: { page, pageSize },
-  })
+// Types - will be replaced by OpenAPI generated types when available
+interface UploadFile {
+  name: string
+  url: string
+  width?: number
+  height?: number
 }
 
+interface GeoLocation {
+  lat?: number
+  lng?: number
+  place_name?: string
+}
+
+interface Location {
+  slug?: string
+  name: string
+  country: string
+  location?: GeoLocation
+}
+
+interface Venue {
+  name: string
+  website?: string
+  location?: GeoLocation
+  addressDetails?: string
+}
+
+interface Player {
+  documentId: string
+  slug: string
+  name: string
+  position?: string
+  avatar?: UploadFile
+  socialNetworks?: Array<{ id: string; url: string; type: string }>
+}
+
+interface Event {
+  documentId: string
+  slug: string
+  name: string
+  start: string
+  end: string
+  timezone?: string
+  eventStatus: string
+  description?: string
+  contactEmail?: string
+  publishedAt?: string
+  defaultImage?: UploadFile
+  images?: UploadFile[]
+  location?: Location
+  venue?: Venue
+  timetable?: Array<{
+    id: string
+    day: string
+    description?: string
+    timeslots?: Array<{ id: string; time: string; description?: string }>
+  }>
+  registration?: { link?: string; widgetCode?: string }
+  sponsorships?: Array<{
+    id: string
+    category: string
+    sponsors?: Array<{
+      name: string
+      url?: string
+      logo?: UploadFile
+      socialNetworks?: Array<{ id: string; type: string; url: string }>
+    }>
+  }>
+  hosts?: Player[]
+  mentors?: Player[]
+  players?: Player[]
+  media?: Array<{ id: string; url: string; type: string }>
+}
+
+interface Testimonial {
+  documentId: string
+  content: string
+  url?: string
+  audio?: { name: string; url: string }
+  author?: {
+    name: string
+    slug: string
+    tagline?: string
+    avatar?: UploadFile
+  }
+}
+
+/**
+ * Get paginated events list
+ * REST equivalent of: events/grid.graphql
+ */
+export async function getEvents(
+  page: number,
+  pageSize: number,
+  status?: string,
+  location?: string,
+  country?: string,
+) {
+  const filters: Record<string, unknown> = {}
+  if (status) {
+    filters.eventStatus = { $eqi: status }
+  }
+  if (location) {
+    filters.location = {
+      ...((filters.location as object) || {}),
+      slug: { $eqi: location },
+    }
+  }
+  if (country) {
+    filters.location = {
+      ...((filters.location as object) || {}),
+      country: { $eqi: country },
+    }
+  }
+
+  const response = await restQuery<Event[]>("events", {
+    sort: ["start:desc"],
+    pagination: { page, pageSize },
+    filters,
+    populate: eventItemPopulate,
+  })
+
+  // Normalize to match GraphQL _connection structure
+  return {
+    events_connection: normalizeConnection(response),
+  }
+}
+
+/**
+ * Get single event by slug
+ * REST equivalent of: events/details.graphql
+ */
 export async function getEvent({ params }: SlugParamsProps) {
   const { slug } = await params
-  const response = await query({
-    query: EventDocument,
-    variables: { slug },
+  const response = await restQuery<Event[]>("events", {
+    filters: {
+      slug: { $eq: slug },
+    },
+    populate: eventDetailsPopulate,
   })
 
-  return (response.events && response.events[0]) as Event
+  return response.data?.[0] || null
 }
 
+/**
+ * Get all event slugs for static generation (past events only)
+ * REST equivalent of: events/slugs.graphql
+ */
 export async function getEventSlugs() {
   const today = moment().format()
-  return await query({
-    query: EventSlugsDocument,
-    variables: { today: today },
+  const response = await restQuery<Array<{ slug: string }>>("events", {
+    fields: ["slug"],
+    filters: {
+      end: { $lt: today },
+    },
+    pagination: { page: 1, pageSize: 5000 },
   })
+
+  return {
+    events: response.data || [],
+  }
+}
+
+/**
+ * Get all events for navigation
+ * REST equivalent of: events/nav.graphql
+ */
+export async function getEventNav() {
+  const response = await restQuery<Event[]>("events", {
+    sort: ["start:desc"],
+    pagination: { page: 1, pageSize: 5000 },
+    populate: eventNavPopulate,
+  })
+
+  return response.data || []
+}
+
+/**
+ * Get events for map markers
+ * REST equivalent of: events/markers.graphql
+ */
+export async function getEventMarkers() {
+  const response = await restQuery<Event[]>("events", {
+    sort: ["start:asc"],
+    filters: {
+      eventStatus: { $ne: "Cancelled" },
+      venue: { location: { $notNull: true } },
+    },
+    pagination: { page: 1, pageSize: 5000 },
+    populate: eventMarkersPopulate,
+  })
+
+  return response.data || []
+}
+
+/**
+ * Get events for calendar
+ * REST equivalent of: events/calendar.graphql
+ */
+export async function getEventCalendar() {
+  const response = await restQuery<Event[]>("events", {
+    sort: ["start:desc"],
+    pagination: { page: 1, pageSize: 5000 },
+    populate: eventCalendarPopulate,
+  })
+
+  return response.data || []
+}
+
+/**
+ * Get testimonials
+ * REST equivalent of: events/testimonials.graphql
+ */
+export async function getTestimonials() {
+  const response = await restQuery<Testimonial[]>("testimonials", {
+    pagination: { page: 1, pageSize: 5000 },
+    populate: testimonialsPopulate,
+  })
+
+  return response.data || []
+}
+
+/**
+ * Get hosting content
+ * REST equivalent of: events/hosting.graphql
+ */
+export async function getHosting() {
+  const response = await restQuery<{ content: string }>("hosting", {})
+
+  return response.data
 }

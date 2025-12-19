@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Pagination } from "../../models/graphql"
+import { Pagination } from "@/models/strapi"
 
 interface PagingProps {
   pagination: Pagination

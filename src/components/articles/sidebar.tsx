@@ -1,14 +1,13 @@
-import { query } from "@/libs/apollo-client"
 import moment from "moment"
 import Image from "next/image"
 import Link from "next/link"
-import { Article, ArticleSidebarDocument } from "../../models/graphql"
+import { Article } from "@/models/strapi"
+import { getArticleSidebar } from "./get.action"
 
 const ArticleSidebar = async () => {
-  const response = await query({ query: ArticleSidebarDocument })
+  const response = await getArticleSidebar()
 
-  const latest = ((response.latest as { nodes?: unknown[] })?.nodes ||
-    []) as Article[]
+  const latest = (response.latest?.nodes || []) as Article[]
   const categories = (response.categories || []) as Article[]
 
   const categoryCount = categories.reduce(

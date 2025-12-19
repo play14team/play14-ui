@@ -1,14 +1,13 @@
-import { query } from "@/libs/apollo-client"
-import { Player, PlayerNavDocument, UploadFile } from "../../models/graphql"
+import { Player, UploadFile } from "@/models/strapi"
 import DetailsNavigator, { NavLink } from "../layout/detailsnav"
+import { getPlayerNav } from "./get.action"
 
 export default async function PlayersNavigator({
   current,
 }: {
   current: string
 }) {
-  const response = await query({ query: PlayerNavDocument })
-  const players = (response.players || []) as Player[]
+  const players = (await getPlayerNav()) as Player[]
   const index = players.findIndex((a) => a.slug == current)
   const previous = index > 0 ? players[index - 1] : null
   const next = index < players.length - 1 ? players[index + 1] : null

@@ -1,13 +1,11 @@
 import moment from "moment"
-import { Event } from "../../models/graphql"
+import { Event } from "@/models/strapi"
 import EventGrid from "../events/grid"
-import { getUpcomingEvents } from "./get-upcoming-events.action"
+import { getUpcomingEvents } from "./get.action"
 
 const UpcomingEvents = async () => {
   const today = moment().format()
-  const result = await getUpcomingEvents({ today })
-  // In Strapi 5, events is directly an array
-  const events = (result?.data?.events || []) as Event[]
+  const events = (await getUpcomingEvents(today)) as Event[]
 
   return (
     <div className="pt-100">
