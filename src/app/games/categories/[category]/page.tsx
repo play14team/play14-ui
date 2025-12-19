@@ -1,5 +1,5 @@
 import Filters from "@/components/games/filters"
-import { getGames } from "@/components/games/get.action"
+import { getAllGames } from "@/components/games/get.action"
 import { camelPad } from "@/libs/camelPad"
 import GameGrid from "../../../../components/games/grid"
 
@@ -7,8 +7,7 @@ export default async function GameCategory(props: {
   params: Promise<{ category: string }>
 }) {
   const params = await props.params
-  const response = await getGames(1, 1000, params.category)
-  const games = response.games_connection.nodes
+  const games = await getAllGames(params.category)
 
   const cat =
     games.length > 0

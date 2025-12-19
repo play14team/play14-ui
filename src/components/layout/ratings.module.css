@@ -1,7 +1,7 @@
 .ratingColor {
-  color: #ffc900 !important;
+  color: var(--color-yellow) !important;
 }
 
 .smallRatings i {
-  color: #cecece;
+  color: var(--color-border);
 }

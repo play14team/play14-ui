@@ -47,7 +47,13 @@ const PlayerDetails = ({ player }: { player: Player }) => {
                   height={350}
                   priority
                   className="shadow"
-                  style={{ borderRadius: "10px" }}
+                  style={{
+                    borderRadius: "10px",
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: "450px",
+                    objectFit: "cover",
+                  }}
                   unoptimized
                 />
               )}
@@ -59,7 +65,13 @@ const PlayerDetails = ({ player }: { player: Player }) => {
                   height={350}
                   priority
                   className="shadow"
-                  style={{ borderRadius: "10px" }}
+                  style={{
+                    borderRadius: "10px",
+                    width: "100%",
+                    height: "auto",
+                    maxHeight: "450px",
+                    objectFit: "cover",
+                  }}
                   unoptimized
                 />
               )}

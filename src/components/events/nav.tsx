@@ -9,6 +9,12 @@ export default async function EventsNavigator({
 }) {
   const events = (await getEventNav()) as Event[]
   const index = events.findIndex((a) => a.slug == current)
+
+  // If event not found in list, show no navigation
+  if (index === -1) {
+    return <DetailsNavigator previous={null} next={null} entity="events" />
+  }
+
   const previous = index > 0 ? events[index - 1] : null
   const next = index < events.length - 1 ? events[index + 1] : null
 

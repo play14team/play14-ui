@@ -1,6 +1,7 @@
 import footerMap from "@/styles/images/footer-map.png"
 import Image from "next/image"
 import Link from "next/link"
+import Logo from "./logo"
 
 const Footer = () => {
   const socialLinks = [
@@ -30,17 +31,7 @@ const Footer = () => {
           <div className="col-lg-4 col-sm-6">
             <div className="single-footer-widget">
               <Link href="/" className="logo">
-                <Image
-                  src="/logo/play14_600x200_transparent.png"
-                  alt="logo"
-                  width={600}
-                  height={200}
-                  style={{
-                    maxWidth: "100%",
-                    height: "auto",
-                  }}
-                  unoptimized
-                />
+                <Logo width={300} height={100} />
               </Link>
               <p>play is the way</p>
 

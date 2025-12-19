@@ -1,15 +1,38 @@
+"use client"
+
+import { useTheme } from "next-themes"
 import Image from "next/image"
+import { useEffect, useState } from "react"
 
 const Title = () => {
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  // Default to light mode logo during SSR/hydration
+  const isDark = mounted && resolvedTheme === "dark"
+  const logoSrc = isDark
+    ? "/logo/play14_1500x500_transparent-dark.png"
+    : "/logo/play14_1500x500_transparent-light.png"
+
   return (
     <div>
       <div className="d-flex justify-content-center pt-5">
         <Image
-          src="logo/play14_1500x500_transparent.png"
+          src={logoSrc}
           alt="#play14 logo"
           width={600}
-          height={333}
+          height={200}
           unoptimized
+          style={{
+            width: "auto",
+            height: "auto",
+            maxWidth: 600,
+            maxHeight: 200,
+          }}
         />
       </div>
       <div className="d-flex justify-content-center pt-5">

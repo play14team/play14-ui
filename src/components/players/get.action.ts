@@ -70,7 +70,7 @@ export async function getPlayers(
 
   const response = await restQuery<Player[]>("players", {
     sort: ["name:asc"],
-    pagination: { page, pageSize },
+    pagination: { page, pageSize: Math.min(pageSize, 100) },
     filters,
     populate: playerItemPopulate,
   })
@@ -79,6 +79,40 @@ export async function getPlayers(
   return {
     players_connection: normalizeConnection(response),
   }
+}
+
+/**
+ * Get all players with optional position filter
+ * Fetches all pages since Strapi limits pageSize to 100
+ */
+export async function getAllPlayers(position?: string) {
+  const allPlayers: Player[] = []
+  let page = 1
+  const pageSize = 100
+
+  const filters: Record<string, unknown> = {}
+  if (position) {
+    filters.position = { $eqi: position }
+  }
+
+  while (true) {
+    const response = await restQuery<Player[]>("players", {
+      sort: ["name:asc"],
+      pagination: { page, pageSize },
+      filters,
+      populate: playerItemPopulate,
+    })
+
+    const players = response.data || []
+    allPlayers.push(...players)
+
+    if (players.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allPlayers
 }
 
 /**
@@ -115,13 +149,29 @@ export async function getPlayerSlugs() {
 /**
  * Get all players for navigation
  * REST equivalent of: players/nav.graphql
+ * Note: Strapi limits pageSize to 100, so we need to fetch all pages
  */
 export async function getPlayerNav() {
-  const response = await restQuery<Player[]>("players", {
-    sort: ["name:asc"],
-    pagination: { page: 1, pageSize: 5000 },
-    populate: playerNavPopulate,
-  })
+  const allPlayers: Player[] = []
+  let page = 1
+  const pageSize = 100
 
-  return response.data || []
+  while (true) {
+    const response = await restQuery<Player[]>("players", {
+      sort: ["name:asc"],
+      pagination: { page, pageSize },
+      populate: playerNavPopulate,
+    })
+
+    const players = response.data || []
+    allPlayers.push(...players)
+
+    // If we got fewer than pageSize, we've reached the end
+    if (players.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allPlayers
 }

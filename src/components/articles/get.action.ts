@@ -65,7 +65,7 @@ export async function getArticles(
 
   const response = await restQuery<Article[]>("articles", {
     sort: ["publishedAt:desc"],
-    pagination: { page, pageSize },
+    pagination: { page, pageSize: Math.min(pageSize, 100) },
     filters,
     populate: articleItemPopulate,
   })
@@ -74,6 +74,43 @@ export async function getArticles(
   return {
     articles_connection: normalizeConnection(response),
   }
+}
+
+/**
+ * Get all articles with optional filters
+ * Fetches all pages since Strapi limits pageSize to 100
+ */
+export async function getAllArticles(category?: string, tag?: string) {
+  const allArticles: Article[] = []
+  let page = 1
+  const pageSize = 100
+
+  const filters: Record<string, unknown> = {}
+  if (category) {
+    filters.category = { $eqi: category }
+  }
+  if (tag) {
+    filters.tags = { value: { $eqi: tag } }
+  }
+
+  while (true) {
+    const response = await restQuery<Article[]>("articles", {
+      sort: ["publishedAt:desc"],
+      pagination: { page, pageSize },
+      filters,
+      populate: articleItemPopulate,
+    })
+
+    const articles = response.data || []
+    allArticles.push(...articles)
+
+    if (articles.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allArticles
 }
 
 /**
@@ -142,13 +179,28 @@ export async function getArticleSidebar() {
 /**
  * Get all articles for navigation
  * REST equivalent of: articles/nav.graphql
+ * Note: Strapi limits pageSize to 100, so we need to fetch all pages
  */
 export async function getArticleNav() {
-  const response = await restQuery<Article[]>("articles", {
-    sort: ["publishedAt:desc"],
-    pagination: { page: 1, pageSize: 5000 },
-    populate: articleNavPopulate,
-  })
+  const allArticles: Article[] = []
+  let page = 1
+  const pageSize = 100
 
-  return response.data || []
+  while (true) {
+    const response = await restQuery<Article[]>("articles", {
+      sort: ["publishedAt:desc"],
+      pagination: { page, pageSize },
+      populate: articleNavPopulate,
+    })
+
+    const articles = response.data || []
+    allArticles.push(...articles)
+
+    if (articles.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allArticles
 }

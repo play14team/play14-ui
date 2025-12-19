@@ -1,4 +1,8 @@
+"use client"
+
 import Link from "next/link"
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 import { Popup } from "react-map-gl/mapbox"
 import { Enum_Event_Eventstatus, Event, GeoLocation } from "@/models/strapi"
 import EventDate from "./date"
@@ -27,6 +31,15 @@ function getCoordinates(
   return null
 }
 
+// Theme-aware color mapping
+const getThemeColors = (isDark: boolean) => ({
+  announced: isDark ? "#ffd633" : "#ffc900", // Yellow
+  open: isDark ? "#ff6b2c" : "#ff5200", // Orange
+  over: isDark ? "#a8d900" : "#92c900", // Green
+  cancelled: isDark ? "#555555" : "#393939", // Dark gray
+  default: isDark ? "#3eb5ed" : "#0098dd", // Blue
+})
+
 const EventPopup = ({
   events,
   onClose,
@@ -34,6 +47,37 @@ const EventPopup = ({
   events: Event[]
   onClose: () => void
 }) => {
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = mounted && resolvedTheme === "dark"
+  const themeColors = getThemeColors(isDark)
+
+  const mapColorForStatus = (
+    status: Enum_Event_Eventstatus | string | undefined,
+  ) => {
+    switch (status) {
+      case Enum_Event_Eventstatus.Announced:
+      case "Announced":
+        return themeColors.announced
+      case Enum_Event_Eventstatus.Open:
+      case "Open":
+        return themeColors.open
+      case Enum_Event_Eventstatus.Over:
+      case "Over":
+        return themeColors.over
+      case Enum_Event_Eventstatus.Cancelled:
+      case "Cancelled":
+        return themeColors.cancelled
+      default:
+        return themeColors.default
+    }
+  }
+
   if (!events || events.length === 0) return null
 
   const venue = events[0].venue
@@ -71,7 +115,7 @@ const EventPopup = ({
         const timezone = event.timezone
         const status = event.eventStatus
 
-        const color = mapColor(status)
+        const color = mapColorForStatus(status)
         const style = { color: color }
 
         return (
@@ -87,7 +131,7 @@ const EventPopup = ({
                   <Link
                     href={event.registration.link}
                     target="_blank"
-                    style={{ color: "#ff5200" }}
+                    style={{ color: themeColors.open }}
                   >
                     <b>Register now</b>
                   </Link>
@@ -106,6 +150,7 @@ const EventPopup = ({
   )
 }
 
+// Keep the original mapColor export for backward compatibility
 export const mapColor = (
   status: Enum_Event_Eventstatus | string | undefined,
 ) => {

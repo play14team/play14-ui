@@ -1,6 +1,6 @@
 ---
-mode: "agent"
-model: Claude Sonnet 4
+agent: "agent"
+model: Claude Haiku 4.5 (copilot)
 tools:
   [
     "edit",

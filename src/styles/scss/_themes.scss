@@ -1,0 +1,936 @@
+// ===========================================
+// Theme CSS Custom Properties
+// ===========================================
+// This file defines all theme-related CSS custom properties
+// for light and dark modes. Import this FIRST in main.scss.
+
+:root {
+  // Brand accent colors (light mode)
+  --color-orange: #ff5200;
+  --color-blue: #0098dd;
+  --color-green: #92c900;
+  --color-yellow: #ffc900;
+  --color-red: #d80000;
+
+  // Backgrounds
+  --color-bg: #ffffff;
+  --color-bg-alt: #fafafa;
+  --color-bg-elevated: #f5f5f5;
+  --color-bg-muted: #f1f8fb;
+  --color-bg-warm: #fffbf5;
+  --color-bg-light-blue: #f4f7fe;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f4f7fe;
+
+  // Text colors
+  --color-text: #393939;
+  --color-text-secondary: #6b6b84;
+  --color-text-muted: #7e7e7e;
+  --color-text-inverse: #ffffff;
+
+  // Borders
+  --color-border: #eeeeee;
+  --color-border-light: #f3f2ee;
+  --color-border-input: #f5f5f5;
+  --color-border-dark: #dddddd;
+
+  // Shadows
+  --shadow-card: 0 5px 40px 10px #eaeaef;
+  --shadow-button:
+    0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --shadow-elevated: 0px 8px 16px 0px rgba(146, 184, 255, 0.2);
+  --shadow-soft: 0 2px 48px 0 rgba(0, 0, 0, 0.06);
+
+  // Component-specific
+  --navbar-bg: transparent;
+  --navbar-sticky-bg: #ffffff;
+  --footer-bg: transparent;
+  --footer-bg-color: #fefcf8;
+  --dropdown-bg: #ffffff;
+  --input-bg: #f5f5f5;
+  --input-bg-focus: transparent;
+  --collapsible-header: #dddddd;
+  --collapsible-content: #eeeeee;
+
+  // Scrollbar
+  --scrollbar-track: #f1f1f1;
+  --scrollbar-thumb: #888888;
+  --scrollbar-thumb-hover: #555555;
+
+  // Links
+  --link-color: var(--color-blue);
+  --link-hover-color: var(--color-orange);
+
+  // Calendar
+  --calendar-bg: var(--color-bg);
+  --calendar-border: var(--color-border);
+  --calendar-today-bg: #eaf6ff;
+  --calendar-event-bg: var(--color-green);
+
+  // Code/pre
+  --code-bg: #f4f4f4;
+  --code-border: #e1e1e1;
+
+  // Blockquote
+  --blockquote-bg: #fafafa;
+  --blockquote-alt-bg: #e6f2f5;
+}
+
+[data-theme="dark"] {
+  // Brand accent colors (adjusted for dark backgrounds)
+  --color-orange: #ff6b2c;
+  --color-blue: #3eb5ed;
+  --color-green: #a8d900;
+  --color-yellow: #ffd633;
+  --color-red: #ff4444;
+
+  // Backgrounds
+  --color-bg: #0f0f0f;
+  --color-bg-alt: #1a1a1a;
+  --color-bg-elevated: #242424;
+  --color-bg-muted: #1e2830;
+  --color-bg-warm: #1a1814;
+  --color-bg-light-blue: #1a1e24;
+  --color-surface: #1e1e1e;
+  --color-surface-hover: #2a2a2a;
+
+  // Text colors
+  --color-text: #f0f0f0;
+  --color-text-secondary: #a8a8b8;
+  --color-text-muted: #888888;
+  --color-text-inverse: #0f0f0f;
+
+  // Borders
+  --color-border: #333333;
+  --color-border-light: #2a2a2a;
+  --color-border-input: #3a3a3a;
+  --color-border-dark: #444444;
+
+  // Shadows (darker, more subtle)
+  --shadow-card: 0 5px 40px 10px rgba(0, 0, 0, 0.3);
+  --shadow-button: 0 4px 6px rgba(0, 0, 0, 0.3), 0 1px 3px rgba(0, 0, 0, 0.2);
+  --shadow-elevated: 0px 8px 16px 0px rgba(0, 0, 0, 0.4);
+  --shadow-soft: 0 2px 48px 0 rgba(0, 0, 0, 0.3);
+
+  // Component-specific
+  --navbar-bg: rgba(15, 15, 15, 0.95);
+  --navbar-sticky-bg: #1a1a1a;
+  --footer-bg: #0a0a0a;
+  --footer-bg-color: #0a0a0a;
+  --dropdown-bg: #1e1e1e;
+  --input-bg: #2a2a2a;
+  --input-bg-focus: #1a1a1a;
+  --collapsible-header: #2a2a2a;
+  --collapsible-content: #1e1e1e;
+
+  // Scrollbar
+  --scrollbar-track: #1a1a1a;
+  --scrollbar-thumb: #444444;
+  --scrollbar-thumb-hover: #555555;
+
+  // Links
+  --link-color: var(--color-blue);
+  --link-hover-color: var(--color-orange);
+
+  // Calendar
+  --calendar-bg: var(--color-bg-alt);
+  --calendar-border: var(--color-border);
+  --calendar-today-bg: #1e2830;
+  --calendar-event-bg: var(--color-green);
+
+  // Code/pre
+  --code-bg: #1e1e1e;
+  --code-border: #333333;
+
+  // Blockquote
+  --blockquote-bg: #1e1e1e;
+  --blockquote-alt-bg: #1e2830;
+}
+
+// ===========================================
+// Theme Toggle Button Styles
+// ===========================================
+.theme-toggle {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+  width: 40px;
+  height: 40px;
+
+  i {
+    font-size: 20px;
+    line-height: 1;
+  }
+
+  &:hover {
+    background-color: var(--color-bg-elevated);
+    color: var(--color-orange);
+  }
+
+  &:focus {
+    outline: 2px solid var(--color-orange);
+    outline-offset: 2px;
+  }
+}
+
+// ===========================================
+// Global Theme Transitions
+// ===========================================
+// Smooth transitions when switching themes
+html {
+  color-scheme: light;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+}
+
+// Transition for theme changes (applied to key properties)
+body,
+.navbar-area,
+.footer-area,
+.single-events-box,
+.single-blog-post,
+.single-courses-box,
+.dropdown-menu {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease;
+}
+
+// ===========================================
+// Bootstrap Dark Mode Overrides
+// ===========================================
+[data-theme="dark"] {
+  // Body
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+  }
+
+  // Headings
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--color-text);
+  }
+
+  // Forms
+  .form-control {
+    background-color: var(--input-bg);
+    border-color: var(--color-border-input);
+    color: var(--color-text);
+
+    &:focus {
+      background-color: var(--input-bg-focus);
+      border-color: var(--color-orange);
+      color: var(--color-text);
+    }
+
+    &::placeholder {
+      color: var(--color-text-muted);
+    }
+  }
+
+  // Dropdowns
+  .dropdown-menu {
+    background-color: var(--dropdown-bg);
+    border-color: var(--color-border);
+
+    .dropdown-item {
+      color: var(--color-text);
+
+      &:hover,
+      &:focus {
+        background-color: var(--color-surface-hover);
+        color: var(--color-orange);
+      }
+    }
+  }
+
+  // Cards
+  .card {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+  }
+
+  // Tables
+  .table {
+    color: var(--color-text);
+
+    th,
+    td {
+      border-color: var(--color-border);
+    }
+  }
+
+  // Modals
+  .modal-content {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+  }
+
+  .modal-header,
+  .modal-footer {
+    border-color: var(--color-border);
+  }
+
+  // Alerts
+  .alert {
+    border-color: var(--color-border);
+  }
+
+  // Close button
+  .btn-close {
+    filter: invert(1);
+  }
+
+  // Grey text (used in "play is the way !")
+  .grey {
+    color: var(--color-text);
+  }
+}
+
+// ===========================================
+// React Big Calendar Dark Mode Overrides
+// ===========================================
+[data-theme="dark"] {
+  .rbc-calendar {
+    background-color: var(--calendar-bg);
+  }
+
+  .rbc-toolbar {
+    color: var(--color-text);
+
+    button {
+      color: var(--color-text);
+      border-color: var(--color-border);
+
+      &:hover,
+      &:focus {
+        background-color: var(--color-surface-hover);
+        color: var(--color-orange);
+      }
+
+      &.rbc-active {
+        background-color: var(--color-orange);
+        border-color: var(--color-orange);
+        color: var(--color-text-inverse);
+      }
+    }
+  }
+
+  .rbc-month-view,
+  .rbc-time-view,
+  .rbc-agenda-view {
+    background-color: var(--calendar-bg);
+    border-color: var(--calendar-border);
+  }
+
+  .rbc-month-row,
+  .rbc-day-bg,
+  .rbc-time-content,
+  .rbc-time-header {
+    border-color: var(--calendar-border);
+  }
+
+  .rbc-header {
+    border-color: var(--calendar-border);
+    color: var(--color-text);
+  }
+
+  .rbc-off-range-bg {
+    background-color: var(--color-bg-elevated);
+  }
+
+  .rbc-today {
+    background-color: var(--calendar-today-bg);
+  }
+
+  .rbc-date-cell {
+    color: var(--color-text);
+
+    &.rbc-off-range {
+      color: var(--color-text-muted);
+    }
+  }
+
+  .rbc-event {
+    background-color: var(--calendar-event-bg);
+    border-color: var(--calendar-event-bg);
+  }
+
+  .rbc-show-more {
+    color: var(--color-blue);
+  }
+
+  .rbc-agenda-table {
+    border-color: var(--calendar-border);
+
+    thead > tr > th {
+      border-color: var(--calendar-border);
+    }
+
+    tbody > tr > td {
+      border-color: var(--calendar-border);
+    }
+  }
+
+  .rbc-agenda-date-cell,
+  .rbc-agenda-time-cell {
+    color: var(--color-text);
+  }
+}
+
+// ===========================================
+// Mapbox Popup Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .mapboxgl-popup-content {
+    background-color: #2a2a2a;
+    color: var(--color-text);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+    border: 1px solid #444444;
+  }
+
+  .mapboxgl-popup-anchor-top .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-top-left .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-top-right .mapboxgl-popup-tip {
+    border-bottom-color: #2a2a2a;
+  }
+
+  .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-bottom-left .mapboxgl-popup-tip,
+  .mapboxgl-popup-anchor-bottom-right .mapboxgl-popup-tip {
+    border-top-color: #2a2a2a;
+  }
+
+  .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
+    border-right-color: #2a2a2a;
+  }
+
+  .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
+    border-left-color: #2a2a2a;
+  }
+
+  .mapboxgl-popup-close-button {
+    color: var(--color-text);
+
+    &:hover {
+      background-color: var(--color-surface-hover);
+    }
+  }
+
+  .mapboxgl-ctrl-group {
+    background-color: #2a2a2a;
+    border: 1px solid #444444;
+
+    button {
+      background-color: #2a2a2a;
+
+      &:hover {
+        background-color: #3a3a3a;
+      }
+    }
+  }
+
+  .mapboxgl-ctrl-group button + button {
+    border-top-color: #444444;
+  }
+
+  .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-in .mapboxgl-ctrl-icon,
+  .mapboxgl-ctrl button.mapboxgl-ctrl-zoom-out .mapboxgl-ctrl-icon,
+  .mapboxgl-ctrl button.mapboxgl-ctrl-compass .mapboxgl-ctrl-icon,
+  .mapboxgl-ctrl button.mapboxgl-ctrl-geolocate .mapboxgl-ctrl-icon,
+  .mapboxgl-ctrl button.mapboxgl-ctrl-fullscreen .mapboxgl-ctrl-icon {
+    filter: invert(1);
+  }
+
+  // Geocoder (search box) dark mode
+  .mapboxgl-ctrl-geocoder {
+    background-color: #2a2a2a;
+    border: 1px solid #444444;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+    .mapboxgl-ctrl-geocoder--input {
+      background-color: #2a2a2a;
+      color: var(--color-text);
+
+      &::placeholder {
+        color: var(--color-text-muted);
+      }
+
+      &:focus {
+        background-color: #2a2a2a;
+        outline: none;
+      }
+    }
+
+    .mapboxgl-ctrl-geocoder--icon {
+      fill: var(--color-text-muted);
+    }
+
+    .mapboxgl-ctrl-geocoder--icon-search {
+      fill: var(--color-text-muted);
+    }
+
+    .mapboxgl-ctrl-geocoder--button {
+      background-color: transparent;
+
+      &:hover {
+        background-color: #3a3a3a;
+      }
+    }
+
+    .mapboxgl-ctrl-geocoder--icon-close {
+      fill: var(--color-text-muted);
+    }
+
+    .mapboxgl-ctrl-geocoder--icon-loading {
+      fill: var(--color-text-muted);
+    }
+  }
+
+  .mapboxgl-ctrl-geocoder--suggestion-title,
+  .mapboxgl-ctrl-geocoder--suggestion-address {
+    color: var(--color-text);
+  }
+
+  .mapboxgl-ctrl-geocoder .suggestions {
+    background-color: #2a2a2a;
+    border: 1px solid #444444;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+
+    > li > a {
+      color: var(--color-text);
+
+      &:hover {
+        background-color: #3a3a3a;
+      }
+    }
+
+    > .active > a {
+      background-color: #3a3a3a;
+      color: var(--color-text);
+    }
+  }
+
+  .mapboxgl-ctrl-geocoder--suggestion {
+    &:hover {
+      background-color: #3a3a3a;
+    }
+  }
+}
+
+// ===========================================
+// Game/Services Details Info Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .services-details-info {
+    .services-list {
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-card);
+
+      li {
+        a {
+          color: var(--color-text);
+          border-bottom-color: var(--color-border);
+
+          &:hover,
+          &.active {
+            background-color: var(--color-orange);
+            border-color: var(--color-orange);
+            color: var(--color-text-inverse);
+          }
+        }
+      }
+    }
+
+    .download-file {
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-card);
+
+      h3 {
+        color: var(--color-text);
+      }
+
+      ul {
+        li {
+          a {
+            color: var(--color-text);
+            border-bottom-color: var(--color-border);
+
+            &:hover {
+              color: var(--color-orange);
+            }
+          }
+
+          &:first-child {
+            border-top-color: var(--color-border);
+          }
+        }
+      }
+    }
+
+    .services-contact-info {
+      background-color: var(--color-surface);
+      box-shadow: var(--shadow-card);
+
+      h3 {
+        color: var(--color-text);
+      }
+
+      ul {
+        li {
+          border-bottom-color: var(--color-border);
+          color: var(--color-text-secondary);
+
+          span {
+            color: var(--color-text);
+          }
+
+          a {
+            color: var(--color-text-secondary);
+
+            &:hover {
+              color: var(--color-orange);
+            }
+
+            // Avatar sections (Proposed by / Documented by)
+            h5 {
+              color: var(--color-text);
+            }
+          }
+
+          .icon {
+            i {
+              color: var(--color-orange);
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===========================================
+// Player/Case Studies Details Info Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .case-studies-details-info {
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-card);
+
+    ul {
+      li {
+        border-bottom-color: var(--color-border);
+        color: var(--color-text-secondary);
+
+        span {
+          color: var(--color-text);
+        }
+
+        a {
+          color: var(--color-text-secondary);
+
+          &:hover {
+            color: var(--color-orange);
+          }
+        }
+
+        .icon {
+          i {
+            color: var(--color-orange);
+          }
+        }
+      }
+    }
+  }
+}
+
+// ===========================================
+// Game Cards (single-courses-box) Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .single-courses-box {
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-card);
+
+    .courses-content {
+      h3 {
+        a {
+          color: var(--color-text);
+
+          &:hover {
+            color: var(--color-orange);
+          }
+        }
+      }
+
+      .course-author {
+        span {
+          color: var(--color-orange);
+        }
+      }
+
+      p {
+        color: var(--color-text-secondary);
+      }
+    }
+
+    .courses-box-footer {
+      border-top-color: var(--color-border);
+
+      li {
+        color: var(--color-text-secondary);
+
+        i {
+          color: var(--color-orange);
+        }
+      }
+    }
+  }
+}
+
+// ===========================================
+// Article Cards (single-blog-post) Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .single-blog-post {
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-card);
+
+    .post-content {
+      .post-meta {
+        li {
+          color: var(--color-text-secondary);
+        }
+      }
+
+      h3 {
+        a {
+          color: var(--color-text);
+
+          &:hover {
+            color: var(--color-orange);
+          }
+        }
+      }
+
+      p {
+        color: var(--color-text-secondary);
+      }
+    }
+  }
+}
+
+// ===========================================
+// Article Author Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .blog-details-desc .article-author,
+  .article-author {
+    background: var(--color-bg-elevated) !important;
+
+    .author-profile-header {
+      background-color: var(--color-surface);
+    }
+
+    .author-profile {
+      .author-profile-title {
+        img {
+          border-color: var(--color-border) !important;
+        }
+
+        h4 {
+          color: var(--color-text) !important;
+        }
+
+        span {
+          color: var(--color-text-secondary) !important;
+        }
+
+        p {
+          color: var(--color-text-secondary) !important;
+        }
+      }
+    }
+  }
+}
+
+// ===========================================
+// Testimonials Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .testimonials-area {
+    &.bg-color {
+      &::before {
+        background-color: var(--color-bg-muted) !important;
+      }
+    }
+  }
+
+  .single-testimonials-item {
+    &::before {
+      background-color: var(--color-surface) !important;
+    }
+
+    &::after {
+      color: var(--color-text) !important;
+      opacity: 0.1;
+    }
+
+    p {
+      color: var(--color-text);
+    }
+
+    .client-info {
+      .title {
+        h3 {
+          color: var(--color-text);
+
+          a {
+            color: var(--color-text);
+
+            &:hover {
+              color: var(--color-orange);
+            }
+          }
+        }
+
+        span {
+          color: var(--color-text-secondary) !important;
+        }
+      }
+    }
+  }
+
+  .single-testimonials-box {
+    background-color: var(--color-surface) !important;
+
+    &.bg-fafafb {
+      background-color: var(--color-bg-elevated) !important;
+    }
+
+    img {
+      border-color: var(--color-border) !important;
+    }
+
+    p {
+      color: var(--color-text);
+    }
+
+    .client-info {
+      h3 {
+        color: var(--color-text);
+      }
+
+      span {
+        color: var(--color-text-secondary);
+      }
+    }
+  }
+}
+
+// ===========================================
+// History Timeline Dark Mode
+// ===========================================
+[data-theme="dark"] {
+  .history-timeline {
+    &::before {
+      background-color: var(--color-border) !important;
+    }
+
+    .timeline-block {
+      .timeline-date {
+        color: var(--color-text-secondary);
+
+        span {
+          color: var(--color-text) !important;
+        }
+
+        sup {
+          color: var(--color-text) !important;
+        }
+      }
+
+      .timeline-content {
+        background-color: var(--color-surface) !important;
+
+        .content {
+          h3 {
+            color: var(--color-text);
+          }
+
+          p {
+            color: var(--color-text-secondary);
+          }
+        }
+      }
+    }
+
+    &.history-timeline-style-two {
+      &::before {
+        background-color: var(--color-border) !important;
+      }
+
+      .timeline-block {
+        .timeline-content {
+          background-color: var(--color-bg-elevated) !important;
+        }
+      }
+    }
+  }
+}
+
+// ===========================================
+// Utility Classes
+// ===========================================
+.img-border {
+  border: 1px solid var(--color-border) !important;
+}
+
+.error {
+  color: var(--color-red);
+  font-style: italic;
+}
+
+// ===========================================
+// Scrollbar Styling
+// ===========================================
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--scrollbar-track);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--scrollbar-thumb-hover);
+  }
+}
+
+// Firefox scrollbar
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}

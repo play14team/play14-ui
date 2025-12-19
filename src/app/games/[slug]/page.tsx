@@ -31,7 +31,9 @@ export async function generateMetadata(props: SlugParamsProps) {
       description: game.summary,
       type: "article",
       publishedTime: game.publishedAt,
-      authors: game.documentedBy?.name ? [game.documentedBy.name] : undefined,
+      authors: game.documentedBy?.length
+        ? game.documentedBy.map((p) => p.name)
+        : undefined,
       images: [game.defaultImage?.url].concat(images),
     },
   }

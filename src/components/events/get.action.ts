@@ -130,7 +130,7 @@ export async function getEvents(
 
   const response = await restQuery<Event[]>("events", {
     sort: ["start:desc"],
-    pagination: { page, pageSize },
+    pagination: { page, pageSize: Math.min(pageSize, 100) },
     filters,
     populate: eventItemPopulate,
   })
@@ -139,6 +139,56 @@ export async function getEvents(
   return {
     events_connection: normalizeConnection(response),
   }
+}
+
+/**
+ * Get all events with optional filters
+ * Fetches all pages since Strapi limits pageSize to 100
+ */
+export async function getAllEvents(
+  status?: string,
+  location?: string,
+  country?: string,
+) {
+  const allEvents: Event[] = []
+  let page = 1
+  const pageSize = 100
+
+  const filters: Record<string, unknown> = {}
+  if (status) {
+    filters.eventStatus = { $eqi: status }
+  }
+  if (location) {
+    filters.location = {
+      ...((filters.location as object) || {}),
+      slug: { $eqi: location },
+    }
+  }
+  if (country) {
+    filters.location = {
+      ...((filters.location as object) || {}),
+      country: { $eqi: country },
+    }
+  }
+
+  while (true) {
+    const response = await restQuery<Event[]>("events", {
+      sort: ["start:desc"],
+      pagination: { page, pageSize },
+      filters,
+      populate: eventItemPopulate,
+    })
+
+    const events = response.data || []
+    allEvents.push(...events)
+
+    if (events.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allEvents
 }
 
 /**
@@ -179,15 +229,30 @@ export async function getEventSlugs() {
 /**
  * Get all events for navigation
  * REST equivalent of: events/nav.graphql
+ * Note: Strapi limits pageSize to 100, so we need to fetch all pages
  */
 export async function getEventNav() {
-  const response = await restQuery<Event[]>("events", {
-    sort: ["start:desc"],
-    pagination: { page: 1, pageSize: 5000 },
-    populate: eventNavPopulate,
-  })
+  const allEvents: Event[] = []
+  let page = 1
+  const pageSize = 100
 
-  return response.data || []
+  while (true) {
+    const response = await restQuery<Event[]>("events", {
+      sort: ["start:desc"],
+      pagination: { page, pageSize },
+      populate: eventNavPopulate,
+    })
+
+    const events = response.data || []
+    allEvents.push(...events)
+
+    if (events.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allEvents
 }
 
 /**

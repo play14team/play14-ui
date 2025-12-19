@@ -1,9 +1,10 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import React, { useState } from "react"
+import Logo from "./logo"
 import SearchBox from "./searchbox"
+import ThemeToggle from "./theme-toggle"
 const Navbar = () => {
   const [collapsed, setCollapsed] = useState(true)
 
@@ -45,17 +46,7 @@ const Navbar = () => {
                 onClick={() => setCollapsed(true)}
                 className="navbar-brand"
               >
-                <Image
-                  src="/logo/play14_white_bg_transparent.svg"
-                  alt="logo"
-                  height={60}
-                  width={180}
-                  unoptimized
-                  priority
-                  style={{
-                    height: "auto",
-                  }}
-                />
+                <Logo width={180} height={60} priority />
               </Link>
 
               <button
@@ -227,6 +218,7 @@ const Navbar = () => {
                 </ul>
 
                 <SearchBox />
+                <ThemeToggle />
               </div>
             </nav>
           </div>

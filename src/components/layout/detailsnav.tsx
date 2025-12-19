@@ -11,8 +11,8 @@ export interface NavLink {
 }
 
 const DetailsNavigator = (props: {
-  previous: NavLink
-  next: NavLink
+  previous: NavLink | null
+  next: NavLink | null
   entity: string
 }) => {
   const { previous, next, entity } = props

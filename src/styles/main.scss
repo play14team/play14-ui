@@ -1,6 +1,7 @@
-@import "scss/style.scss";
-@import "scss/responsive.scss";
-@import "scss/play14.scss";
+@use "scss/themes";
+@use "scss/style.scss";
+@use "scss/responsive.scss";
+@use "scss/play14.scss";
 
 @import "css/bootstrap.min.css";
 @import "css/animate.min.css";

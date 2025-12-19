@@ -7,7 +7,10 @@ import { Game } from "@/models/strapi"
 const GameCard = ({ game }: { game: Game }) => {
   const url = `/games/${encodeURIComponent(game.slug)}`
   const image = game.defaultImage
-  const proposedby = game.proposedBy
+  // Take first proposer if array, handle both array and single object for backwards compatibility
+  const proposedby = Array.isArray(game.proposedBy)
+    ? game.proposedBy[0]
+    : game.proposedBy
 
   return (
     <article id={game.name} key={game.name} className="col-lg-4 col-md-6">

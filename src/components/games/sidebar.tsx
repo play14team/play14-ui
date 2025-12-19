@@ -65,49 +65,59 @@ const GameSidebar = (props: { game: Game }) => {
             </li>
           )}
 
-          {game.proposedBy && (
+          {game.proposedBy && game.proposedBy.length > 0 && (
             <li>
               <div className="icon">
                 <i className="bx bx-bulb"></i>
               </div>
               <span>Proposed by</span>
-              <Link
-                href={`/players/${game.proposedBy.slug}`}
-                className="centered pt-3"
-              >
-                <Image
-                  src={game.proposedBy.avatar?.url || "#"}
-                  alt={game.proposedBy.avatar?.name || "avatar"}
-                  width={200}
-                  height={200}
-                  priority
-                  unoptimized
-                />
-                <h5 className="centered pt-2">{game.proposedBy.name}</h5>
-              </Link>
+              {game.proposedBy.map((player) => (
+                <Link
+                  key={player.slug}
+                  href={`/players/${player.slug}`}
+                  className="centered pt-3"
+                >
+                  {player.avatar?.url && (
+                    <Image
+                      src={player.avatar.url}
+                      alt={player.avatar.name || player.name || "Player avatar"}
+                      width={200}
+                      height={200}
+                      priority
+                      unoptimized
+                    />
+                  )}
+                  <h5 className="centered pt-2">{player.name}</h5>
+                </Link>
+              ))}
             </li>
           )}
 
-          {game.documentedBy && (
+          {game.documentedBy && game.documentedBy.length > 0 && (
             <li>
               <div className="icon">
                 <i className="bx bx-edit"></i>
               </div>
               <span>Documented by</span>
-              <Link
-                href={`/players/${game.documentedBy.slug}`}
-                className="centered pt-3"
-              >
-                <Image
-                  src={game.documentedBy.avatar?.url || "#"}
-                  alt={game.documentedBy.avatar?.name || "avatar"}
-                  width={200}
-                  height={200}
-                  priority
-                  unoptimized
-                />
-                <h5 className="centered pt-2">{game.documentedBy.name}</h5>
-              </Link>
+              {game.documentedBy.map((player) => (
+                <Link
+                  key={player.slug}
+                  href={`/players/${player.slug}`}
+                  className="centered pt-3"
+                >
+                  {player.avatar?.url && (
+                    <Image
+                      src={player.avatar.url}
+                      alt={player.avatar.name || player.name || "Player avatar"}
+                      width={200}
+                      height={200}
+                      priority
+                      unoptimized
+                    />
+                  )}
+                  <h5 className="centered pt-2">{player.name}</h5>
+                </Link>
+              ))}
             </li>
           )}
         </ul>
