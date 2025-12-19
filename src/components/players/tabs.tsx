@@ -4,16 +4,30 @@ import HtmlContent from "../layout/html-content"
 import TabHeaders from "./tab-headers"
 
 export default function PlayerTabs({ player }: { player: Player }) {
-  const attended = player.attended
-  const hosted = player.hosted
-  const mentored = player.mentored
+  const hosted = player.hosted || []
+  const mentored = player.mentored || []
+  const rawAttended = player.attended || []
+
+  // Merge attended + hosted + mentored, removing duplicates by slug
+  const seen = new Set<string>()
+  const attended = [...rawAttended, ...hosted, ...mentored]
+    .filter((e): e is EventType => {
+      if (!e || seen.has(e.slug)) return false
+      seen.add(e.slug)
+      return true
+    })
+    .sort((a, b) => {
+      const dateA = a.start ? new Date(a.start).getTime() : 0
+      const dateB = b.start ? new Date(b.start).getTime() : 0
+      return dateB - dateA // Most recent first
+    })
 
   return (
     <div className="courses-details-desc">
       <TabHeaders
-        attendedCount={attended?.length}
-        hostedCount={hosted?.length}
-        mentoredCount={mentored?.length}
+        attendedCount={attended.length}
+        hostedCount={hosted.length}
+        mentoredCount={mentored.length}
       />
 
       <div className="tab-content" style={{ minHeight: "650px" }}>
