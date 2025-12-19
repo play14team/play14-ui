@@ -14,7 +14,7 @@ const PlayerCard = ({ player }: { player: Player }) => {
       className="col-lg-3 col-sm-6 col-md-6"
     >
       <div className="single-scientist-box">
-        <div style={{ position: "relative", height: "300px" }}>
+        <div style={{ position: "relative", height: "300px", width: "100%" }}>
           {avatar && (
             <Link href={url}>
               <Image
@@ -23,12 +23,12 @@ const PlayerCard = ({ player }: { player: Player }) => {
                 width={400}
                 height={400}
                 sizes="100vw"
-                className="shadow"
+                className="shadow img-border"
                 style={{
                   objectFit: "cover",
-                  border: "1px solid #ddd",
                   borderRadius: "15px",
-                  maxHeight: "300px",
+                  width: "100%",
+                  height: "300px",
                 }}
                 unoptimized
               />
@@ -39,13 +39,14 @@ const PlayerCard = ({ player }: { player: Player }) => {
               <Image
                 src="/default-player.png"
                 alt="default player image"
-                className="shadow"
+                className="shadow img-border"
                 width={500}
                 height={500}
                 style={{
                   objectFit: "cover",
-                  border: "1px solid #ddd",
                   borderRadius: "15px",
+                  width: "100%",
+                  height: "300px",
                 }}
                 unoptimized
               />

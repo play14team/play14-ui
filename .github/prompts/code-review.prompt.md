@@ -1,6 +1,6 @@
 ---
-mode: "agent"
-model: Claude Sonnet 4
+agent: agent
+model: Claude Haiku 4.5 (copilot)
 tools: ["codebase", "search", "usages", "problems"]
 description: "Assist with code review process and provide feedback"
 ---

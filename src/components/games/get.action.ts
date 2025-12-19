@@ -46,8 +46,8 @@ interface Game {
   images?: UploadFile[]
   resources?: Array<{ name: string; url: string }>
   firstPlayedAt?: { name: string; slug: string }
-  documentedBy?: Player
-  proposedBy?: Player
+  documentedBy?: Player[]
+  proposedBy?: Player[]
   ratings?: { energy: number; connection: number; silliness: number }
 }
 
@@ -71,7 +71,7 @@ export async function getGames(
 
   const response = await restQuery<Game[]>("games", {
     sort: ["name:asc"],
-    pagination: { page, pageSize },
+    pagination: { page, pageSize: Math.min(pageSize, 100) },
     filters,
     populate: gameItemPopulate,
   })
@@ -80,6 +80,43 @@ export async function getGames(
   return {
     games_connection: normalizeConnection(response),
   }
+}
+
+/**
+ * Get all games with optional filters
+ * Fetches all pages since Strapi limits pageSize to 100
+ */
+export async function getAllGames(category?: string, tag?: string) {
+  const allGames: Game[] = []
+  let page = 1
+  const pageSize = 100
+
+  const filters: Record<string, unknown> = {}
+  if (category) {
+    filters.category = { $eqi: category }
+  }
+  if (tag) {
+    filters.tags = { value: { $eqi: tag } }
+  }
+
+  while (true) {
+    const response = await restQuery<Game[]>("games", {
+      sort: ["name:asc"],
+      pagination: { page, pageSize },
+      filters,
+      populate: gameItemPopulate,
+    })
+
+    const games = response.data || []
+    allGames.push(...games)
+
+    if (games.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allGames
 }
 
 /**
@@ -116,13 +153,28 @@ export async function getGameSlugs() {
 /**
  * Get all games for navigation
  * REST equivalent of: games/nav.graphql
+ * Note: Strapi limits pageSize to 100, so we need to fetch all pages
  */
 export async function getGameNav() {
-  const response = await restQuery<Game[]>("games", {
-    sort: ["name:asc"],
-    pagination: { page: 1, pageSize: 5000 },
-    populate: gameNavPopulate,
-  })
+  const allGames: Game[] = []
+  let page = 1
+  const pageSize = 100
 
-  return response.data || []
+  while (true) {
+    const response = await restQuery<Game[]>("games", {
+      sort: ["name:asc"],
+      pagination: { page, pageSize },
+      populate: gameNavPopulate,
+    })
+
+    const games = response.data || []
+    allGames.push(...games)
+
+    if (games.length < pageSize) {
+      break
+    }
+    page++
+  }
+
+  return allGames
 }

@@ -1,6 +1,8 @@
 "use client"
 
 import { Event } from "@/models/strapi"
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 import Map, {
   FullscreenControl,
@@ -15,15 +17,28 @@ import EventMarkers from "./markers"
 const TOKEN = process.env.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN
 
 export default function EventMap({ events }: { events: Event[] }) {
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   if (!TOKEN) {
     return (
-      <span style={{ color: "red" }}>
+      <span className="error">
         Mapbox access token not found. Please add a
         NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN environment variable and set it with a
         valid Mapbox api token.
       </span>
     )
   }
+
+  // Theme-aware map style
+  const isDark = mounted && resolvedTheme === "dark"
+  const mapStyle = isDark
+    ? "mapbox://styles/mapbox/navigation-night-v1"
+    : "mapbox://styles/mapbox/streets-v12"
 
   return (
     <>
@@ -38,7 +53,7 @@ export default function EventMap({ events }: { events: Event[] }) {
             zoom: 2,
           }}
           style={{ width: "100%", height: "800px" }}
-          mapStyle="mapbox://styles/mapbox/streets-v12"
+          mapStyle={mapStyle}
           mapboxAccessToken={TOKEN}
           attributionControl={false}
         >

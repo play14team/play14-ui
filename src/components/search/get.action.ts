@@ -53,11 +53,11 @@ interface Game {
   category?: string
   summary?: string
   defaultImage?: UploadFile
-  proposedBy?: {
+  proposedBy?: Array<{
     name: string
     slug: string
     avatar?: UploadFile
-  }
+  }>
 }
 
 interface Player {

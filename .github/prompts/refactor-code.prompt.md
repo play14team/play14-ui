@@ -1,6 +1,6 @@
 ---
-mode: "agent"
-model: Claude Sonnet 4
+agent: "agent"
+model: Claude Haiku 4.5 (copilot)
 tools: ["codebase", "search", "usages", "edit"]
 description: "Refactor code to improve maintainability, performance, and readability"
 ---

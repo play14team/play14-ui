@@ -1,6 +1,8 @@
 "use client"
 
 import "mapbox-gl/dist/mapbox-gl.css"
+import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 import Map, {
   FullscreenControl,
   Marker,
@@ -35,6 +37,13 @@ function isMapboxLocation(loc: LocationType): loc is MapboxLocation {
 }
 
 const MapView = ({ location, height, zoom, popup }: MapViewProps) => {
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
   let longitude = 10
   let latitude = 40
   let address: string | null = null
@@ -57,6 +66,13 @@ const MapView = ({ location, height, zoom, popup }: MapViewProps) => {
   const offset = [0, -35] as [number, number]
   const zoomLevel = location ? zoom || 15 : 1
 
+  // Theme-aware map style and marker color
+  const isDark = mounted && resolvedTheme === "dark"
+  const mapStyle = isDark
+    ? "mapbox://styles/mapbox/navigation-night-v1"
+    : "mapbox://styles/mapbox/streets-v12"
+  const markerColor = isDark ? "#ffd633" : "#ffc900"
+
   return (
     <div className="shadow">
       <Map
@@ -66,14 +82,18 @@ const MapView = ({ location, height, zoom, popup }: MapViewProps) => {
           zoom: zoomLevel,
         }}
         style={{ width: "100%", height: height || "500px" }}
-        mapStyle="mapbox://styles/mapbox/streets-v12"
+        mapStyle={mapStyle}
         mapboxAccessToken={token}
       >
         <FullscreenControl />
         <NavigationControl />
 
         {location && (
-          <Marker longitude={longitude} latitude={latitude} color="#ffc900" />
+          <Marker
+            longitude={longitude}
+            latitude={latitude}
+            color={markerColor}
+          />
         )}
 
         {popup && (

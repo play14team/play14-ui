@@ -1,13 +1,12 @@
 import Filters from "@/components/players/filters"
-import { getPlayers } from "@/components/players/get.action"
+import { getAllPlayers } from "@/components/players/get.action"
 import PlayerGrid from "../../../../components/players/grid"
 
 export default async function PlayerPosition(props: {
   params: Promise<{ position: string }>
 }) {
   const params = await props.params
-  const response = await getPlayers(1, 1000, params.position)
-  const players = response.players_connection.nodes
+  const players = await getAllPlayers(params.position)
 
   return (
     <>

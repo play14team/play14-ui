@@ -2,6 +2,7 @@ import Footer from "@/components/layout/footer"
 import Loader from "@/components/layout/loader"
 import Navbar from "@/components/layout/navbar"
 import { ApolloProvider } from "@/components/utils/apollo-provider"
+import { ThemeProvider } from "@/components/utils/theme-provider"
 import { WebVitals } from "@/components/utils/web-vitals"
 import "@/styles/main.scss"
 import type { Metadata } from "next"
@@ -52,23 +53,25 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <Script src="https://widget.weezevent.com/weez.js" />
       <body className={inter.className}>
-        <ApolloProvider>
-          <Navbar />
-          <main>
-            <div className="container">
-              <div className="pt-100 pb-70">
-                <Suspense fallback={<Loader />}>
-                  {displayWebVitals && <WebVitals />}
-                  {children}
-                </Suspense>
+        <ThemeProvider>
+          <ApolloProvider>
+            <Navbar />
+            <main>
+              <div className="container">
+                <div className="pt-100 pb-70">
+                  <Suspense fallback={<Loader />}>
+                    {displayWebVitals && <WebVitals />}
+                    {children}
+                  </Suspense>
+                </div>
               </div>
-            </div>
-          </main>
-          <Footer />
-        </ApolloProvider>
+            </main>
+            <Footer />
+          </ApolloProvider>
+        </ThemeProvider>
       </body>
     </html>
   )

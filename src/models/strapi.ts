@@ -240,8 +240,8 @@ export interface Game {
   images?: UploadFile[]
   resources?: Resource[]
   firstPlayedAt?: { name: string; slug: string }
-  documentedBy?: Player
-  proposedBy?: Player
+  documentedBy?: Player[]
+  proposedBy?: Player[]
   ratings?: Ratings
 }
 

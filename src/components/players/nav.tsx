@@ -8,7 +8,13 @@ export default async function PlayersNavigator({
   current: string
 }) {
   const players = (await getPlayerNav()) as Player[]
-  const index = players.findIndex((a) => a.slug == current)
+  const index = players.findIndex((a) => a.slug === current)
+
+  // If player not found in list, show no navigation
+  if (index === -1) {
+    return <DetailsNavigator previous={null} next={null} entity="players" />
+  }
+
   const previous = index > 0 ? players[index - 1] : null
   const next = index < players.length - 1 ? players[index + 1] : null
 

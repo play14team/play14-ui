@@ -1,13 +1,12 @@
 import Filters from "@/components/events/filters"
-import { getEvents } from "@/components/events/get.action"
+import { getAllEvents } from "@/components/events/get.action"
 import EventGrid from "../../../../components/events/grid"
 
 export default async function EventLocation(props: {
   params: Promise<{ location: string }>
 }) {
   const params = await props.params
-  const response = await getEvents(1, 1000, undefined, params.location)
-  const events = response.events_connection.nodes
+  const events = await getAllEvents(undefined, params.location)
 
   return (
     <>
