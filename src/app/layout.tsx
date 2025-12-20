@@ -1,7 +1,6 @@
 import Footer from "@/components/layout/footer"
 import Loader from "@/components/layout/loader"
 import Navbar from "@/components/layout/navbar"
-import { ApolloProvider } from "@/components/utils/apollo-provider"
 import { ThemeProvider } from "@/components/utils/theme-provider"
 import { WebVitals } from "@/components/utils/web-vitals"
 import "@/styles/main.scss"
@@ -57,20 +56,18 @@ export default function RootLayout({
       <Script src="https://widget.weezevent.com/weez.js" />
       <body className={inter.className}>
         <ThemeProvider>
-          <ApolloProvider>
-            <Navbar />
-            <main>
-              <div className="container">
-                <div className="pt-100 pb-70">
-                  <Suspense fallback={<Loader />}>
-                    {displayWebVitals && <WebVitals />}
-                    {children}
-                  </Suspense>
-                </div>
+          <Navbar />
+          <main>
+            <div className="container">
+              <div className="pt-100 pb-70">
+                <Suspense fallback={<Loader />}>
+                  {displayWebVitals && <WebVitals />}
+                  {children}
+                </Suspense>
               </div>
-            </main>
-            <Footer />
-          </ApolloProvider>
+            </div>
+          </main>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>

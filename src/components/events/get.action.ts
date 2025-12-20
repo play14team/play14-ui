@@ -24,6 +24,21 @@ interface GeoLocation {
   lat?: number
   lng?: number
   place_name?: string
+  geometry?: {
+    coordinates: [number, number]
+    type?: string
+  }
+  // Allow additional Mapbox properties
+  id?: string
+  text?: string
+  type?: string
+  center?: [number, number]
+  address?: string
+  context?: unknown[]
+  relevance?: number
+  place_type?: string[]
+  properties?: Record<string, unknown>
+  [key: string]: unknown
 }
 
 interface Location {
@@ -34,6 +49,7 @@ interface Location {
 }
 
 interface Venue {
+  documentId?: string
   name: string
   website?: string
   location?: GeoLocation
@@ -260,17 +276,38 @@ export async function getEventNav() {
  * REST equivalent of: events/markers.graphql
  */
 export async function getEventMarkers() {
+  // Fetch all events and filter client-side since Strapi JSON field filtering is complex
   const response = await restQuery<Event[]>("events", {
     sort: ["start:asc"],
     filters: {
       eventStatus: { $ne: "Cancelled" },
-      venue: { location: { $notNull: true } },
     },
     pagination: { page: 1, pageSize: 5000 },
     populate: eventMarkersPopulate,
   })
 
-  return response.data || []
+  const allEvents = response.data || []
+
+  // Filter events that have venue location coordinates
+  const eventsWithLocation = allEvents.filter((event) => {
+    const location = event.venue?.location
+    if (!location) return false
+
+    // Check for Mapbox format (geometry.coordinates)
+    if ("geometry" in location && location.geometry?.coordinates) {
+      const [lng, lat] = location.geometry.coordinates
+      return lng !== undefined && lat !== undefined
+    }
+
+    // Check for simple format (lat/lng)
+    if ("lng" in location && "lat" in location) {
+      return location.lng !== undefined && location.lat !== undefined
+    }
+
+    return false
+  })
+
+  return eventsWithLocation
 }
 
 /**

@@ -68,16 +68,15 @@ describe('ComponentName', () => {
 
 ### Testing Server Actions
 
-- Mock the GraphQL client and responses
+- Mock the fetch API and responses
 - Test error handling and validation
 - Verify correct data transformation
 
 ```typescript
 import { getEvents } from "./get.action"
-import { query } from "@/libs/apollo-client"
 
-jest.mock("@/libs/apollo-client")
-const mockedQuery = jest.mocked(query)
+global.fetch = jest.fn()
+const mockedFetch = jest.mocked(fetch)
 
 describe("getEvents", () => {
   beforeEach(() => {
@@ -86,18 +85,19 @@ describe("getEvents", () => {
 
   it("should fetch events with correct parameters", async () => {
     const mockResponse = {
-      events: {
-        data: [{ id: "1", attributes: { name: "Test Event" } }],
-      },
+      data: [{ id: "1", attributes: { name: "Test Event" } }],
+      meta: { pagination: { page: 1, pageSize: 10, total: 1 } },
     }
 
-    mockedQuery.mockResolvedValue(mockResponse)
+    mockedFetch.mockResolvedValue({
+      ok: true,
+      json: async () => mockResponse,
+    } as Response)
 
     const result = await getEvents(1, 10)
 
-    expect(mockedQuery).toHaveBeenCalledWith({
-      query: expect.any(Object),
-      variables: { page: 1, pageSize: 10 },
+    expect(mockedFetch).toHaveBeenCalledWith(
+      expect.stringContaining("/api/events"),
     })
     expect(result).toEqual(mockResponse)
   })

@@ -5,7 +5,6 @@ const STRAPI_REST_ENDPOINT = process.env.STRAPI_API_URL + "/api"
 
 /**
  * Fetch with timeout to prevent hanging connections
- * Mirrors the Apollo client pattern for consistency
  */
 async function fetchWithTimeout(
   url: string,

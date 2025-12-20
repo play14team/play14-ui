@@ -1,5 +1,0 @@
-query PlayerSlugs {
-  players(pagination: { limit: 5000 }) {
-    slug
-  }
-}

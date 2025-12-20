@@ -1,8 +1,0 @@
-query Expectations($type: String!) {
-  expectations(filters: { type: { eq: $type } }) {
-    title
-    type
-    icon
-    content
-  }
-}

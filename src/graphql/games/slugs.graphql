@@ -1,5 +1,0 @@
-query GameSlugs {
-  games(pagination: { limit: 5000 }) {
-    slug
-  }
-}

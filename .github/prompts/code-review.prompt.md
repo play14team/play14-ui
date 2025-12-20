@@ -41,11 +41,11 @@ Provide comprehensive code review feedback following the project's standards and
 - **Interfaces**: Are interfaces well-defined and reusable?
 - **Generics**: Are generics used appropriately for reusable code?
 
-### GraphQL/Data Fetching
+### REST API/Data Fetching
 
-- **Query efficiency**: Are GraphQL queries optimized and not over-fetching?
+- **API efficiency**: Are REST API calls optimized with appropriate query parameters?
 - **Error handling**: Are data fetching errors properly handled?
-- **Type generation**: Are generated types being used correctly?
+- **Type safety**: Are response types properly defined and used?
 - **Caching**: Is caching strategy appropriate?
 
 ### Security and Best Practices
@@ -76,14 +76,15 @@ Provide comprehensive code review feedback following the project's standards and
 #### Critical Issue
 
 ```
-🚨 Critical: This GraphQL query is vulnerable to injection. Use parameterized queries instead.
+🚨 Critical: This API call is vulnerable to injection. Use parameterized queries instead.
 
 Current:
-query = `query { events(filter: "${userInput}") }`
+const url = `${STRAPI_API_URL}/api/events?filters[name]=${userInput}`
 
 Suggested:
-Use the generated query with proper variables:
-query(EventsDocument, { filter: userInput })
+Use URLSearchParams for safe parameter encoding:
+const params = new URLSearchParams({ 'filters[name]': userInput })
+const url = `${STRAPI_API_URL}/api/events?${params.toString()}`
 ```
 
 #### Important Suggestion

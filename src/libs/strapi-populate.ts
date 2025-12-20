@@ -132,7 +132,7 @@ export const eventMarkersPopulate = {
     fields: ["link"],
   },
   venue: {
-    fields: ["name", "website", "location"],
+    fields: ["documentId", "name", "website", "location"],
   },
 }
 

@@ -153,7 +153,30 @@ const EventPopup = ({
 // Keep the original mapColor export for backward compatibility
 export const mapColor = (
   status: Enum_Event_Eventstatus | string | undefined,
+  isDark?: boolean,
 ) => {
+  // Use theme-aware colors if isDark is provided
+  if (isDark !== undefined) {
+    const themeColors = getThemeColors(isDark)
+    switch (status) {
+      case Enum_Event_Eventstatus.Announced:
+      case "Announced":
+        return themeColors.announced
+      case Enum_Event_Eventstatus.Open:
+      case "Open":
+        return themeColors.open
+      case Enum_Event_Eventstatus.Over:
+      case "Over":
+        return themeColors.over
+      case Enum_Event_Eventstatus.Cancelled:
+      case "Cancelled":
+        return themeColors.cancelled
+      default:
+        return themeColors.default
+    }
+  }
+
+  // Fallback to light mode colors for backwards compatibility
   switch (status) {
     case Enum_Event_Eventstatus.Announced:
     case "Announced":

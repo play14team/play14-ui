@@ -14,7 +14,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 # Development
-pnpm dev                    # Start dev server with Turbopack at http://localhost:3000
+pnpm dev                    # Start local dev server with Turbopack at http://localhost:3000
+
+# Container Development (Podman/Docker)
+pnpm up                     # Start containerized dev environment (detached + logs)
+pnpm down                   # Stop and remove containers
+podman compose up           # Start containerized dev environment (foreground)
+podman compose up --build   # Rebuild and start containers
+podman compose logs -f app  # Follow container logs
+
+# Production
 pnpm run build              # Production build (standalone output)
 pnpm start                  # Run production server
 
@@ -116,6 +125,43 @@ STRAPI_API_SECRET=<token>                      # Local auth token
 NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=<token>        # Mapbox key
 ```
 
+### Container Setup
+
+**Prerequisites:**
+
+- Strapi backend (`play14-api`) running in its own container
+- Strapi must be using the `Play14-api` Docker network (created by play14-api compose)
+
+**Quick Start:**
+
+1. Create `.env.local` file with your environment variables (see `.env.example` for reference)
+2. Start Strapi backend first (in play14-api directory): `podman compose up -d`
+3. Start Next.js UI: `pnpm up`
+4. Access the applications:
+   - Next.js UI: http://localhost:3000
+   - Strapi API: http://localhost:1337 (from play14-api)
+   - Database Admin (Adminer): http://localhost:9090 (from play14-api)
+5. Stop services: `pnpm down`
+
+**The containerized setup includes:**
+
+- **Next.js UI** with hot reload for all source code changes
+- Shared Docker network (`Play14-api`) for communication with Strapi
+- Persistent volumes for node_modules
+- Health checks for container monitoring
+- Automatic connection to Strapi via service name
+
+**Important Notes:**
+
+- **Separate compose files**: Each repository manages its own services
+- **Shared network**: Next.js connects to the external `Play14-api` network
+- **Service discovery**: Next.js reaches Strapi via `http://play14-api:1337`
+- **Start order**: Start play14-api services first, then play14-ui
+- **Scripts**:
+  - `pnpm up` - Start containerized Next.js
+  - `pnpm down` - Stop containerized Next.js
+  - `pnpm dev` - Run Next.js locally (no container)
+
 ## Type Safety Helpers
 
 - Define TypeScript interfaces in `@/models/` for Strapi response types
@@ -194,6 +240,8 @@ Uses **Turbopack** for faster builds (`next dev --turbopack`)
 
 ## Deployment
 
+### Azure Static Web Apps (Current)
+
 - **Platform:** Azure Static Web Apps
 - **Node Version:** 20
 - **Build Output:** Standalone
@@ -206,6 +254,59 @@ Uses **Turbopack** for faster builds (`next dev --turbopack`)
   5. Set backend URL (acceptance for PRs, production for main)
   6. Run `pnpm run build`
   7. Deploy to Azure Static Web Apps
+
+### Container Deployment (Production)
+
+The application can be deployed as a containerized application using the production-optimized Dockerfile.
+
+**Quick Start:**
+
+```bash
+# 1. Configure production environment
+cp .env.production.example .env.production
+# Edit .env.production with your production values
+
+# 2. Build and run with Podman Compose
+podman compose -f compose.prod.yaml up --build
+
+# Or with Docker Compose
+docker compose -f compose.prod.yaml up --build
+```
+
+**Production Features:**
+
+- **Multi-stage build:** Optimized for minimal image size (~150MB)
+- **Non-root user:** Runs as `nextjs` user (UID 1001) for security
+- **Standalone output:** Self-contained deployment with all dependencies
+- **Health checks:** Built-in health monitoring on `/api/health`
+- **Resource limits:** Configurable CPU and memory constraints
+- **Security hardening:** Read-only filesystem support, no-new-privileges
+
+**Manual Build & Deploy:**
+
+```bash
+# Build production image
+podman build -t play14-ui:latest \
+  --build-arg STRAPI_API_URL=https://community.play14.org \
+  --build-arg STRAPI_API_SECRET=your-secret \
+  --build-arg NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=your-token \
+  -f Dockerfile .
+
+# Run production container
+podman run -d \
+  --name play14-ui \
+  -p 3000:3000 \
+  --restart unless-stopped \
+  play14-ui:latest
+```
+
+**Deployment Targets:**
+
+- Container orchestration platforms (Kubernetes, OpenShift)
+- Azure Container Instances
+- Azure Container Apps
+- Azure Kubernetes Service (AKS)
+- Any container runtime (Podman, Docker, containerd)
 
 ## Git Workflow
 

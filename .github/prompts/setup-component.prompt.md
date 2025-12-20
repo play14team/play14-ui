@@ -49,7 +49,7 @@ Ask for the following information if not provided:
 
 6. **Consider integration**:
    - How will this component integrate with existing server actions?
-   - Does it need to call GraphQL queries?
+   - Does it need to fetch data from the Strapi REST API?
    - Should it use existing utility functions from `src/libs/`?
 
 ## Component Template
