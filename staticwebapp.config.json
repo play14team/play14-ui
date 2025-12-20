@@ -1,5 +1,17 @@
 {
   "platform": {
     "apiRuntime": "node:20"
-  }
+  },
+  "navigationFallback": {
+    "rewrite": "/index.html",
+    "exclude": ["/_next/*", "/static/*", "/favicon.ico"]
+  },
+  "routes": [
+    {
+      "route": "/_next/*",
+      "headers": {
+        "cache-control": "public, max-age=31536000, immutable"
+      }
+    }
+  ]
 }
