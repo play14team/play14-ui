@@ -3,6 +3,7 @@ import { getArticle, getArticleSlugs } from "@/components/articles/get.action"
 import Page from "@/components/layout/page"
 import { SlugParamsProps } from "@/libs/slug-params"
 import type { Article } from "@/models/strapi"
+import { notFound } from "next/navigation"
 
 export const revalidate = 3600
 
@@ -19,6 +20,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: SlugParamsProps) {
   const article = await getArticle(props)
+
+  if (!article) {
+    return {
+      title: "Article Not Found",
+      description: "The requested article could not be found.",
+    }
+  }
+
   const images = article.images
     ?.filter(Boolean)
     ?.map((i) => (i as { url: string }).url) as string[]
@@ -40,9 +49,13 @@ export async function generateMetadata(props: SlugParamsProps) {
 export default async function Article(props: SlugParamsProps) {
   const article = await getArticle(props)
 
+  if (!article) {
+    notFound()
+  }
+
   return (
-    <Page name={article && article.title}>
-      {article && <ArticleDetails article={article} />}
+    <Page name={article.title}>
+      <ArticleDetails article={article} />
     </Page>
   )
 }

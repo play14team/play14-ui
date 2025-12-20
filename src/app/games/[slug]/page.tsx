@@ -3,6 +3,7 @@ import Page from "@/components/layout/page"
 import { SlugParamsProps } from "@/libs/slug-params"
 import type { Game } from "@/models/strapi"
 import { getGame, getGameSlugs } from "../../../components/games/get.action"
+import { notFound } from "next/navigation"
 
 export const revalidate = 3600
 
@@ -19,6 +20,14 @@ export async function generateStaticParams() {
 
 export async function generateMetadata(props: SlugParamsProps) {
   const game = await getGame(props)
+
+  if (!game) {
+    return {
+      title: "Game Not Found",
+      description: "The requested game could not be found.",
+    }
+  }
+
   const images = game.images
     ?.filter(Boolean)
     ?.map((i) => (i as { url: string }).url) as string[]
@@ -42,7 +51,13 @@ export async function generateMetadata(props: SlugParamsProps) {
 export default async function Game(props: SlugParamsProps) {
   const game = await getGame(props)
 
+  if (!game) {
+    notFound()
+  }
+
   return (
-    <Page name={game && game.name}>{game && <GameDetails game={game} />}</Page>
+    <Page name={game.name}>
+      <GameDetails game={game} />
+    </Page>
   )
 }

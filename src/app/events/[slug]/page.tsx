@@ -3,6 +3,7 @@ import { getEvent } from "@/components/events/get.action"
 import Page from "@/components/layout/page"
 import { formatDate } from "@/libs/dates"
 import { SlugParamsProps } from "@/libs/slug-params"
+import { notFound } from "next/navigation"
 
 export const revalidate = 3600
 
@@ -17,6 +18,15 @@ export const revalidate = 3600
 
 export async function generateMetadata(props: SlugParamsProps) {
   const event = await getEvent(props)
+
+  // Handle case where event is not found
+  if (!event) {
+    return {
+      title: "Event Not Found",
+      description: "The requested event could not be found.",
+    }
+  }
+
   const images = event.images
     ?.filter(Boolean)
     ?.map((i) => (i as { url: string }).url) as string[]
@@ -49,9 +59,13 @@ export async function generateMetadata(props: SlugParamsProps) {
 export default async function Event(props: SlugParamsProps) {
   const event = await getEvent(props)
 
+  if (!event) {
+    notFound()
+  }
+
   return (
-    <Page name={event && event.name} hideName={true}>
-      {event && <EventDetails event={event} />}
+    <Page name={event.name} hideName={true}>
+      <EventDetails event={event} />
     </Page>
   )
 }
