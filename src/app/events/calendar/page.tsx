@@ -24,6 +24,7 @@ export default async function Calendar() {
       end: new Date(event.end),
       tooltip: event.name,
       slug: event.slug,
+      eventStatus: event.eventStatus,
     })) as CalendarEvent[]
 
   return (
