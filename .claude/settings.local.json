@@ -1,23 +1,24 @@
 {
   "permissions": {
     "allow": [
-      "Bash(pnpm run build:*)",
-      "Bash(pnpm dev:*)",
-      "Bash(pnpm run format:*)",
+      "Bash(bun run build:*)",
+      "Bash(bun run dev:*)",
+      "Bash(bun run format:*)",
       "WebFetch(domain:docs.strapi.io)",
       "mcp__filesystem__list_directory",
       "mcp__filesystem__directory_tree",
       "mcp__filesystem__read_text_file",
       "WebSearch",
-      "Bash(pnpm run lint:*)",
+      "Bash(bun run lint:*)",
       "Bash(npx eslint:*)",
-      "Bash(pnpm list:*)",
-      "Bash(pnpm run typecheck:*)",
+      "Bash(bun pm ls:*)",
+      "Bash(bun run typecheck:*)",
       "Bash(npx playwright test --list)",
-      "Bash(pnpm test:*)",
+      "Bash(bun test:*)",
       "Bash(npx playwright test:*)",
-      "Bash(pnpm test:report:*)",
-      "Bash(gh secret list:*)"
+      "Bash(bun run test:report:*)",
+      "Bash(gh secret list:*)",
+      "Bash(bun --version:*)"
     ],
     "deny": [],
     "ask": []
