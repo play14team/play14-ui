@@ -16,7 +16,8 @@
       "Bash(npx playwright test --list)",
       "Bash(pnpm test:*)",
       "Bash(npx playwright test:*)",
-      "Bash(pnpm test:report:*)"
+      "Bash(pnpm test:report:*)",
+      "Bash(gh secret list:*)"
     ],
     "deny": [],
     "ask": []

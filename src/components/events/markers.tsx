@@ -23,8 +23,8 @@ function getCoordinates(
   if (
     "lng" in location &&
     "lat" in location &&
-    location.lng !== undefined &&
-    location.lat !== undefined
+    typeof location.lng === "number" &&
+    typeof location.lat === "number"
   ) {
     return [location.lng, location.lat]
   }
