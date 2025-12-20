@@ -1,0 +1,154 @@
+name: Deploy to Azure Container Apps (Acceptance)
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: aca-acceptance-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "20"
+  STRAPI_API_URL: "https://community-acc.play14.org/"
+  AZURE_CONTAINER_REGISTRY: play14containerregistry.azurecr.io
+  CONTAINER_APP_NAME: play14-ui-acc
+  RESOURCE_GROUP: play14-community
+  CONTAINER_APP_ENVIRONMENT: play14-container-env
+
+jobs:
+  quality:
+    name: Code Quality
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run linter
+        run: pnpm run lint
+
+      - name: Type check
+        run: pnpm run typecheck
+
+  build-and-deploy:
+    name: Build and Deploy
+    needs: quality
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+      id-token: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to Azure Container Registry
+        run: |
+          az acr login --name ${{ env.AZURE_CONTAINER_REGISTRY }}
+
+      - name: Generate image tag
+        id: image-tag
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            TAG="pr-${{ github.event.pull_request.number }}-${{ github.sha }}"
+          else
+            TAG="acc-${{ github.sha }}"
+          fi
+          echo "tag=${TAG}" >> $GITHUB_OUTPUT
+          echo "full-image=${{ env.AZURE_CONTAINER_REGISTRY }}/play14-ui:${TAG}" >> $GITHUB_OUTPUT
+
+      - name: Build and push container image
+        run: |
+          docker build \
+            --build-arg STRAPI_API_URL=${{ env.STRAPI_API_URL }} \
+            --build-arg STRAPI_API_SECRET=${{ secrets.STRAPI_API_SECRET }} \
+            --build-arg NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }} \
+            --tag ${{ steps.image-tag.outputs.full-image }} \
+            --file Dockerfile \
+            .
+          docker push ${{ steps.image-tag.outputs.full-image }}
+
+      - name: Deploy to Azure Container Apps
+        run: |
+          az containerapp update \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --image ${{ steps.image-tag.outputs.full-image }} \
+            --set-env-vars \
+              STRAPI_API_URL=${{ env.STRAPI_API_URL }} \
+              STRAPI_API_SECRET=secretref:strapi-api-secret \
+              NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=secretref:mapbox-token
+
+      - name: Get Container App URL
+        id: get-url
+        run: |
+          URL=$(az containerapp show \
+            --name ${{ env.CONTAINER_APP_NAME }} \
+            --resource-group ${{ env.RESOURCE_GROUP }} \
+            --query properties.configuration.ingress.fqdn \
+            --output tsv)
+          echo "url=https://${URL}" >> $GITHUB_OUTPUT
+
+      - name: Comment PR with deployment URL
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const url = '${{ steps.get-url.outputs.url }}';
+            const comment = `## 🚀 Acceptance Deployment
+
+            Your changes have been deployed to Azure Container Apps!
+
+            **Environment:** Acceptance
+            **URL:** ${url}
+            **Image:** \`${{ steps.image-tag.outputs.full-image }}\`
+            **Backend:** ${{ env.STRAPI_API_URL }}
+
+            The deployment will be updated automatically with each push to this PR.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Health check
+        run: |
+          echo "Waiting for deployment to stabilize..."
+          sleep 30
+
+          URL="${{ steps.get-url.outputs.url }}"
+          for i in {1..10}; do
+            if curl -f -s "${URL}/api/health" > /dev/null; then
+              echo "✅ Health check passed!"
+              exit 0
+            fi
+            echo "Attempt $i/10 failed, retrying in 10s..."
+            sleep 10
+          done
+
+          echo "❌ Health check failed after 10 attempts"
+          exit 1

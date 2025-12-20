@@ -240,22 +240,39 @@ Uses **Turbopack** for faster builds (`next dev --turbopack`)
 
 ## Deployment
 
-### Azure Static Web Apps (Current)
+### Azure Container Apps (Primary)
 
-- **Platform:** Azure Static Web Apps
-- **Node Version:** 20
-- **Build Output:** Standalone
-- **CI/CD:** GitHub Actions (`.github/workflows/`)
-- **Deployment Flow:**
-  1. Install pnpm
-  2. Install dependencies
-  3. Run `pnpm run lint` (quality job)
-  4. Run `pnpm run typecheck` (quality job)
-  5. Set backend URL (acceptance for PRs, production for main)
-  6. Run `pnpm run build`
-  7. Deploy to Azure Static Web Apps
+The application is deployed to **Azure Container Apps** which supports all Next.js features including SSR, ISR, and dynamic routes.
 
-### Container Deployment (Production)
+**Environments:**
+
+- **Acceptance (play14-ui-acc):** Deployed automatically on PR creation/updates
+  - Backend: `https://community-acc.play14.org/`
+  - Workflow: `.github/workflows/azure-container-apps-acceptance.yml`
+- **Production (play14-ui-prod):** Deployed from main branch
+  - Backend: `https://community.play14.org`
+  - Workflow: TBD
+
+**Setup Guide:** See [`.azure/SETUP.md`](.azure/SETUP.md) for complete Azure Container Apps setup instructions.
+
+**Deployment Flow:**
+
+1. Code quality checks (lint, typecheck)
+2. Build Docker image with Next.js standalone output
+3. Push to Azure Container Registry
+4. Deploy to Azure Container Apps
+5. Health check verification
+6. PR comment with deployment URL (for PRs)
+
+### Azure Static Web Apps (Legacy)
+
+**Note:** Azure SWA doesn't support Next.js SSR and is being phased out. Existing deployment:
+
+- **Production Workflow:** `.github/workflows/azure-static-web-apps-blue-stone-057ce2a03.yml`
+- **PR Preview Workflow:** `.github/workflows/azure-swa-pr-preview.yml`
+- **Limitation:** Incompatible with Next.js standalone output and dynamic routes
+
+### Local Container Development
 
 The application can be deployed as a containerized application using the production-optimized Dockerfile.
 

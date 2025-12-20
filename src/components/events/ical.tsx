@@ -42,8 +42,8 @@ const ICalendar = ({ event }: { event: Event }) => {
       longitude = geoJSON.geometry.coordinates[0]
       latitude = geoJSON.geometry.coordinates[1]
     } else if ("lng" in geoJSON && "lat" in geoJSON) {
-      longitude = geoJSON.lng
-      latitude = geoJSON.lat
+      longitude = typeof geoJSON.lng === "number" ? geoJSON.lng : undefined
+      latitude = typeof geoJSON.lat === "number" ? geoJSON.lat : undefined
     }
     if (latitude !== undefined && longitude !== undefined) {
       evt.geo = { lat: latitude, lon: longitude }
