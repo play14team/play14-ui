@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-**/codacy.instructions.md
+.github\instructions\codacy.instructions.md

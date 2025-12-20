@@ -31,9 +31,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Generate GraphQL types
-        run: pnpm run codegen
-
       - name: Run linter
         run: pnpm run lint
 
