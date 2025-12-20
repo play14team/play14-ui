@@ -7,16 +7,20 @@ export const metadata: Metadata = {
 }
 
 const NotFoundPage = () => (
-  <div className="pt-70">
+  <div className="pt-70" style={{ textAlign: "center" }}>
     <h1>404: Not Found</h1>
-    <p>You just hit a page that doesn&#39;t exist...</p>
+    <p style={{ marginBottom: "2rem" }}>
+      You just hit a page that doesn&#39;t exist...
+    </p>
     <Image
-      src="play14_broken.png"
+      src="/play14_broken.png"
       alt="#play14 404"
-      style={{ marginBottom: `1.45rem` }}
+      width={1000}
+      height={385}
+      style={{ marginTop: "2rem", marginBottom: "2rem" }}
       unoptimized
     />
-    <p>
+    <p style={{ marginTop: "2rem" }}>
       Please, stop playing with our URLs and{" "}
       <b>
         <Link href={"/"} className="orange">

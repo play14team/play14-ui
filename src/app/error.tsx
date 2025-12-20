@@ -40,13 +40,8 @@ export default function Error({
             ? `${error.message}\n${error.stack || ""}`
             : undefined
         }
-        showReload={true}
+        onRetry={reset}
       />
-      <div className="container mt-3">
-        <button className="btn btn-primary" onClick={() => reset()}>
-          Try again
-        </button>
-      </div>
     </div>
   )
 }
