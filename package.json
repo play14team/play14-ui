@@ -1,16 +1,15 @@
 {
   "name": "play14-ui",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "format": "prettier src --write",
-    "codegen": "graphql-codegen --config codegen.ts",
-    "codegen-watch": "npm run codegen --watch",
-    "codegen:rest": "openapi-typescript openapi/specification.json -o src/models/strapi.d.ts"
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "tsc --noEmit",
+    "format": "prettier src --write"
   },
   "dependencies": {
     "@apollo/client": "^4.0.9",
@@ -49,9 +48,7 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@eslint/eslintrc": "^3.3.3",
-    "@graphql-codegen/cli": "^6.1.0",
-    "@graphql-codegen/client-preset": "^5.2.1",
+    "@eslint/js": "^9.39.2",
     "@types/country-data": "^0.0.5",
     "@types/lodash": "^4.17.21",
     "@types/mapbox-gl": "^3.4.1",
@@ -71,7 +68,6 @@
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
-    "openapi-typescript": "^7.10.1",
     "prettier": "^3.7.4",
     "purify-css": "^1.2.5",
     "sass": "^1.95.0",

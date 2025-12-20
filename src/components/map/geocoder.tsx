@@ -1,4 +1,3 @@
-/* eslint-disable */
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder"
 import mapboxgl from "mapbox-gl"
 import React from "react"

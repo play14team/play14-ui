@@ -12,35 +12,27 @@ const UpcomingEventTimer = ({ date }: TimerProps) => {
   const [minutes, setMinutes] = React.useState("")
   const [seconds, setSeconds] = React.useState("")
 
-  React.useEffect(() => {
-    const interval = setInterval(() => {
-      commingSoonTime()
-    }, 1000)
-    return () => clearInterval(interval)
-  })
-
-  const commingSoonTime = () => {
+  const updateCountdown = React.useCallback(() => {
     const endTimeParse = Date.parse(date.toString()) / 1000
     const now = new Date()
     const nowParse = Date.parse(now.toString()) / 1000
     const timeLeft = endTimeParse - nowParse
-    const days = Math.floor(timeLeft / 86400)
-    const hours = Math.floor((timeLeft - days * 86400) / 3600)
-    const minutes = Math.floor((timeLeft - days * 86400 - hours * 3600) / 60)
-    const seconds = Math.floor(
-      timeLeft - days * 86400 - hours * 3600 - minutes * 60,
-    )
+    const d = Math.floor(timeLeft / 86400)
+    const h = Math.floor((timeLeft - d * 86400) / 3600)
+    const m = Math.floor((timeLeft - d * 86400 - h * 3600) / 60)
+    const s = Math.floor(timeLeft - d * 86400 - h * 3600 - m * 60)
 
-    const daysString = days.toString()
-    const hoursString = hours.toString().padStart(2, "0")
-    const minutesString = minutes.toString().padStart(2, "0")
-    const secondsString = seconds.toString().padStart(2, "0")
+    setDays(d.toString())
+    setHours(h.toString().padStart(2, "0"))
+    setMinutes(m.toString().padStart(2, "0"))
+    setSeconds(s.toString().padStart(2, "0"))
+  }, [date])
 
-    setDays(daysString)
-    setHours(hoursString)
-    setMinutes(minutesString)
-    setSeconds(secondsString)
-  }
+  React.useEffect(() => {
+    updateCountdown()
+    const interval = setInterval(updateCountdown, 1000)
+    return () => clearInterval(interval)
+  }, [updateCountdown])
 
   return (
     <div id="timer" className="flex-wrap d-flex justify-content-center">

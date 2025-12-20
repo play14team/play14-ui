@@ -1,16 +1,28 @@
-import { dirname } from "path"
-import { fileURLToPath } from "url"
-import { FlatCompat } from "@eslint/eslintrc"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-})
+import nextVitals from "eslint-config-next/core-web-vitals"
+import eslintConfigPrettier from "eslint-config-prettier"
 
 const eslintConfig = [
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    ignores: [
+      ".next/**",
+      "node_modules/**",
+      "out/**",
+      "build/**",
+      "public/**",
+      ".codacy/**",
+      "src/models/**",
+    ],
+  },
+  ...nextVitals,
+  eslintConfigPrettier,
+  {
+    rules: {
+      // Allow setMounted(true) pattern for hydration safety
+      "react-hooks/set-state-in-effect": "off",
+      // Allow useCallback with function reference
+      "react-hooks/use-memo": "off",
+    },
+  },
 ]
 
 export default eslintConfig
