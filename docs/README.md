@@ -22,7 +22,7 @@ This directory contains the OpenAPI specification from Strapi, used to generate 
 3. **Generate TypeScript types:**
 
    ```bash
-   pnpm run codegen:rest
+   bun run codegen:rest
    ```
 
    This will create `src/models/strapi.d.ts` with all the types.
@@ -33,7 +33,7 @@ Whenever you make changes to content types in Strapi:
 
 1. Regenerate the OpenAPI spec in Strapi
 2. Copy the new `specification.json` here
-3. Run `pnpm run codegen:rest`
+3. Run `bun run codegen:rest`
 
 ## Notes
 

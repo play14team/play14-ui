@@ -4,6 +4,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.dev
+      target: development
+      cache_from:
+        - type=registry,ref=play14containerregistry.azurecr.io/play14/play14-ui:dev-cache
+      cache_to:
+        - type=inline
     env_file:
       - .env.local
     ports:
@@ -24,7 +29,7 @@ services:
       - NODE_ENV=development
       # Override STRAPI_API_URL to use the service name from play14-api network
       - STRAPI_API_URL=http://play14-api:1337
-    command: pnpm develop
+    command: bun run develop
     networks:
       - Play14-api
     healthcheck:

@@ -68,7 +68,7 @@ podman compose down
 podman compose logs -f
 
 # Execute commands in container
-podman compose exec app pnpm run lint
+podman compose exec app bun run lint
 podman compose exec app sh  # Interactive shell
 ```
 
@@ -176,10 +176,10 @@ podman run -d \
 ### Development Container (Dockerfile.dev)
 
 ```
-Base: node:20-alpine
+Base: oven/bun:1.3.5-alpine
 Size: ~500MB (with dev dependencies)
 Purpose: Development with hot reload
-Entry: pnpm dev
+Entry: bun run develop
 ```
 
 ### Production Container (Dockerfile)

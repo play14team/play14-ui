@@ -2,25 +2,19 @@
 # Optimized for minimal image size and security
 
 # Stage 1: Dependencies
-FROM node:20-alpine AS deps
+FROM oven/bun:1.3.5-alpine AS deps
 RUN apk add --no-cache libc6-compat
-
-# Install pnpm
-RUN npm install -g pnpm@10.15.1
 
 WORKDIR /app
 
 # Copy package files
-COPY package.json pnpm-lock.yaml ./
+COPY package.json bun.lock ./
 
 # Install dependencies with frozen lockfile
-RUN pnpm install --frozen-lockfile --prod=false
+RUN bun install --frozen-lockfile
 
 # Stage 2: Builder
-FROM node:20-alpine AS builder
-
-# Install pnpm
-RUN npm install -g pnpm@10.15.1
+FROM oven/bun:1.3.5-alpine AS builder
 
 WORKDIR /app
 
@@ -47,7 +41,7 @@ ENV NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN}
 ENV NEXT_PUBLIC_WEB_VITALS=${NEXT_PUBLIC_WEB_VITALS}
 
 # Build application
-RUN pnpm run build
+RUN bun run build
 
 # Stage 3: Runner
 FROM node:20-alpine AS runner

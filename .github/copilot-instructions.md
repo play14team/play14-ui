@@ -9,7 +9,7 @@ This is a **Next.js 15 App Router** application for the #play14 community platfo
 ### Data Flow: Strapi GraphQL → Server Actions → Components
 
 1. **GraphQL queries** live in `src/graphql/{domain}/*.graphql` (e.g., `events/grid.graphql`, `games/details.graphql`)
-2. Run `pnpm run codegen` to generate TypeScript types in `src/models/` from these queries
+2. Run `bun run codegen` to generate TypeScript types in `src/models/` from these queries
 3. **Server Actions** (`*.action.ts` files with `"use server"`) wrap queries using `src/libs/apollo-client.ts`
 4. Components import and call these actions directly (RSC pattern)
 
@@ -44,11 +44,11 @@ src/
 ## Essential Commands
 
 ```bash
-pnpm dev              # Start dev server (uses Turbopack)
-pnpm run codegen      # Regenerate GraphQL types after editing .graphql files
-pnpm run build        # Production build
-pnpm run lint         # ESLint check
-pnpm run format       # Prettier format
+bun run dev           # Start dev server (uses Turbopack)
+bun run codegen       # Regenerate GraphQL types after editing .graphql files
+bun run build         # Production build
+bun run lint          # ESLint check
+bun run format        # Prettier format
 ```
 
 ## Critical Environment Variables
@@ -75,7 +75,7 @@ NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=<token>       # Mapbox API key
 ### Adding/Modifying GraphQL Queries
 
 1. Edit `.graphql` files in `src/graphql/{domain}/`
-2. Run `pnpm run codegen` to update types
+2. Run `bun run codegen` to update types
 3. Import generated documents from `@/models/graphql`
 4. Use in server actions via `query()` helper
 
@@ -145,7 +145,7 @@ All list pages (events, games, articles, players) use the `load-more.tsx` patter
 ## Common Pitfalls
 
 1. **Editing generated files** - Never modify `src/models/` files; they're overwritten by codegen
-2. **Missing codegen run** - Type errors after GraphQL changes? Run `pnpm run codegen`
+2. **Missing codegen run** - Type errors after GraphQL changes? Run `bun run codegen`
 3. **Wrong directive** - Use `"use server"` in `*.action.ts`, `"use client"` in interactive components
 4. **Cache issues** - Server components cache by default; set `revalidate` or `dynamic` exports as needed
 5. **Path aliases** - Always use `@/*` imports (configured in `tsconfig.json`)

@@ -8,28 +8,28 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Tech Stack:** Next.js 16.0.8 (App Router) • React 19 • TypeScript 5.9 • Strapi 5 REST API • SCSS • Mapbox • Azure Static Web Apps
 
-**Package Manager:** `pnpm` (version 10.15.1 - pinned in package.json)
+**Package Manager:** `bun` (version 1.3.5 - pinned in package.json)
 
 ## Essential Commands
 
 ```bash
 # Development
-pnpm dev                    # Start local dev server with Turbopack at http://localhost:3000
+bun run dev                 # Start local dev server with Turbopack at http://localhost:3000
 
 # Container Development (Podman/Docker)
-pnpm up                     # Start containerized dev environment (detached + logs)
-pnpm down                   # Stop and remove containers
+bun run up                  # Start containerized dev environment (detached + logs)
+bun run down                # Stop and remove containers
 podman compose up           # Start containerized dev environment (foreground)
 podman compose up --build   # Rebuild and start containers
 podman compose logs -f app  # Follow container logs
 
 # Production
-pnpm run build              # Production build (standalone output)
-pnpm start                  # Run production server
+bun run build               # Production build (standalone output)
+bun run start               # Run production server
 
 # Code Quality
-pnpm run lint               # ESLint check
-pnpm run format             # Prettier format all files
+bun run lint                # ESLint check
+bun run format              # Prettier format all files
 ```
 
 ## Architecture: REST API → Server Actions → Components
