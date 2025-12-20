@@ -39,16 +39,8 @@ export default function EventsError({
             ? `${error.message}\n${error.stack || ""}`
             : undefined
         }
-        showReload={false}
+        onRetry={reset}
       />
-      <div className="container mt-3">
-        <button className="btn btn-primary" onClick={() => reset()}>
-          Retry loading events
-        </button>
-        <a href="/events" className="btn btn-outline-secondary ms-2">
-          Back to events
-        </a>
-      </div>
     </Page>
   )
 }
