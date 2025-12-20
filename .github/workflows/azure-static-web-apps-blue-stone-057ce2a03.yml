@@ -58,6 +58,15 @@ jobs:
         with:
           submodules: true
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: "pnpm"
+
       - name: Set Backend URL
         id: backend-url
         run: |
@@ -67,7 +76,17 @@ jobs:
             echo "STRAPI_API_URL=https://community.play14.org" >> $GITHUB_ENV
           fi
 
-      - name: Build and Deploy to Azure
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build Next.js application
+        run: pnpm run build
+        env:
+          STRAPI_API_URL: ${{ env.STRAPI_API_URL }}
+          STRAPI_API_SECRET: ${{ secrets.STRAPI_API_SECRET }}
+          NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+
+      - name: Deploy to Azure Static Web Apps
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
         with:
@@ -76,14 +95,8 @@ jobs:
           action: "upload"
           app_location: "/"
           api_location: ""
-          output_location: ""
-          skip_app_build: false
-        env:
-          NODE_VERSION: ${{ env.NODE_VERSION }}
-          STRAPI_API_URL: ${{ env.STRAPI_API_URL }}
-          STRAPI_API_SECRET: ${{ secrets.STRAPI_API_SECRET }}
-          NEXT_SHARP_PATH: node_modules/sharp
-          NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN: ${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }}
+          output_location: ".next"
+          skip_app_build: true
 
   close_pull_request:
     name: Close PR Preview
@@ -99,3 +112,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_BLUE_STONE_057CE2A03 }}
           action: "close"
+          app_location: "/"
