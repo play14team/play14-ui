@@ -1,9 +1,0 @@
-query Format {
-  format {
-    openspace
-    lawOfTwoFeet
-    butterfly
-    bumblebee
-    schedule
-  }
-}

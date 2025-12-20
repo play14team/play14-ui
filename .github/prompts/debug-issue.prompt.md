@@ -78,7 +78,7 @@ const bugReport = {
 // Add debugging logs
 console.log("Events data:", events)
 console.log("Pagination:", pagination)
-console.log("GraphQL response:", response)
+console.log("API response:", response)
 
 // Check data types and shapes
 console.log("Type of events:", typeof events)
@@ -94,7 +94,7 @@ if (!events) {
 
 ### Phase 3: Common Bug Categories
 
-#### GraphQL/Data Fetching Issues
+#### REST API/Data Fetching Issues
 
 ```typescript
 // Common issues and solutions

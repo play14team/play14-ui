@@ -1,5 +1,0 @@
-query ArticleSlugs {
-  articles(pagination: { limit: 5000 }) {
-    slug
-  }
-}

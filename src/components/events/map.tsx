@@ -35,9 +35,10 @@ export default function EventMap({ events }: { events: Event[] }) {
   }
 
   // Theme-aware map style
+  // Use dark-v11 instead of navigation-night-v1 to maintain globe projection
   const isDark = mounted && resolvedTheme === "dark"
   const mapStyle = isDark
-    ? "mapbox://styles/mapbox/navigation-night-v1"
+    ? "mapbox://styles/mapbox/dark-v11"
     : "mapbox://styles/mapbox/streets-v12"
 
   return (

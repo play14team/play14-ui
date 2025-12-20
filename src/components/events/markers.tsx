@@ -1,5 +1,6 @@
 import { Event, GeoLocation } from "@/models/strapi"
-import { useMemo, useState } from "react"
+import { useTheme } from "next-themes"
+import { useEffect, useMemo, useState } from "react"
 import { Marker } from "react-map-gl/mapbox"
 import EventPopup, { mapColor } from "./popup"
 
@@ -11,7 +12,11 @@ function getCoordinates(
 
   // Handle Mapbox format (geometry.coordinates)
   if ("geometry" in location && location.geometry?.coordinates) {
-    return [location.geometry.coordinates[0], location.geometry.coordinates[1]]
+    const coords: [number, number] = [
+      location.geometry.coordinates[0],
+      location.geometry.coordinates[1],
+    ]
+    return coords
   }
 
   // Handle simple format (lat/lng)
@@ -29,53 +34,59 @@ function getCoordinates(
 
 export default function EventMarkers({ events }: { events: Event[] }) {
   const [popupInfo, setPopupInfo] = useState<Event[]>([])
+  const [mounted, setMounted] = useState(false)
+  const { resolvedTheme } = useTheme()
 
-  const markers = useMemo(
-    () =>
-      events
-        .map((event, index) => {
-          const coords = getCoordinates(event.venue?.location)
+  useEffect(() => {
+    setMounted(true)
+  }, [])
 
-          if (coords) {
-            const [longitude, latitude] = coords
-            const venueId = event.venue?.documentId
+  const isDark = mounted && resolvedTheme === "dark"
 
-            // Filter events at the same venue by matching coordinates and venue ID
-            const predicate = (e: Event) => {
-              const eCoords = getCoordinates(e.venue?.location)
-              if (!eCoords) return false
+  const markers = useMemo(() => {
+    return events
+      .map((event, index) => {
+        const coords = getCoordinates(event.venue?.location)
 
-              const [eLng, eLat] = eCoords
+        if (coords) {
+          const [longitude, latitude] = coords
+          const venueId = event.venue?.documentId
 
-              // Match by venue documentId if available, otherwise match by exact coordinates
-              if (venueId && e.venue?.documentId) {
-                return venueId === e.venue.documentId
-              }
+          // Filter events at the same venue by matching coordinates and venue ID
+          const predicate = (e: Event) => {
+            const eCoords = getCoordinates(e.venue?.location)
+            if (!eCoords) return false
 
-              return eLng === longitude && eLat === latitude
+            const [eLng, eLat] = eCoords
+
+            // Match by venue documentId if available, otherwise match by exact coordinates
+            if (venueId && e.venue?.documentId) {
+              return venueId === e.venue.documentId
             }
 
-            const markerEvents = events.filter(predicate)
-
-            return (
-              <Marker
-                key={`marker-${index}`}
-                longitude={longitude}
-                latitude={latitude}
-                color={mapColor(event.eventStatus)}
-                style={{ cursor: "pointer" }}
-                onClick={(e) => {
-                  e.originalEvent.stopPropagation()
-                  setPopupInfo(markerEvents)
-                }}
-              />
-            )
+            return eLng === longitude && eLat === latitude
           }
-          return null
-        })
-        .filter(Boolean), // Remove null values
-    [events],
-  )
+
+          const markerEvents = events.filter(predicate)
+
+          return (
+            <Marker
+              key={`marker-${index}`}
+              longitude={longitude}
+              latitude={latitude}
+              color={mapColor(event.eventStatus, isDark)}
+              style={{ cursor: "pointer" }}
+              onClick={(e) => {
+                e.originalEvent.stopPropagation()
+                setPopupInfo(markerEvents)
+              }}
+            />
+          )
+        }
+        return null
+      })
+      .filter(Boolean) // Remove null values
+  }, [events, isDark])
 
   return (
     <>

@@ -63,8 +63,20 @@ export interface SimpleGeoLocation {
 export interface MapboxGeoLocation {
   geometry: {
     coordinates: [number, number]
+    type?: string
   }
-  place_name: string
+  place_name?: string
+  // Allow additional Mapbox properties
+  id?: string
+  text?: string
+  type?: string
+  center?: [number, number]
+  address?: string
+  context?: unknown[]
+  relevance?: number
+  place_type?: string[]
+  properties?: Record<string, unknown>
+  [key: string]: unknown // Allow any additional properties
 }
 
 export type GeoLocation = SimpleGeoLocation | MapboxGeoLocation

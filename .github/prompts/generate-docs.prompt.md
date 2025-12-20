@@ -54,7 +54,7 @@ export default function EventCard({
 
 ### API Documentation
 
-Document server actions, utility functions, and GraphQL queries.
+Document server actions, utility functions, and REST API integrations.
 
 #### Server Action Documentation
 
@@ -74,7 +74,7 @@ Document server actions, utility functions, and GraphQL queries.
  * const pagination = result.events?.meta.pagination
  * ```
  *
- * @throws {Error} When GraphQL query fails
+ * @throws {Error} When API request fails
  */
 export async function getEvents(
   page: number,
@@ -167,7 +167,7 @@ High-level description of the system architecture.
 
 1. User interacts with UI components
 2. Components call server actions
-3. Server actions query GraphQL API
+3. Server actions fetch data from Strapi 5 REST API
 4. Data flows back through the chain
 5. UI updates with new data
 
@@ -177,10 +177,10 @@ High-level description of the system architecture.
 - Server Components handle data fetching and initial rendering
 - Client Components handle user interactions and state
 
-### GraphQL Code Generation
-- Queries defined in .graphql files
-- Types generated automatically with `pnpm run codegen`
-- Server actions use generated types and documents
+### REST API Integration
+- Server actions use fetch to call Strapi 5 REST API endpoints
+- TypeScript interfaces define response types
+- Server actions handle data transformation and error handling
 
 ## Directory Structure
 
@@ -188,10 +188,10 @@ High-level description of the system architecture.
 
 src/
 ├── app/ # Next.js App Router routes
-├── components/ # Reusable UI components
-├── graphql/ # GraphQL query definitions
+├── components/ # Reusable UI components and server actions
 ├── libs/ # Utility libraries
-└── models/ # Generated GraphQL types
+├── models/ # TypeScript type definitions
+└── hooks/ # Custom React hooks
 
 ```
 
