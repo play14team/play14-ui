@@ -4,9 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**play14-ui** is a Next.js 16 App Router application for the #play14 global community platform. It fetches content from a **Strapi CMS GraphQL API** and displays events, games, articles, and player profiles with server-side rendering and client-side interactivity.
+**play14-ui** is a Next.js 16 App Router application for the #play14 global community platform. It fetches content from a **Strapi 5 CMS REST API** and displays events, games, articles, and player profiles with server-side rendering and client-side interactivity.
 
-**Tech Stack:** Next.js 16.0.8 (App Router) • React 19 • TypeScript 5.9 • Apollo Client • Strapi GraphQL API • SCSS • Mapbox • Azure Static Web Apps
+**Tech Stack:** Next.js 16.0.8 (App Router) • React 19 • TypeScript 5.9 • Strapi 5 REST API • SCSS • Mapbox • Azure Static Web Apps
 
 **Package Manager:** `pnpm` (version 10.15.1 - pinned in package.json)
 
@@ -21,30 +21,26 @@ pnpm start                  # Run production server
 # Code Quality
 pnpm run lint               # ESLint check
 pnpm run format             # Prettier format all files
-
-# GraphQL Type Generation (CRITICAL - run after editing .graphql files)
-pnpm run codegen            # Generate TypeScript types from GraphQL queries
-pnpm run codegen-watch      # Watch mode for continuous type generation
 ```
 
-## Architecture: GraphQL → Server Actions → Components
+## Architecture: REST API → Server Actions → Components
 
 ### Data Flow Pattern
 
-1. **GraphQL Queries** → `src/graphql/{domain}/*.graphql` (e.g., `events/grid.graphql`)
-2. **Code Generation** → Run `pnpm run codegen` to generate types in `src/models/`
-3. **Server Actions** → `*.action.ts` files with `"use server"` wrap queries using Apollo Client
-4. **Components** → Import and call server actions directly (React Server Component pattern)
+1. **Server Actions** → `*.action.ts` files with `"use server"` fetch data from Strapi 5 REST API
+2. **Components** → Import and call server actions directly (React Server Component pattern)
 
 **Example:**
 
 ```typescript
-// 1. src/graphql/events/grid.graphql defines EventsDocument
-// 2. src/components/events/get.action.ts exports:
+// 1. src/components/events/get.action.ts exports:
 export async function getEvents(page: number, pageSize: number) {
-  return await query({ query: EventsDocument, variables: { page, pageSize } })
+  const response = await fetch(
+    `${STRAPI_API_URL}/api/events?pagination[page]=${page}&pagination[pageSize]=${pageSize}`,
+  )
+  return await response.json()
 }
-// 3. src/app/events/page.tsx calls getEvents() directly
+// 2. src/app/events/page.tsx calls getEvents() directly
 ```
 
 ### Server/Client Component Boundaries
@@ -59,29 +55,32 @@ export async function getEvents(page: number, pageSize: number) {
 src/
 ├── app/{domain}/              # Next.js routes (page.tsx, [slug]/page.tsx)
 ├── components/{domain}/       # Domain components + get.action.ts
-├── graphql/{domain}/          # GraphQL queries (.graphql files)
-├── libs/                      # Utilities (apollo-client, dates, arrays, safe-actions)
-├── models/                    # Generated types (DO NOT EDIT - run codegen)
+├── libs/                      # Utilities (fetch helpers, dates, arrays, safe-actions)
+├── models/                    # TypeScript types and interfaces
 ├── hooks/                     # Custom React hooks (useIntersection)
 └── styles/                    # SCSS, CSS, fonts, images
 ```
 
 ## Critical Workflows
 
-### Adding/Modifying GraphQL Queries
-
-1. Edit `.graphql` files in `src/graphql/{domain}/`
-2. **MUST RUN:** `pnpm run codegen` to regenerate types
-3. Import generated documents from `@/models/graphql`
-4. Use in server actions via `query()` helper from `@/libs/apollo-client`
-
 ### Creating New Features
 
-1. Add GraphQL query: `src/graphql/{domain}/feature-name.graphql`
-2. Run `pnpm run codegen`
-3. Create server action: `src/components/{domain}/get.action.ts`
-4. Build component: `src/components/{domain}/feature-name.tsx`
-5. Use in route: `src/app/{domain}/page.tsx`
+1. Create server action: `src/components/{domain}/get.action.ts`
+   - Use `fetch` to call Strapi 5 REST API endpoints
+   - Handle errors appropriately
+   - Return typed data
+2. Build component: `src/components/{domain}/feature-name.tsx`
+3. Use in route: `src/app/{domain}/page.tsx`
+
+### Working with Strapi 5 REST API
+
+- **Base URL:** `STRAPI_API_URL` environment variable
+- **Authentication:** Use `STRAPI_API_SECRET` for server-side requests
+- **Endpoints:** Follow Strapi 5 REST API conventions
+  - Collections: `/api/{collection-name}`
+  - Single entries: `/api/{collection-name}/{id}`
+  - Query parameters: `?populate=*&filters[field][$eq]=value`
+- **Response format:** Strapi 5 JSON API format with `data`, `meta`, and `attributes`
 
 ### Styling Approach
 
@@ -119,28 +118,23 @@ NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=<token>        # Mapbox key
 
 ## Type Safety Helpers
 
-Import from `@/libs/apollo-client`:
-
-- `dataAs<T>()` - Extract typed data from GraphQL response
-- `dataAsArrayOf<T>()` - Extract typed array from response
-- `attributesAs<T>()` - Extract Strapi attributes
-- `getPagination()` - Extract pagination metadata
+- Define TypeScript interfaces in `@/models/` for Strapi response types
+- Use type assertions when working with API responses
+- Validate data shape in server actions before returning to components
 
 ## Path Aliases (tsconfig.json)
 
 Always use `@/*` imports:
 
 - `@/components` → src/components
-- `@/models` → src/models (generated types)
+- `@/models` → src/models
 - `@/libs` → src/libs
-- `@/graphql` → src/graphql
 - `@/hooks` → src/hooks
 
 ## File Naming Conventions
 
 - Components: `PascalCase.tsx` (`Navbar.tsx`, `GameGrid.tsx`)
 - Server actions: `get.action.ts` (consistent naming across domains)
-- GraphQL queries: `kebab-case.graphql` (`grid.graphql`, `details.graphql`)
 - Utilities: `camelCase.ts`
 - Route params: Use `SlugParamsProps` from `@/libs/slug-params` for `[slug]` routes
 
@@ -169,11 +163,11 @@ All list pages use the `load-more.tsx` pattern:
 
 ## Common Pitfalls
 
-1. **Never edit generated files** - `src/models/` is overwritten by codegen
-2. **Missing codegen** - Type errors after GraphQL changes? Run `pnpm run codegen`
-3. **Wrong directive** - Use `"use server"` in `*.action.ts`, `"use client"` for interactive components
-4. **Cache issues** - Server components cache by default; set `revalidate` or `dynamic` exports as needed
-5. **Image domains** - Remote images must be configured in `next.config.js` remotePatterns
+1. **Wrong directive** - Use `"use server"` in `*.action.ts`, `"use client"` for interactive components
+2. **Cache issues** - Server components cache by default; set `revalidate` or `dynamic` exports as needed
+3. **Image domains** - Remote images must be configured in `next.config.js` remotePatterns
+4. **API errors** - Always handle fetch errors and check response status codes
+5. **Environment variables** - Server-side variables (without `NEXT_PUBLIC_`) only available in server components and actions
 
 ## Next.js Configuration
 
@@ -207,10 +201,11 @@ Uses **Turbopack** for faster builds (`next dev --turbopack`)
 - **Deployment Flow:**
   1. Install pnpm
   2. Install dependencies
-  3. Run `pnpm run codegen`
-  4. Run `pnpm run lint`
-  5. Run `pnpm run build`
-  6. Deploy to Azure
+  3. Run `pnpm run lint` (quality job)
+  4. Run `pnpm run typecheck` (quality job)
+  5. Set backend URL (acceptance for PRs, production for main)
+  6. Run `pnpm run build`
+  7. Deploy to Azure Static Web Apps
 
 ## Git Workflow
 
