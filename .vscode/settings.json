@@ -18,5 +18,10 @@
     "titleBar.inactiveBackground": "#0b1c0899",
     "titleBar.inactiveForeground": "#e7e7e799"
   },
-  "peacock.color": "#0b1c08"
+  "conventionalCommits.scopes": [
+        "events"
+  ],
+  "terminal.integrated.enablePersistentSessions": true,
+  "terminal.integrated.persistentSessionReviveProcess": "onExit",
+  "claude.commitMessage.includeClaudeCodeAttribution": false
 }
