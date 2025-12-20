@@ -1,22 +1,21 @@
-name: Deploy to Azure Container Apps (Acceptance)
+name: Deploy to Azure Container Apps (Production)
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  push:
     branches:
       - main
   workflow_dispatch:
 
 concurrency:
-  group: aca-acceptance-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  group: aca-production
+  cancel-in-progress: false
 
 env:
   NODE_VERSION: "20"
-  STRAPI_API_URL: "https://community-acc.play14.org/"
+  STRAPI_API_URL: "https://community.play14.org"
   REGISTRY: play14containerregistry.azurecr.io
   IMAGE_NAME: play14/play14-ui
-  CONTAINER_APP_NAME: play14-ui-acc
+  CONTAINER_APP_NAME: play14-ui
   RESOURCE_GROUP: play14-community
   CONTAINER_APP_ENVIRONMENT: play14-container-env
 
@@ -54,7 +53,6 @@ jobs:
       contents: read
       packages: write
       id-token: write
-      pull-requests: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -75,13 +73,10 @@ jobs:
       - name: Generate image tag
         id: image-tag
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            TAG="pr-${{ github.event.pull_request.number }}-${{ github.sha }}"
-          else
-            TAG="acc-${{ github.sha }}"
-          fi
+          TAG="prod-${{ github.sha }}"
           echo "tag=${TAG}" >> $GITHUB_OUTPUT
           echo "full-image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG}" >> $GITHUB_OUTPUT
+          echo "latest-image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_OUTPUT
 
       - name: Build and push container image
         uses: docker/build-push-action@v5
@@ -89,7 +84,9 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
-          tags: ${{ steps.image-tag.outputs.full-image }}
+          tags: |
+            ${{ steps.image-tag.outputs.full-image }}
+            ${{ steps.image-tag.outputs.latest-image }}
           build-args: |
             STRAPI_API_URL=${{ env.STRAPI_API_URL }}
             STRAPI_API_SECRET=${{ secrets.STRAPI_API_SECRET }}
@@ -118,30 +115,6 @@ jobs:
             --output tsv)
           echo "url=https://${URL}" >> $GITHUB_OUTPUT
 
-      - name: Comment PR with deployment URL
-        if: github.event_name == 'pull_request'
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const url = '${{ steps.get-url.outputs.url }}';
-            const comment = `## 🚀 Acceptance Deployment
-
-            Your changes have been deployed to Azure Container Apps!
-
-            **Environment:** Acceptance
-            **URL:** ${url}
-            **Image:** \`${{ steps.image-tag.outputs.full-image }}\`
-            **Backend:** ${{ env.STRAPI_API_URL }}
-
-            The deployment will be updated automatically with each push to this PR.`;
-
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: comment
-            });
-
       - name: Health check
         run: |
           echo "Waiting for deployment to stabilize..."
@@ -151,6 +124,7 @@ jobs:
           for i in {1..10}; do
             if curl -f -s "${URL}/api/health" > /dev/null; then
               echo "✅ Health check passed!"
+              echo "🚀 Production deployment successful: ${URL}"
               exit 0
             fi
             echo "Attempt $i/10 failed, retrying in 10s..."
@@ -159,3 +133,14 @@ jobs:
 
           echo "❌ Health check failed after 10 attempts"
           exit 1
+
+      - name: Create deployment summary
+        if: always()
+        run: |
+          echo "## 🚀 Production Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment:** Production" >> $GITHUB_STEP_SUMMARY
+          echo "**URL:** ${{ steps.get-url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Image:** \`${{ steps.image-tag.outputs.full-image }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Backend:** ${{ env.STRAPI_API_URL }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
