@@ -2,7 +2,14 @@
 
 import moment from "moment"
 import { useRouter } from "next/navigation"
-import { Calendar, Event, Views, momentLocalizer } from "react-big-calendar"
+import { useState, useCallback } from "react"
+import {
+  Calendar,
+  Event,
+  Views,
+  momentLocalizer,
+  NavigateAction,
+} from "react-big-calendar"
 
 const localizer = momentLocalizer(moment)
 
@@ -17,10 +24,19 @@ export interface CalendarEvent extends Event {
 
 export default function EventCalendar({ events }: EventCalendarProps) {
   const router = useRouter()
+  const [date, setDate] = useState(new Date())
   const views = [Views.MONTH]
+
   const onDoubleClickEvent = (event: { slug: string }) => {
     router.push("/events/" + event.slug)
   }
+
+  const onNavigate = useCallback(
+    (newDate: Date, _view: string, _action: NavigateAction) => {
+      setDate(newDate)
+    },
+    [],
+  )
 
   return (
     <div className="pt-70 pb-100">
@@ -28,6 +44,8 @@ export default function EventCalendar({ events }: EventCalendarProps) {
       <Calendar
         localizer={localizer}
         events={events}
+        date={date}
+        onNavigate={onNavigate}
         defaultView="month"
         views={views}
         startAccessor="start"
