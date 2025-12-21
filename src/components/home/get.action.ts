@@ -2,6 +2,8 @@
 
 import { restQuery, normalizeEntity } from "@/libs/strapi-client"
 import { homePopulate, eventItemPopulate } from "@/libs/strapi-populate"
+import { getTestimonials } from "@/components/events/get.action"
+import { Testimonial } from "@/models/strapi"
 
 // Types - will be replaced by OpenAPI generated types when available
 interface UploadFile {
@@ -79,4 +81,35 @@ export async function getExpectations(type: string) {
     },
   })
   return response.data || []
+}
+
+/**
+ * Get random testimonials for home page
+ * Shuffles server-side on each render (respects page revalidate cache)
+ * Filters to only text testimonials with named authors (excludes audio and anonymous)
+ */
+export async function getRandomTestimonials(count: number = 4) {
+  const allTestimonials = (await getTestimonials()) as Testimonial[]
+
+  if (!allTestimonials || allTestimonials.length === 0) {
+    return []
+  }
+
+  // Filter to only text testimonials (no audio) with named authors
+  const textTestimonials = allTestimonials.filter(
+    (testimonial) => !testimonial.audio && testimonial.author,
+  )
+
+  if (textTestimonials.length === 0) {
+    return []
+  }
+
+  // Fisher-Yates shuffle
+  const shuffled = [...textTestimonials]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  return shuffled.slice(0, count)
 }

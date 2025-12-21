@@ -1,6 +1,7 @@
 import EventsWorldMap from "@/components/events/EventsWorldMap"
 import Expectations from "@/components/home/expectations"
 import HomeGallery from "@/components/home/gallery"
+import HomeTestimonials from "@/components/home/testimonials"
 import UpcomingEvents from "@/components/home/upcoming"
 import CodeOfConduct from "@/components/layout/codeofconduct"
 import Manifesto from "@/components/layout/manifesto"
@@ -225,6 +226,10 @@ export default function Home() {
 
       <section id="gallery">
         <HomeGallery />
+      </section>
+
+      <section id="testimonials">
+        <HomeTestimonials />
       </section>
 
       <section id="manifesto and code of conduct" className="pt-100">
