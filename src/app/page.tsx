@@ -97,6 +97,10 @@ export default function Home() {
         <UpcomingEvents />
       </section>
 
+      <section id="interactive-world-map" className="pt-70">
+        <EventsWorldMap interactive={true} />
+      </section>
+
       <section id="activities">
         <h3 className="pb-3">What to expect?</h3>
         <p>
@@ -238,10 +242,6 @@ export default function Home() {
             <CodeOfConduct />
           </div>
         </div>
-      </section>
-
-      <section id="interactive-world-map" className="pt-70">
-        <EventsWorldMap interactive={true} />
       </section>
 
       <section id="benefits" className="pt-70">
