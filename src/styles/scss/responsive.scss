@@ -47,8 +47,8 @@ $value_nine: 1550px;
     padding-bottom: 30px;
   }
   .navbar-area {
-    background-color: #fff;
-    border-bottom: 1px solid #f7f7f7;
+    background-color: var(--navbar-sticky-bg);
+    border-bottom: 1px solid var(--color-border-light);
   }
   .tarn-nav {
     .container-fluid {
@@ -61,22 +61,22 @@ $value_nine: 1550px;
         margin-top: 8px !important;
         max-height: 70vh;
         overflow-y: scroll;
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--color-border);
         padding-top: 10px;
 
         &::-webkit-scrollbar {
           width: 10px;
         }
         &::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: var(--scrollbar-track);
           border-radius: 30px;
         }
         &::-webkit-scrollbar-thumb {
-          background: #888;
+          background: var(--scrollbar-thumb);
           border-radius: 30px;
         }
         &::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: var(--scrollbar-thumb-hover);
         }
       }
 
@@ -4907,8 +4907,8 @@ $value_nine: 1550px;
   }
 
   .navbar-area {
-    background-color: #fff;
-    border-bottom: 1px solid #f7f7f7;
+    background-color: var(--navbar-sticky-bg);
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   .tarn-nav {
@@ -4922,22 +4922,22 @@ $value_nine: 1550px;
         margin-top: 8px !important;
         max-height: 70vh;
         overflow-y: scroll;
-        border-top: 1px solid #eee;
+        border-top: 1px solid var(--color-border);
         padding-top: 10px;
 
         &::-webkit-scrollbar {
           width: 10px;
         }
         &::-webkit-scrollbar-track {
-          background: #f1f1f1;
+          background: var(--scrollbar-track);
           border-radius: 30px;
         }
         &::-webkit-scrollbar-thumb {
-          background: #888;
+          background: var(--scrollbar-thumb);
           border-radius: 30px;
         }
         &::-webkit-scrollbar-thumb:hover {
-          background: #555;
+          background: var(--scrollbar-thumb-hover);
         }
       }
 
