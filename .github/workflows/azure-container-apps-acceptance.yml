@@ -1,10 +1,9 @@
-name: Deploy to Azure Container Apps (Acceptance)
+name: PR Deployment to Acceptance
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - main
+    types: [opened, synchronize, reopened, closed]
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -16,14 +15,14 @@ env:
   STRAPI_API_URL: "https://community-acc.play14.org/"
   REGISTRY: play14containerregistry.azurecr.io
   IMAGE_NAME: play14/play14-ui
-  CONTAINER_APP_NAME: play14-ui-acc
+  CONTAINER_APP_ACC: play14-ui-acc
   RESOURCE_GROUP: play14-community
-  CONTAINER_APP_ENVIRONMENT: play14-container-env
 
 jobs:
   quality:
     name: Code Quality
     runs-on: ubuntu-latest
+    if: github.event.action != 'closed'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -42,17 +41,18 @@ jobs:
       - name: Type check
         run: bun run typecheck
 
-  build-and-deploy:
-    name: Build and Deploy
-    needs: quality
+  build-pr:
+    name: Build PR Image
     runs-on: ubuntu-latest
+    needs: quality
+    if: github.event.action != 'closed'
     permissions:
-      contents: read
-      packages: write
       id-token: write
+      contents: read
       pull-requests: write
+
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
@@ -65,93 +65,181 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Log in to Azure Container Registry
-        run: az acr login --name play14containerregistry
-
-      - name: Generate image tag
-        id: image-tag
+      - name: Log in to container registry
         run: |
-          if [ "${{ github.event_name }}" == "pull_request" ]; then
-            TAG="pr-${{ github.event.pull_request.number }}-${{ github.sha }}"
-          else
-            TAG="acc-${{ github.sha }}"
-          fi
-          echo "tag=${TAG}" >> $GITHUB_OUTPUT
-          echo "full-image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG}" >> $GITHUB_OUTPUT
+          az acr login --name play14containerregistry
 
-      - name: Build and push container image
-        uses: docker/build-push-action@v5
+      - name: Build and push PR container image
+        uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
           push: true
-          tags: ${{ steps.image-tag.outputs.full-image }}
+          tags: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}-${{ github.sha }}
+          file: ./Dockerfile
+          context: ./
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           build-args: |
             STRAPI_API_URL=${{ env.STRAPI_API_URL }}
             STRAPI_API_SECRET=${{ secrets.STRAPI_API_SECRET }}
             NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
 
-      - name: Deploy to Azure Container Apps
-        run: |
-          az containerapp update \
-            --name ${{ env.CONTAINER_APP_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image ${{ steps.image-tag.outputs.full-image }} \
-            --set-env-vars \
-              STRAPI_API_URL=${{ env.STRAPI_API_URL }} \
-              STRAPI_API_SECRET=secretref:strapi-api-secret \
-              NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=secretref:mapbox-token
-
-      - name: Get Container App URL
-        id: get-url
-        run: |
-          URL=$(az containerapp show \
-            --name ${{ env.CONTAINER_APP_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --query properties.configuration.ingress.fqdn \
-            --output tsv)
-          echo "url=https://${URL}" >> $GITHUB_OUTPUT
-
-      - name: Comment PR with deployment URL
-        if: github.event_name == 'pull_request'
+      - name: Comment PR with image tags
         uses: actions/github-script@v7
         with:
           script: |
-            const url = '${{ steps.get-url.outputs.url }}';
-            const comment = `## 🚀 Acceptance Deployment
-
-            Your changes have been deployed to Azure Container Apps!
-
-            **Environment:** Acceptance
-            **URL:** ${url}
-            **Image:** \`${{ steps.image-tag.outputs.full-image }}\`
-            **Backend:** ${{ env.STRAPI_API_URL }}
-
-            The deployment will be updated automatically with each push to this PR.`;
-
             github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: comment
-            });
+              body: `🐳 **Docker Image Built Successfully**\n\nPR Image Tags:\n- \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}\`\n- \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}-${{ github.sha }}\`\n\n⏳ Deploying to acceptance environment...`
+            })
 
-      - name: Health check
-        run: |
-          echo "Waiting for deployment to stabilize..."
-          sleep 30
+  deploy-pr:
+    name: Deploy to Acceptance
+    runs-on: ubuntu-latest
+    needs: build-pr
+    if: github.event.action != 'closed'
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
 
-          URL="${{ steps.get-url.outputs.url }}"
-          for i in {1..10}; do
-            if curl -f -s "${URL}/api/health" > /dev/null; then
-              echo "✅ Health check passed!"
-              exit 0
+    steps:
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Acceptance Container App
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            echo "Deploying new image to container app (can deploy while stopped)..."
+            az containerapp update \
+              -n ${{ env.CONTAINER_APP_ACC }} \
+              -g ${{ env.RESOURCE_GROUP }} \
+              --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}-${{ github.sha }} \
+              --set-env-vars \
+                STRAPI_API_URL=${{ env.STRAPI_API_URL }} \
+                STRAPI_API_SECRET=secretref:strapi-api-secret \
+                NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=secretref:mapbox-token
+
+      - name: Start Container App
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            echo "Starting container app..."
+            az rest --method post \
+              --url "/subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP }}/providers/Microsoft.App/containerApps/${{ env.CONTAINER_APP_ACC }}/start?api-version=2024-03-01"
+
+            echo "Waiting 30 seconds for container app to initialize..."
+            sleep 30
+
+      - name: Wait for Container App to be Ready
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            echo "Waiting for container app to be ready..."
+
+            # Get the app URL
+            APP_URL=$(az containerapp show \
+              -n ${{ env.CONTAINER_APP_ACC }} \
+              -g ${{ env.RESOURCE_GROUP }} \
+              --query properties.configuration.ingress.fqdn \
+              -o tsv)
+
+            if [ -z "$APP_URL" ]; then
+              echo "Error: Could not retrieve container app URL"
+              exit 1
             fi
-            echo "Attempt $i/10 failed, retrying in 10s..."
-            sleep 10
-          done
 
-          echo "❌ Health check failed after 10 attempts"
-          exit 1
+            HEALTH_URL="https://$APP_URL/api/health"
+            MAX_ATTEMPTS=60
+            SLEEP_SECONDS=10
+            attempt=1
+
+            echo "Checking health endpoint: $HEALTH_URL"
+            echo "Will retry up to $MAX_ATTEMPTS times (${SLEEP_SECONDS}s intervals, ~$((MAX_ATTEMPTS * SLEEP_SECONDS / 60)) minutes total)"
+
+            while [ $attempt -le $MAX_ATTEMPTS ]; do
+              echo "Attempt $attempt/$MAX_ATTEMPTS..."
+
+              # Use curl to check health endpoint
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -m 10 "$HEALTH_URL" || echo "000")
+
+              if [ "$HTTP_CODE" = "204" ] || [ "$HTTP_CODE" = "200" ]; then
+                echo "✅ Container app is ready (HTTP $HTTP_CODE)"
+                exit 0
+              fi
+
+              echo "Container app not ready yet (HTTP $HTTP_CODE). Waiting ${SLEEP_SECONDS}s..."
+              sleep $SLEEP_SECONDS
+              attempt=$((attempt + 1))
+            done
+
+            echo "❌ Container app failed to become ready after $MAX_ATTEMPTS attempts"
+            exit 1
+
+      - name: Get Container App URL
+        id: get-url
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            URL=$(az containerapp show \
+              -n ${{ env.CONTAINER_APP_ACC }} \
+              -g ${{ env.RESOURCE_GROUP }} \
+              --query properties.configuration.ingress.fqdn \
+              -o tsv)
+            echo "url=https://$URL" >> $GITHUB_OUTPUT
+
+      - name: Comment PR with deployment info
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `✅ **Deployed to Acceptance Environment**\n\n🌐 URL: ${{ steps.get-url.outputs.url }}\n📦 Image: \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${{ github.event.pull_request.number }}-${{ github.sha }}\`\n🔗 Backend: ${{ env.STRAPI_API_URL }}\n\nYou can now test this PR in the acceptance environment.`
+            })
+
+  stop-pr:
+    name: Stop Acceptance Environment
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    permissions:
+      id-token: write
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Stop Container App
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            echo "Stopping container app..."
+            az rest --method post \
+              --url "/subscriptions/${{ secrets.AZURE_SUBSCRIPTION_ID }}/resourceGroups/${{ env.RESOURCE_GROUP }}/providers/Microsoft.App/containerApps/${{ env.CONTAINER_APP_ACC }}/stop?api-version=2024-03-01"
+
+      - name: Comment PR with stop notification
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const prStatus = context.payload.pull_request.merged ? 'merged' : 'closed';
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `🛑 **Acceptance Environment Stopped**\n\nThe container app has been stopped to save resources.\nPR was ${prStatus}.`
+            })

@@ -10,9 +10,15 @@
     "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
     "format": "prettier src --write",
-    "dev": "podman compose up --build",
+    "dev": "bun develop",
+    "dev:pods": "podman compose up --build",
     "up": "podman compose up -d && podman logs -f play14-ui",
-    "down": "podman compose down"
+    "down": "podman compose down",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "@keyv/sqlite": "^4.0.6",
@@ -21,6 +27,7 @@
     "clsx": "^2.1.1",
     "country-locale-map": "^1.9.11",
     "html-react-parser": "^5.2.11",
+    "i18n-iso-countries": "^7.14.0",
     "ics": "^3.8.1",
     "keyv": "^5.5.5",
     "lodash": "^4.17.21",
@@ -47,6 +54,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@playwright/test": "^1.57.0",
     "@types/country-data": "^0.0.5",
     "@types/lodash": "^4.17.21",
     "@types/mapbox-gl": "^3.4.1",
