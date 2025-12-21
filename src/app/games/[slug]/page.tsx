@@ -13,13 +13,17 @@ export async function generateStaticParams() {
       games?: Game[]
     }
     const games = response?.games || []
+    console.log(`[Build] Pre-generating ${games.length} game pages`)
 
     return games.map((game) => ({
       slug: game.slug,
     }))
-  } catch {
-    // Return empty array if games API is unavailable
-    // Pages will be generated on-demand at runtime
+  } catch (error) {
+    console.warn(
+      "[Build] Failed to generate static params for games:",
+      error instanceof Error ? error.message : String(error),
+    )
+    console.warn("[Build] Games will be generated on-demand at runtime")
     return []
   }
 }

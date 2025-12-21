@@ -13,13 +13,17 @@ export async function generateStaticParams() {
       articles?: Article[]
     }
     const articles = response.articles || []
+    console.log(`[Build] Pre-generating ${articles.length} article pages`)
 
     return articles.map((article) => ({
       slug: article.slug,
     }))
-  } catch {
-    // Return empty array if articles API is unavailable
-    // Pages will be generated on-demand at runtime
+  } catch (error) {
+    console.warn(
+      "[Build] Failed to generate static params for articles:",
+      error instanceof Error ? error.message : String(error),
+    )
+    console.warn("[Build] Articles will be generated on-demand at runtime")
     return []
   }
 }

@@ -5,7 +5,9 @@ const STRAPI_REST_ENDPOINT =
   (process.env.STRAPI_API_URL || "").replace(/\/$/, "") + "/api"
 
 // Fallback to production if primary endpoint is unavailable
-const STRAPI_FALLBACK_ENDPOINT = "https://community.play14.org/api"
+const STRAPI_FALLBACK_ENDPOINT = process.env.STRAPI_FALLBACK_API_URL
+  ? process.env.STRAPI_FALLBACK_API_URL.replace(/\/$/, "") + "/api"
+  : "https://community.play14.org/api"
 
 /**
  * Fetch with timeout to prevent hanging connections
@@ -106,11 +108,34 @@ async function tryFetch(
       return { response, url }
     }
 
-    console.warn(`[Strapi] ${url} returned ${response.status}`)
+    console.warn(
+      `[Strapi] ${url} returned ${response.status}: ${response.statusText}`,
+    )
     return null
   } catch (error) {
-    console.warn(`[Strapi] ${url} failed:`, (error as Error).message)
+    console.warn(
+      `[Strapi] ${url} failed:`,
+      error instanceof Error ? error.message : String(error),
+    )
     return null
+  }
+}
+
+/**
+ * Safely parse JSON response with error handling
+ */
+async function parseJsonResponse<T>(
+  response: Response,
+  url: string,
+): Promise<StrapiResponse<T>> {
+  try {
+    return (await response.json()) as StrapiResponse<T>
+  } catch (error) {
+    console.error(
+      `[Strapi] Failed to parse JSON from ${url}:`,
+      error instanceof Error ? error.message : String(error),
+    )
+    throw new Error("Invalid JSON response from Strapi API")
   }
 }
 
@@ -127,18 +152,20 @@ export async function restQuery<T>(
     ? `?${qs.stringify(params, { encodeValuesOnly: true })}`
     : ""
 
-  const token = process.env.STRAPI_API_SECRET
+  const primaryToken = process.env.STRAPI_API_SECRET
+  const fallbackToken =
+    process.env.STRAPI_FALLBACK_API_SECRET || process.env.STRAPI_API_SECRET
 
   // Try primary endpoint first
   const primaryResult = await tryFetch(
     STRAPI_REST_ENDPOINT,
     endpoint,
     queryString,
-    token,
+    primaryToken,
   )
 
   if (primaryResult) {
-    return (await primaryResult.response.json()) as StrapiResponse<T>
+    return parseJsonResponse<T>(primaryResult.response, primaryResult.url)
   }
 
   // Fallback to production if primary failed and fallback is different
@@ -151,11 +178,11 @@ export async function restQuery<T>(
       STRAPI_FALLBACK_ENDPOINT,
       endpoint,
       queryString,
-      token,
+      fallbackToken,
     )
 
     if (fallbackResult) {
-      return (await fallbackResult.response.json()) as StrapiResponse<T>
+      return parseJsonResponse<T>(fallbackResult.response, fallbackResult.url)
     }
   }
 
