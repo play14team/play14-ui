@@ -1,7 +1,8 @@
 import "server-only"
 import qs from "qs"
 
-const STRAPI_REST_ENDPOINT = process.env.STRAPI_API_URL + "/api"
+const STRAPI_REST_ENDPOINT =
+  (process.env.STRAPI_API_URL || "").replace(/\/$/, "") + "/api"
 
 /**
  * Fetch with timeout to prevent hanging connections
