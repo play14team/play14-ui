@@ -5,9 +5,7 @@ import { homePopulate, eventItemPopulate } from "@/libs/strapi-populate"
 import { getTestimonials } from "@/components/events/get.action"
 import { Testimonial } from "@/models/strapi"
 import { shuffleArray } from "@/libs/arrays"
-
-/** Number of testimonials to display on the home page */
-export const HOME_TESTIMONIALS_COUNT = 4
+import { HOME_TESTIMONIALS_COUNT } from "./constants"
 
 // Types - will be replaced by OpenAPI generated types when available
 interface UploadFile {

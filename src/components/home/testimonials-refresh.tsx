@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react"
 import { Testimonial } from "@/models/strapi"
 import TestimonialItem from "@/components/events/testimonial"
-import { getRandomTestimonials, HOME_TESTIMONIALS_COUNT } from "./get.action"
+import { getRandomTestimonials } from "./get.action"
+import { HOME_TESTIMONIALS_COUNT } from "./constants"
 
 interface TestimonialsRefreshProps {
   initialTestimonials: Testimonial[]

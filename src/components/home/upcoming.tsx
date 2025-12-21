@@ -9,7 +9,7 @@ const UpcomingEvents = async () => {
 
   return (
     <div className="pt-100">
-      <h3 className="pb-3">Get involved</h3>
+      <h3 className="pb-3">Our upcoming events</h3>
       <p>
         Ready to play? Join our <strong>upcoming events</strong> and be part of
         a vibrant community that’s shaping the future through play. Your next
