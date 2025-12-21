@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 
 interface WorldMapProps {
   selected?: string[]
@@ -32,6 +32,39 @@ export default function WorldMap({
   const svgRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
   const [isFullscreen, setIsFullscreen] = useState(false)
+
+  // Function to apply country colors
+  const applyCountryColors = useCallback(() => {
+    if (!svgRef.current) return
+
+    const svgElement = svgRef.current.querySelector("svg")
+    if (!svgElement) return
+
+    const paths = svgElement.querySelectorAll("path[data-country-code]")
+
+    paths.forEach((path) => {
+      const countryCode = path.getAttribute("data-country-code")
+      if (!countryCode) return
+
+      const isSelected = selected.includes(countryCode.toUpperCase())
+      const htmlPath = path as HTMLElement
+
+      if (isSelected) {
+        // Use provided color or fallback to default blue
+        const color = countryColors[countryCode.toUpperCase()] || "#00a0dc"
+
+        htmlPath.style.fill = color
+        htmlPath.style.stroke = "#000000"
+        htmlPath.style.strokeWidth = "0.5"
+        htmlPath.classList.add("selected-country")
+      } else {
+        htmlPath.style.fill = "#ececec"
+        htmlPath.style.stroke = "#000000"
+        htmlPath.style.strokeWidth = "0.2"
+        htmlPath.classList.remove("selected-country")
+      }
+    })
+  }, [selected, countryColors])
 
   useEffect(() => {
     if (!svgRef.current) return
@@ -107,45 +140,12 @@ export default function WorldMap({
       .catch((error) => {
         console.error("Failed to load world map SVG:", error)
       })
-  }, [onClick, onMouseEnter, onMouseLeave, className])
-
-  // Function to apply country colors
-  const applyCountryColors = () => {
-    if (!svgRef.current) return
-
-    const svgElement = svgRef.current.querySelector("svg")
-    if (!svgElement) return
-
-    const paths = svgElement.querySelectorAll("path[data-country-code]")
-
-    paths.forEach((path) => {
-      const countryCode = path.getAttribute("data-country-code")
-      if (!countryCode) return
-
-      const isSelected = selected.includes(countryCode.toUpperCase())
-      const htmlPath = path as HTMLElement
-
-      if (isSelected) {
-        // Use provided color or fallback to default blue
-        const color = countryColors[countryCode.toUpperCase()] || "#00a0dc"
-
-        htmlPath.style.fill = color
-        htmlPath.style.stroke = "#000000"
-        htmlPath.style.strokeWidth = "0.5"
-        htmlPath.classList.add("selected-country")
-      } else {
-        htmlPath.style.fill = "#ececec"
-        htmlPath.style.stroke = "#000000"
-        htmlPath.style.strokeWidth = "0.2"
-        htmlPath.classList.remove("selected-country")
-      }
-    })
-  }
+  }, [onClick, onMouseEnter, onMouseLeave, className, applyCountryColors])
 
   // Update selected countries styling when selected prop or countryColors changes
   useEffect(() => {
     applyCountryColors()
-  }, [selected, countryColors])
+  }, [applyCountryColors])
 
   // Fullscreen handler
   const toggleFullscreen = async () => {

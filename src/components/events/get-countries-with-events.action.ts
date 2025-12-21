@@ -40,10 +40,11 @@ export async function getCountriesWithEvents(): Promise<string[]> {
 
       // Check if there are more pages
       const meta = response.meta
-      hasMore =
+      hasMore = Boolean(
         meta &&
         meta.pagination &&
-        meta.pagination.page < meta.pagination.pageCount
+        meta.pagination.page < meta.pagination.pageCount,
+      )
       page++
     }
 
