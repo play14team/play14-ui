@@ -12,7 +12,12 @@
     "format": "prettier src --write",
     "dev": "podman compose up --build",
     "up": "podman compose up -d && podman logs -f play14-ui",
-    "down": "podman compose down"
+    "down": "podman compose down",
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:headed": "playwright test --headed",
+    "test:debug": "playwright test --debug",
+    "test:report": "playwright show-report"
   },
   "dependencies": {
     "@keyv/sqlite": "^4.0.6",
@@ -47,6 +52,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@playwright/test": "^1.57.0",
     "@types/country-data": "^0.0.5",
     "@types/lodash": "^4.17.21",
     "@types/mapbox-gl": "^3.4.1",
