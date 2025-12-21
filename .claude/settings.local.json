@@ -20,7 +20,8 @@
       "Bash(gh secret list:*)",
       "Bash(bun --version:*)",
       "Bash(curl:*)",
-      "Bash(gh pr list:*)"
+      "Bash(gh pr list:*)",
+      "Bash(git checkout:*)"
     ],
     "deny": [],
     "ask": []

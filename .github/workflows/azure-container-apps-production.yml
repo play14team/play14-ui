@@ -30,37 +30,62 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 1
 
       - name: Check if commit is from PR merge
         id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          # Check if this is a merge commit
-          if git rev-parse HEAD^2 >/dev/null 2>&1; then
-            echo "This is a merge commit"
+          set -e  # Exit on error for better error visibility
 
-            # Extract PR head commit SHA (the commit that was merged, not the merge commit)
-            PR_HEAD_SHA=$(git rev-parse HEAD^2)
-            echo "PR head SHA: $PR_HEAD_SHA"
-            echo "pr_head_sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
+          # Get commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MSG"
 
-            # Extract PR number from merge commit message
-            # Supports both formats:
-            # - Regular merge: "Merge pull request #123 from..."
-            # - Squash merge: "feat: some title (#123)"
-            COMMIT_MSG=$(git log -1 --pretty=%B)
-            PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oP 'Merge pull request #\K\d+' || echo "$COMMIT_MSG" | grep -oP '\(#\K\d+(?=\))' || echo "")
+          # Extract PR number from commit message
+          # Supports both formats:
+          # - Regular merge: "Merge pull request #123 from..."
+          # - Squash/Rebase merge: "feat: some title (#123)"
+          PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oP 'Merge pull request #\K\d+' || echo "$COMMIT_MSG" | grep -oP '\(#\K\d+(?=\))' || echo "")
 
-            if [ -n "$PR_NUMBER" ]; then
-              echo "PR number: $PR_NUMBER"
-              echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
-              echo "is_pr_merge=true" >> $GITHUB_OUTPUT
+          # Validate PR number is numeric (defensive coding)
+          if [ -n "$PR_NUMBER" ] && [[ "$PR_NUMBER" =~ ^[0-9]+$ ]]; then
+            echo "✅ Detected PR merge: #$PR_NUMBER"
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+
+            # Get the actual PR head SHA from GitHub API
+            # This works for all merge strategies (squash, rebase, regular merge)
+            echo "Fetching PR details from GitHub API..."
+
+            # Add error handling for API call
+            if PR_DATA=$(gh api "repos/${{ github.repository }}/pulls/${PR_NUMBER}" 2>&1); then
+              PR_HEAD_SHA=$(echo "$PR_DATA" | jq -r '.head.sha')
+
+              if [ -n "$PR_HEAD_SHA" ] && [ "$PR_HEAD_SHA" != "null" ]; then
+                echo "✅ Retrieved PR head SHA from GitHub API: $PR_HEAD_SHA"
+                echo "pr_head_sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
+                echo "is_pr_merge=true" >> $GITHUB_OUTPUT
+              else
+                echo "⚠️ Could not extract PR head SHA from API response"
+                echo "is_pr_merge=false" >> $GITHUB_OUTPUT
+              fi
             else
-              echo "Could not extract PR number from merge commit"
+              echo "⚠️ GitHub API call failed: $PR_DATA"
+              echo "This could be due to:"
+              echo "  - Network issues"
+              echo "  - API rate limits"
+              echo "  - PR not found (already deleted)"
+              echo "  - Permission issues"
+              echo "Falling back to building a new image..."
               echo "is_pr_merge=false" >> $GITHUB_OUTPUT
             fi
           else
-            echo "This is not a merge commit (direct push to main)"
+            if [ -n "$PR_NUMBER" ]; then
+              echo "⚠️ Invalid PR number format: $PR_NUMBER (not numeric)"
+            else
+              echo "ℹ️ No PR number found - direct push to main"
+            fi
             echo "is_pr_merge=false" >> $GITHUB_OUTPUT
           fi
 
