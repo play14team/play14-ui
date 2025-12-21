@@ -38,10 +38,48 @@ export default function EventsWorldMap({
   const [tooltipY, setTooltipY] = useState(0)
   const [isMounted, setIsMounted] = useState(false)
   const [isMapFullscreen, setIsMapFullscreen] = useState(false)
+  const [zoomLevel, setZoomLevel] = useState(1)
 
   // Track if component is mounted for portal
   useEffect(() => {
     setIsMounted(true)
+  }, [])
+
+  // Detect browser zoom level (including trackpad pinch zoom)
+  useEffect(() => {
+    function detectZoom() {
+      // For CSS-based zoom (trackpad pinch), compare visual viewport to layout viewport
+      if (window.visualViewport) {
+        const visualWidth = window.visualViewport.width
+        const layoutWidth = document.documentElement.clientWidth
+        // Prevent division by zero and ensure valid zoom value
+        const zoom = visualWidth > 0 ? layoutWidth / visualWidth : 1
+        setZoomLevel(zoom)
+      } else {
+        // Fallback to device pixel ratio for traditional browser zoom
+        setZoomLevel(window.devicePixelRatio || 1)
+      }
+    }
+
+    // Initial detection
+    detectZoom()
+
+    // Listen for resize events (which fire when zooming)
+    window.addEventListener("resize", detectZoom)
+
+    // Also listen for visual viewport changes (more accurate for trackpad zoom)
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", detectZoom)
+      window.visualViewport.addEventListener("scroll", detectZoom)
+    }
+
+    return () => {
+      window.removeEventListener("resize", detectZoom)
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener("resize", detectZoom)
+        window.visualViewport.removeEventListener("scroll", detectZoom)
+      }
+    }
   }, [])
 
   // Fetch data on mount
@@ -190,6 +228,8 @@ export default function EventsWorldMap({
       style={{
         left: `${tooltipX + 10}px`,
         top: `${tooltipY - 10}px`,
+        transform: `scale(${1 / zoomLevel})`,
+        transformOrigin: "top left",
       }}
       data-country={hoveredCountry}
     >

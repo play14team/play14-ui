@@ -85,9 +85,11 @@
   border-radius: 0.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
   padding: 1rem;
-  min-width: 280px;
-  max-width: 400px;
+  min-width: min(280px, 90vw); // Scale with viewport, max 90% of screen width
+  max-width: min(400px, 95vw); // Scale with viewport, max 95% of screen width
   animation: fadeIn 0.2s ease-in-out;
+  // Use transform for better scaling with browser zoom
+  transform-origin: top left;
 
   @media (prefers-color-scheme: dark) {
     background: #1f2937;
