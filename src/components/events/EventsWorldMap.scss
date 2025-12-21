@@ -14,7 +14,7 @@
   font-weight: bold;
   color: #111827;
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     color: #f3f4f6;
   }
 }
@@ -104,7 +104,7 @@
       0 4px 12px rgba(0, 0, 0, 0.15);
   }
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     background: #1f2937;
     border-color: #374151;
     color: #f3f4f6;
@@ -147,7 +147,7 @@
   &:hover {
     color: #111827;
 
-    @media (prefers-color-scheme: dark) {
+    [data-theme="dark"] & {
       color: #f3f4f6;
     }
   }
@@ -170,7 +170,7 @@
     border-radius: 0.375rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    @media (prefers-color-scheme: dark) {
+    [data-theme="dark"] & {
       background: rgba(31, 41, 55, 0.95);
       color: #9ca3af;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -191,7 +191,7 @@
     border-radius: 0.375rem;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 
-    @media (prefers-color-scheme: dark) {
+    [data-theme="dark"] & {
       background: rgba(31, 41, 55, 0.95);
       color: #f87171;
       box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
@@ -235,7 +235,7 @@
   color: #111827;
   margin-right: 0.5rem;
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     color: #f3f4f6;
   }
 }
@@ -271,7 +271,7 @@
   // Use transform for better scaling with browser zoom
   transform-origin: top left;
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     background: #1f2937;
     border-color: #374151;
   }
@@ -300,7 +300,7 @@
   margin: 0;
   color: #111827;
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     color: #f3f4f6;
   }
 }
@@ -323,7 +323,7 @@
   position: relative;
   padding-right: 5rem; // Space for status badge
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     background: #374151;
   }
 }
@@ -336,7 +336,7 @@
   word-wrap: break-word;
   overflow-wrap: break-word;
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     color: #f3f4f6;
   }
 }
@@ -433,7 +433,7 @@
     padding: 2rem;
     overflow: visible; // Ensure overflow is visible in fullscreen
 
-    @media (prefers-color-scheme: dark) {
+    [data-theme="dark"] & {
       background: #111827;
     }
 
@@ -520,7 +520,7 @@
     box-shadow: 0 0 0 3px rgba(0, 160, 220, 0.1);
   }
 
-  @media (prefers-color-scheme: dark) {
+  [data-theme="dark"] & {
     background: #1f2937;
     border-color: #374151;
 

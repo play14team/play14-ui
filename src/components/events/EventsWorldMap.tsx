@@ -326,7 +326,7 @@ export default function EventsWorldMap({
   return (
     <section className="events-world-map-wrapper">
       <h2 id="eventsWorldMapTitle" className="events-world-map-title">
-        Our events around the world
+        Events all around the world
       </h2>
 
       <div

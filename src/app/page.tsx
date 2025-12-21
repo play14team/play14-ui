@@ -1,6 +1,7 @@
 import EventsWorldMap from "@/components/events/EventsWorldMap"
 import Expectations from "@/components/home/expectations"
 import HomeGallery from "@/components/home/gallery"
+import HomeTestimonials from "@/components/home/testimonials"
 import UpcomingEvents from "@/components/home/upcoming"
 import CodeOfConduct from "@/components/layout/codeofconduct"
 import Manifesto from "@/components/layout/manifesto"
@@ -61,7 +62,7 @@ export default function Home() {
           and error, play fosters a deeper, more meaningful connection to the
           material being learned.
         </p>
-        <h3 className="pt-100 pb-3">What attend?</h3>
+        <h3 className="pt-100 pb-3">Why attend?</h3>
         <p>
           Whether you are a facilitator, educator, or curious mind, our events
           are designed to spark creativity, foster collaboration, and ignite new
@@ -223,12 +224,8 @@ export default function Home() {
         </p>
       </section>
 
-      <section id="gallery">
-        <HomeGallery />
-      </section>
-
       <section id="manifesto and code of conduct" className="pt-100">
-        <h3 className="pt-100 pb-3">Our values</h3>
+        <h3 className="pt-100 pb-3">What we stand for</h3>
         <p>
           A game/activity at #play14 could be pretty much anything as long as it
           respects our{" "}
@@ -242,6 +239,14 @@ export default function Home() {
             <CodeOfConduct />
           </div>
         </div>
+      </section>
+
+      <section id="testimonials" className="pt-100">
+        <HomeTestimonials />
+      </section>
+
+      <section id="gallery">
+        <HomeGallery />
       </section>
 
       <section id="benefits" className="pt-70">
