@@ -1,4 +1,4 @@
-import StaticEventMap from "@/components/events/static-map"
+import EventsWorldMap from "@/components/events/EventsWorldMap"
 import Expectations from "@/components/home/expectations"
 import HomeGallery from "@/components/home/gallery"
 import UpcomingEvents from "@/components/home/upcoming"
@@ -240,17 +240,8 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="event map" className="pb-5 pt-70">
-        <h3 className="pt-100 pb-3">Where to find us?</h3>
-        <p className="pb-4">
-          The first event was hosted in Luxembourg, and then we spread through
-          all Europe. Now we are a{" "}
-          <strong>
-            <Link href="/events/map">global event</Link>
-          </strong>
-          .
-        </p>
-        <StaticEventMap />
+      <section id="interactive-world-map" className="pt-70">
+        <EventsWorldMap interactive={true} />
       </section>
 
       <section id="benefits" className="pt-70">

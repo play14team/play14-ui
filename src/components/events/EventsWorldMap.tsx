@@ -1,0 +1,321 @@
+"use client"
+
+import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import countries from "i18n-iso-countries"
+import en from "i18n-iso-countries/langs/en.json"
+import WorldMap from "@/components/map/WorldMap"
+import { getCountriesWithEvents } from "./get-countries-with-events.action"
+import {
+  getEventsGroupedByCountry,
+  type EventsByCountry,
+} from "./get-events-grouped-by-country.action"
+import "./EventsWorldMap.scss"
+
+// Register English locale for country names
+countries.registerLocale(en)
+
+interface EventsWorldMapProps {
+  interactive?: boolean
+  onCountryClick?: (countryCode: string) => void
+}
+
+export default function EventsWorldMap({
+  interactive = true,
+  onCountryClick,
+}: EventsWorldMapProps) {
+  const router = useRouter()
+  const [selectedCountries, setSelectedCountries] = useState<string[]>([])
+  const [eventsByCountry, setEventsByCountry] = useState<EventsByCountry>({})
+  const [countryColors, setCountryColors] = useState<Record<string, string>>({})
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  // Tooltip state
+  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null)
+  const [tooltipX, setTooltipX] = useState(0)
+  const [tooltipY, setTooltipY] = useState(0)
+
+  // Fetch data on mount
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        setIsLoading(true)
+        const [countryCodes, groupedEvents] = await Promise.all([
+          getCountriesWithEvents(),
+          getEventsGroupedByCountry(),
+        ])
+
+        setSelectedCountries(countryCodes)
+        setEventsByCountry(groupedEvents)
+
+        // Status to color mapping
+        const statusColorMap: Record<string, string> = {
+          Over: "#7ac143", // green
+          Announced: "#ffc20e", // yellow
+          Open: "#f47920", // orange
+          Cancelled: "#ed1c24", // red
+        }
+
+        // Status priority: Open > Announced > Over > Cancelled
+        const statusPriority: Record<string, number> = {
+          Open: 4,
+          Announced: 3,
+          Over: 2,
+          Cancelled: 1,
+        }
+
+        // Calculate colors for each country based on highest priority event status
+        const colors: Record<string, string> = {}
+        Object.entries(groupedEvents).forEach(([countryCode, events]) => {
+          if (events.length > 0) {
+            // Find the event with the highest priority status
+            let highestPriority = 0
+            let priorityStatus = events[0].status
+
+            events.forEach((event) => {
+              const priority = statusPriority[event.status] || 0
+              if (priority > highestPriority) {
+                highestPriority = priority
+                priorityStatus = event.status
+              }
+            })
+
+            colors[countryCode] = statusColorMap[priorityStatus] || "#00a0dc"
+          }
+        })
+        setCountryColors(colors)
+        setError(null)
+
+        // Debug: Log all events to check Nancy 2025
+        console.log("All countries with events:", Object.keys(groupedEvents))
+        console.log(
+          "Total events by country:",
+          Object.entries(groupedEvents).map(
+            ([code, events]) => `${code}: ${events.length}`,
+          ),
+        )
+
+        // Search for Nancy in all events
+        const allEvents = Object.values(groupedEvents).flat()
+        const nancyEvents = allEvents.filter(
+          (e) =>
+            e.name.toLowerCase().includes("nancy") ||
+            e.locationName.toLowerCase().includes("nancy"),
+        )
+        console.log("Nancy events found:", nancyEvents)
+      } catch (err) {
+        console.error("Failed to load event locations:", err)
+        setError("Failed to load event locations. Please try again later.")
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  // Handle mouse move for tooltip positioning
+  useEffect(() => {
+    function handleMouseMove(event: MouseEvent) {
+      setTooltipX(event.clientX)
+      setTooltipY(event.clientY)
+    }
+
+    window.addEventListener("mousemove", handleMouseMove)
+    return () => window.removeEventListener("mousemove", handleMouseMove)
+  }, [])
+
+  // Format date for display
+  function formatDate(timestamp: number): string {
+    return new Date(timestamp).toLocaleDateString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    })
+  }
+
+  // Format date range for display
+  function formatDateRange(start: number, end: number): string {
+    const startDate = new Date(start)
+    const endDate = new Date(end)
+
+    // If same date, show only once
+    if (startDate.toDateString() === endDate.toDateString()) {
+      return formatDate(start)
+    }
+
+    // If same month and year, show abbreviated format
+    if (
+      startDate.getMonth() === endDate.getMonth() &&
+      startDate.getFullYear() === endDate.getFullYear()
+    ) {
+      return `${startDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${endDate.getDate()}, ${endDate.getFullYear()}`
+    }
+
+    // If same year, show abbreviated format
+    if (startDate.getFullYear() === endDate.getFullYear()) {
+      return `${startDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })} - ${endDate.toLocaleDateString("en-US", { month: "short", day: "numeric" })}, ${endDate.getFullYear()}`
+    }
+
+    // Different years, show full format
+    return `${formatDate(start)} - ${formatDate(end)}`
+  }
+
+  // Get country name from ISO code
+  function getCountryName(code: string): string {
+    return countries.getName(code, "en") || code.toUpperCase()
+  }
+
+  // Handle country click
+  function handleCountryClick(countryCode: string) {
+    if (!interactive) return
+
+    const hasEvents = selectedCountries.includes(countryCode.toUpperCase())
+
+    if (hasEvents) {
+      // Navigate to events page filtered by country
+      router.push(`/events/countries/${countryCode.toUpperCase()}`)
+      onCountryClick?.(countryCode)
+    } else {
+      console.log(`Country ${countryCode} has no #play14 events`)
+    }
+  }
+
+  // Handle mouse enter on country
+  function handleCountryMouseEnter(countryCode: string) {
+    // Always show tooltip for any country (with or without events)
+    setHoveredCountry(countryCode.toUpperCase())
+  }
+
+  // Handle mouse leave on country
+  function handleCountryMouseLeave() {
+    setHoveredCountry(null)
+  }
+
+  return (
+    <section className="events-world-map-wrapper">
+      <h2 id="eventsWorldMapTitle" className="events-world-map-title">
+        Our events around the world
+      </h2>
+
+      <div
+        className="events-world-map"
+        role="region"
+        aria-labelledby="eventsWorldMapTitle"
+        aria-label="World map showing countries with #play14 events"
+      >
+        {error ? (
+          <div className="error-message">{error}</div>
+        ) : isLoading ? (
+          <div className="loading-message">Loading event locations...</div>
+        ) : (
+          <div className="map-wrapper">
+            <WorldMap
+              selected={selectedCountries}
+              countryColors={countryColors}
+              onClick={interactive ? handleCountryClick : undefined}
+              onMouseEnter={handleCountryMouseEnter}
+              onMouseLeave={handleCountryMouseLeave}
+              className="world-map-svg"
+            />
+
+            {hoveredCountry && (
+              <div
+                className="tooltip-container"
+                style={{
+                  left: `${tooltipX + 10}px`,
+                  top: `${tooltipY - 10}px`,
+                }}
+                data-country={hoveredCountry}
+              >
+                <div className="country-events">
+                  <h3 className="country-name">
+                    {getCountryName(hoveredCountry)}
+                  </h3>
+
+                  {eventsByCountry[hoveredCountry] ? (
+                    <>
+                      <div className="events-count">
+                        {eventsByCountry[hoveredCountry].length} event
+                        {eventsByCountry[hoveredCountry].length !== 1
+                          ? "s"
+                          : ""}
+                      </div>
+
+                      <div className="events-list">
+                        {eventsByCountry[hoveredCountry]
+                          .slice(0, 5)
+                          .map((event) => (
+                            <div key={event.slug} className="event-item">
+                              <div className="event-name">{event.name}</div>
+                              <div className="event-details">
+                                <div className="event-location">
+                                  {event.locationName}
+                                </div>
+                                <div className="event-date">
+                                  {formatDateRange(event.start, event.end)}
+                                </div>
+                              </div>
+                              <span
+                                className={`event-status status-${event.status.toLowerCase()}`}
+                              >
+                                {event.status}
+                              </span>
+                            </div>
+                          ))}
+
+                        {eventsByCountry[hoveredCountry].length > 5 && (
+                          <div className="more-events">
+                            +{eventsByCountry[hoveredCountry].length - 5} more
+                            event
+                            {eventsByCountry[hoveredCountry].length - 5 !== 1
+                              ? "s"
+                              : ""}
+                          </div>
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <div className="no-events">No #play14 events</div>
+                  )}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="map-legend">
+        <span className="legend-item">
+          <span
+            className="legend-color"
+            style={{ backgroundColor: "#7ac143" }}
+          ></span>
+          Over
+        </span>
+        <span className="legend-item">
+          <span
+            className="legend-color"
+            style={{ backgroundColor: "#ffc20e" }}
+          ></span>
+          Announced
+        </span>
+        <span className="legend-item">
+          <span
+            className="legend-color"
+            style={{ backgroundColor: "#f47920" }}
+          ></span>
+          Open
+        </span>
+        <span className="legend-item">
+          <span
+            className="legend-color"
+            style={{ backgroundColor: "#ed1c24" }}
+          ></span>
+          Cancelled
+        </span>
+      </div>
+    </section>
+  )
+}
