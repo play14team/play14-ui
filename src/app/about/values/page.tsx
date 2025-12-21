@@ -27,7 +27,7 @@ export default async function Values() {
         </div>
         <div className="centered pt-5 pb-100">
           <Image
-            src="/values/manifesto.jpg"
+            src="/values/manifesto-gray.jpg"
             alt="manifesto"
             className="shadow"
             width={600}
@@ -43,11 +43,11 @@ export default async function Values() {
         </div>
         <div className="centered pt-5 pb-100">
           <Image
-            src="/values/CoC.jpg"
+            src="/values/CoC-gray.jpg"
             alt="code of conduct"
             className="shadow"
-            width={4032}
-            height={3024}
+            width={600}
+            height={800}
             style={{
               borderRadius: "10px",
             }}
