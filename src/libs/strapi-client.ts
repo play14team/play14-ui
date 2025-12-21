@@ -1,7 +1,13 @@
 import "server-only"
 import qs from "qs"
 
-const STRAPI_REST_ENDPOINT = process.env.STRAPI_API_URL + "/api"
+const STRAPI_REST_ENDPOINT =
+  (process.env.STRAPI_API_URL || "").replace(/\/$/, "") + "/api"
+
+// Fallback to production if primary endpoint is unavailable
+const STRAPI_FALLBACK_ENDPOINT = process.env.STRAPI_FALLBACK_API_URL
+  ? process.env.STRAPI_FALLBACK_API_URL.replace(/\/$/, "") + "/api"
+  : "https://community.play14.org/api"
 
 /**
  * Fetch with timeout to prevent hanging connections
@@ -80,19 +86,15 @@ const defaultPagination: StrapiPagination = {
 }
 
 /**
- * Main REST query function
- * Executes a GET request to the Strapi REST API with the provided parameters
+ * Attempts to fetch from a specific endpoint
  */
-export async function restQuery<T>(
+async function tryFetch(
+  baseUrl: string,
   endpoint: string,
-  params?: StrapiParams,
-): Promise<StrapiResponse<T>> {
-  const queryString = params
-    ? `?${qs.stringify(params, { encodeValuesOnly: true })}`
-    : ""
-  const url = `${STRAPI_REST_ENDPOINT}/${endpoint}${queryString}`
-
-  const token = process.env.STRAPI_API_SECRET
+  queryString: string,
+  token: string | undefined,
+): Promise<{ response: Response; url: string } | null> {
+  const url = `${baseUrl}/${endpoint}${queryString}`
 
   try {
     const response = await fetchWithTimeout(url, {
@@ -102,54 +104,95 @@ export async function restQuery<T>(
       },
     })
 
-    if (!response.ok) {
-      console.error("==================== REST API Error ====================")
-      console.error("Endpoint:", url)
-      console.error("Status:", response.status, response.statusText)
-      console.error("=========================================================")
-      throw new Error(
-        `REST API Error: ${response.status} ${response.statusText}`,
-      )
+    if (response.ok) {
+      return { response, url }
     }
 
-    return (await response.json()) as StrapiResponse<T>
-  } catch (error: unknown) {
-    const err = error as {
-      message: string
-      cause?: Error & { code?: string }
-    }
-
-    console.error("==================== REST Query Error ====================")
-    console.error("Endpoint:", url)
-    console.error("Message:", err.message)
-
-    // Check for connection errors
-    if (
-      err.message.includes("fetch failed") ||
-      err.message.includes("aborted") ||
-      err.cause?.code === "ECONNRESET"
-    ) {
-      console.error("\nConnection Error Detected:")
-      console.error(
-        "  The server at",
-        STRAPI_REST_ENDPOINT,
-        "is not reachable.",
-      )
-      console.error("  Possible causes:")
-      console.error("    - Strapi server is not running")
-      console.error("    - Wrong STRAPI_API_URL in .env.local")
-      console.error("    - Network connectivity issues")
-      console.error("    - Request timeout (30s)")
-      console.error("\n  To fix:")
-      console.error("    1. Check if Strapi is running: http://localhost:1337")
-      console.error(
-        "    2. Or switch to production: STRAPI_API_URL=https://community.play14.org",
-      )
-    }
-
-    console.error("==========================================================")
-    throw error
+    console.warn(
+      `[Strapi] ${url} returned ${response.status}: ${response.statusText}`,
+    )
+    return null
+  } catch (error) {
+    console.warn(
+      `[Strapi] ${url} failed:`,
+      error instanceof Error ? error.message : String(error),
+    )
+    return null
   }
+}
+
+/**
+ * Safely parse JSON response with error handling
+ */
+async function parseJsonResponse<T>(
+  response: Response,
+  url: string,
+): Promise<StrapiResponse<T>> {
+  try {
+    return (await response.json()) as StrapiResponse<T>
+  } catch (error) {
+    console.error(
+      `[Strapi] Failed to parse JSON from ${url}:`,
+      error instanceof Error ? error.message : String(error),
+    )
+    throw new Error("Invalid JSON response from Strapi API")
+  }
+}
+
+/**
+ * Main REST query function
+ * Executes a GET request to the Strapi REST API with the provided parameters
+ * Falls back to production endpoint if primary is unavailable
+ */
+export async function restQuery<T>(
+  endpoint: string,
+  params?: StrapiParams,
+): Promise<StrapiResponse<T>> {
+  const queryString = params
+    ? `?${qs.stringify(params, { encodeValuesOnly: true })}`
+    : ""
+
+  const primaryToken = process.env.STRAPI_API_SECRET
+  const fallbackToken =
+    process.env.STRAPI_FALLBACK_API_SECRET || process.env.STRAPI_API_SECRET
+
+  // Try primary endpoint first
+  const primaryResult = await tryFetch(
+    STRAPI_REST_ENDPOINT,
+    endpoint,
+    queryString,
+    primaryToken,
+  )
+
+  if (primaryResult) {
+    return parseJsonResponse<T>(primaryResult.response, primaryResult.url)
+  }
+
+  // Fallback to production if primary failed and fallback is different
+  if (STRAPI_REST_ENDPOINT !== STRAPI_FALLBACK_ENDPOINT) {
+    console.log(
+      `[Strapi] Primary endpoint unavailable, trying fallback: ${STRAPI_FALLBACK_ENDPOINT}`,
+    )
+
+    const fallbackResult = await tryFetch(
+      STRAPI_FALLBACK_ENDPOINT,
+      endpoint,
+      queryString,
+      fallbackToken,
+    )
+
+    if (fallbackResult) {
+      return parseJsonResponse<T>(fallbackResult.response, fallbackResult.url)
+    }
+  }
+
+  // Both endpoints failed
+  const url = `${STRAPI_REST_ENDPOINT}/${endpoint}${queryString}`
+  console.error("==================== REST API Error ====================")
+  console.error("Endpoint:", url)
+  console.error("Both primary and fallback endpoints failed")
+  console.error("=========================================================")
+  throw new Error(`REST API Error: Unable to reach Strapi API`)
 }
 
 /**

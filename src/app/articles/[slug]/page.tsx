@@ -8,14 +8,24 @@ import { notFound } from "next/navigation"
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const response = (await getArticleSlugs()) as {
-    articles?: Article[]
-  }
-  const articles = response.articles || []
+  try {
+    const response = (await getArticleSlugs()) as {
+      articles?: Article[]
+    }
+    const articles = response.articles || []
+    console.log(`[Build] Pre-generating ${articles.length} article pages`)
 
-  return articles.map((article) => ({
-    slug: article.slug,
-  }))
+    return articles.map((article) => ({
+      slug: article.slug,
+    }))
+  } catch (error) {
+    console.warn(
+      "[Build] Failed to generate static params for articles:",
+      error instanceof Error ? error.message : String(error),
+    )
+    console.warn("[Build] Articles will be generated on-demand at runtime")
+    return []
+  }
 }
 
 export async function generateMetadata(props: SlugParamsProps) {

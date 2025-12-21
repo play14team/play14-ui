@@ -8,14 +8,24 @@ import { notFound } from "next/navigation"
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const response = (await getGameSlugs()) as {
-    games?: Game[]
-  }
-  const games = response?.games || []
+  try {
+    const response = (await getGameSlugs()) as {
+      games?: Game[]
+    }
+    const games = response?.games || []
+    console.log(`[Build] Pre-generating ${games.length} game pages`)
 
-  return games.map((game) => ({
-    slug: game.slug,
-  }))
+    return games.map((game) => ({
+      slug: game.slug,
+    }))
+  } catch (error) {
+    console.warn(
+      "[Build] Failed to generate static params for games:",
+      error instanceof Error ? error.message : String(error),
+    )
+    console.warn("[Build] Games will be generated on-demand at runtime")
+    return []
+  }
 }
 
 export async function generateMetadata(props: SlugParamsProps) {
