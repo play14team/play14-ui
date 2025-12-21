@@ -19,7 +19,8 @@
       "Bash(bun run test:report:*)",
       "Bash(gh secret list:*)",
       "Bash(bun --version:*)",
-      "Bash(curl:*)"
+      "Bash(curl:*)",
+      "Bash(gh pr list:*)"
     ],
     "deny": [],
     "ask": []

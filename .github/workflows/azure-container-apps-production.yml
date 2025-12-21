@@ -1,9 +1,8 @@
-name: Deploy to Production
+name: Production Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
 concurrency:
@@ -17,12 +16,180 @@ env:
   IMAGE_NAME: play14/play14-ui
   CONTAINER_APP_NAME: play14-ui
   RESOURCE_GROUP: play14-community
-  CONTAINER_APP_ENVIRONMENT: play14-container-env
 
 jobs:
+  check-pr-merge:
+    name: Check if PR was merged
+    runs-on: ubuntu-latest
+    outputs:
+      pr_number: ${{ steps.check.outputs.pr_number }}
+      pr_head_sha: ${{ steps.check.outputs.pr_head_sha }}
+      is_pr_merge: ${{ steps.check.outputs.is_pr_merge }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if commit is from PR merge
+        id: check
+        run: |
+          # Check if this is a merge commit
+          if git rev-parse HEAD^2 >/dev/null 2>&1; then
+            echo "This is a merge commit"
+
+            # Extract PR head commit SHA (the commit that was merged, not the merge commit)
+            PR_HEAD_SHA=$(git rev-parse HEAD^2)
+            echo "PR head SHA: $PR_HEAD_SHA"
+            echo "pr_head_sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
+
+            # Extract PR number from merge commit message
+            # Supports both formats:
+            # - Regular merge: "Merge pull request #123 from..."
+            # - Squash merge: "feat: some title (#123)"
+            COMMIT_MSG=$(git log -1 --pretty=%B)
+            PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oP 'Merge pull request #\K\d+' || echo "$COMMIT_MSG" | grep -oP '\(#\K\d+(?=\))' || echo "")
+
+            if [ -n "$PR_NUMBER" ]; then
+              echo "PR number: $PR_NUMBER"
+              echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+              echo "is_pr_merge=true" >> $GITHUB_OUTPUT
+            else
+              echo "Could not extract PR number from merge commit"
+              echo "is_pr_merge=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "This is not a merge commit (direct push to main)"
+            echo "is_pr_merge=false" >> $GITHUB_OUTPUT
+          fi
+
+  retag-pr-image:
+    name: Retag PR Image for Production
+    runs-on: ubuntu-latest
+    needs: check-pr-merge
+    if: needs.check-pr-merge.outputs.is_pr_merge == 'true'
+    outputs:
+      image_retagged: ${{ steps.retag.outputs.success }}
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Log in to container registry
+        run: |
+          az acr login --name play14containerregistry
+
+      - name: Retag PR image for production
+        id: retag
+        continue-on-error: true
+        run: |
+          set +e  # Don't exit on error, we handle errors explicitly
+
+          PR_NUMBER=${{ needs.check-pr-merge.outputs.pr_number }}
+          PR_HEAD_SHA=${{ needs.check-pr-merge.outputs.pr_head_sha }}
+          PR_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:pr-${PR_NUMBER}-${PR_HEAD_SHA}"
+          PROD_MERGE_SHA_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+          PROD_HEAD_SHA_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${PR_HEAD_SHA}"
+          PROD_LATEST_IMAGE="${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest"
+
+          echo "Looking for PR image: $PR_IMAGE"
+
+          # Check if image exists in registry
+          if az acr repository show-tags --name play14containerregistry --repository ${{ env.IMAGE_NAME }} --output json | grep -q "pr-${PR_NUMBER}-${PR_HEAD_SHA}"; then
+            echo "✅ PR image found in registry"
+
+            # Pull PR image with retry logic
+            echo "Pulling PR image: $PR_IMAGE"
+            RETRY=0
+            MAX_RETRIES=3
+            until docker pull "$PR_IMAGE" || [ $RETRY -eq $MAX_RETRIES ]; do
+              RETRY=$((RETRY + 1))
+              echo "Pull attempt $RETRY failed. Retrying in 5 seconds..."
+              sleep 5
+            done
+
+            if [ $RETRY -eq $MAX_RETRIES ]; then
+              echo "❌ Failed to pull PR image after $MAX_RETRIES attempts"
+              echo "This could be due to:"
+              echo "  - Network connectivity issues"
+              echo "  - Registry rate limits"
+              echo "  - Corrupted image in registry"
+              echo "success=false" >> $GITHUB_OUTPUT
+              exit 1
+            fi
+
+            # Tag with both merge commit SHA and PR head SHA for redundancy
+            echo "Tagging as merge commit SHA: $PROD_MERGE_SHA_IMAGE"
+            docker tag "$PR_IMAGE" "$PROD_MERGE_SHA_IMAGE"
+
+            echo "Tagging as PR head SHA: $PROD_HEAD_SHA_IMAGE"
+            docker tag "$PR_IMAGE" "$PROD_HEAD_SHA_IMAGE"
+
+            echo "Tagging as latest: $PROD_LATEST_IMAGE"
+            docker tag "$PR_IMAGE" "$PROD_LATEST_IMAGE"
+
+            # Push all tags with error handling
+            echo "Pushing production tags..."
+            PUSH_FAILED=false
+
+            if ! docker push "$PROD_MERGE_SHA_IMAGE"; then
+              echo "⚠️ Failed to push merge SHA tag"
+              PUSH_FAILED=true
+            fi
+
+            if ! docker push "$PROD_HEAD_SHA_IMAGE"; then
+              echo "⚠️ Failed to push head SHA tag"
+              PUSH_FAILED=true
+            fi
+
+            if ! docker push "$PROD_LATEST_IMAGE"; then
+              echo "⚠️ Failed to push latest tag"
+              PUSH_FAILED=true
+            fi
+
+            if [ "$PUSH_FAILED" = true ]; then
+              echo "❌ Some tags failed to push"
+              echo "success=false" >> $GITHUB_OUTPUT
+              exit 1
+            fi
+
+            echo "✅ Successfully retagged PR image for production"
+            echo "  - Merge commit SHA: ${{ github.sha }}"
+            echo "  - PR head SHA: ${PR_HEAD_SHA}"
+            echo "  - Latest tag updated"
+            echo "success=true" >> $GITHUB_OUTPUT
+            exit 0
+          else
+            echo "⚠️ PR image not found in registry: $PR_IMAGE"
+            echo "This could happen if:"
+            echo "  - PR was closed before acceptance deployment completed"
+            echo "  - PR deployment workflow failed"
+            echo "  - Image was manually deleted from ACR"
+            echo "  - ACR cleanup policy removed the image"
+            echo "Will fall back to building a new image..."
+            echo "success=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
   quality:
     name: Code Quality
     runs-on: ubuntu-latest
+    needs: [check-pr-merge, retag-pr-image]
+    # Run quality checks only if we need to build (not retagging)
+    if: |
+      always() && (
+        needs.check-pr-merge.outputs.is_pr_merge == 'false' ||
+        (needs.check-pr-merge.outputs.is_pr_merge == 'true' && needs.retag-pr-image.outputs.image_retagged != 'true')
+      )
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -41,16 +208,31 @@ jobs:
       - name: Type check
         run: bun run typecheck
 
-  build-and-deploy:
-    name: Build and Deploy
-    needs: quality
+  build-production:
+    name: Build Production Image
     runs-on: ubuntu-latest
+    needs: [check-pr-merge, retag-pr-image, quality]
+    # Run if: direct push to main OR retag failed (fallback scenario)
+    if: |
+      always() && (
+        needs.check-pr-merge.outputs.is_pr_merge == 'false' ||
+        (needs.check-pr-merge.outputs.is_pr_merge == 'true' && needs.retag-pr-image.outputs.image_retagged != 'true')
+      )
     permissions:
-      contents: read
-      packages: write
       id-token: write
+      contents: read
+
     steps:
-      - name: Checkout code
+      - name: Log fallback reason if retagging failed
+        if: needs.check-pr-merge.outputs.is_pr_merge == 'true' && needs.retag-pr-image.outputs.image_retagged != 'true'
+        run: |
+          echo "⚠️ FALLBACK: Building new image because PR image retagging failed"
+          echo "This is expected in scenarios like:"
+          echo "  - PR was closed before acceptance deployment completed"
+          echo "  - PR deployment workflow failed"
+          echo "  - Image was removed from ACR by cleanup policy"
+
+      - name: Checkout
         uses: actions/checkout@v4
 
       - name: Set up Docker Buildx
@@ -63,72 +245,120 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Log in to Azure Container Registry
-        run: az acr login --name play14containerregistry
-
-      - name: Generate image tag
-        id: image-tag
+      - name: Log in to container registry
         run: |
-          TAG="prod-${{ github.sha }}"
-          echo "tag=${TAG}" >> $GITHUB_OUTPUT
-          echo "full-image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${TAG}" >> $GITHUB_OUTPUT
-          echo "latest-image=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest" >> $GITHUB_OUTPUT
+          az acr login --name play14containerregistry
 
-      - name: Build and push container image
-        uses: docker/build-push-action@v5
+      - name: Build and push production container image
+        uses: docker/build-push-action@v6
         with:
-          context: .
-          file: ./Dockerfile
           push: true
           tags: |
-            ${{ steps.image-tag.outputs.full-image }}
-            ${{ steps.image-tag.outputs.latest-image }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          file: ./Dockerfile
+          context: ./
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           build-args: |
             STRAPI_API_URL=${{ env.STRAPI_API_URL }}
             STRAPI_API_SECRET=${{ secrets.STRAPI_API_SECRET }}
             NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=${{ secrets.NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN }}
-          cache-from: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache
-          cache-to: type=registry,ref=${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:buildcache,mode=max
 
-      - name: Deploy to Azure Container Apps
+  deploy:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [check-pr-merge, retag-pr-image, build-production]
+    # Deploy if either retagging OR building succeeded
+    if: always() && (needs.retag-pr-image.result == 'success' || needs.build-production.result == 'success')
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Log deployment source
         run: |
-          az containerapp update \
-            --name ${{ env.CONTAINER_APP_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --image ${{ steps.image-tag.outputs.full-image }} \
-            --set-env-vars \
-              STRAPI_API_URL=${{ env.STRAPI_API_URL }} \
-              STRAPI_API_SECRET=secretref:strapi-api-secret \
-              NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=secretref:mapbox-token
+          if [ "${{ needs.retag-pr-image.result }}" == "success" ]; then
+            echo "🚀 Deploying retagged PR image (fast path)"
+            echo "Image was tested in acceptance environment and retagged for production"
+          elif [ "${{ needs.build-production.result }}" == "success" ]; then
+            echo "🚀 Deploying newly built image"
+            if [ "${{ needs.check-pr-merge.outputs.is_pr_merge }}" == "true" ]; then
+              echo "Built as fallback because PR image retagging failed"
+            else
+              echo "Built from direct push to main"
+            fi
+          fi
+
+      - name: Log in to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Production Container App
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            echo "Deploying image: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}"
+            az containerapp update \
+              -n ${{ env.CONTAINER_APP_NAME }} \
+              -g ${{ env.RESOURCE_GROUP }} \
+              --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }} \
+              --set-env-vars \
+                STRAPI_API_URL=${{ env.STRAPI_API_URL }} \
+                STRAPI_API_SECRET=secretref:strapi-api-secret \
+                NEXT_PUBLIC_MAPBOX_ACCESS_TOKEN=secretref:mapbox-token
 
       - name: Get Container App URL
         id: get-url
-        run: |
-          URL=$(az containerapp show \
-            --name ${{ env.CONTAINER_APP_NAME }} \
-            --resource-group ${{ env.RESOURCE_GROUP }} \
-            --query properties.configuration.ingress.fqdn \
-            --output tsv)
-          echo "url=https://${URL}" >> $GITHUB_OUTPUT
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            URL=$(az containerapp show \
+              -n ${{ env.CONTAINER_APP_NAME }} \
+              -g ${{ env.RESOURCE_GROUP }} \
+              --query properties.configuration.ingress.fqdn \
+              -o tsv)
+            echo "url=https://$URL" >> $GITHUB_OUTPUT
 
-      - name: Health check
+      - name: Wait for deployment to stabilize
         run: |
-          echo "Waiting for deployment to stabilize..."
+          echo "Waiting 30 seconds for deployment to stabilize..."
           sleep 30
 
-          URL="${{ steps.get-url.outputs.url }}"
-          for i in {1..10}; do
-            if curl -f -s "${URL}/api/health" > /dev/null; then
-              echo "✅ Health check passed!"
-              echo "🚀 Production deployment successful: ${URL}"
-              exit 0
-            fi
-            echo "Attempt $i/10 failed, retrying in 10s..."
-            sleep 10
-          done
+      - name: Health check
+        uses: azure/CLI@v2
+        with:
+          inlineScript: |
+            URL="${{ steps.get-url.outputs.url }}"
+            HEALTH_URL="$URL/api/health"
+            MAX_ATTEMPTS=10
+            SLEEP_SECONDS=10
+            attempt=1
 
-          echo "❌ Health check failed after 10 attempts"
-          exit 1
+            echo "Checking health endpoint: $HEALTH_URL"
+            echo "Will retry up to $MAX_ATTEMPTS times (${SLEEP_SECONDS}s intervals)"
+
+            while [ $attempt -le $MAX_ATTEMPTS ]; do
+              echo "Attempt $attempt/$MAX_ATTEMPTS..."
+
+              HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" -m 10 "$HEALTH_URL" || echo "000")
+
+              if [ "$HTTP_CODE" = "204" ] || [ "$HTTP_CODE" = "200" ]; then
+                echo "✅ Health check passed (HTTP $HTTP_CODE)"
+                echo "🚀 Production deployment successful: $URL"
+                exit 0
+              fi
+
+              echo "Health check failed (HTTP $HTTP_CODE). Waiting ${SLEEP_SECONDS}s..."
+              sleep $SLEEP_SECONDS
+              attempt=$((attempt + 1))
+            done
+
+            echo "❌ Health check failed after $MAX_ATTEMPTS attempts"
+            exit 1
 
       - name: Create deployment summary
         if: always()
@@ -137,6 +367,13 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Environment:** Production" >> $GITHUB_STEP_SUMMARY
           echo "**URL:** ${{ steps.get-url.outputs.url }}" >> $GITHUB_STEP_SUMMARY
-          echo "**Image:** \`${{ steps.image-tag.outputs.full-image }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Image:** \`${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}\`" >> $GITHUB_STEP_SUMMARY
           echo "**Backend:** ${{ env.STRAPI_API_URL }}" >> $GITHUB_STEP_SUMMARY
           echo "**Commit:** ${{ github.sha }}" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ needs.retag-pr-image.result }}" == "success" ]; then
+            echo "**Source:** Retagged PR #${{ needs.check-pr-merge.outputs.pr_number }} image" >> $GITHUB_STEP_SUMMARY
+            echo "**Note:** Image was tested in acceptance environment" >> $GITHUB_STEP_SUMMARY
+          elif [ "${{ needs.build-production.result }}" == "success" ]; then
+            echo "**Source:** Newly built image" >> $GITHUB_STEP_SUMMARY
+          fi
