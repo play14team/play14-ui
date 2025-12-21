@@ -39,6 +39,10 @@ export default function EventsWorldMap({
   const [isMounted, setIsMounted] = useState(false)
   const [isMapFullscreen, setIsMapFullscreen] = useState(false)
   const [zoomLevel, setZoomLevel] = useState(1)
+  const [searchQuery, setSearchQuery] = useState("")
+  const [filteredCountries, setFilteredCountries] = useState<string[]>([])
+  const [showNoResults, setShowNoResults] = useState(false)
+  const [showSearch, setShowSearch] = useState(false)
 
   // Track if component is mounted for portal
   useEffect(() => {
@@ -81,6 +85,26 @@ export default function EventsWorldMap({
       }
     }
   }, [])
+
+  // Filter countries based on search query
+  useEffect(() => {
+    if (!searchQuery.trim()) {
+      setFilteredCountries([])
+      setShowNoResults(false)
+      return
+    }
+
+    const query = searchQuery.toLowerCase().trim()
+    const matches = selectedCountries.filter((countryCode) => {
+      const countryName = getCountryName(countryCode).toLowerCase()
+      return (
+        countryName.includes(query) || countryCode.toLowerCase().includes(query)
+      )
+    })
+
+    setFilteredCountries(matches)
+    setShowNoResults(matches.length === 0)
+  }, [searchQuery, selectedCountries])
 
   // Fetch data on mount
   useEffect(() => {
@@ -221,6 +245,29 @@ export default function EventsWorldMap({
     setHoveredCountry(null)
   }
 
+  // Handle search input change
+  function handleSearchChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSearchQuery(event.target.value)
+  }
+
+  // Clear search
+  function clearSearch() {
+    setSearchQuery("")
+  }
+
+  // Toggle search visibility
+  function toggleSearch() {
+    setShowSearch((prev) => !prev)
+    // Clear search when hiding
+    if (showSearch) {
+      setSearchQuery("")
+    }
+  }
+
+  // Determine which countries to display on the map
+  const displayedCountries =
+    filteredCountries.length > 0 ? filteredCountries : selectedCountries
+
   // Render tooltip content
   const tooltipContent = hoveredCountry && (
     <div
@@ -295,7 +342,7 @@ export default function EventsWorldMap({
         ) : (
           <div className="map-wrapper">
             <WorldMap
-              selected={selectedCountries}
+              selected={displayedCountries}
               countryColors={countryColors}
               onClick={interactive ? handleCountryClick : undefined}
               onMouseEnter={handleCountryMouseEnter}
@@ -303,6 +350,72 @@ export default function EventsWorldMap({
               className="world-map-svg"
               tooltipContent={tooltipContent}
               onFullscreenChange={setIsMapFullscreen}
+              onSearchToggle={toggleSearch}
+              showSearch={showSearch}
+              searchContent={
+                showSearch ? (
+                  <div className="country-search-container inline">
+                    <div className="search-input-wrapper">
+                      <svg
+                        className="search-icon"
+                        width="16"
+                        height="16"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      >
+                        <circle cx="11" cy="11" r="8" />
+                        <path d="m21 21-4.35-4.35" />
+                      </svg>
+                      <input
+                        type="text"
+                        className="search-input"
+                        placeholder="Search countries..."
+                        value={searchQuery}
+                        onChange={handleSearchChange}
+                        aria-label="Search countries with events"
+                        autoFocus
+                      />
+                      {searchQuery && (
+                        <button
+                          className="clear-search-button"
+                          onClick={clearSearch}
+                          aria-label="Clear search"
+                          type="button"
+                        >
+                          <svg
+                            width="14"
+                            height="14"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          >
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                          </svg>
+                        </button>
+                      )}
+                    </div>
+                    {showNoResults && (
+                      <div className="no-search-results">
+                        No countries found matching &quot;{searchQuery}&quot;
+                      </div>
+                    )}
+                    {filteredCountries.length > 0 && (
+                      <div className="search-results-count">
+                        {filteredCountries.length} countr
+                        {filteredCountries.length === 1 ? "y" : "ies"}
+                      </div>
+                    )}
+                  </div>
+                ) : undefined
+              }
             />
           </div>
         )}
