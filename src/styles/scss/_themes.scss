@@ -908,6 +908,13 @@ body,
   font-style: italic;
 }
 
+// Dark mode image backgrounds
+[data-theme="dark"] {
+  img.shadow {
+    background-color: transparent;
+  }
+}
+
 // ===========================================
 // Scrollbar Styling
 // ===========================================
