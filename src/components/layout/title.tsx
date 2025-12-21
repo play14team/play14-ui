@@ -28,10 +28,9 @@ const Title = () => {
           height={200}
           unoptimized
           style={{
-            width: "auto",
+            width: "100%",
             height: "auto",
-            maxWidth: 600,
-            maxHeight: 200,
+            maxWidth: "min(600px, 90vw)",
           }}
         />
       </div>
