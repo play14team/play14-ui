@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react"
 import { Testimonial } from "@/models/strapi"
 import TestimonialItem from "@/components/events/testimonial"
-import { getRandomTestimonials } from "./get.action"
+import { getRandomTestimonials, HOME_TESTIMONIALS_COUNT } from "./get.action"
 
 interface TestimonialsRefreshProps {
   initialTestimonials: Testimonial[]
@@ -17,8 +17,17 @@ const TestimonialsRefresh = ({
 
   const handleRefresh = () => {
     startTransition(async () => {
-      const newTestimonials = await getRandomTestimonials(4)
-      setTestimonials(newTestimonials)
+      try {
+        const newTestimonials = await getRandomTestimonials(
+          HOME_TESTIMONIALS_COUNT,
+        )
+        if (newTestimonials.length > 0) {
+          setTestimonials(newTestimonials)
+        }
+      } catch (error) {
+        console.error("Failed to refresh testimonials:", error)
+        // Keep existing testimonials on error
+      }
     })
   }
 
