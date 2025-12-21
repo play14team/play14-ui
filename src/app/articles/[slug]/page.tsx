@@ -8,14 +8,20 @@ import { notFound } from "next/navigation"
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const response = (await getArticleSlugs()) as {
-    articles?: Article[]
-  }
-  const articles = response.articles || []
+  try {
+    const response = (await getArticleSlugs()) as {
+      articles?: Article[]
+    }
+    const articles = response.articles || []
 
-  return articles.map((article) => ({
-    slug: article.slug,
-  }))
+    return articles.map((article) => ({
+      slug: article.slug,
+    }))
+  } catch {
+    // Return empty array if articles API is unavailable
+    // Pages will be generated on-demand at runtime
+    return []
+  }
 }
 
 export async function generateMetadata(props: SlugParamsProps) {

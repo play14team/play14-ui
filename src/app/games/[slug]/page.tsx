@@ -8,14 +8,20 @@ import { notFound } from "next/navigation"
 export const revalidate = 3600
 
 export async function generateStaticParams() {
-  const response = (await getGameSlugs()) as {
-    games?: Game[]
-  }
-  const games = response?.games || []
+  try {
+    const response = (await getGameSlugs()) as {
+      games?: Game[]
+    }
+    const games = response?.games || []
 
-  return games.map((game) => ({
-    slug: game.slug,
-  }))
+    return games.map((game) => ({
+      slug: game.slug,
+    }))
+  } catch {
+    // Return empty array if games API is unavailable
+    // Pages will be generated on-demand at runtime
+    return []
+  }
 }
 
 export async function generateMetadata(props: SlugParamsProps) {
