@@ -1,4 +1,4 @@
-name: Deploy to Azure Container Apps (Acceptance)
+name: Deploy to Acceptance
 
 on:
   pull_request:
