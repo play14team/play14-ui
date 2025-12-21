@@ -9,6 +9,8 @@ interface WorldMapProps {
   onMouseEnter?: (countryCode: string) => void
   onMouseLeave?: () => void
   className?: string
+  tooltipContent?: React.ReactNode // Tooltip to render inside fullscreen container
+  onFullscreenChange?: (isFullscreen: boolean) => void
 }
 
 export default function WorldMap({
@@ -18,6 +20,8 @@ export default function WorldMap({
   onMouseEnter,
   onMouseLeave,
   className = "",
+  tooltipContent,
+  onFullscreenChange,
 }: WorldMapProps) {
   const svgRef = useRef<HTMLDivElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
@@ -161,14 +165,16 @@ export default function WorldMap({
   // Listen for fullscreen changes
   useEffect(() => {
     const handleFullscreenChange = () => {
-      setIsFullscreen(!!document.fullscreenElement)
+      const isFs = !!document.fullscreenElement
+      setIsFullscreen(isFs)
+      onFullscreenChange?.(isFs)
     }
 
     document.addEventListener("fullscreenchange", handleFullscreenChange)
     return () => {
       document.removeEventListener("fullscreenchange", handleFullscreenChange)
     }
-  }, [])
+  }, [onFullscreenChange])
 
   // Handle mouse move for tooltip
   const handleMouseMove = (e: React.MouseEvent) => {
@@ -231,6 +237,8 @@ export default function WorldMap({
           )}
         </button>
       </div>
+      {/* Render tooltip inside fullscreen container when in fullscreen mode */}
+      {isFullscreen && tooltipContent}
     </div>
   )
 }

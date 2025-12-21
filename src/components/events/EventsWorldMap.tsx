@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { createPortal } from "react-dom"
 import { useRouter } from "next/navigation"
 import countries from "i18n-iso-countries"
 import en from "i18n-iso-countries/langs/en.json"
@@ -35,6 +36,13 @@ export default function EventsWorldMap({
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null)
   const [tooltipX, setTooltipX] = useState(0)
   const [tooltipY, setTooltipY] = useState(0)
+  const [isMounted, setIsMounted] = useState(false)
+  const [isMapFullscreen, setIsMapFullscreen] = useState(false)
+
+  // Track if component is mounted for portal
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   // Fetch data on mount
   useEffect(() => {
@@ -86,24 +94,6 @@ export default function EventsWorldMap({
         })
         setCountryColors(colors)
         setError(null)
-
-        // Debug: Log all events to check Nancy 2025
-        console.log("All countries with events:", Object.keys(groupedEvents))
-        console.log(
-          "Total events by country:",
-          Object.entries(groupedEvents).map(
-            ([code, events]) => `${code}: ${events.length}`,
-          ),
-        )
-
-        // Search for Nancy in all events
-        const allEvents = Object.values(groupedEvents).flat()
-        const nancyEvents = allEvents.filter(
-          (e) =>
-            e.name.toLowerCase().includes("nancy") ||
-            e.locationName.toLowerCase().includes("nancy"),
-        )
-        console.log("Nancy events found:", nancyEvents)
       } catch (err) {
         console.error("Failed to load event locations:", err)
         setError("Failed to load event locations. Please try again later.")
@@ -193,6 +183,59 @@ export default function EventsWorldMap({
     setHoveredCountry(null)
   }
 
+  // Render tooltip content
+  const tooltipContent = hoveredCountry && (
+    <div
+      className="tooltip-container"
+      style={{
+        left: `${tooltipX + 10}px`,
+        top: `${tooltipY - 10}px`,
+      }}
+      data-country={hoveredCountry}
+    >
+      <div className="country-events">
+        <h3 className="country-name">{getCountryName(hoveredCountry)}</h3>
+
+        {eventsByCountry[hoveredCountry] ? (
+          <>
+            <div className="events-count">
+              {eventsByCountry[hoveredCountry].length} event
+              {eventsByCountry[hoveredCountry].length !== 1 ? "s" : ""}
+            </div>
+
+            <div className="events-list">
+              {eventsByCountry[hoveredCountry].slice(0, 5).map((event) => (
+                <div key={event.slug} className="event-item">
+                  <div className="event-name">{event.name}</div>
+                  <div className="event-details">
+                    <div className="event-location">{event.locationName}</div>
+                    <div className="event-date">
+                      {formatDateRange(event.start, event.end)}
+                    </div>
+                  </div>
+                  <span
+                    className={`event-status status-${event.status.toLowerCase()}`}
+                  >
+                    {event.status}
+                  </span>
+                </div>
+              ))}
+
+              {eventsByCountry[hoveredCountry].length > 5 && (
+                <div className="more-events">
+                  +{eventsByCountry[hoveredCountry].length - 5} more event
+                  {eventsByCountry[hoveredCountry].length - 5 !== 1 ? "s" : ""}
+                </div>
+              )}
+            </div>
+          </>
+        ) : (
+          <div className="no-events">No #play14 events</div>
+        )}
+      </div>
+    </div>
+  )
+
   return (
     <section className="events-world-map-wrapper">
       <h2 id="eventsWorldMapTitle" className="events-world-map-title">
@@ -218,70 +261,9 @@ export default function EventsWorldMap({
               onMouseEnter={handleCountryMouseEnter}
               onMouseLeave={handleCountryMouseLeave}
               className="world-map-svg"
+              tooltipContent={tooltipContent}
+              onFullscreenChange={setIsMapFullscreen}
             />
-
-            {hoveredCountry && (
-              <div
-                className="tooltip-container"
-                style={{
-                  left: `${tooltipX + 10}px`,
-                  top: `${tooltipY - 10}px`,
-                }}
-                data-country={hoveredCountry}
-              >
-                <div className="country-events">
-                  <h3 className="country-name">
-                    {getCountryName(hoveredCountry)}
-                  </h3>
-
-                  {eventsByCountry[hoveredCountry] ? (
-                    <>
-                      <div className="events-count">
-                        {eventsByCountry[hoveredCountry].length} event
-                        {eventsByCountry[hoveredCountry].length !== 1
-                          ? "s"
-                          : ""}
-                      </div>
-
-                      <div className="events-list">
-                        {eventsByCountry[hoveredCountry]
-                          .slice(0, 5)
-                          .map((event) => (
-                            <div key={event.slug} className="event-item">
-                              <div className="event-name">{event.name}</div>
-                              <div className="event-details">
-                                <div className="event-location">
-                                  {event.locationName}
-                                </div>
-                                <div className="event-date">
-                                  {formatDateRange(event.start, event.end)}
-                                </div>
-                              </div>
-                              <span
-                                className={`event-status status-${event.status.toLowerCase()}`}
-                              >
-                                {event.status}
-                              </span>
-                            </div>
-                          ))}
-
-                        {eventsByCountry[hoveredCountry].length > 5 && (
-                          <div className="more-events">
-                            +{eventsByCountry[hoveredCountry].length - 5} more
-                            event
-                            {eventsByCountry[hoveredCountry].length - 5 !== 1
-                              ? "s"
-                              : ""}
-                          </div>
-                        )}
-                      </div>
-                    </>
-                  ) : (
-                    <div className="no-events">No #play14 events</div>
-                  )}
-                </div>
-              </div>
-            )}
           </div>
         )}
       </div>
@@ -316,6 +298,12 @@ export default function EventsWorldMap({
           Cancelled
         </span>
       </div>
+
+      {/* Render tooltip via portal only when NOT in fullscreen */}
+      {!isMapFullscreen &&
+        isMounted &&
+        tooltipContent &&
+        createPortal(tooltipContent, document.body)}
     </section>
   )
 }
