@@ -34,33 +34,39 @@ jobs:
 
       - name: Check if commit is from PR merge
         id: check
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          # Check if this is a merge commit
-          if git rev-parse HEAD^2 >/dev/null 2>&1; then
-            echo "This is a merge commit"
+          # Get commit message
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          echo "Commit message: $COMMIT_MSG"
 
-            # Extract PR head commit SHA (the commit that was merged, not the merge commit)
-            PR_HEAD_SHA=$(git rev-parse HEAD^2)
-            echo "PR head SHA: $PR_HEAD_SHA"
-            echo "pr_head_sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
+          # Extract PR number from commit message
+          # Supports both formats:
+          # - Regular merge: "Merge pull request #123 from..."
+          # - Squash merge: "feat: some title (#123)"
+          PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oP 'Merge pull request #\K\d+' || echo "$COMMIT_MSG" | grep -oP '\(#\K\d+(?=\))' || echo "")
 
-            # Extract PR number from merge commit message
-            # Supports both formats:
-            # - Regular merge: "Merge pull request #123 from..."
-            # - Squash merge: "feat: some title (#123)"
-            COMMIT_MSG=$(git log -1 --pretty=%B)
-            PR_NUMBER=$(echo "$COMMIT_MSG" | grep -oP 'Merge pull request #\K\d+' || echo "$COMMIT_MSG" | grep -oP '\(#\K\d+(?=\))' || echo "")
+          if [ -n "$PR_NUMBER" ]; then
+            echo "✅ Detected PR merge: #$PR_NUMBER"
+            echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
 
-            if [ -n "$PR_NUMBER" ]; then
-              echo "PR number: $PR_NUMBER"
-              echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+            # Get the actual PR head SHA from GitHub API
+            # This works for both regular merges and squash merges
+            echo "Fetching PR details from GitHub API..."
+            PR_DATA=$(gh api repos/${{ github.repository }}/pulls/$PR_NUMBER)
+            PR_HEAD_SHA=$(echo "$PR_DATA" | jq -r '.head.sha')
+
+            if [ -n "$PR_HEAD_SHA" ] && [ "$PR_HEAD_SHA" != "null" ]; then
+              echo "✅ Retrieved PR head SHA from GitHub API: $PR_HEAD_SHA"
+              echo "pr_head_sha=$PR_HEAD_SHA" >> $GITHUB_OUTPUT
               echo "is_pr_merge=true" >> $GITHUB_OUTPUT
             else
-              echo "Could not extract PR number from merge commit"
+              echo "⚠️ Could not retrieve PR head SHA from GitHub API"
               echo "is_pr_merge=false" >> $GITHUB_OUTPUT
             fi
           else
-            echo "This is not a merge commit (direct push to main)"
+            echo "ℹ️ No PR number found - direct push to main"
             echo "is_pr_merge=false" >> $GITHUB_OUTPUT
           fi
 
